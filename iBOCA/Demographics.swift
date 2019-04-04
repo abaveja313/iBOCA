@@ -79,6 +79,11 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         self.present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func CancelPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     /*
     @IBOutlet weak var done: UIButton!
     
