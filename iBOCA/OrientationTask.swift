@@ -207,6 +207,20 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     }
     
     @IBAction func DoneButton(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Confirm", message: "Do you really want to complete this test?", preferredStyle: .alert)
+        
+        let noAction = UIAlertAction.init(title: "No", style: .cancel, handler: nil)
+        let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
+            self.completeTest()
+            // Show MainViewController
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(noAction)
+        alert.addAction(yesAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func completeTest() {
         let result = Results()
         result.name = "Orientation"
         result.startTime = startTime
@@ -253,7 +267,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         if dkMonth {
             result.shortDescription = result.shortDescription! + " Don't know month "
         }
- 
+        
         if dkYear {
             result.shortDescription = result.shortDescription! + " Don't know year "
         }
