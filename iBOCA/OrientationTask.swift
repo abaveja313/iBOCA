@@ -120,44 +120,50 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         dkMonth = false
         dkYear = false
         
-        State = stateData[StatePicker.selectedRow(inComponent: 0)]
+        // Get the random State
+        let indexState = Int(arc4random_uniform(UInt32(stateData.count)))
+        State = stateData[indexState]
+        StatePicker.selectRow(indexState, inComponent: 0, animated: true)
         // If a correct state name has been saved, use it
         if(UserDefaults.standard.object(forKey: "OrientationState") != nil) {
             let os = UserDefaults.standard.object(forKey: "OrientationState") as! String
             let v = stateData.index(of: os)
             if (v != nil) {
-                State  = os
-                StatePicker.selectRow(v!, inComponent: 0, animated: false)
+//                State  = os
+//                StatePicker.selectRow(v!, inComponent: 0, animated: false)
+            }
+        }
+        // Get the random Town
+        let indexTown = Int(arc4random_uniform(UInt32(townData.count)))
+        Town = townData[indexTown]
+        TownPicker.selectRow(indexTown, inComponent: 0, animated: true)
+        
+        let formatter = DateFormatter()
+        if let date_random = Foundation.Date().generateRandomDate(daysBack: 20) {
+            // Get the random date
+            formatter.dateFormat = "y-MM-dd"
+            currentDate.setDate( date_random,  animated: false)
+            Date = formatter.string(from: currentDate.date)
+            DateOK = true
+            
+            // Get the random time
+            formatter.dateFormat = "yyyy/MM/dd HH:mm"
+            currentTime.setDate(date_random,  animated: false)
+            formatter.dateFormat = "HH:MM"
+            Time = formatter.string(from: currentTime.date)
+            TimeOK = true
+            
+            // Get the random week
+            Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
+            formatter.dateFormat = "EEEE"
+            let wk = formatter.string(from: date_random)
+            let v = weekData.index(of: wk)
+            if (v != nil) {
+                Week  = wk
+                WeekPicker.selectRow(v!, inComponent: 0, animated: false)
             }
         }
         
-        Town = townData[TownPicker.selectedRow(inComponent: 0)]
-        
-        // Get the current date
-        let formatter = DateFormatter()
-        formatter.dateFormat = "y-MM-dd"
-        currentDate.setDate(Foundation.Date(),  animated: false)
-        Date = formatter.string(from: currentDate.date)
-        DateOK = true
-        
-        
-        // Get the current time
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        currentTime.setDate(Foundation.Date(),  animated: false)
-        formatter.dateFormat = "HH:MM"
-        Time = formatter.string(from: currentTime.date)
-        TimeOK = true
-        
-        // Get the current week
-        Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
-        formatter.dateFormat = "EEEE"
-        let wk = formatter.string(from: Foundation.Date())
-        let v = weekData.index(of: wk)
-        if (v != nil) {
-            Week  = wk
-            WeekPicker.selectRow(v!, inComponent: 0, animated: false)
-        }
-
         currentDate.isUserInteractionEnabled = true
         currentTime.isUserInteractionEnabled = true
         WeekPicker.isUserInteractionEnabled = true
@@ -345,4 +351,23 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
   */
+}
+
+// MARK: - Extension Date
+extension Date {
+    func generateRandomDate(daysBack: Int)-> Date?{
+        let day = arc4random_uniform(UInt32(daysBack))+1
+        let hour = arc4random_uniform(23)
+        let minute = arc4random_uniform(59)
+        
+        let today = Date(timeIntervalSinceNow: 0)
+        let gregorian  = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        var offsetComponents = DateComponents()
+        offsetComponents.day = Int(day - 1)
+        offsetComponents.hour = Int(hour)
+        offsetComponents.minute = Int(minute)
+        
+        let randomDate = gregorian?.date(byAdding: offsetComponents, to: today, options: .init(rawValue: 0) )
+        return randomDate
+    }
 }
