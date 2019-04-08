@@ -953,9 +953,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         }
         
         recallResult += "\(recallIncorrect) item(s) incorrectly recalled at times \(recallIncorrectTimes)\n"
-        
-        resultLabel.text = imageSetResult + delayResult + recallResult + recognizeResult
         resultTitleLabel.text = "Result"
+        resultLabel.text = imageSetResult + delayResult + recallResult + recognizeResult
         let result = Results()
         result.name = "Simple Memory"
         result.startTime = StartTimer
