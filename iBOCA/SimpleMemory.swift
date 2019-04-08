@@ -28,6 +28,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var delayLabel: UILabel!
     
+    @IBOutlet weak var resultTitleLabel: UILabel!
+    
     @IBOutlet weak var resultLabel: UILabel!
     
     @IBOutlet weak var testPicker: UIPickerView!
@@ -301,6 +303,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         recognizeTimes = [Double]()
         recognizeErrors = [Int]()
         orderRecognize = [Int]()
+        resultTitleLabel.text = ""
         resultLabel.text = ""
         timerLabel.text = ""
         delayLabel.text = ""
@@ -952,7 +955,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         recallResult += "\(recallIncorrect) item(s) incorrectly recalled at times \(recallIncorrectTimes)\n"
         
         resultLabel.text = imageSetResult + delayResult + recallResult + recognizeResult
-        
+        resultTitleLabel.text = "Result"
         let result = Results()
         result.name = "Simple Memory"
         result.startTime = StartTimer
