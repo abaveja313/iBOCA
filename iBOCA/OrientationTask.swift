@@ -13,9 +13,9 @@ var firstTimeThrough = true
 //declare variables to be defined by pickerviews
 var startTime = Foundation.Date()
 
-
 class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate  {
     
+    let defaultBlueColor: UIColor = UIColor.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
     var Week : String?
     var State : String?
     var Town : String?
@@ -23,10 +23,76 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     var Time : String?
     var TimeOK : Bool = false
     var DateOK : Bool = false
-    var dkDate : Bool = false
-    var dkMonth : Bool = false
-    var dkYear : Bool = false
-
+    var dkDate : Bool = false {
+        didSet {
+            if dkDate {
+                btnDontKnowDate.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowDate.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkMonth : Bool = false {
+        didSet {
+            if dkMonth {
+                btnDontKnowMonth.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowMonth.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkYear : Bool = false {
+        didSet {
+            if dkYear {
+                btnDontKnowYear.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowYear.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkWeek : Bool = false {
+        didSet {
+            if dkWeek {
+                btnDontKnowWeek.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowWeek.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkState : Bool = false {
+        didSet {
+            if dkState {
+                btnDontKnowState.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowState.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkTown : Bool = false {
+        didSet {
+            if dkTown {
+                btnDontKnowTown.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowTown.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkTime : Bool = false {
+        didSet {
+            if dkTime {
+                btnDontKnowTime.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowTime.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
 
     //pickerview content set up(defines options)
     
@@ -38,6 +104,15 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     
     
     @IBOutlet weak var currentDate: UIDatePicker!
+    
+    @IBOutlet weak var btnDontKnowMonth: UIButton!
+    @IBOutlet weak var btnDontKnowDate: UIButton!
+    @IBOutlet weak var btnDontKnowYear: UIButton!
+    @IBOutlet weak var btnDontKnowWeek: UIButton!
+    @IBOutlet weak var btnDontKnowState: UIButton!
+    @IBOutlet weak var btnDontKnowTown: UIButton!
+    @IBOutlet weak var btnDontKnowTime: UIButton!
+    
     
     var body:String?
     //text field input and results
@@ -53,6 +128,10 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         } else {
             DateOK = false
         }
+        
+        dkDate = false
+        dkMonth = false
+        dkYear = false
     }
     
     @IBOutlet weak var TownPicker: UIPickerView!
@@ -67,6 +146,8 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         formatter.dateFormat = "HH:mm"
         Time = formatter.string(from: d.date)
         TimeOK = TimeDiffOK(date1: startTime, date2: d.date)
+        
+        dkTime = false
     }
     
     @IBAction func DontKnowMonth(_ sender: UIButton) {
@@ -83,28 +164,24 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     
     @IBAction func DontKnowWeek(_ sender: Any) {
         Week = "Dont Know"
-        WeekPicker.isUserInteractionEnabled = false
-        WeekPicker.alpha = 0.5
+        dkWeek = true
     }
     
     
     @IBAction func DontKnowState(_ sender: Any) {
         State = "Dont Know"
-        StatePicker.isUserInteractionEnabled = false
-        StatePicker.alpha = 0.5
+        dkState = true
     }
     
     
     @IBAction func DontKnowTown(_ sender: Any) {
         Town = "Dont Know"
-        TownPicker.isUserInteractionEnabled = false
-        TownPicker.alpha = 0.5
+        dkTown = true
     }
     
     @IBAction func DontKnowTime(_ sender: Any) {
         Time = "Dont Know"
-        currentTime.isUserInteractionEnabled = false
-        currentTime.alpha = 0.5
+        dkTime = true
         TimeOK = false
     }
     
@@ -313,12 +390,15 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         print("2:", pickerView)
         if pickerView == WeekPicker {
+            dkWeek = false
             Week = weekData[row]
         }
         else if pickerView == StatePicker {
+            dkState = false
             State = stateData[row]
         }
         else if pickerView == TownPicker {
+            dkTown = false
             Town = townData[row]
         }
     }
