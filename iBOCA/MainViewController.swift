@@ -17,6 +17,8 @@ var testName:String?
 class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     var mailSubject : String = "iBOCA Results of "
     
+    var iTimer: Timer?
+    
     var segueToLanding = false // COmplete hack to get back to landing page.  The timer will keep issuing segue command if this variable is set. Deals with the asynchronous mail window (need to find a better way!)
     
     // NOTE: All buttons have to have the keypath translatesAutoresizingMaskIntoConstraints unset!!!
@@ -156,7 +158,7 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         }
         
         segueToLanding = false
-        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
     }
     
     
@@ -198,6 +200,7 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     
     func update(timer: Timer) {
         if segueToLanding == true { // The HACK!
+            iTimer?.invalidate()
             self.performSegue(withIdentifier: "BackToLanding", sender: self)
         }
         
