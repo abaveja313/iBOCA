@@ -41,6 +41,7 @@ class CatsAndDogsViewController: ViewController {
     var timeOfStart = Double()  // timer to figure out how long after the start of the round
     
     @IBOutlet weak var sequenceSelectionButton: UIButton!
+    @IBOutlet weak var btn_start: UIButton!
     
     var iTimer: Timer?
     var startTime = TimeInterval()
@@ -178,8 +179,103 @@ class CatsAndDogsViewController: ViewController {
         
         sequenceSelectionButton.isHidden = false
         sequenceSelectionButton.isEnabled = true
+        sequenceSelectionButton.isUserInteractionEnabled = false
+        btn_start.isHidden = false
+        btn_start.isEnabled = true
     }
     
+    @IBAction func btnStartSelected(_ sender: UIButton) {
+        // BUGBUG: Need to make sure a bad input will not crash the app
+        
+        let dogsAlone = field1.text
+        var dogsCats1 = field2.text
+        var dogsCats2 = field3.text
+        
+        dogsCats1?.remove(at: (dogsCats1?.index(before: (dogsCats1?.endIndex)!))!)
+        dogsCats1?.remove(at: (dogsCats1?.startIndex)!)
+        
+        dogsCats2?.remove(at: (dogsCats2?.index(before: (dogsCats2?.endIndex)!))!)
+        dogsCats2?.remove(at: (dogsCats2?.startIndex)!)
+        
+        label1.isHidden = true
+        label2.isHidden = true
+        label3.isHidden = true
+        field1.isHidden = true
+        field1.isEnabled = false
+        field2.isHidden = true
+        field2.isEnabled = false
+        field3.isHidden = true
+        field3.isEnabled = false
+        sequenceSelectionButton.isHidden = true
+        btn_start.isHidden = true
+        
+        do {
+            let dogsAloneArr = dogsAlone?.components(separatedBy: ",")
+            
+            //        print(dogsAloneArr)
+            
+            let up0 = (dogsAloneArr?.count) ?? 0
+            for i in 0...up0 - 1 {
+                let x =  (dogsAloneArr?[i]) ?? "1"
+                let y =  Int(x) ?? 0
+                dogList.append(y)
+                catList.append(0)
+            }
+            
+            //        let separators = CharacterSet(charactersIn: "),(")
+            
+            let dogsCats1Arr = dogsCats1?.components(separatedBy: String("),("))
+            
+            //        print(dogsCats1Arr)
+            
+            let up1 = (dogsCats1Arr?.count) ?? 0
+            for i in 0...up1 - 1 {
+                let split1 = dogsCats1Arr?[i].components(separatedBy: ",")
+                let x1 = (split1?[0]) ?? "1"
+                let y1 = Int(x1) ?? 1
+                dogList.append(y1)
+                let x2 = (split1?[1]) ?? "1"
+                let y2 = Int(x2) ?? 1
+                catList.append(y2)
+            }
+            
+            let dogsCats2Arr = dogsCats2?.components(separatedBy: String("),("))
+            
+            //        print(dogsCats2Arr)
+            
+            let up2 = (dogsCats2Arr?.count) ?? 0
+            for i in 0...up2 - 1 {
+                let split2 = dogsCats2Arr?[i].components(separatedBy: ",")
+                let x1 = (split2?[0]) ?? "1"
+                let y1 = Int(x1) ?? 1
+                dogList.append(y1)
+                let x2 = (split2?[1]) ?? "1"
+                let y2 = Int(x2) ?? 1
+                catList.append(y2)
+            }
+            
+            break1 = up0
+            break2 = up0 + up1
+            
+            UserDefaults.standard.set(field1.text, forKey:"CandD-Dogs")
+            UserDefaults.standard.set(field2.text, forKey:"CandD-Dogs-no-Cats")
+            UserDefaults.standard.set(field3.text, forKey:"CandD-Cats-no-Dogs")
+            UserDefaults.standard.synchronize()
+            
+            cats = catList[0]
+            dogs = dogList[0]
+            
+            //print("doglist:", dogList)
+            //print("catlist:", catList)
+            //print("breaks:", break1, break2)
+            
+            startAlert()
+        } catch {
+            break1 = 0
+            break2 = 0
+            resultsLabel.text = "Invalid Sequence Data"
+        }
+    }
     
     @IBAction func sequenceSelected(_ sender: Any) {
         // BUGBUG: Need to make sure a bad input will not crash the app
@@ -204,6 +300,7 @@ class CatsAndDogsViewController: ViewController {
         field3.isHidden = true
         field3.isEnabled = false
         sequenceSelectionButton.isHidden = true
+        btn_start.isHidden = true
         
         do {
             let dogsAloneArr = dogsAlone?.components(separatedBy: ",")
