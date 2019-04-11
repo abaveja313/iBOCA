@@ -42,6 +42,7 @@ class CatsAndDogsViewController: ViewController {
     
     @IBOutlet weak var sequenceSelectionButton: UIButton!
     
+    var iTimer: Timer?
     var startTime = TimeInterval()
     var startTime2 = Foundation.Date()
     
@@ -533,7 +534,7 @@ class CatsAndDogsViewController: ViewController {
             
         }
         
-        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         
         startTime = NSDate.timeIntervalSinceReferenceDate
         
@@ -563,6 +564,7 @@ class CatsAndDogsViewController: ViewController {
         endButton.isEnabled = false
         resetButton.isEnabled = true
         backButton.isEnabled = true
+        iTimer?.invalidate()
         donetest()
         
     }
@@ -580,15 +582,9 @@ class CatsAndDogsViewController: ViewController {
         result.startTime = startTime2 as Date
         result.endTime = Foundation.Date()
         
-        for k in 0 ..< buttonList.count {
-            buttonList[k].removeFromSuperview()
-        }
-        for j in 0 ..< imageList.count {
-            imageList[j].removeFromSuperview()
-        }
-        for j in 0 ..< boxList.count {
-            boxList[j].removeFromSuperview()
-        }
+        self.buttonList.forEach{ $0.removeFromSuperview() }
+        self.imageList.forEach{ $0.removeFromSuperview() }
+        self.boxList.forEach{ $0.removeFromSuperview() }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             self.navigationItem.setHidesBackButton(false, animated:true)
