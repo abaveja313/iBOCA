@@ -111,6 +111,9 @@ class CatsAndDogsViewController: ViewController {
         timeOfTap = -1.0
         timeOfStart = -1.0
         
+        // Reset result
+        self.resultLabel.text = ""
+        
         setSequence()
         
 //        StartTest(resetButton)
