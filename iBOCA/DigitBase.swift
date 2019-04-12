@@ -105,6 +105,7 @@ class DigitBase: ViewController {
     }
     
     @IBAction func KeyPadKeyPressed(_ sender: UIButton) {
+        guard Int(value + sender.currentTitle!) != nil else {return}
         value = value + sender.currentTitle!
         KeypadLabel.text = value
         let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
