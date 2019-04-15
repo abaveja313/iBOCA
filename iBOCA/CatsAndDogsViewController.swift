@@ -127,6 +127,10 @@ class CatsAndDogsViewController: ViewController {
     var field2 = UITextField()
     var field3 = UITextField()
     
+    var lb_error_1 = UILabel()
+    var lb_error_2 = UILabel()
+    var lb_error_3 = UILabel()
+    
     
     func setSequence(){
         label1 = UILabel(frame: CGRect(x: 50, y: 200, width: 350, height: 100))
@@ -156,7 +160,15 @@ class CatsAndDogsViewController: ViewController {
         field1.borderStyle = UITextBorderStyle.roundedRect
         field1.keyboardType = UIKeyboardType.numbersAndPunctuation
         field1.isEnabled = true
+        field1.delegate = self
         self.view.addSubview(field1)
+        
+        lb_error_1 = UILabel(frame: CGRect(x: 450, y: 300, width: 510, height: 50))
+        lb_error_1.textAlignment = .right
+        lb_error_1.textColor = UIColor.red
+        lb_error_1.text = "Maximum number of dogs should not be greater than 10"
+        lb_error_1.isHidden = true
+        self.view.addSubview(lb_error_1)
         
         field2 = UITextField(frame: CGRect(x: 450, y: 350, width: 510, height: 100))
         if(UserDefaults.standard.object(forKey: "CandD-Dogs-no-Cats") != nil) {
@@ -167,7 +179,15 @@ class CatsAndDogsViewController: ViewController {
         field2.borderStyle = UITextBorderStyle.roundedRect
         field2.keyboardType = UIKeyboardType.numbersAndPunctuation
         field2.isEnabled = true
+        field2.delegate = self
         self.view.addSubview(field2)
+        
+        lb_error_2 = UILabel(frame: CGRect(x: 450, y: 450, width: 510, height: 50))
+        lb_error_2.textAlignment = .right
+        lb_error_2.textColor = UIColor.red
+        lb_error_2.text = "Maximum number of dogs and cats should not be greater 10"
+        lb_error_2.isHidden = true
+        self.view.addSubview(lb_error_2)
         
         field3 = UITextField(frame: CGRect(x: 450, y: 500, width: 510, height: 100))
         if(UserDefaults.standard.object(forKey: "CandD-Cats-no-Dogs") != nil) {
@@ -178,7 +198,15 @@ class CatsAndDogsViewController: ViewController {
         field3.borderStyle = UITextBorderStyle.roundedRect
         field3.keyboardType = UIKeyboardType.numbersAndPunctuation
         field3.isEnabled = true
+        field3.delegate = self
         self.view.addSubview(field3)
+        
+        lb_error_3 = UILabel(frame: CGRect(x: 450, y: 600, width: 510, height: 50))
+        lb_error_3.textAlignment = .right
+        lb_error_3.textColor = UIColor.red
+        lb_error_3.text = "Maximum number of dogs and cats should not be greater 10"
+        lb_error_3.isHidden = true
+        self.view.addSubview(lb_error_3)
         
         sequenceSelectionButton.isHidden = false
         sequenceSelectionButton.isEnabled = true
@@ -188,6 +216,18 @@ class CatsAndDogsViewController: ViewController {
     }
     
     @IBAction func btnStartSelected(_ sender: UIButton) {
+        guard
+            self.lb_error_1.isHidden == true &&
+            self.lb_error_2.isHidden == true &&
+            self.lb_error_3.isHidden == true
+        else {
+            // Show alert error
+            let err_Alert = UIAlertController.init(title: "Warning", message: "Please enter the correct format or valid number!", preferredStyle: .alert)
+            err_Alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(err_Alert, animated: true, completion: nil)
+            return
+        }
+        
         // BUGBUG: Need to make sure a bad input will not crash the app
         
         let dogsAlone = field1.text
@@ -936,5 +976,107 @@ class CatsAndDogsViewController: ViewController {
     
 }
 
+extension CatsAndDogsViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard
+            let text = textField.text,
+            let textRange = Range(range, in: text)
+        else { return true }
+        if textField == self.field1 {
+            // Format clean text of field1
+            let updatedText = text.replacingCharacters(in: textRange, with: string).trimmingCharacters(in: .whitespaces)
+            let array_character = updatedText.components(separatedBy: ",")
+            print("array_character: \(array_character)")
+            self.checkInputField(field: textField, array_character: array_character)
+        }
+        else {
+            // Format clean text of field
+            let updatedText = text.replacingCharacters(in: textRange, with: string).trimmingCharacters(in: .whitespaces)
+                .replacingOccurrences(of: "(", with: "")
+                .replacingOccurrences(of: ")", with: "")
+            let array_character = updatedText.components(separatedBy: ",")
+            self.checkInputField(field: textField, array_character: array_character)
+        }
+        return true
+    }
+    
+    private func checkInputField(field: UITextField, array_character: [String]) {
+        if field == self.field1 {
+            // Check logic
+            // Check item <= 10
+            let results_filter = array_character.filter { (iCharacter) -> Bool in
+                if let iResult = Int(iCharacter), iResult <= 10 {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
+            
+            if results_filter.count == array_character.count {
+                self.lb_error_1.isHidden = true
+            }
+            else {
+                self.lb_error_1.isHidden = false
+            }
+        }
+        else if field == self.field2 {
+            // Check logic
+            // Check the array always the same value pair
+            if array_character.count != 0, array_character.count % 2 == 0 {
+                let arr_result = stride(from: 0, to: array_character.count - 1, by: 2).map {
+                    (array_character[$0], array_character[$0+1])
+                }
+                let results_filter = arr_result.filter { (obj) -> Bool in
+                    // Check item1 || item2 > 0 and (item1 + item2) <= 10
+                    if let obj_1 = Int(obj.0), let obj_2 = Int(obj.1), obj_1 > 0, obj_2 > 0, (obj_1 + obj_2) <= 10 {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }
+                
+                if results_filter.count == arr_result.count {
+                    self.lb_error_2.isHidden = true
+                }
+                else {
+                    self.lb_error_2.isHidden = false
+                }
+            }
+            else {
+                self.lb_error_2.isHidden = false
+            }
+        }
+        else if field == self.field3 {
+            // Check logic
+            // Check the array always the same value pair
+            if array_character.count != 0, array_character.count % 2 == 0 {
+                let arr_result = stride(from: 0, to: array_character.count - 1, by: 2).map {
+                    (array_character[$0], array_character[$0+1])
+                }
+                let results_filter = arr_result.filter { (obj) -> Bool in
+                    // Check item1 || item2 > 0 and (item1 + item2) <= 10
+                    if let obj_1 = Int(obj.0), let obj_2 = Int(obj.1), obj_1 > 0, obj_2 > 0, (obj_1 + obj_2) <= 10 {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }
+                
+                if results_filter.count == arr_result.count {
+                    self.lb_error_3.isHidden = true
+                }
+                else {
+                    self.lb_error_3.isHidden = false
+                }
+            }
+            else {
+                self.lb_error_3.isHidden = false
+            }
+        }
+    }
+}
 
 
