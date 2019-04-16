@@ -309,6 +309,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         start.isHidden = false
         start.isEnabled = false
+        timerLabel.isHidden = false
         
         start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
         start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
@@ -319,7 +320,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     }
     
     func startDisplayAlert(){
-        
         Status[TestSimpleMemory] = TestStatus.Running
         
         start.isHidden = true
