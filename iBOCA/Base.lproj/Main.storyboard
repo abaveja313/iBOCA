@@ -2730,6 +2730,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowWeek:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="ysk-xh-g1J"/>
                                 </connections>
@@ -2739,6 +2742,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowState:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="Xt4-au-IT1"/>
                                 </connections>
@@ -2748,6 +2754,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowTown:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="Wfs-iC-xYP"/>
                                 </connections>
@@ -2757,6 +2766,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowTime:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="VTR-M6-v6S"/>
                                 </connections>
@@ -2766,6 +2778,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Date"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowDate:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="uTm-wX-953"/>
                                 </connections>
@@ -2775,6 +2790,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Year"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowYear:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="YEy-gS-A7E"/>
                                 </connections>
@@ -2782,8 +2800,12 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfY-bh-V3b">
                                 <rect key="frame" x="689" y="62" width="198" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Month"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowMonth:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="fId-DW-zXT"/>
                                 </connections>
@@ -2804,6 +2826,13 @@
                         <outlet property="StatePicker" destination="G5g-Wp-9Q3" id="23F-Fw-NvP"/>
                         <outlet property="TownPicker" destination="HXQ-cz-LoD" id="GpB-eg-vKL"/>
                         <outlet property="WeekPicker" destination="5RO-Hz-93f" id="YLC-25-Hrv"/>
+                        <outlet property="btnDontKnowDate" destination="ukp-Ds-fga" id="jfi-GS-VQl"/>
+                        <outlet property="btnDontKnowMonth" destination="JfY-bh-V3b" id="gM9-vX-sYD"/>
+                        <outlet property="btnDontKnowState" destination="BoR-w1-jnR" id="YRd-RS-aoL"/>
+                        <outlet property="btnDontKnowTime" destination="zbg-ij-Bfs" id="lOl-kW-uf7"/>
+                        <outlet property="btnDontKnowTown" destination="Dhc-mR-ipm" id="m73-IW-Mdp"/>
+                        <outlet property="btnDontKnowWeek" destination="5mu-xW-DsC" id="oyU-9v-wyS"/>
+                        <outlet property="btnDontKnowYear" destination="lw1-LA-Gp3" id="Yvs-XK-CIb"/>
                         <outlet property="currentDate" destination="slc-lJ-ird" id="YYa-GY-vpc"/>
                         <outlet property="currentTime" destination="Oj7-GR-ZMQ" id="tML-Sw-NtW"/>
                     </connections>
