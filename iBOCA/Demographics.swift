@@ -310,20 +310,25 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) -> Void in
             let textField = alert.textFields![0] as UITextField
             //self.resultComments[self.count-startCount] = textField.text!
-            let result = textField.text
             
-            var cnt : Int = 0
-            if pickerView == self.EthnicityPicker {
-                self.ethnicData.append(result!)
-                cnt = self.ethnicData.count
-                Ethnicity = result!
-            } else if pickerView == self.RacePicker {
-                self.raceData.append(result!)
-                cnt = self.raceData.count
-                Race = result!
+            if let result = textField.text, !result.isEmpty {
+                //do something if it's not empty
+                var cnt : Int = 0
+                if pickerView == self.EthnicityPicker {
+                    self.ethnicData.append(result)
+                    cnt = self.ethnicData.count
+                    Ethnicity = result
+                } else if pickerView == self.RacePicker {
+                    self.raceData.append(result)
+                    cnt = self.raceData.count
+                    Race = result
+                }
+                pickerView.reloadAllComponents()
+                pickerView.selectRow(cnt-1, inComponent: 0, animated: true)
             }
-            pickerView.reloadAllComponents()
-            pickerView.selectRow(cnt-1, inComponent: 0, animated: true)
+            else {
+                alert.dismiss(animated: true, completion: nil)
+            }
         }))
         
         // 4. Present the alert.
