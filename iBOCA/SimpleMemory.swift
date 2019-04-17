@@ -1012,6 +1012,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         start.isHidden = false
         start.isEnabled = true
+        start.setTitle("Start New", for: .normal)
+        start.setTitle("Start New", for: .selected)
         start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
         start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
