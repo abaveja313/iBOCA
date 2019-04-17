@@ -2707,12 +2707,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cdC-re-Tb9">
-                                <rect key="frame" x="900" y="62" width="112" height="48"/>
+                                <rect key="frame" x="12" y="62" width="112" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <action selector="DoneButton:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="pXo-4V-0cf"/>
                                     <segue destination="BYZ-38-t0r" kind="show" id="dL7-Sq-hiA"/>
                                 </connections>
                             </button>
@@ -2787,6 +2786,15 @@
                                 <state key="normal" title="Don't Know Month"/>
                                 <connections>
                                     <action selector="DontKnowMonth:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="fId-DW-zXT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDq-15-Yl5">
+                                <rect key="frame" x="902" y="62" width="110" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Complete"/>
+                                <connections>
+                                    <action selector="DoneButton:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="imB-Y4-Hyi"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -3801,6 +3809,6 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="kTw-7t-VZN"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="1MG-jT-bnL"/>
+        <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>
