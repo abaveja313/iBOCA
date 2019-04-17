@@ -36,6 +36,14 @@ func makeAgeData() -> [String] {
 
 class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate {
     
+    @IBOutlet weak var btnGender: UIButton!
+    @IBOutlet weak var btnAge: UIButton!
+    @IBOutlet weak var btnEducation: UIButton!
+    @IBOutlet weak var btnEthinicity: UIButton!
+    @IBOutlet weak var btnRace: UIButton!
+    @IBOutlet weak var btnProcotol: UIButton!
+    
+    
     @IBOutlet weak var GenderPicker: UIPickerView!
     let genderData = ["Male", "Female", "Other", "Prefer Not To Say"]
     
@@ -76,6 +84,73 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     @IBAction func NextPressed(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func GenderPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = genderData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.GenderPicker.selectRow(index, inComponent: 0, animated: false)
+        })
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func AgePressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = ageData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.AgePicker.selectRow(index, inComponent: 0, animated: false)
+        })
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func EducationPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = educationData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.EducationPicker.selectRow(index, inComponent: 0, animated: false)
+        })
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func EthinicityPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = ethnicData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.EthnicityPicker.selectRow(index, inComponent: 0, animated: false)
+        })
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func RacePressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = raceData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.RacePicker.selectRow(index, inComponent: 0, animated: false)
+        })
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func ProtocolPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        vc.datasource = protocolData
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.didSelect = ({ value, index in
+            self.ProtocolPicker.selectRow(index, inComponent: 0, animated: false)
+        })
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -142,9 +217,11 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         if(ModeECT) {
             protocolLabel.isHidden = false
             ProtocolPicker.isHidden = false
+            btnProcotol.isHidden = false
         } else {
             protocolLabel.isHidden = true
             ProtocolPicker.isHidden = true
+            btnProcotol.isHidden = true
         }
     }
    
