@@ -346,3 +346,17 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     print(Results1)
     }
 }
+
+
+extension Demographics {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.length + range.location > textField.text!.count {
+            return false
+        }
+        
+        if string.isEmpty {
+            return true
+        }
+        return Int(string) != nil
+    }
+}
