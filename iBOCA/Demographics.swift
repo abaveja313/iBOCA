@@ -56,7 +56,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     var ethnicData = ["Hispanic or Latino", "Not Hispanic or Latino"]
     
     @IBOutlet weak var RacePicker: UIPickerView!
-    var raceData = ["White", "Black or African American", "Asian", "Native Hawaiian or Other Pacific Islander", "American Indian or Alaskan Native", "Multi-Racial", "Unknown", "Other",]
+    var raceData = ["White", "Black or African American", "Asian", "Native Hawaiian or Other Pacific Islander", "American Indian or Alaskan Native", "Multi-Racial", "Unknown", "Add more",]
     
     @IBOutlet weak var AgePicker: UIPickerView!
     var ageData:[String] = makeAgeData()
@@ -281,23 +281,23 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
             Gender = genderData[row]
         } else if pickerView == EthnicityPicker {
             Ethnicity = ethnicData[row]
-            if Ethnicity == "Other" {
-                addOtherCondition(pickerView)
+            if Ethnicity == "Other", let iEthnicity = Ethnicity {
+                addOtherCondition(pickerView, strCondition: iEthnicity)
             }
         } else if pickerView == EducationPicker {
            Education = educationData[row]
         } else if pickerView == RacePicker {
             Race = raceData[row]
-            if Race == "Other" {
-                addOtherCondition(pickerView)
+            if Race == "Add more", let iRace = Race {
+                addOtherCondition(pickerView, strCondition: iRace)
             }
         } else if pickerView == ProtocolPicker {
             Protocol = protocolData[row]
         }
     }
     
-    func addOtherCondition(_ pickerView:UIPickerView){
-        let alert = UIAlertController(title: "Other", message: "Enter other ", preferredStyle: .alert)
+    func addOtherCondition(_ pickerView:UIPickerView, strCondition: String){
+        let alert = UIAlertController(title: strCondition, message: "Enter \(strCondition.lowercased()) ", preferredStyle: .alert)
         
         //2. Add the text field. You can configure it however you need.
         
