@@ -132,11 +132,13 @@ class DigitBase: ViewController {
         StartButton.isHidden = true
         EndButton.isHidden = false
         BackButton.isHidden = true
+        NumberLabel.isHidden = false
         base!.DoStart()
     }
     
     @IBAction func EndPressed(_ sender: UIButton) {
         base!.DoEnd()
+        NumberLabel.isHidden = true
     }
     
     // This may be call more than when EndPressed, DoEnd may be call within the subclass, which should call this
