@@ -439,7 +439,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPt-IE-2go">
-                                <rect key="frame" x="46" y="66" width="87" height="50"/>
+                                <rect key="frame" x="148" y="66" width="87" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="End"/>
@@ -457,7 +457,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JC5-hU-DsF">
-                                <rect key="frame" x="171" y="66" width="108" height="50"/>
+                                <rect key="frame" x="250" y="66" width="108" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Reset"/>
@@ -478,11 +478,21 @@
                                     <action selector="sequenceSelected:" destination="kzf-ng-R8q" eventType="touchUpInside" id="6Of-yo-uyl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hjr-fl-gq9">
+                                <rect key="frame" x="46" y="66" width="87" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="btnStartSelected:" destination="kzf-ng-R8q" eventType="touchUpInside" id="wvf-3r-4by"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="JFY-6y-BWw" id="pHx-IS-Lkm"/>
+                        <outlet property="btn_start" destination="Hjr-fl-gq9" id="Bxw-hi-aXF"/>
                         <outlet property="endButton" destination="SPt-IE-2go" id="dEB-2p-lCv"/>
                         <outlet property="resetButton" destination="JC5-hU-DsF" id="9OB-hT-wzj"/>
                         <outlet property="resultLabel" destination="Wzl-ke-4rO" id="5M4-fZ-ddv"/>
@@ -3838,6 +3848,7 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="kTw-7t-VZN"/>
         <segue reference="fV2-tM-D7d"/>
+        <segue reference="AER-wR-ZtZ"/>
         <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>
