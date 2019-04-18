@@ -113,6 +113,7 @@ class CatsAndDogsViewController: ViewController {
         
         // Reset result
         self.resultLabel.text = ""
+        self.resetSequence()
         
         setSequence()
         
@@ -137,18 +138,21 @@ class CatsAndDogsViewController: ViewController {
         label1.textAlignment = .left
         label1.numberOfLines = 2
         label1.text = "Dogs Alone:\n(Format: #dogs1,#dogs2,#dogs3...))"
+        label1.tag = 1
         self.view.addSubview(label1)
         
         label2 = UILabel(frame: CGRect(x: 50, y: 350, width: 350, height: 100))
         label2.textAlignment = .left
         label2.numberOfLines = 2
         label2.text = "Dogs with Cat Distractors:\n(Format: (#dogs1,#cats1),(#dogs2,#cats2)...)"
+        label2.tag = 2
         self.view.addSubview(label2)
         
         label3 = UILabel(frame: CGRect(x: 50, y: 500, width: 350, height: 100))
         label3.textAlignment = .left
         label3.numberOfLines = 2
         label3.text = "Cats with Dog Distractors:\n(Format: (#dogs1,#cats1),(#dogs2,#cats2)...)"
+        label3.tag = 3
         self.view.addSubview(label3)
         
         field1 = UITextField(frame: CGRect(x: 450, y: 200, width: 510, height: 100))
@@ -161,6 +165,7 @@ class CatsAndDogsViewController: ViewController {
         field1.keyboardType = UIKeyboardType.numbersAndPunctuation
         field1.isEnabled = true
         field1.delegate = self
+        field1.tag = 11
         self.view.addSubview(field1)
         
         lb_error_1 = UILabel(frame: CGRect(x: 450, y: 300, width: 510, height: 50))
@@ -168,6 +173,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_1.textColor = UIColor.red
         lb_error_1.text = "Maximum number of dogs should not be greater than 10"
         lb_error_1.isHidden = true
+        lb_error_1.tag = 12
         self.view.addSubview(lb_error_1)
         
         field2 = UITextField(frame: CGRect(x: 450, y: 350, width: 510, height: 100))
@@ -180,6 +186,7 @@ class CatsAndDogsViewController: ViewController {
         field2.keyboardType = UIKeyboardType.numbersAndPunctuation
         field2.isEnabled = true
         field2.delegate = self
+        field2.tag = 21
         self.view.addSubview(field2)
         
         lb_error_2 = UILabel(frame: CGRect(x: 450, y: 450, width: 510, height: 50))
@@ -187,6 +194,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_2.textColor = UIColor.red
         lb_error_2.text = "Maximum number of dogs and cats should not be greater 10"
         lb_error_2.isHidden = true
+        lb_error_2.tag = 22
         self.view.addSubview(lb_error_2)
         
         field3 = UITextField(frame: CGRect(x: 450, y: 500, width: 510, height: 100))
@@ -199,6 +207,7 @@ class CatsAndDogsViewController: ViewController {
         field3.keyboardType = UIKeyboardType.numbersAndPunctuation
         field3.isEnabled = true
         field3.delegate = self
+        field3.tag = 31
         self.view.addSubview(field3)
         
         lb_error_3 = UILabel(frame: CGRect(x: 450, y: 600, width: 510, height: 50))
@@ -206,6 +215,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_3.textColor = UIColor.red
         lb_error_3.text = "Maximum number of dogs and cats should not be greater 10"
         lb_error_3.isHidden = true
+        lb_error_3.tag = 32
         self.view.addSubview(lb_error_3)
         
         sequenceSelectionButton.isHidden = false
@@ -213,6 +223,29 @@ class CatsAndDogsViewController: ViewController {
         sequenceSelectionButton.isUserInteractionEnabled = false
         btn_start.isHidden = false
         btn_start.isEnabled = true
+    }
+    
+    private func resetSequence() {
+        guard
+            let _label1 = self.view.viewWithTag(1),
+            let _field1 = self.view.viewWithTag(11),
+            let _lb_error_1 = self.view.viewWithTag(12),
+            let _label2 = self.view.viewWithTag(2),
+            let _field2 = self.view.viewWithTag(21),
+            let _lb_error_2 = self.view.viewWithTag(22),
+            let _label3 = self.view.viewWithTag(3),
+            let _field3 = self.view.viewWithTag(31),
+            let _lb_error_3 = self.view.viewWithTag(32)
+        else {return}
+        _label1.removeFromSuperview()
+        _field1.removeFromSuperview()
+        _lb_error_1.removeFromSuperview()
+        _label2.removeFromSuperview()
+        _field2.removeFromSuperview()
+        _lb_error_2.removeFromSuperview()
+        _label3.removeFromSuperview()
+        _field3.removeFromSuperview()
+        _lb_error_3.removeFromSuperview()
     }
     
     @IBAction func btnStartSelected(_ sender: UIButton) {
@@ -729,9 +762,9 @@ class CatsAndDogsViewController: ViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             self.navigationItem.setHidesBackButton(false, animated:true)
             //            self.startButton.isEnabled = false
-            self.endButton.isEnabled = false
-            self.resetButton.isEnabled = true
-            self.backButton.isEnabled = true
+//            self.endButton.isEnabled = false
+//            self.resetButton.isEnabled = true
+//            self.backButton.isEnabled = true
             
             for (index, _) in self.order.enumerated() {
                 self.buttonList[index].backgroundColor = UIColor.darkGray
@@ -854,6 +887,9 @@ class CatsAndDogsViewController: ViewController {
                 repetition += 1
             }
             else {
+                self.endButton.isEnabled = false
+                self.resetButton.isEnabled = true
+                self.backButton.isEnabled = true
                 donetest()
             }
         }
