@@ -72,8 +72,8 @@ class PicturesViewController: ViewController {
         fixDimensions(image: image4!)
         imageView.image = image4
         
-        correctButton.isEnabled = true
-        incorrectButton.isEnabled = true
+//        correctButton.isEnabled = true
+//        incorrectButton.isEnabled = true
         
         placeLabel.text = "\(count+1)/\(namingImages.count)"
         
