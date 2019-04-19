@@ -727,13 +727,13 @@ class VATask: ViewController, UIPickerViewDelegate {
         arrowButton2.removeTarget(nil, action:nil, for: .allEvents)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-            self.view.addSubview(self.arrowButton1)
-            self.view.addSubview(self.arrowButton2)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
             self.arrowButton1.addTarget(self, action: #selector(VATask.recognize1), for:.touchUpInside)
             self.arrowButton2.addTarget(self, action: #selector(VATask.recognize2), for:.touchUpInside)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.view.addSubview(self.arrowButton1)
+            self.view.addSubview(self.arrowButton2)
         }
     }
     

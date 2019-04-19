@@ -13,9 +13,9 @@ var firstTimeThrough = true
 //declare variables to be defined by pickerviews
 var startTime = Foundation.Date()
 
-
 class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate  {
     
+    let defaultBlueColor: UIColor = UIColor.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
     var Week : String?
     var State : String?
     var Town : String?
@@ -23,10 +23,76 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     var Time : String?
     var TimeOK : Bool = false
     var DateOK : Bool = false
-    var dkDate : Bool = false
-    var dkMonth : Bool = false
-    var dkYear : Bool = false
-
+    var dkDate : Bool = false {
+        didSet {
+            if dkDate {
+                btnDontKnowDate.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowDate.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkMonth : Bool = false {
+        didSet {
+            if dkMonth {
+                btnDontKnowMonth.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowMonth.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkYear : Bool = false {
+        didSet {
+            if dkYear {
+                btnDontKnowYear.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowYear.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkWeek : Bool = false {
+        didSet {
+            if dkWeek {
+                btnDontKnowWeek.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowWeek.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkState : Bool = false {
+        didSet {
+            if dkState {
+                btnDontKnowState.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowState.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkTown : Bool = false {
+        didSet {
+            if dkTown {
+                btnDontKnowTown.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowTown.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
+    var dkTime : Bool = false {
+        didSet {
+            if dkTime {
+                btnDontKnowTime.setTitleColor(UIColor.red, for: .normal)
+            }
+            else {
+                btnDontKnowTime.setTitleColor(defaultBlueColor, for: .normal)
+            }
+        }
+    }
 
     //pickerview content set up(defines options)
     
@@ -38,6 +104,15 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     
     
     @IBOutlet weak var currentDate: UIDatePicker!
+    
+    @IBOutlet weak var btnDontKnowMonth: UIButton!
+    @IBOutlet weak var btnDontKnowDate: UIButton!
+    @IBOutlet weak var btnDontKnowYear: UIButton!
+    @IBOutlet weak var btnDontKnowWeek: UIButton!
+    @IBOutlet weak var btnDontKnowState: UIButton!
+    @IBOutlet weak var btnDontKnowTown: UIButton!
+    @IBOutlet weak var btnDontKnowTime: UIButton!
+    
     
     var body:String?
     //text field input and results
@@ -53,6 +128,10 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         } else {
             DateOK = false
         }
+        
+        dkDate = false
+        dkMonth = false
+        dkYear = false
     }
     
     @IBOutlet weak var TownPicker: UIPickerView!
@@ -67,6 +146,8 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         formatter.dateFormat = "HH:mm"
         Time = formatter.string(from: d.date)
         TimeOK = TimeDiffOK(date1: startTime, date2: d.date)
+        
+        dkTime = false
     }
     
     @IBAction func DontKnowMonth(_ sender: UIButton) {
@@ -83,28 +164,24 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     
     @IBAction func DontKnowWeek(_ sender: Any) {
         Week = "Dont Know"
-        WeekPicker.isUserInteractionEnabled = false
-        WeekPicker.alpha = 0.5
+        dkWeek = true
     }
     
     
     @IBAction func DontKnowState(_ sender: Any) {
         State = "Dont Know"
-        StatePicker.isUserInteractionEnabled = false
-        StatePicker.alpha = 0.5
+        dkState = true
     }
     
     
     @IBAction func DontKnowTown(_ sender: Any) {
         Town = "Dont Know"
-        TownPicker.isUserInteractionEnabled = false
-        TownPicker.alpha = 0.5
+        dkTown = true
     }
     
     @IBAction func DontKnowTime(_ sender: Any) {
         Time = "Dont Know"
-        currentTime.isUserInteractionEnabled = false
-        currentTime.alpha = 0.5
+        dkTime = true
         TimeOK = false
     }
     
@@ -120,44 +197,50 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         dkMonth = false
         dkYear = false
         
-        State = stateData[StatePicker.selectedRow(inComponent: 0)]
+        // Get the random State
+        let indexState = Int(arc4random_uniform(UInt32(stateData.count)))
+        State = stateData[indexState]
+        StatePicker.selectRow(indexState, inComponent: 0, animated: true)
         // If a correct state name has been saved, use it
         if(UserDefaults.standard.object(forKey: "OrientationState") != nil) {
             let os = UserDefaults.standard.object(forKey: "OrientationState") as! String
             let v = stateData.index(of: os)
             if (v != nil) {
-                State  = os
-                StatePicker.selectRow(v!, inComponent: 0, animated: false)
+//                State  = os
+//                StatePicker.selectRow(v!, inComponent: 0, animated: false)
+            }
+        }
+        // Get the random Town
+        let indexTown = Int(arc4random_uniform(UInt32(townData.count)))
+        Town = townData[indexTown]
+        TownPicker.selectRow(indexTown, inComponent: 0, animated: true)
+        
+        let formatter = DateFormatter()
+        if let date_random = Foundation.Date().generateRandomDate(daysBack: 20) {
+            // Get the random date
+            formatter.dateFormat = "y-MM-dd"
+            currentDate.setDate( date_random,  animated: false)
+            Date = formatter.string(from: currentDate.date)
+            DateOK = true
+            
+            // Get the random time
+            formatter.dateFormat = "yyyy/MM/dd HH:mm"
+            currentTime.setDate(date_random,  animated: false)
+            formatter.dateFormat = "HH:MM"
+            Time = formatter.string(from: currentTime.date)
+            TimeOK = true
+            
+            // Get the random week
+            Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
+            formatter.dateFormat = "EEEE"
+            let wk = formatter.string(from: date_random)
+            let v = weekData.index(of: wk)
+            if (v != nil) {
+                Week  = wk
+                WeekPicker.selectRow(v!, inComponent: 0, animated: false)
             }
         }
         
-        Town = townData[TownPicker.selectedRow(inComponent: 0)]
-        
-        // Get the current date
-        let formatter = DateFormatter()
-        formatter.dateFormat = "y-MM-dd"
-        currentDate.setDate(Foundation.Date(),  animated: false)
-        Date = formatter.string(from: currentDate.date)
-        DateOK = true
-        
-        
-        // Get the current time
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        currentTime.setDate(Foundation.Date(),  animated: false)
-        formatter.dateFormat = "HH:MM"
-        Time = formatter.string(from: currentTime.date)
-        TimeOK = true
-        
-        // Get the current week
-        Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
-        formatter.dateFormat = "EEEE"
-        let wk = formatter.string(from: Foundation.Date())
-        let v = weekData.index(of: wk)
-        if (v != nil) {
-            Week  = wk
-            WeekPicker.selectRow(v!, inComponent: 0, animated: false)
-        }
-
         currentDate.isUserInteractionEnabled = true
         currentTime.isUserInteractionEnabled = true
         WeekPicker.isUserInteractionEnabled = true
@@ -207,6 +290,20 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     }
     
     @IBAction func DoneButton(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Confirm", message: "Do you really want to complete this test?", preferredStyle: .alert)
+        
+        let noAction = UIAlertAction.init(title: "No", style: .cancel, handler: nil)
+        let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
+            self.completeTest()
+            // Show MainViewController
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(noAction)
+        alert.addAction(yesAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func completeTest() {
         let result = Results()
         result.name = "Orientation"
         result.startTime = startTime
@@ -253,7 +350,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         if dkMonth {
             result.shortDescription = result.shortDescription! + " Don't know month "
         }
- 
+        
         if dkYear {
             result.shortDescription = result.shortDescription! + " Don't know year "
         }
@@ -313,12 +410,15 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         print("2:", pickerView)
         if pickerView == WeekPicker {
+            dkWeek = false
             Week = weekData[row]
         }
         else if pickerView == StatePicker {
+            dkState = false
             State = stateData[row]
         }
         else if pickerView == TownPicker {
+            dkTown = false
             Town = townData[row]
         }
     }
@@ -345,4 +445,23 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
   */
+}
+
+// MARK: - Extension Date
+extension Date {
+    func generateRandomDate(daysBack: Int)-> Date?{
+        let day = arc4random_uniform(UInt32(daysBack))+1
+        let hour = arc4random_uniform(23)
+        let minute = arc4random_uniform(59)
+        
+        let today = Date(timeIntervalSinceNow: 0)
+        let gregorian  = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        var offsetComponents = DateComponents()
+        offsetComponents.day = Int(day - 1)
+        offsetComponents.hour = Int(hour)
+        offsetComponents.minute = Int(minute)
+        
+        let randomDate = gregorian?.date(byAdding: offsetComponents, to: today, options: .init(rawValue: 0) )
+        return randomDate
+    }
 }
