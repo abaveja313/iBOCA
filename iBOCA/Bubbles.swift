@@ -204,8 +204,16 @@ class BubblesA {
         
         // frame the bubbles within the bounding box
         let bcount = (24 - bubblelist.count) * 5 // more bubbles, larger area
-        x = (x - xmin)*(950-40-2*bcount)/(xmax - xmin) + 40 + bcount
-        y = (y - ymin)*(580-40-2*bcount)/(ymax - ymin) + 40 + bcount
+        
+        // Check Division by zero
+        if (xmax - xmin) != 0 {
+            x = (x - xmin)*(950-40-2*bcount)/(xmax - xmin) + 40 + bcount
+        }
+        
+        // Check Division by zero
+        if (ymax - ymin) != 0 {
+            y = (y - ymin)*(580-40-2*bcount)/(ymax - ymin) + 40 + bcount
+        }
         
         if xt  {
             x  = 1010 - x

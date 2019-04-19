@@ -362,8 +362,8 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="ZXe-jH-G6o"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORv-Rw-hsI">
-                                <rect key="frame" x="56" y="71" width="78" height="37"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORv-Rw-hsI">
+                                <rect key="frame" x="56" y="71" width="150" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Start"/>
@@ -439,7 +439,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPt-IE-2go">
-                                <rect key="frame" x="46" y="66" width="87" height="50"/>
+                                <rect key="frame" x="148" y="66" width="87" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="End"/>
@@ -457,7 +457,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JC5-hU-DsF">
-                                <rect key="frame" x="171" y="66" width="108" height="50"/>
+                                <rect key="frame" x="250" y="66" width="108" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Reset"/>
@@ -478,11 +478,21 @@
                                     <action selector="sequenceSelected:" destination="kzf-ng-R8q" eventType="touchUpInside" id="6Of-yo-uyl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hjr-fl-gq9">
+                                <rect key="frame" x="46" y="66" width="87" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="btnStartSelected:" destination="kzf-ng-R8q" eventType="touchUpInside" id="wvf-3r-4by"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="JFY-6y-BWw" id="pHx-IS-Lkm"/>
+                        <outlet property="btn_start" destination="Hjr-fl-gq9" id="Bxw-hi-aXF"/>
                         <outlet property="endButton" destination="SPt-IE-2go" id="dEB-2p-lCv"/>
                         <outlet property="resetButton" destination="JC5-hU-DsF" id="9OB-hT-wzj"/>
                         <outlet property="resultLabel" destination="Wzl-ke-4rO" id="5M4-fZ-ddv"/>
@@ -1130,6 +1140,62 @@
             </objects>
             <point key="canvasLocation" x="-3001.171875" y="5660.9375"/>
         </scene>
+        <!--Picker View Controller-->
+        <scene sceneID="P88-Km-Spp">
+            <objects>
+                <viewController storyboardIdentifier="PickerViewController" id="eyA-ja-YPs" customClass="PickerViewController" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="C34-nm-16R"/>
+                        <viewControllerLayoutGuide type="bottom" id="iAS-bz-gsr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4YX-nt-VAp">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMl-aO-yue">
+                                <rect key="frame" x="0.0" y="412" width="1024" height="356"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DyG-al-tCn">
+                                        <rect key="frame" x="0.0" y="73" width="1029" height="283"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="eyA-ja-YPs" id="s6Q-7I-qqx"/>
+                                            <outlet property="delegate" destination="eyA-ja-YPs" id="dCG-rv-HYE"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWW-sr-rvv">
+                                        <rect key="frame" x="21" y="3" width="100" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="CancelPressed:" destination="eyA-ja-YPs" eventType="touchUpInside" id="Tgj-cW-8VF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzt-tQ-0X3">
+                                        <rect key="frame" x="908" y="0.0" width="100" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="DonePressed:" destination="eyA-ja-YPs" eventType="touchUpInside" id="cib-tj-RRA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="pickerView" destination="DyG-al-tCn" id="OjG-Ya-gou"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UWg-to-dYu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5871.09375" y="141.40625"/>
+        </scene>
         <!--Ack View Controller-->
         <scene sceneID="RU7-xX-ukI">
             <objects>
@@ -1591,6 +1657,60 @@
                                 <rect key="frame" x="180" y="689" width="432" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZx-xL-aT2" userLabel="Gender Button">
+                                <rect key="frame" x="205" y="198" width="367" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="350" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="GenderPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="4Hu-dJ-72K"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mon-a0-lDt" userLabel="Age Button">
+                                <rect key="frame" x="172" y="295" width="432" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="415" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="AgePressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="shZ-G5-cF5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qmV-kj-ulY" userLabel="Education Button">
+                                <rect key="frame" x="172" y="378" width="432" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="415" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="EducationPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="O9s-1v-Z55"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCk-sM-4UW" userLabel="Ethinicity Button">
+                                <rect key="frame" x="172" y="460" width="432" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="415" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="EthinicityPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="1tX-In-Efc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dMa-Dc-ibQ" userLabel="Race Button">
+                                <rect key="frame" x="172" y="544" width="432" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="415" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="RacePressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="Jw2-Bx-HWn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQ5-NW-esb" userLabel="Protocol Button">
+                                <rect key="frame" x="180" y="689" width="432" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="415" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_caret_down"/>
+                                <connections>
+                                    <action selector="ProtocolPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="WGI-MC-pko"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -1605,6 +1725,12 @@
                         <outlet property="PatientUID" destination="vtW-La-IvP" id="5Ag-EN-rTX"/>
                         <outlet property="ProtocolPicker" destination="1vC-WW-LtO" id="xRM-Xa-3nO"/>
                         <outlet property="RacePicker" destination="2Ra-LU-vyr" id="CMU-TD-jlQ"/>
+                        <outlet property="btnAge" destination="mon-a0-lDt" id="uv3-7K-Spl"/>
+                        <outlet property="btnEducation" destination="qmV-kj-ulY" id="Qmw-sE-fr0"/>
+                        <outlet property="btnEthinicity" destination="JCk-sM-4UW" id="a2W-e7-RiI"/>
+                        <outlet property="btnGender" destination="fZx-xL-aT2" id="lku-Qz-i0b"/>
+                        <outlet property="btnProcotol" destination="WQ5-NW-esb" id="ssY-ps-jiW"/>
+                        <outlet property="btnRace" destination="dMa-Dc-ibQ" id="Q98-0d-ysa"/>
                         <outlet property="protocolLabel" destination="eep-12-LWn" id="M3j-80-jNd"/>
                     </connections>
                 </viewController>
@@ -2591,12 +2717,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cdC-re-Tb9">
-                                <rect key="frame" x="900" y="62" width="112" height="48"/>
+                                <rect key="frame" x="12" y="62" width="112" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <action selector="DoneButton:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="pXo-4V-0cf"/>
                                     <segue destination="BYZ-38-t0r" kind="show" id="dL7-Sq-hiA"/>
                                 </connections>
                             </button>
@@ -2615,6 +2740,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowWeek:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="ysk-xh-g1J"/>
                                 </connections>
@@ -2624,6 +2752,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowState:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="Xt4-au-IT1"/>
                                 </connections>
@@ -2633,6 +2764,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowTown:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="Wfs-iC-xYP"/>
                                 </connections>
@@ -2642,6 +2776,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowTime:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="VTR-M6-v6S"/>
                                 </connections>
@@ -2651,6 +2788,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Date"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowDate:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="uTm-wX-953"/>
                                 </connections>
@@ -2660,6 +2800,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Year"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowYear:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="YEy-gS-A7E"/>
                                 </connections>
@@ -2667,10 +2810,23 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfY-bh-V3b">
                                 <rect key="frame" x="689" y="62" width="198" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Don't Know Month"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="DontKnowMonth:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="fId-DW-zXT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDq-15-Yl5">
+                                <rect key="frame" x="902" y="62" width="110" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Complete"/>
+                                <connections>
+                                    <action selector="DoneButton:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="imB-Y4-Hyi"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2680,6 +2836,13 @@
                         <outlet property="StatePicker" destination="G5g-Wp-9Q3" id="23F-Fw-NvP"/>
                         <outlet property="TownPicker" destination="HXQ-cz-LoD" id="GpB-eg-vKL"/>
                         <outlet property="WeekPicker" destination="5RO-Hz-93f" id="YLC-25-Hrv"/>
+                        <outlet property="btnDontKnowDate" destination="ukp-Ds-fga" id="jfi-GS-VQl"/>
+                        <outlet property="btnDontKnowMonth" destination="JfY-bh-V3b" id="gM9-vX-sYD"/>
+                        <outlet property="btnDontKnowState" destination="BoR-w1-jnR" id="YRd-RS-aoL"/>
+                        <outlet property="btnDontKnowTime" destination="zbg-ij-Bfs" id="lOl-kW-uf7"/>
+                        <outlet property="btnDontKnowTown" destination="Dhc-mR-ipm" id="m73-IW-Mdp"/>
+                        <outlet property="btnDontKnowWeek" destination="5mu-xW-DsC" id="oyU-9v-wyS"/>
+                        <outlet property="btnDontKnowYear" destination="lw1-LA-Gp3" id="Yvs-XK-CIb"/>
                         <outlet property="currentDate" destination="slc-lJ-ird" id="YYa-GY-vpc"/>
                         <outlet property="currentTime" destination="Oj7-GR-ZMQ" id="tML-Sw-NtW"/>
                     </connections>
@@ -3677,13 +3840,16 @@
         <image name="cnbs" width="612" height="89"/>
         <image name="ellison1.jpg" width="960" height="960"/>
         <image name="iBoca logo.png" width="1376" height="594"/>
+        <image name="ic_caret_down" width="18" height="10"/>
         <image name="izzy1.jpg" width="960" height="960"/>
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="Ahl-wP-pho"/>
+        <segue reference="kTw-7t-VZN"/>
         <segue reference="fV2-tM-D7d"/>
         <segue reference="wuj-UQ-84Y"/>
+        <segue reference="AER-wR-ZtZ"/>
+        <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>

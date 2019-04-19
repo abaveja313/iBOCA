@@ -549,14 +549,16 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.arrowButton1.addTarget(self, action: #selector(SimpleMemoryTask.recognize1), for:.touchUpInside)
+            self.arrowButton2.addTarget(self, action: #selector(SimpleMemoryTask.recognize2), for:.touchUpInside)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
             self.view.addSubview(self.arrowButton1)
             self.view.addSubview(self.arrowButton2)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
-            self.arrowButton1.addTarget(self, action: #selector(SimpleMemoryTask.recognize1), for:.touchUpInside)
-            self.arrowButton2.addTarget(self, action: #selector(SimpleMemoryTask.recognize2), for:.touchUpInside)
-        }
+        
         
     }
     
@@ -1012,6 +1014,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         start.isHidden = false
         start.isEnabled = true
+        start.setTitle("Start New", for: .normal)
+        start.setTitle("Start New", for: .selected)
         start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
         start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
