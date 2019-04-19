@@ -58,7 +58,7 @@ class CatsAndDogsViewController: ViewController {
     
     @IBOutlet weak var backButton: UIButton!
     
-//    @IBOutlet weak var startButton: UIButton!
+    //    @IBOutlet weak var startButton: UIButton!
     
     @IBOutlet weak var endButton: UIButton!
     
@@ -104,7 +104,7 @@ class CatsAndDogsViewController: ViewController {
         level = 0 //current level
         repetition = 0
         ended = false
-//        startButton.isEnabled = false
+        //        startButton.isEnabled = false
         endButton.isEnabled = false
         resetButton.isEnabled = false
         backButton.isEnabled = true
@@ -113,11 +113,12 @@ class CatsAndDogsViewController: ViewController {
         
         // Reset result
         self.resultLabel.text = ""
+        self.resetSequence()
         
         setSequence()
         
-//        StartTest(resetButton)
-//        startAlert()
+        //        StartTest(resetButton)
+        //        startAlert()
     }
     
     var label1 = UILabel()
@@ -137,23 +138,26 @@ class CatsAndDogsViewController: ViewController {
         label1.textAlignment = .left
         label1.numberOfLines = 2
         label1.text = "Dogs Alone:\n(Format: #dogs1,#dogs2,#dogs3...))"
+        label1.tag = 1
         self.view.addSubview(label1)
         
         label2 = UILabel(frame: CGRect(x: 50, y: 350, width: 350, height: 100))
         label2.textAlignment = .left
         label2.numberOfLines = 2
         label2.text = "Dogs with Cat Distractors:\n(Format: (#dogs1,#cats1),(#dogs2,#cats2)...)"
+        label2.tag = 2
         self.view.addSubview(label2)
         
         label3 = UILabel(frame: CGRect(x: 50, y: 500, width: 350, height: 100))
         label3.textAlignment = .left
         label3.numberOfLines = 2
         label3.text = "Cats with Dog Distractors:\n(Format: (#dogs1,#cats1),(#dogs2,#cats2)...)"
+        label3.tag = 3
         self.view.addSubview(label3)
         
         field1 = UITextField(frame: CGRect(x: 450, y: 200, width: 510, height: 100))
         if(UserDefaults.standard.object(forKey: "CandD-Dogs") != nil) {
-             field1.text = (UserDefaults.standard.object(forKey: "CandD-Dogs") as! String)
+            field1.text = (UserDefaults.standard.object(forKey: "CandD-Dogs") as! String)
         } else {
             field1.text = "2,3,4"
         }
@@ -161,6 +165,7 @@ class CatsAndDogsViewController: ViewController {
         field1.keyboardType = UIKeyboardType.numbersAndPunctuation
         field1.isEnabled = true
         field1.delegate = self
+        field1.tag = 11
         self.view.addSubview(field1)
         
         lb_error_1 = UILabel(frame: CGRect(x: 450, y: 300, width: 510, height: 50))
@@ -168,6 +173,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_1.textColor = UIColor.red
         lb_error_1.text = "Maximum number of dogs should not be greater than 10"
         lb_error_1.isHidden = true
+        lb_error_1.tag = 12
         self.view.addSubview(lb_error_1)
         
         field2 = UITextField(frame: CGRect(x: 450, y: 350, width: 510, height: 100))
@@ -180,6 +186,7 @@ class CatsAndDogsViewController: ViewController {
         field2.keyboardType = UIKeyboardType.numbersAndPunctuation
         field2.isEnabled = true
         field2.delegate = self
+        field2.tag = 21
         self.view.addSubview(field2)
         
         lb_error_2 = UILabel(frame: CGRect(x: 450, y: 450, width: 510, height: 50))
@@ -187,6 +194,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_2.textColor = UIColor.red
         lb_error_2.text = "Maximum number of dogs and cats should not be greater 10"
         lb_error_2.isHidden = true
+        lb_error_2.tag = 22
         self.view.addSubview(lb_error_2)
         
         field3 = UITextField(frame: CGRect(x: 450, y: 500, width: 510, height: 100))
@@ -199,6 +207,7 @@ class CatsAndDogsViewController: ViewController {
         field3.keyboardType = UIKeyboardType.numbersAndPunctuation
         field3.isEnabled = true
         field3.delegate = self
+        field3.tag = 31
         self.view.addSubview(field3)
         
         lb_error_3 = UILabel(frame: CGRect(x: 450, y: 600, width: 510, height: 50))
@@ -206,6 +215,7 @@ class CatsAndDogsViewController: ViewController {
         lb_error_3.textColor = UIColor.red
         lb_error_3.text = "Maximum number of dogs and cats should not be greater 10"
         lb_error_3.isHidden = true
+        lb_error_3.tag = 32
         self.view.addSubview(lb_error_3)
         
         sequenceSelectionButton.isHidden = false
@@ -215,17 +225,40 @@ class CatsAndDogsViewController: ViewController {
         btn_start.isEnabled = true
     }
     
+    private func resetSequence() {
+        guard
+            let _label1 = self.view.viewWithTag(1),
+            let _field1 = self.view.viewWithTag(11),
+            let _lb_error_1 = self.view.viewWithTag(12),
+            let _label2 = self.view.viewWithTag(2),
+            let _field2 = self.view.viewWithTag(21),
+            let _lb_error_2 = self.view.viewWithTag(22),
+            let _label3 = self.view.viewWithTag(3),
+            let _field3 = self.view.viewWithTag(31),
+            let _lb_error_3 = self.view.viewWithTag(32)
+        else {return}
+        _label1.removeFromSuperview()
+        _field1.removeFromSuperview()
+        _lb_error_1.removeFromSuperview()
+        _label2.removeFromSuperview()
+        _field2.removeFromSuperview()
+        _lb_error_2.removeFromSuperview()
+        _label3.removeFromSuperview()
+        _field3.removeFromSuperview()
+        _lb_error_3.removeFromSuperview()
+    }
+    
     @IBAction func btnStartSelected(_ sender: UIButton) {
         guard
             self.lb_error_1.isHidden == true &&
-            self.lb_error_2.isHidden == true &&
-            self.lb_error_3.isHidden == true
-        else {
-            // Show alert error
-            let err_Alert = UIAlertController.init(title: "Warning", message: "Please enter the correct format or valid number!", preferredStyle: .alert)
-            err_Alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(err_Alert, animated: true, completion: nil)
-            return
+                self.lb_error_2.isHidden == true &&
+                self.lb_error_3.isHidden == true
+            else {
+                // Show alert error
+                let err_Alert = UIAlertController.init(title: "Warning", message: "Please enter the correct format or valid number!", preferredStyle: .alert)
+                err_Alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(err_Alert, animated: true, completion: nil)
+                return
         }
         
         // BUGBUG: Need to make sure a bad input will not crash the app
@@ -509,7 +542,7 @@ class CatsAndDogsViewController: ViewController {
             array.append(i)
         }
         
-//IDK IF THIS WILL WORK BACKWARDS???
+        //IDK IF THIS WILL WORK BACKWARDS???
         
         for k in 0...places.count-1 {
             
@@ -529,7 +562,7 @@ class CatsAndDogsViewController: ViewController {
         
         self.navigationItem.title = "Cats And Dogs"
         
-//        startButton.isEnabled = true
+        //        startButton.isEnabled = true
         endButton.isEnabled = false
         resetButton.isEnabled = false
         backButton.isEnabled = true
@@ -541,13 +574,13 @@ class CatsAndDogsViewController: ViewController {
         
         setSequence()
         
-//        startAlert()
+        //        startAlert()
     }
     
     func startAlert(){
         
         print("getting to start alert")
-                
+        
         let alert = UIAlertController(title: "Start", message: "Follow instructions to tap cats and dogs behind the boxes.", preferredStyle: .alert)
         
         let str = NSMutableAttributedString(string: "\nFollow instructions to tap cats and dogs behind the boxes.", attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 30.0)])
@@ -560,12 +593,12 @@ class CatsAndDogsViewController: ViewController {
         alert.addAction(UIAlertAction(title: "Start", style: .cancel, handler: { (action) -> Void in
             self.StartTest()
         }))
-  
+        
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
         }
         
-//        self.present(alert, animated: true, completion: nil)
+        //        self.present(alert, animated: true, completion: nil)
     }
     
     func update(timer: Timer) {
@@ -594,7 +627,7 @@ class CatsAndDogsViewController: ViewController {
         
         for index in 0 ..< order.count {
             UIView.animate(withDuration: 0.2, animations:{
-//                self.buttonList[index].frame = CGRect(x: self.buttonList[index].frame.origin.x - 110, y: self.buttonList[index].frame.origin.y, width: self.buttonList[index].frame.size.width, height: self.buttonList[index].frame.size.height)
+                //                self.buttonList[index].frame = CGRect(x: self.buttonList[index].frame.origin.x - 110, y: self.buttonList[index].frame.origin.y, width: self.buttonList[index].frame.size.width, height: self.buttonList[index].frame.size.height)
                 self.buttonList[index].alpha = 0.0
             })
         }
@@ -602,16 +635,16 @@ class CatsAndDogsViewController: ViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8){
             for index in 0 ..< self.order.count {
                 UIView.animate(withDuration: 0.2, animations:{
-//                    self.buttonList[index].frame = CGRect(x: self.buttonList[index].frame.origin.x + 110, y: self.buttonList[index].frame.origin.y, width: self.buttonList[index].frame.size.width, height: self.buttonList[index].frame.size.height)
+                    //                    self.buttonList[index].frame = CGRect(x: self.buttonList[index].frame.origin.x + 110, y: self.buttonList[index].frame.origin.y, width: self.buttonList[index].frame.size.width, height: self.buttonList[index].frame.size.height)
                     self.buttonList[index].alpha = 1.0
                 })
             }
             /*
-            self.selectionDoneButton.isEnabled = true
-            
-            self.enableButtons()
-            self.startTime = NSDate.timeIntervalSinceReferenceDate
- */
+             self.selectionDoneButton.isEnabled = true
+             
+             self.enableButtons()
+             self.startTime = NSDate.timeIntervalSinceReferenceDate
+             */
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
             self.endButton.isEnabled = true
@@ -625,7 +658,7 @@ class CatsAndDogsViewController: ViewController {
     func StartTest() {
         endButton.isEnabled = false
         resetButton.isEnabled = false
-//        startButton.isEnabled = false
+        //        startButton.isEnabled = false
         backButton.isEnabled = false
         
         randomizeBoard()
@@ -658,7 +691,7 @@ class CatsAndDogsViewController: ViewController {
                 }
             }
             
-         
+            
             let box = UIImageView(frame: CGRect(x: x, y: y, width: 100, height: 100))
             boxList.append(box)
             box.layer.borderColor = UIColor.blue.cgColor
@@ -689,10 +722,10 @@ class CatsAndDogsViewController: ViewController {
         
         alert(info: "Tap all the dogs", display: true, start: true)
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
-//            self.display()
-//            self.startTime2 = NSDate()
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
+        //            self.display()
+        //            self.startTime2 = NSDate()
+        //        }
         
         self.resultsLabel.text = ""
     }
@@ -700,7 +733,7 @@ class CatsAndDogsViewController: ViewController {
     
     @IBAction func EndTest(_ sender: Any) {
         self.navigationItem.setHidesBackButton(false, animated:true)
-//        startButton.isEnabled = false
+        //        startButton.isEnabled = false
         endButton.isEnabled = false
         resetButton.isEnabled = true
         backButton.isEnabled = true
@@ -728,10 +761,10 @@ class CatsAndDogsViewController: ViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             self.navigationItem.setHidesBackButton(false, animated:true)
-//            self.startButton.isEnabled = false
-            self.endButton.isEnabled = false
-            self.resetButton.isEnabled = true
-            self.backButton.isEnabled = true
+            //            self.startButton.isEnabled = false
+//            self.endButton.isEnabled = false
+//            self.resetButton.isEnabled = true
+//            self.backButton.isEnabled = true
             
             for (index, _) in self.order.enumerated() {
                 self.buttonList[index].backgroundColor = UIColor.darkGray
@@ -791,7 +824,7 @@ class CatsAndDogsViewController: ViewController {
     }
     
     
-//    @IBAction func selectionDone(_ sender: Any) {
+    //    @IBAction func selectionDone(_ sender: Any) {
     func selectionDone(){
         
         disableButtons()
@@ -837,8 +870,8 @@ class CatsAndDogsViewController: ViewController {
     
     
     //  level        0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-//    let levelcats = [0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
-//    let leveldogs = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4]
+    //    let levelcats = [0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+    //    let leveldogs = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4]
     
     //user completed sequence; reset repeats, increase numplaces so 1 more button lights up
     func next(){
@@ -854,6 +887,9 @@ class CatsAndDogsViewController: ViewController {
                 repetition += 1
             }
             else {
+                self.endButton.isEnabled = false
+                self.resetButton.isEnabled = true
+                self.backButton.isEnabled = true
                 donetest()
             }
         }
@@ -981,7 +1017,7 @@ extension CatsAndDogsViewController: UITextFieldDelegate {
         guard
             let text = textField.text,
             let textRange = Range(range, in: text)
-        else { return true }
+            else { return true }
         if textField == self.field1 {
             // Format clean text of field1
             let updatedText = text.replacingCharacters(in: textRange, with: string).trimmingCharacters(in: .whitespaces)

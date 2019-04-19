@@ -69,7 +69,7 @@ class PatiantID {
     }
     
     func getID() -> String {
-        return "\(currDate)-\(currInitials)-" + String(format: "%03d", currNum)
+        return "\(currDate)-\(currInitials)-" + String(format: "%03ld", currNum)
     }
     
     func incID() {

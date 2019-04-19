@@ -112,7 +112,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         startTime2 = Foundation.Date()
         
-        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        
         
         startTime = NSDate.timeIntervalSinceReferenceDate
         timedConnectionsA = [Double]()
@@ -122,6 +122,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         drawingView.canDraw = true
         
         bubbleColor = UIColor.red
+        
+        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
     }
     
     
@@ -220,11 +222,9 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         }
         else {
             timer.invalidate()
-        }
-        
-        if displayImgTrailsA == true {
             done()
         }
+        
     }
     
     func done() {
