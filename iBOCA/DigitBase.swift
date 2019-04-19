@@ -105,6 +105,7 @@ class DigitBase: ViewController {
     }
     
     @IBAction func KeyPadKeyPressed(_ sender: UIButton) {
+        guard Int(value + sender.currentTitle!) != nil else {return}
         value = value + sender.currentTitle!
         KeypadLabel.text = value
         let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
@@ -131,11 +132,13 @@ class DigitBase: ViewController {
         StartButton.isHidden = true
         EndButton.isHidden = false
         BackButton.isHidden = true
+        NumberLabel.isHidden = false
         base!.DoStart()
     }
     
     @IBAction func EndPressed(_ sender: UIButton) {
         base!.DoEnd()
+        NumberLabel.isHidden = true
     }
     
     // This may be call more than when EndPressed, DoEnd may be call within the subclass, which should call this
