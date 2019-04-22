@@ -193,6 +193,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MRField.delegate = self
         AgePicker.delegate = self
         GenderPicker.delegate = self
         EthnicityPicker.delegate = self
