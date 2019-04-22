@@ -185,6 +185,31 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         TimeOK = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Check location permission before continue
+        if !LocationManager.shared.isLocationServiceAvailable() && !LocationManager.shared.isLocationServiceNotEnable() {
+            let alertController = UIAlertController.init(title: "", message: "Please turn on location permission to do this test.", preferredStyle: .alert)
+            let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel) { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            let okAction = UIAlertAction.init(title: "OK", style: .default) { (_) in
+                if let url = URL.init(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.openURL(url)
+                }
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            DispatchQueue.main.async {
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,6 +217,8 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         WeekPicker.delegate = self
         StatePicker.delegate = self
         TownPicker.delegate = self
+        
+        LocationManager.shared.requestLocationServiceIfNeeded(in: self)
         
         dkDate = false
         dkMonth = false
