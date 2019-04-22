@@ -34,6 +34,11 @@ func makeAgeData() -> [String] {
     return str
 }
 
+enum DemographicsCategory: String {
+    case Race = "Race"
+    case Ethnicity = "Ethnicity"
+}
+
 class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate {
     
     @IBOutlet weak var btnGender: UIButton!
@@ -136,9 +141,14 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
         vc.datasource = raceData
+        vc.category = DemographicsCategory.Race.rawValue
         vc.modalPresentationStyle = .overCurrentContext
         vc.didSelect = ({ value, index in
-            self.RacePicker.selectRow(index, inComponent: 0, animated: false)
+            if index == self.raceData.count-1 {
+                self.showAddMoreRace()
+            } else {
+                self.RacePicker.selectRow(index, inComponent: 0, animated: false)
+            }
         })
         self.present(vc, animated: true, completion: nil)
     }
@@ -296,6 +306,33 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         }
     }
     
+    func showAddMoreRace() {
+        let alert = UIAlertController(title: "Add more", message: "Enter add more", preferredStyle: .alert)
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField(configurationHandler: { (textField) -> Void in
+            textField.text = ""
+        })
+        //3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) -> Void in
+            let textField = alert.textFields![0] as UITextField
+            //self.resultComments[self.count-startCount] = textField.text!
+            
+            if let result = textField.text, !result.isEmpty {
+                //do something if it's not empty
+                self.raceData.insert(result, at: self.raceData.count-1)
+                Race = result
+                self.RacePicker.reloadAllComponents()
+                self.RacePicker.selectRow(self.raceData.count-2, inComponent: 0, animated: false)
+            }
+            else {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }))
+        
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func addOtherCondition(_ pickerView:UIPickerView, strCondition: String){
         let alert = UIAlertController(title: strCondition, message: "Enter \(strCondition.lowercased()) ", preferredStyle: .alert)
         
@@ -351,7 +388,6 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     print(Results1)
     }
 }
-
 
 extension Demographics {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
