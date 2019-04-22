@@ -353,6 +353,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hh0-N1-9r0">
+                                <rect key="frame" x="56" y="179" width="100" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOo-OD-hLe">
                                 <rect key="frame" x="902" y="67" width="92" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -409,6 +416,7 @@
                         <outlet property="incorrectPickerLabel" destination="oeZ-s5-uyt" id="ABN-ef-eCy"/>
                         <outlet property="next1" destination="oCK-4i-97i" id="P5n-gw-eSS"/>
                         <outlet property="resultLabel" destination="NRm-Lw-Ust" id="0cI-eI-BV1"/>
+                        <outlet property="resultTitleLabel" destination="hh0-N1-9r0" id="N55-z8-Nyh"/>
                         <outlet property="start" destination="ORv-Rw-hsI" id="5JO-0s-QnB"/>
                         <outlet property="testPicker" destination="YT3-Ad-F1v" id="WuS-T3-QuA"/>
                         <outlet property="testPickerLabel" destination="wGM-GK-AG8" id="vJx-wM-5RF"/>
@@ -3857,6 +3865,8 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="kTw-7t-VZN"/>
         <segue reference="fV2-tM-D7d"/>
+        <segue reference="ZXe-jH-G6o"/>
+        <segue reference="AER-wR-ZtZ"/>
         <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>
