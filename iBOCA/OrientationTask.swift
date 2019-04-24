@@ -18,7 +18,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     let defaultBlueColor: UIColor = UIColor.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
     var Week : String?
     var State : String?
-    var Town : String?
     var Date : String?
     var Time : String?
     var TimeOK : Bool = false
@@ -73,16 +72,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             }
         }
     }
-    var dkTown : Bool = false {
-        didSet {
-            if dkTown {
-                btnDontKnowTown.setTitleColor(UIColor.red, for: .normal)
-            }
-            else {
-                btnDontKnowTown.setTitleColor(defaultBlueColor, for: .normal)
-            }
-        }
-    }
     var dkTime : Bool = false {
         didSet {
             if dkTime {
@@ -110,7 +99,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     @IBOutlet weak var btnDontKnowYear: UIButton!
     @IBOutlet weak var btnDontKnowWeek: UIButton!
     @IBOutlet weak var btnDontKnowState: UIButton!
-    @IBOutlet weak var btnDontKnowTown: UIButton!
     @IBOutlet weak var btnDontKnowTime: UIButton!
     
     
@@ -133,9 +121,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         dkMonth = false
         dkYear = false
     }
-    
-    @IBOutlet weak var TownPicker: UIPickerView!
-    let townData = ["Correct", "Incorrect"]
     
     
     @IBOutlet weak var currentTime: UIDatePicker!
@@ -174,11 +159,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     }
     
     
-    @IBAction func DontKnowTown(_ sender: Any) {
-        Town = "Dont Know"
-        dkTown = true
-    }
-    
     @IBAction func DontKnowTime(_ sender: Any) {
         Time = "Dont Know"
         dkTime = true
@@ -216,7 +196,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         //declare pickerviews
         WeekPicker.delegate = self
         StatePicker.delegate = self
-        TownPicker.delegate = self
         
         LocationManager.shared.requestLocationServiceIfNeeded(in: self)
         
@@ -228,19 +207,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         let indexState = Int(arc4random_uniform(UInt32(stateData.count)))
         State = stateData[indexState]
         StatePicker.selectRow(indexState, inComponent: 0, animated: true)
-        // If a correct state name has been saved, use it
-        if(UserDefaults.standard.object(forKey: "OrientationState") != nil) {
-            let os = UserDefaults.standard.object(forKey: "OrientationState") as! String
-            let v = stateData.index(of: os)
-            if (v != nil) {
-//                State  = os
-//                StatePicker.selectRow(v!, inComponent: 0, animated: false)
-            }
-        }
-        // Get the random Town
-        let indexTown = Int(arc4random_uniform(UInt32(townData.count)))
-        Town = townData[indexTown]
-        TownPicker.selectRow(indexTown, inComponent: 0, animated: true)
         
         let formatter = DateFormatter()
         if let date_random = Foundation.Date().generateRandomDate(daysBack: 20) {
@@ -272,12 +238,10 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         currentTime.isUserInteractionEnabled = true
         WeekPicker.isUserInteractionEnabled = true
         StatePicker.isUserInteractionEnabled = true
-        TownPicker.isUserInteractionEnabled = true
         currentDate.alpha = 1.0
         currentTime.alpha = 1.0
         WeekPicker.alpha = 1.0
         StatePicker.alpha = 1.0
-        TownPicker.alpha = 1.0
         
         startTime = Foundation.Date()
     }
@@ -338,7 +302,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         
         result.json["Week Given"] = Week!
         result.json["State Given"] = State!
-        result.json["Town Given"] = Town!
         result.json["Date Given"] = Date!
         result.json["Time Given"] = Time!
         
@@ -354,16 +317,23 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         result.json["Week Tested"] = rightWeek
         let WeekOK = rightWeek == Week!
         
+        var stateOK = false
+        let currentState = LocationManager.shared.currentState
+        if !currentState.isEmpty {
+            stateOK = currentState == State!
+        }
+        
         result.json["Time Correct"] = TimeOK
         result.json["Date Correct"] = DateOK
         result.json["Week Correct"] = WeekOK
         result.json["Dont Know Date"] = dkDate
         result.json["Dont Know Month"] = dkMonth
         result.json["Dont Know Year"] = dkYear
+        result.json["State Correct"] = stateOK
         
-        result.shortDescription = "State: \(State!) "
-        if Town! != "Correct" {
-            result.shortDescription = result.shortDescription! + "Town: \(Town!) "
+
+        if stateOK == false {
+            result.shortDescription = "State: \(State!)(\(currentState)) "
         }
         if WeekOK == false {
             result.shortDescription = result.shortDescription! + " Week: \(Week!)(\(rightWeek)) "
@@ -388,9 +358,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         
         resultsArray.add(result)
         Status[TestOrientation] = TestStatus.Done
-        
-        UserDefaults.standard.set(State, forKey:"OrientationState")
-        UserDefaults.standard.synchronize()
     }
     
     //pickerview setup and whatnot
@@ -408,9 +375,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         else if pickerView == StatePicker {
             return stateData.count
         }
-        else if pickerView == TownPicker {
-            return townData.count
-        }
         return 1
     }
     
@@ -424,10 +388,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         else if pickerView == StatePicker {
             State = stateData[row]
             return stateData[row]
-        }
-        else if pickerView == TownPicker {
-            Town = townData[row]
-            return townData[row]
         }
         
         return ""
@@ -443,10 +403,6 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         else if pickerView == StatePicker {
             dkState = false
             State = stateData[row]
-        }
-        else if pickerView == TownPicker {
-            dkTown = false
-            Town = townData[row]
         }
     }
     
