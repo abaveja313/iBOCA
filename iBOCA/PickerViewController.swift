@@ -12,7 +12,8 @@ class PickerViewController: UIViewController {
 
     @IBOutlet weak var pickerView: UIPickerView!
     var datasource: [String] = []
-    
+    /// DemographicsCategory RawValue
+    var category: DemographicsCategory.RawValue?
     var didSelect: ((_ selectedValue: String, _ index: Int) -> ())?
     
     
@@ -29,12 +30,10 @@ class PickerViewController: UIViewController {
         guard datasource.count > 0 else {return}
         let selectedRow = pickerView.selectedRow(inComponent: 0)
         let selectedValue = datasource[selectedRow]
-        didSelect?(selectedValue, selectedRow)
-        
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.didSelect?(selectedValue, selectedRow)
+        }
     }
-    
-
 }
 
 extension PickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {

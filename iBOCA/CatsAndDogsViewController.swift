@@ -577,6 +577,10 @@ class CatsAndDogsViewController: ViewController {
         //        startAlert()
     }
     
+    deinit {
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 10
+    }
+    
     func startAlert(){
         
         print("getting to start alert")
@@ -1013,6 +1017,11 @@ class CatsAndDogsViewController: ViewController {
 }
 
 extension CatsAndDogsViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 40
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard
             let text = textField.text,
