@@ -36,6 +36,7 @@ class DigitBase: ViewController {
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var KeypadLabel: UILabel!
     @IBOutlet weak var InfoLabel: UILabel!
+    @IBOutlet weak var lbCorrectAnswer: UILabel!
     
     var value:String = ""
     
@@ -106,6 +107,10 @@ class DigitBase: ViewController {
     
     @IBAction func KeyPadKeyPressed(_ sender: UIButton) {
         guard Int(value + sender.currentTitle!) != nil else {return}
+        
+        // Hide answer label
+        lbCorrectAnswer.isHidden = true
+        
         value = value + sender.currentTitle!
         KeypadLabel.text = value
         let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
@@ -147,11 +152,18 @@ class DigitBase: ViewController {
         value = ""
         NumberLabel.text = ""
         KeypadLabel.text = ""
-
+        lbCorrectAnswer.text = ""
+        
         disableKeypad()
         StartButton.isHidden = false
         EndButton.isHidden = true
         BackButton.isHidden = false
+        lbCorrectAnswer.isHidden = true
+    }
+    
+    func showCorrectAnswer(value: Int) {
+        self.lbCorrectAnswer.isHidden = false
+        self.lbCorrectAnswer.text = "Correct answer: \(value)"
     }
     
     func DisplayStringShowContinue(val:String) {

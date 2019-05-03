@@ -104,6 +104,11 @@ class DigitSerialSeven:DigitBaseClass {
             } else {
                 totErrors += 1
                 base.InfoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it"
+                
+                // Show correct answer to let user know
+                if lastNum - 7 > 0 {
+                    base.showCorrectAnswer(value: lastNum - 7)
+                }
             }
             
             enteredNumber.append(num)
@@ -112,10 +117,10 @@ class DigitSerialSeven:DigitBaseClass {
             keys.append(gotKeys)
             gotTime.append(Foundation.Date())
             
-            lastNum = num
+            lastNum -= 7
         }
    
-        if (lastNum - 7 < 0) || (level >= 5) {
+        if (lastNum - 7 <= 0)  { // || (level >= 5)
             // Done test
             base.InfoLabel.text = "Test Ended"
             DoEnd()
