@@ -137,6 +137,7 @@ class DigitBase: ViewController {
     }
     
     @IBAction func EndPressed(_ sender: UIButton) {
+        speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
         base!.DoEnd()
         NumberLabel.isHidden = true
     }
@@ -147,7 +148,6 @@ class DigitBase: ViewController {
         value = ""
         NumberLabel.text = ""
         KeypadLabel.text = ""
-
         disableKeypad()
         StartButton.isHidden = false
         EndButton.isHidden = true
