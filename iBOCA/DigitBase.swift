@@ -140,6 +140,7 @@ class DigitBase: ViewController {
     }
     
     @IBAction func EndPressed(_ sender: UIButton) {
+        speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
         base!.DoEnd()
         NumberLabel.isHidden = true
     }
@@ -150,7 +151,6 @@ class DigitBase: ViewController {
         value = ""
         NumberLabel.text = ""
         KeypadLabel.text = ""
-
         disableKeypad()
         StartButton.isHidden = false
         EndButton.isHidden = true
@@ -175,7 +175,11 @@ class DigitBase: ViewController {
                     let c = String(val.characters.first!)
                     self.value = self.value + c
                     let rest = String(Array(repeating: ".", count: self.base!.level - self.value.characters.count + 1))
-                    self.NumberLabel.text = self.value + rest
+                    
+                    if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
+                        self.NumberLabel.text = self.value + rest
+                    }
+                    
                     let utterence = AVSpeechUtterance(string: c)
                     self.speechSynthesizer.speak(utterence)
                     

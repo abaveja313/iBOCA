@@ -213,6 +213,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     func startNewTask(){
         
+        Status[TestVisualAssociation] = TestStatus.NotStarted
         timerVA.invalidate()
         
         recallErrors = [Int]()
@@ -474,7 +475,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
         let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
-        
+        // Check  the time is over 5 minute
+        if let intMinutes = Int(strMinutes), intMinutes >= 5, strSeconds != "00" {
+            timerLabel.textColor = UIColor.red
+        }
         timerLabel.text = "\(strMinutes) : \(strSeconds)"
         
     }
