@@ -296,6 +296,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     
     func startNewTask(){
         
+        Status[TestSimpleMemory] = TestStatus.NotStarted
         timerSM.invalidate()
         
         buttonTaps = [Bool]()
@@ -630,8 +631,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
         
         startTimeSM = NSDate.timeIntervalSinceReferenceDate
-        
-        
     }
     
     func updateInDelay(timer:Timer){
@@ -649,9 +648,10 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
         let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
-        
+        if strMinutes != "00", strSeconds != "00"  {
+            timerLabel.textColor = UIColor.red
+        }
         timerLabel.text = "\(strMinutes) : \(strSeconds)"
-        
     }
     
     func resumeTask(){
