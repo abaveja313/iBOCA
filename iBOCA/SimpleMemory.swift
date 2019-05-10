@@ -41,6 +41,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var testPickerLabel: UILabel!
     @IBOutlet weak var incorrectPickerLabel: UILabel!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     var resultList : [String:Any] = [:]
     var recognizeErrors = [Int]()
     var recognizeTimes = [Double]()
@@ -49,11 +51,17 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     
     var delayTime = Double()
     
+    var totalTime = 60
+    
     var ended = false
+    var isStartNew = false
     
     @IBOutlet weak var next1: UIButton!
     @IBOutlet weak var start: UIButton!
     @IBOutlet weak var back: UIButton!
+    
+    @IBOutlet weak var btnArrowLeft: UIButton!
+    @IBOutlet weak var btnArrowRight: UIButton!
     
     var testCount = 0
     
@@ -92,10 +100,15 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     
     var testSelectButtons : [UIButton] = []
     
+    var result: Results!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        result = Results()
+        result.name = "Simple Memory"
+        result.startTime = StartTimer
         
         testPicker.delegate = self
         testPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
@@ -103,7 +116,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         incorrectPicker.delegate = self
         incorrectPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
         
-        gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
+//        gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
 
         arrowButton1 = UIButton(type: UIButtonType.custom) as UIButton
         
@@ -115,8 +128,21 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         start.isHidden = false
         
+        // Hide arrow
+        self.btnArrowLeft.isHidden = true
+        self.btnArrowRight.isHidden = true
+        
+        afterBreakSM = false
+        
+        // Setup tableView
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.isHidden = true
+        
         if(afterBreakSM == true){
-            timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
+//            timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
+            timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
+            timerSM.fire()
             delayLabel.text = "Recommended delay: 1 minute"
 //            start.isHidden = false
             testPicker.isHidden = true
@@ -288,16 +314,21 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             //action
         }))
         
-        DispatchQueue.main.async {
-            self.present(startAlert, animated: true, completion: nil)
-        }
-        
+        self.present(startAlert, animated: true, completion: nil)
     }
     
     func startNewTask(){
         
-        Status[TestSimpleMemory] = TestStatus.NotStarted
+        totalTime = 60
+        ended = true
+        self.isStartNew = true
+        self.tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.isStartNew = false
+        }
         timerSM.invalidate()
+        afterBreakSM = false
+        Status[TestSimpleMemory] = TestStatus.NotStarted
         
         buttonTaps = [Bool]()
         testCount = 0
@@ -315,11 +346,12 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         start.isEnabled = false
         timerLabel.isHidden = false
         
+        start.setTitle("Start", for: .normal)
+        start.setTitle("Start", for: .selected)
+        
         start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
         start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
         start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-        
-        
         
     }
     
@@ -476,6 +508,10 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         print("testCount = \(testCount), imagesSM = \(imagesSM)")
         print("imagesSM[testCount] = \(imagesSM[testCount])")
         
+        // Show Arrow
+        self.btnArrowRight.isHidden = false
+        self.btnArrowLeft.isHidden = true
+        
         outputImage(name: imagesSM[testCount])
         
     }
@@ -504,8 +540,59 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
         
+        // Check Show/ Hide Arrow
+        if testCount == 0 {
+            self.btnArrowLeft.isHidden = true
+            self.btnArrowRight.isHidden = false
+        }
+        else if testCount == imagesSM.count {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = true
+        }
+        else {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = false
+        }
+        
         self.view.addSubview(imageView)
         
+    }
+    
+    func outputImage(withImageName name: String) {
+        // Check Show/ Hide Arrow
+        if testCount == 0 {
+            self.btnArrowLeft.isHidden = true
+            self.btnArrowRight.isHidden = false
+        }
+        else if testCount == imagesSM.count {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = true
+        }
+        else {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = false
+        }
+        
+        imageView.removeFromSuperview()
+        imageName = name
+        image = UIImage(named: imageName)!
+        
+        var x = CGFloat()
+        var y = CGFloat()
+        if 0.56*image.size.width < image.size.height {
+            y = 575.0
+            x = (575.0*(image.size.width)/(image.size.height)) - 50.0
+        }
+        else {
+            x = 575.0 - 50.0
+            y = (575.0*(image.size.height)/(image.size.width))
+        }
+        
+        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y))
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        self.view.addSubview(imageView)
+        self.view.sendSubview(toBack: imageView)
     }
     
     func outputRecognizeImages(name1: String, name2: String){
@@ -613,6 +700,9 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     }
     
     func beginDelay(){
+        // Hide Arrow
+        self.btnArrowLeft.isHidden = true
+        self.btnArrowRight.isHidden = true
         imageView.removeFromSuperview()
         print("in delay!")
         
@@ -628,8 +718,9 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         start.isHidden = false
         
-        timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
-        
+//        timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
+        timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
+        timerSM.fire()
         startTimeSM = NSDate.timeIntervalSinceReferenceDate
     }
     
@@ -654,13 +745,45 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         timerLabel.text = "\(strMinutes) : \(strSeconds)"
     }
     
+    func updateTimeDecreases(timer:Timer) {
+        timerLabel.text = "\(timeFormatted(totalTime))"
+        if totalTime != 0 {
+            totalTime -= 1
+        } else {
+            endTimer()
+        }
+    }
+    
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        //     let hours: Int = totalSeconds / 3600
+        return String(format: "%02d : %02d", minutes, seconds)
+    }
+    
+    func endTimer() {
+        timerSM.invalidate()
+        self.totalTime = 60
+        self.testPicker.isHidden = true
+        self.incorrectPicker.isHidden = true
+        
+        self.testPickerLabel.isHidden = true
+        self.incorrectPickerLabel.isHidden = true
+        for b in self.testSelectButtons {
+            b.isHidden = true
+        }
+        
+        self.start.isHidden = true
+        self.resumeTask()
+    }
+    
     func resumeTask(){
         
-//        timerSM.invalidate()
+        timerSM.invalidate()
         
         timerLabel.isHidden = true
         
-        delayTime = findTime()
+        delayTime = 60.0 - Double(self.totalTime)//findTime()
         
 //        timerLabel.text = ""
         delayLabel.text = ""
@@ -668,8 +791,13 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         let recallAlert = UIAlertController(title: "Recall", message: "Ask patients to name the items that were displayed earlier. Record their answers.", preferredStyle: .alert)
         recallAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
             print("recalling...")
-            self.recall()
+//            self.recall()
             //action
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
+            self.next1.isHidden = false
+            self.next1.isEnabled = true
+            self.next1.addTarget(self, action: #selector(self.doneSM), for: UIControlEvents.touchUpInside)
         }))
         self.present(recallAlert, animated: true, completion: nil)
         
@@ -679,6 +807,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         let currTime = NSDate.timeIntervalSinceReferenceDate
         let time = Double(Int((currTime - startTimeSM)*10))/10.0
+        print("time: \(time)")
         return time
         
     }
@@ -905,7 +1034,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     func done(){
         ended = true
         //back.isEnabled = true
-        
+        totalTime = 60
+        self.tableView.isHidden = true
         afterBreakSM = false
         var numErrors = 0
         
@@ -1043,4 +1173,140 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         return UIInterfaceOrientationMask.landscape
     }
     
+    // MARK: - Action
+    @IBAction func btnArrowLeftTapped(_ sender: Any) {
+        print("Arrow Left Tapped")
+        testCount -= 1
+        if testCount >= 0 {
+            print("pic: \(testCount)")
+            outputImage(withImageName: imagesSM[testCount])
+        }
+    }
+    
+    @IBAction func btnArrowRightTapped(_ sender: Any) {
+        print("Arrow Right Tapped")
+        testCount += 1
+        if(testCount == imagesSM.count) {
+            imageView.removeFromSuperview()
+            print("delay")
+            beginDelay()
+        }
+        else {
+            print("pic: \(testCount)")
+            outputImage(withImageName: imagesSM[testCount])
+        }
+    }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        ended = true
+        timerSM.invalidate()
+        afterBreakSM = false
+        Status[TestSimpleMemory] = TestStatus.NotStarted
+    }
+    
+    @objc private func doneSM() {
+        self.view.endEditing(true)
+        if checkValid() == false {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter all fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        }
+        else {
+            ended = true
+            totalTime = 60
+            self.tableView.isHidden = true
+            afterBreakSM = false
+            self.next1.isHidden = true
+            
+            let delayResult = "Delay length of \(delayTime) seconds\n"
+            var outputResult = ""
+            var exactEsults = "Exact results are:"
+            let timeComplete = "\nThe time to complete the test is \(findTime()) seconds"
+            var correct = 0
+            var incorrect = 0
+            
+            for i in 0 ..< imagesSM.count {
+                exactEsults += " \(imagesSM[i]),"
+                let cell = self.tableView.cellForRow(at: IndexPath.init(row: i, section: 0)) as! SMCell
+                guard let inputValue = cell.textField.text else {return}
+                if imagesSM.contains(inputValue.lowercased()) {
+                    outputResult += "Input \(inputValue) correctly\n"
+                    correct += 1
+                }
+                else {
+                    incorrect += 1
+                    outputResult += "Input \(inputValue) incorrectly\n"
+                }
+            }
+            
+            resultTitleLabel.text = "Result"
+            resultLabel.text = delayResult + outputResult + exactEsults + timeComplete
+            
+            // Save Results
+            result.endTime = Foundation.Date()
+            result.shortDescription = "Recall: \(correct) correct, \(incorrect) incorrect. (Sets correct:\(imageSetSM), incorrect:\(incorrectImageSetSM))"
+            result.numErrors = incorrect
+            
+            resultList["CorrectImageSet"] = imageSetSM
+            resultList["IncorrectImageSet"] = incorrectImageSetSM
+            resultList["DelayTime"] = delayTime
+            resultList["Recall Correct"] =  correct
+            resultList["Recall Incorrect"] =  incorrect
+            resultList["CompleteTime"] = findTime()
+            
+            result.json = resultList
+            resultsArray.add(result)
+            
+            resultList = [:]
+            
+            Status[TestSimpleMemory] = TestStatus.Done
+            
+            start.isHidden = false
+            start.isEnabled = true
+            start.setTitle("Start New", for: .normal)
+            start.setTitle("Start New", for: .selected)
+            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+            start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+            start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        }
+    }
+    
+    private func checkValid() -> Bool {
+        var countEmpty = 0
+        for i in 0 ..< imagesSM.count {
+            let cell = self.tableView.cellForRow(at: IndexPath.init(row: i, section: 0)) as! SMCell
+            if let inputValue = cell.textField.text, inputValue.isEmpty {
+                countEmpty += 1
+            }
+        }
+        
+        if countEmpty != 0 {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+}
+// MARK: - TableView Delegate, DataSource
+extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return imagesSM.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SMCell", for: indexPath) as! SMCell
+        cell.lbTitle.text = "Object name \(indexPath.row + 1):"
+        if self.isStartNew == true {
+            cell.textField.text = ""
+        }
+        return cell
+    }
 }
