@@ -77,7 +77,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     var imageName = ""
     var image = UIImage()
     var imageView = UIImageView()
-    var gesture = UIPanGestureRecognizer()
     
     var imageName1 = ""
     var image1 = UIImage()
@@ -116,8 +115,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         incorrectPicker.delegate = self
         incorrectPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
         
-//        gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
-
         arrowButton1 = UIButton(type: UIButtonType.custom) as UIButton
         
         arrowButton2 = UIButton(type: UIButtonType.custom) as UIButton
@@ -160,7 +157,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         }
         else{
 //            start.isHidden = true
-            
             testPicker.reloadAllComponents()
             incorrectPicker.reloadAllComponents()
             
@@ -186,7 +182,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
 //            startAlert()
         }
-        
     }
     
     func setupTestSelectButtons() {
@@ -536,8 +531,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y))
         
         imageView.image = image
-        
-        imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
         
         // Check Show/ Hide Arrow
@@ -650,52 +643,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         }
         
         
-        
-    }
-    
-    
-    func wasDragged(gesture: UIPanGestureRecognizer) {
-        
-        let translation = gesture.translation(in: self.view)
-        
-        let img = gesture.view!
-        img.center = CGPoint(x: self.view.bounds.width / 2 + translation.x, y: 471.0)
-        
-        if gesture.state == UIGestureRecognizerState.ended {
-            if img.center.x < 200 {
-                
-                testCount += 1
-                if(testCount == imagesSM.count){
-                    
-                    imageView.removeFromSuperview()
-                    
-                    print("delay")
-                    
-                    beginDelay()
-                    
-                }
-                    
-                else{
-                    
-                    print("next pic!")
-                    img.center = CGPoint(x: 512.0, y: 471.0)
-                    
-                    outputImage(name: imagesSM[testCount])
-                    
-//                    startTimeSM = NSDate.timeIntervalSinceReferenceDate
-                    
-                }
-                
-            }
-                
-            else{
-                
-                print("back to center!")
-                img.center = CGPoint(x: 512.0, y: 471.0)
-                
-            }
-            
-        }
         
     }
     
