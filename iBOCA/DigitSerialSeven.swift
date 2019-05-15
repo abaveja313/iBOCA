@@ -27,6 +27,10 @@ class DigitSerialSeven:DigitBaseClass {
     var keys : [[String:String]] = [[:]]
     var buttons : [UIButton] = []
     
+    var timer: Timer?
+    var countdownTime: Int = 6
+    var randomNumber: Int = 50
+    
     override func DoInitialize() {
         testName =  "Serial Sevens Test"
         testStatus = TestSerialSevens
@@ -34,20 +38,34 @@ class DigitSerialSeven:DigitBaseClass {
         base.hideKeypad()
         level = -1
         
-        for (i, val) in [50, 60, 70, 80, 90, 100].enumerated() {
-            let button  = UIButton(frame: CGRect(x: 150+125*i, y: 150, width: 100, height: 50))
-            button.setTitle(String(val), for: .normal)
-            button.setTitleColor(UIColor.blue, for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 42.0)
-            button.addTarget(self, action: #selector(DigitSerialSeven.StartNumberButtonTapped), for: .touchDown)
-            button.isHidden = true
-            buttons.append(button)
-            base.view.addSubview(button)
-        }
+//        for (i, val) in [50, 60, 70, 80, 90, 100].enumerated() {
+//            let button  = UIButton(frame: CGRect(x: 150+125*i, y: 150, width: 100, height: 50))
+//            button.setTitle(String(val), for: .normal)
+//            button.setTitleColor(UIColor.blue, for: .normal)
+//            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 42.0)
+//            button.addTarget(self, action: #selector(DigitSerialSeven.StartNumberButtonTapped), for: .touchDown)
+//            button.isHidden = true
+//            buttons.append(button)
+//            base.view.addSubview(button)
+//        }
     }
     
     override func DoStart() {
-        base.InfoLabel.text = "Select the starting number. Tell the patiant that number and instructions"
+        let startingNumbers = [50, 60, 70, 80, 90, 100]
+        let randomIndex = Int(arc4random_uniform(UInt32(startingNumbers.count)))
+        let randomStartingNumber = startingNumbers[randomIndex]
+        debugPrint(randomStartingNumber)
+        
+        // Reset countdown time every starting
+        countdownTime = 6
+        randomNumber = randomStartingNumber
+        base.lbShowRandomNumber.isHidden = false
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DigitSerialSeven.countdown), userInfo: nil, repeats: true)
+        timer?.fire()
+        
+        
+        base.InfoLabel.text = ""
         level = -1
         startTime = Foundation.Date()
         
@@ -63,6 +81,46 @@ class DigitSerialSeven:DigitBaseClass {
             button.isHidden = false
         }
         
+    }
+    
+    @objc private func countdown() {
+        countdownTime -= 1
+        
+        let attributedString = NSMutableAttributedString.init(string: "Starting number is ", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
+        let randomNumberString = NSAttributedString.init(string: "\(randomNumber)", attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont.boldSystemFont(ofSize: 40)])
+        let countdownString = NSAttributedString.init(string: "\n\nThe test will start in ", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
+        let countdownNumber = NSAttributedString.init(string: "\(countdownTime)", attributes: [NSForegroundColorAttributeName: UIColor.red, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
+        attributedString.append(randomNumberString)
+        attributedString.append(countdownString)
+        attributedString.append(countdownNumber)
+        base.lbShowRandomNumber.attributedText = attributedString
+        
+        if countdownTime == 0 {
+            // Stop timer
+            self.timer?.invalidate()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                // Hide countdown
+                self.base.lbShowRandomNumber.isHidden = true
+                self.base.lbShowRandomNumber.text = ""
+                
+                self.startTheTest(startingNumber: self.randomNumber)
+            }
+        }
+    }
+    
+    private func startTheTest(startingNumber: Int) {
+        startNum = startingNumber
+        lastNum = startNum
+        level = 0
+        for button in buttons {
+            button.isHidden = true
+        }
+        base.enableKeypad()
+        
+        levelStartTime = Foundation.Date()
+        
+        base.InfoLabel.text = "Ask patiant for the selected start number minus 7, Enter it"
     }
     
     @objc fileprivate func StartNumberButtonTapped(button: UIButton){
@@ -131,6 +189,13 @@ class DigitSerialSeven:DigitBaseClass {
     }
     
     override func DoEnd() {
+        // Stop timer
+        timer?.invalidate()
+        
+        // Hide countdown
+        base.lbShowRandomNumber.isHidden = true
+        base.lbShowRandomNumber.text = ""
+        
         let endTime = Foundation.Date()
         
         let result = Results()
