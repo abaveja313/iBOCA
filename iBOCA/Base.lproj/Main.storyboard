@@ -3734,7 +3734,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juc-yo-rBg">
-                                <rect key="frame" x="86" y="202" width="317" height="235"/>
+                                <rect key="frame" x="55" y="202" width="317" height="235"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
@@ -3744,6 +3744,12 @@
                                 <rect key="frame" x="433" y="90" width="494" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="48"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ka5-GA-veB">
+                                <rect key="frame" x="55" y="130" width="73" height="36"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -3765,6 +3771,7 @@
                             <constraint firstItem="Ri7-ld-9Ox" firstAttribute="centerY" secondItem="Ehx-RZ-Aa9" secondAttribute="centerY" id="As0-8g-kAt"/>
                             <constraint firstItem="pnW-5O-RbQ" firstAttribute="leading" secondItem="TvU-Pb-ShG" secondAttribute="trailing" constant="37" id="AwW-Uz-Pna"/>
                             <constraint firstItem="bAb-BA-yfp" firstAttribute="leading" secondItem="SBH-Rd-YmK" secondAttribute="leadingMargin" constant="53" id="B5X-SU-MbU"/>
+                            <constraint firstItem="ka5-GA-veB" firstAttribute="leading" secondItem="SBH-Rd-YmK" secondAttribute="leading" constant="55" id="BFZ-PR-0dh"/>
                             <constraint firstItem="lx4-fR-S98" firstAttribute="centerX" secondItem="Ehx-RZ-Aa9" secondAttribute="centerX" id="BKd-JP-Q59"/>
                             <constraint firstItem="0Ef-UF-5xw" firstAttribute="centerX" secondItem="bV3-6w-I82" secondAttribute="centerX" id="CdR-wO-MXB"/>
                             <constraint firstItem="Rgp-1o-flC" firstAttribute="centerX" secondItem="SBH-Rd-YmK" secondAttribute="centerX" id="LAQ-6b-Pmm"/>
@@ -3783,6 +3790,7 @@
                             <constraint firstItem="TvU-Pb-ShG" firstAttribute="centerY" secondItem="0Ef-UF-5xw" secondAttribute="centerY" id="bW6-UB-kWJ"/>
                             <constraint firstItem="pnW-5O-RbQ" firstAttribute="top" secondItem="3LK-eg-yPh" secondAttribute="bottom" constant="37" id="cZI-vU-PqF"/>
                             <constraint firstItem="fjj-MU-S8U" firstAttribute="top" secondItem="pnW-5O-RbQ" secondAttribute="bottom" constant="37" id="e47-GT-5Ek"/>
+                            <constraint firstItem="ka5-GA-veB" firstAttribute="top" secondItem="bV3-6w-I82" secondAttribute="top" id="m4E-T6-lUY"/>
                             <constraint firstItem="fjj-MU-S8U" firstAttribute="leading" secondItem="Ri7-ld-9Ox" secondAttribute="trailing" constant="37" id="mAQ-7n-L6t"/>
                             <constraint firstItem="fvR-RS-4Qo" firstAttribute="centerY" secondItem="bV3-6w-I82" secondAttribute="centerY" id="n81-k2-Q95"/>
                             <constraint firstItem="YU8-sM-77O" firstAttribute="centerX" secondItem="Ri7-ld-9Ox" secondAttribute="centerX" id="oCS-9b-1yS"/>
@@ -3816,6 +3824,7 @@
                         <outlet property="KeypadLabel" destination="oGY-Px-lQc" id="LSK-H4-prg"/>
                         <outlet property="NumberLabel" destination="bAb-BA-yfp" id="ech-Lr-0D5"/>
                         <outlet property="StartButton" destination="b3x-5B-tt3" id="SGC-c7-nTI"/>
+                        <outlet property="lbCorrectAnswer" destination="ka5-GA-veB" id="e9A-MV-pgR"/>
                         <outlet property="lbShowRandomNumber" destination="Rgp-1o-flC" id="FTs-o6-MMl"/>
                     </connections>
                 </viewController>
@@ -4191,12 +4200,9 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b9Y-eL-yKH"/>
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
         <segue reference="HD1-tR-rkD"/>
-        <segue reference="wuj-UQ-84Y"/>
-        <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>
