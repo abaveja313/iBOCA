@@ -36,6 +36,9 @@ class DigitBase: ViewController {
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var KeypadLabel: UILabel!
     @IBOutlet weak var InfoLabel: UILabel!
+    @IBOutlet weak var lbShowRandomNumber: UILabel!
+    
+    
     
     var value:String = ""
     
@@ -153,6 +156,8 @@ class DigitBase: ViewController {
         EndButton.isHidden = true
         BackButton.isHidden = false
     }
+    
+    
     
     func DisplayStringShowContinue(val:String) {
         if BackButton.isHidden == true {
