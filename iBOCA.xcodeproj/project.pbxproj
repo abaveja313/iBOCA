@@ -32,6 +32,7 @@
 		E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */; };
 		E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9F7FF1DD144A70035FE0B /* VATask.swift */; };
 		E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */; };
+		E5A6AFF0226D717100493187 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6AFEF226D717100493187 /* LocationManager.swift */; };
 		E5F13D0C22572CDF002FB4FF /* IQTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF622572CDE002FB4FF /* IQTextView.swift */; };
 		E5F13D0D22572CDF002FB4FF /* IQPreviousNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF822572CDE002FB4FF /* IQPreviousNextView.swift */; };
 		E5F13D0E22572CDF002FB4FF /* IQTitleBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF922572CDE002FB4FF /* IQTitleBarButtonItem.swift */; };
@@ -189,6 +190,7 @@
 		E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardDigitSpan.swift; sourceTree = "<group>"; };
 		E2B9F7FF1DD144A70035FE0B /* VATask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VATask.swift; sourceTree = "<group>"; };
 		E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialSevens.swift; sourceTree = "<group>"; };
+		E5A6AFEF226D717100493187 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E5F13CF622572CDE002FB4FF /* IQTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQTextView.swift; sourceTree = "<group>"; };
 		E5F13CF822572CDE002FB4FF /* IQPreviousNextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQPreviousNextView.swift; sourceTree = "<group>"; };
 		E5F13CF922572CDE002FB4FF /* IQTitleBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQTitleBarButtonItem.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				E5A6AFE9226D715400493187 /* Manager */,
 				E5F13CF322572CA0002FB4FF /* ExternalLib */,
 				E5F13D26225736C3002FB4FF /* Picker */,
 				1BC2DFFA1D4F821F0020D430 /* Info.plist */,
@@ -357,6 +360,14 @@
 			);
 			name = Pictures;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		E5A6AFE9226D715400493187 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E5A6AFEF226D717100493187 /* LocationManager.swift */,
+			);
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		E5F13CF322572CA0002FB4FF /* ExternalLib */ = {
@@ -766,6 +777,7 @@
 				F24E6E701E1BC2C300E29995 /* ScaleView.swift in Sources */,
 				F2A0F1281F02626D00A92B1F /* LandingPage.swift in Sources */,
 				E5F13D0D22572CDF002FB4FF /* IQPreviousNextView.swift in Sources */,
+				E5A6AFF0226D717100493187 /* LocationManager.swift in Sources */,
 				1BC2DFEF1D4F821F0020D430 /* AppDelegate.swift in Sources */,
 				F23951371EF4B2DE004B09E5 /* DigitSerialSeven.swift in Sources */,
 				F261D4E61E3E339F0039A545 /* TrailsViewController.swift in Sources */,
