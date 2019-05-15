@@ -205,9 +205,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         }
         
         if Status[TestSimpleMemory] == TestStatus.Running {
-            LabelSM.isHidden = false
-            LabelSM.text = getTimeDelay(startTime: startTimeSM)
-        
+            LabelSM.isHidden = true
+//            LabelSM.text = getTimeDelay(startTime: startTimeSM)
         } else {
             LabelSM.isHidden = true
         }
