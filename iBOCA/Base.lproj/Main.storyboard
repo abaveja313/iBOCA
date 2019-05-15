@@ -3747,6 +3747,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgp-1o-flC">
+                                <rect key="frame" x="475.5" y="130" width="73" height="36"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3761,9 +3767,11 @@
                             <constraint firstItem="bAb-BA-yfp" firstAttribute="leading" secondItem="SBH-Rd-YmK" secondAttribute="leadingMargin" constant="53" id="B5X-SU-MbU"/>
                             <constraint firstItem="lx4-fR-S98" firstAttribute="centerX" secondItem="Ehx-RZ-Aa9" secondAttribute="centerX" id="BKd-JP-Q59"/>
                             <constraint firstItem="0Ef-UF-5xw" firstAttribute="centerX" secondItem="bV3-6w-I82" secondAttribute="centerX" id="CdR-wO-MXB"/>
+                            <constraint firstItem="Rgp-1o-flC" firstAttribute="centerX" secondItem="SBH-Rd-YmK" secondAttribute="centerX" id="LAQ-6b-Pmm"/>
                             <constraint firstItem="zPk-QR-AMS" firstAttribute="centerX" secondItem="fjj-MU-S8U" secondAttribute="centerX" id="LQV-xc-ZFj"/>
                             <constraint firstItem="Ehx-RZ-Aa9" firstAttribute="centerX" secondItem="bV3-6w-I82" secondAttribute="centerX" id="LUZ-0Z-wJf"/>
                             <constraint firstItem="9fj-el-ah4" firstAttribute="top" secondItem="YU8-sM-77O" secondAttribute="bottom" constant="37" id="Ozk-l3-T82"/>
+                            <constraint firstItem="Rgp-1o-flC" firstAttribute="top" secondItem="bV3-6w-I82" secondAttribute="top" id="PRh-qh-5Ez"/>
                             <constraint firstItem="3LK-eg-yPh" firstAttribute="centerY" secondItem="bV3-6w-I82" secondAttribute="centerY" id="PjZ-Ih-Aub"/>
                             <constraint firstItem="0Ef-UF-5xw" firstAttribute="top" secondItem="bV3-6w-I82" secondAttribute="bottom" constant="37" id="R6v-RT-G6g"/>
                             <constraint firstItem="zPk-QR-AMS" firstAttribute="leading" secondItem="YU8-sM-77O" secondAttribute="trailing" constant="37" id="RhS-Vc-oGo"/>
@@ -3808,6 +3816,7 @@
                         <outlet property="KeypadLabel" destination="oGY-Px-lQc" id="LSK-H4-prg"/>
                         <outlet property="NumberLabel" destination="bAb-BA-yfp" id="ech-Lr-0D5"/>
                         <outlet property="StartButton" destination="b3x-5B-tt3" id="SGC-c7-nTI"/>
+                        <outlet property="lbShowRandomNumber" destination="Rgp-1o-flC" id="FTs-o6-MMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lNg-n4-kUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4186,6 +4195,7 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
+        <segue reference="HD1-tR-rkD"/>
         <segue reference="wuj-UQ-84Y"/>
         <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
