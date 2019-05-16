@@ -239,7 +239,7 @@ class PicturesViewController: ViewController {
         result.endTime = NSDate() as Date
         result.longDescription.add("\(corr) correct out of \(count)")
         if wrongList.count > 0  {
-            result.longDescription.add("The incorrect pictures were the \(wrongList)")
+            result.longDescription.add("The incorrect picture\(wrongList.count > 1 ? "s" : "") were the \(wrongList)")
         }
         result.numErrors = (count - corr)
         result.json["Answered"] = count
@@ -250,7 +250,7 @@ class PicturesViewController: ViewController {
         // Show resultsLabel
         var str:String = "\(corr) correct out of \(count)"
         if wrongList.count > 0 {
-            str += "\nThe incorrect pictures were the \(wrongList)"
+            str += "\nThe incorrect picture\(wrongList.count > 1 ? "s" : "") were the \(wrongList)"
         }
         self.resultsLabel.text = str
     }
