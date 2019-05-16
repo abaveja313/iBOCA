@@ -303,7 +303,6 @@ class PicturesViewController: ViewController {
 //        }
 //        self.resultsLabel.text = str
         
-        
         undoButton.isEnabled = false
         correctButton.isEnabled = false
         incorrectButton.isEnabled = false
@@ -320,21 +319,40 @@ class PicturesViewController: ViewController {
         placeLabel.text = ""
         self.wrongList.removeAll()
         corr = 0
-        self.resultObjectName.forEach { (obj) in
-            if self.namingImages.contains(obj.lowercased()) {
+        let _resultObjectName = self.resultObjectName.map{ $0.lowercased() }
+        
+        _resultObjectName.forEach { (obj) in
+            if self.namingImages.contains(obj) {
                 corr += 1
             }
         }
         
         self.namingImages.forEach { (nameImg) in
-            if !self.resultObjectName.contains(nameImg) {
+            if !_resultObjectName.contains(nameImg) {
                 wrongList.append(nameImg)
             }
         }
+        
         count = self.resultObjectName.count
         
         Status[TestNampingPictures] = TestStatus.Done
         
+        // Save Results
+        let result = Results()
+        result.name = self.title
+        result.startTime = startTime2 as Date
+        result.endTime = NSDate() as Date
+        result.longDescription.add("\(corr) correct out of \(count)")
+        if wrongList.count > 0  {
+            result.longDescription.add("The incorrect pictures were the \(wrongList)")
+        }
+        result.numErrors = (count - corr)
+        result.json["Answered"] = count
+        result.json["Correct"] = corr
+        result.shortDescription = "\(corr) correct with \(count) answered"
+        resultsArray.add(result)
+        
+        // Show resultsLabel
         var str:String = "\(corr) correct out of \(count)"
         if wrongList.count > 0 {
             str += "\nThe incorrect pictures were the \(wrongList)"
@@ -419,7 +437,7 @@ class PicturesViewController: ViewController {
             return
         }
         
-        homeButton.isEnabled = false
+        homeButton.isEnabled = true
         resetButton.isEnabled = true
         undoButton.isEnabled = true
         
@@ -430,9 +448,6 @@ class PicturesViewController: ViewController {
             self.resultObjectName.append(strObjName)
         }
         count += 1
-        print("NEXT")
-        print("count: \(count)")
-        print("back: \(back)")
         if isUndo == true, self.resultObjectName.count != count {
            self.tfObjectName.text = self.resultObjectName[count]
         }
