@@ -23,10 +23,6 @@ class PicturesViewController: ViewController {
     var startTime2 = NSDate()
     var startTime = Foundation.Date()
     
-    @IBOutlet weak var correctButton: UIButton!
-    
-    @IBOutlet weak var incorrectButton: UIButton!
-    
     @IBOutlet weak var undoButton: UIButton! //"Undo" button
     
     @IBOutlet weak var resetButton: UIButton!
@@ -91,103 +87,6 @@ class PicturesViewController: ViewController {
         
     }
     
-    @IBAction func correct(_ sender: Any) {
-        
-        homeButton.isEnabled = false
-        correctButton.isEnabled = true
-        incorrectButton.isEnabled = true
-        resetButton.isEnabled = true
-        undoButton.isEnabled = true
-        
-        
-        resultsLabel.text = ""
-        
-        if(count == 0) {
-            startTime2 = NSDate()
-            self.navigationItem.setHidesBackButton(true, animated:true)
-            undoButton.isEnabled = true
-            resetButton.isEnabled = true
-        }
-        
-        count += 1
-        corr += 1
-        
-        resultImage.append(imageName)
-        resultStatus.append("Correct")
-        let currTime = Foundation.Date()
-        resultTime.append(currTime)
-        
-        if(count==totalCount){
-            done()
-        }
-            
-        else{
-            
-            imageName = getImageName()
-            
-            let image1 = UIImage(named: imageName)
-            
-            fixDimensions(image: image1!)
-            
-            imageView.image = image1
-            
-            order.append(true)
-            
-
-            if count != namingImages.count {
-                placeLabel.text = "\(count+1)/\(namingImages.count)"
-            }
-        }
-        
-    }
-    
-    @IBAction func incorrect(_ sender: Any) {
-        
-        homeButton.isEnabled = false
-        correctButton.isEnabled = true
-        incorrectButton.isEnabled = true
-        resetButton.isEnabled = true
-        undoButton.isEnabled = true
-        
-        resultsLabel.text = ""
-        
-        if(count == 0) {
-            startTime2 = NSDate()
-            self.navigationItem.setHidesBackButton(true, animated:true)
-            undoButton.isEnabled = true
-            resetButton.isEnabled = true
-        }
-        
-        count += 1
-        wrongList.append(imageName)
-        
-        resultImage.append(imageName)
-        resultStatus.append("Incorrect")
-        let currTime = Foundation.Date()
-        resultTime.append(currTime)
-
-        
-        if(count==totalCount){
-            done()
-        }
-            
-        else{
-            imageName = getImageName()
-            
-            let image2 = UIImage(named: imageName)
-            fixDimensions(image: image2!)
-            imageView.image = image2
-            
-            order.append(false)
-            
-            if count != namingImages.count-1 {
-                placeLabel.text = "\(count+1)/\(namingImages.count)"
-            }
-            
-        }
-        
-    }
-    
     @IBAction func undoTapped(_ sender: Any) {
         
 //        homeButton.isEnabled = false
@@ -225,8 +124,6 @@ class PicturesViewController: ViewController {
         
         
         homeButton.isEnabled = false
-        correctButton.isEnabled = true
-        incorrectButton.isEnabled = true
         resetButton.isEnabled = true
         undoButton.isEnabled = true
         isUndo = true
@@ -304,8 +201,6 @@ class PicturesViewController: ViewController {
 //        self.resultsLabel.text = str
         
         undoButton.isEnabled = false
-        correctButton.isEnabled = false
-        incorrectButton.isEnabled = false
         resetButton.isEnabled = false
         homeButton.isEnabled = true
 
@@ -413,8 +308,6 @@ class PicturesViewController: ViewController {
         imageView.image = image
         self.view.addSubview(imageView)
         
-        correctButton.isEnabled = true
-        incorrectButton.isEnabled = true
         undoButton.isEnabled = false
         resetButton.isEnabled = false
         homeButton.isEnabled = true

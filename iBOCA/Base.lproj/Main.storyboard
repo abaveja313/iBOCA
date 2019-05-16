@@ -672,24 +672,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcP-sD-JM2">
-                                <rect key="frame" x="34" y="66" width="119" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Correct"/>
-                                <connections>
-                                    <action selector="correct:" destination="wNj-51-lN4" eventType="touchUpInside" id="iAN-9U-wf4"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVT-nO-wgR">
-                                <rect key="frame" x="180" y="66" width="125" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Incorrect"/>
-                                <connections>
-                                    <action selector="incorrect:" destination="wNj-51-lN4" eventType="touchUpInside" id="x39-DN-jwH"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCa-7d-rcb">
                                 <rect key="frame" x="44" y="66" width="71" height="30"/>
                                 <constraints>
@@ -793,9 +775,7 @@
                     </view>
                     <connections>
                         <outlet property="btnNext" destination="AcT-sn-nDc" id="vAL-kJ-Jeq"/>
-                        <outlet property="correctButton" destination="lcP-sD-JM2" id="vUw-r8-q0e"/>
                         <outlet property="homeButton" destination="yYV-Ns-n2M" id="BzI-7r-85S"/>
-                        <outlet property="incorrectButton" destination="hVT-nO-wgR" id="30O-0N-WzJ"/>
                         <outlet property="lbObjectName" destination="hJe-BY-VQo" id="ajv-3Y-3Qa"/>
                         <outlet property="placeLabel" destination="eub-KA-jB3" id="No9-Rr-06b"/>
                         <outlet property="resetButton" destination="5rw-Jj-8U9" id="Rbs-aG-V9O"/>
@@ -4343,8 +4323,6 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="OeE-YP-4JC"/>
-        <segue reference="ZXe-jH-G6o"/>
         <segue reference="HD1-tR-rkD"/>
     </inferredMetricsTieBreakers>
 </document>
