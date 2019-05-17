@@ -295,6 +295,18 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     }
     
     private func completeTest() {
+        
+        let d:UIDatePicker = self.currentDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "y-MM-dd"
+        Date = dateFormatter.string(from: d.date)
+        let v = startTime.timeIntervalSince(d.date)
+        if abs(v) < 60*60*24 {
+            DateOK = true
+        } else {
+            DateOK = false
+        }
+        
         let result = Results()
         result.name = "Orientation"
         result.startTime = startTime
