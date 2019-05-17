@@ -65,26 +65,6 @@ class PicturesViewController: ViewController {
         self.navigationItem.setHidesBackButton(false, animated:true)
         
         done()
-        
-        order = [Bool]()
-        wrongList = [String]()
-        count = 0
-        corr = 0
-        back = 0
-        imageName = getImageName()
-        resultStatus.removeAll()
-        resultTime.removeAll()
-        resultImage.removeAll()
-        
-        let image4 = UIImage(named: imageName)
-        fixDimensions(image: image4!)
-        imageView.image = image4
-        
-//        correctButton.isEnabled = true
-//        incorrectButton.isEnabled = true
-        print(self.resultObjectName)
-        placeLabel.text = "\(count+1)/\(namingImages.count)"
-        
     }
     
     @IBAction func undoTapped(_ sender: Any) {
@@ -253,6 +233,23 @@ class PicturesViewController: ViewController {
             str += "\nThe incorrect picture\(wrongList.count > 1 ? "s were" : " was")  the \(wrongList)"
         }
         self.resultsLabel.text = str
+        
+        // Reset Data
+        self.tfObjectName.text = ""
+        self.resultObjectName.removeAll()
+        order = [Bool]()
+        wrongList = [String]()
+        count = 0
+        corr = 0
+        back = 0
+        imageName = getImageName()
+        resultStatus.removeAll()
+        resultTime.removeAll()
+        resultImage.removeAll()
+        let image4 = UIImage(named: imageName)
+        fixDimensions(image: image4!)
+        imageView.image = image4
+        placeLabel.text = "\(count+1)/\(namingImages.count)"
     }
     
     // MARK: - viewDidLoad
