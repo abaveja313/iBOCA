@@ -1450,32 +1450,32 @@
                                     <segue destination="RmL-Z6-Ri2" kind="show" id="eep-iX-tUz"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lpx-sn-b5u">
-                                <rect key="frame" x="146" y="477" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lpx-sn-b5u">
+                                <rect key="frame" x="146" y="471" width="51" height="31"/>
                                 <connections>
                                     <action selector="transmitOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="Dg7-pS-LQg"/>
                                 </connections>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00M-sT-NB3">
-                                <rect key="frame" x="146" y="558" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00M-sT-NB3">
+                                <rect key="frame" x="146" y="545" width="51" height="31"/>
                                 <connections>
                                     <action selector="atBIDMCOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="2Hy-HV-qka"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Transmit the Results to be Recorded for Test Normalization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRY-0z-msi">
-                                <rect key="frame" x="224" y="477" width="601.5" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Transmit the Results to be Recorded for Test Normalization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRY-0z-msi">
+                                <rect key="frame" x="224" y="471" width="601.5" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Testing is done within BIDMC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-PP-DQh">
-                                <rect key="frame" x="224" y="556" width="301.5" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Testing is done within BIDMC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-PP-DQh">
+                                <rect key="frame" x="224" y="545" width="301.5" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bth-VQ-NFx">
-                                <rect key="frame" x="146" y="396" width="51" height="31"/>
+                                <rect key="frame" x="146" y="397" width="51" height="31"/>
                                 <connections>
                                     <action selector="emailOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="Fka-bV-NLA"/>
                                 </connections>
@@ -1517,7 +1517,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email the Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZB-af-wx7">
-                                <rect key="frame" x="224" y="397" width="176.5" height="29"/>
+                                <rect key="frame" x="224" y="397" width="176.5" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1540,14 +1540,14 @@
                                     <action selector="emailChanged:" destination="uIz-3z-MW0" eventType="editingDidEnd" id="kFh-hU-hza"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Test Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-Np-KYX">
-                                <rect key="frame" x="146" y="645" width="106" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-Np-KYX">
+                                <rect key="frame" x="146" y="609" width="106" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-an-SEC">
-                                <rect key="frame" x="277" y="626" width="176" height="73"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-an-SEC">
+                                <rect key="frame" x="277" y="587" width="176" height="73"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="176" id="AHJ-1q-Ozm"/>
                                     <constraint firstAttribute="height" constant="73" id="aL7-Hy-VUY"/>
@@ -1557,13 +1557,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="DyP-wG-qya" firstAttribute="top" secondItem="t7J-3P-S9X" secondAttribute="bottom" constant="50" id="0Md-0F-raz"/>
-                            <constraint firstItem="izf-PP-DQh" firstAttribute="top" secondItem="WRY-0z-msi" secondAttribute="bottom" constant="50" id="2MI-uY-Plw"/>
+                            <constraint firstItem="WRY-0z-msi" firstAttribute="height" secondItem="Lpx-sn-b5u" secondAttribute="height" id="0RH-Xu-o6V"/>
                             <constraint firstItem="HHK-GF-sPt" firstAttribute="centerY" secondItem="JHw-5f-zda" secondAttribute="centerY" id="6hj-Hi-vPB"/>
                             <constraint firstItem="Pws-an-SEC" firstAttribute="centerY" secondItem="z6c-Np-KYX" secondAttribute="centerY" id="7g9-vA-2oa"/>
-                            <constraint firstItem="z6c-Np-KYX" firstAttribute="top" secondItem="izf-PP-DQh" secondAttribute="bottom" constant="39" id="Agx-fF-a7W"/>
+                            <constraint firstItem="sZB-af-wx7" firstAttribute="height" secondItem="Bth-VQ-NFx" secondAttribute="height" id="A35-k2-djz"/>
                             <constraint firstItem="00M-sT-NB3" firstAttribute="leading" secondItem="Lpx-sn-b5u" secondAttribute="leading" id="B8f-ta-eUP"/>
                             <constraint firstItem="z6c-Np-KYX" firstAttribute="leading" secondItem="JHw-5f-zda" secondAttribute="leading" id="Buc-gU-Hfc"/>
-                            <constraint firstItem="WRY-0z-msi" firstAttribute="top" secondItem="sZB-af-wx7" secondAttribute="bottom" constant="50" id="Czw-b0-bbO"/>
                             <constraint firstItem="izf-PP-DQh" firstAttribute="centerY" secondItem="00M-sT-NB3" secondAttribute="centerY" id="EaO-cQ-18M"/>
                             <constraint firstItem="izf-PP-DQh" firstAttribute="leading" secondItem="WRY-0z-msi" secondAttribute="leading" id="Erv-as-g7K"/>
                             <constraint firstItem="Piw-Hj-uba" firstAttribute="top" secondItem="xub-GD-0Lr" secondAttribute="bottom" constant="138" id="FVQ-6d-hHG"/>
@@ -1573,6 +1572,7 @@
                             <constraint firstItem="qaW-D2-2dg" firstAttribute="leading" secondItem="Piw-Hj-uba" secondAttribute="leading" id="SGG-og-cgc"/>
                             <constraint firstItem="Piw-Hj-uba" firstAttribute="leading" secondItem="Lpx-sn-b5u" secondAttribute="leading" id="V9Q-Gt-USB"/>
                             <constraint firstItem="sZB-af-wx7" firstAttribute="top" secondItem="JHw-5f-zda" secondAttribute="bottom" constant="50" id="XQB-VY-CWg"/>
+                            <constraint firstItem="Lpx-sn-b5u" firstAttribute="top" secondItem="Bth-VQ-NFx" secondAttribute="bottom" constant="43" id="Xjr-zQ-3ch"/>
                             <constraint firstItem="JHw-5f-zda" firstAttribute="leading" secondItem="Lpx-sn-b5u" secondAttribute="leading" id="Y0h-2b-M8R"/>
                             <constraint firstItem="t7J-3P-S9X" firstAttribute="trailing" secondItem="HHK-GF-sPt" secondAttribute="trailing" id="YXL-Xc-Oss"/>
                             <constraint firstItem="t7J-3P-S9X" firstAttribute="centerY" secondItem="Piw-Hj-uba" secondAttribute="centerY" id="Ytd-j9-JzC"/>
@@ -1580,8 +1580,10 @@
                             <constraint firstItem="XKX-0D-676" firstAttribute="leading" secondItem="t7J-3P-S9X" secondAttribute="trailing" constant="40" id="eDN-l8-8YY"/>
                             <constraint firstItem="DyP-wG-qya" firstAttribute="leading" secondItem="t7J-3P-S9X" secondAttribute="leading" id="jb4-fh-eJD"/>
                             <constraint firstItem="XKX-0D-676" firstAttribute="centerY" secondItem="Piw-Hj-uba" secondAttribute="centerY" id="kn2-gA-9CT"/>
+                            <constraint firstItem="z6c-Np-KYX" firstAttribute="top" secondItem="00M-sT-NB3" secondAttribute="bottom" constant="33" id="mKA-Tn-1sQ"/>
                             <constraint firstItem="Lpx-sn-b5u" firstAttribute="leading" secondItem="NRe-Fe-q05" secondAttribute="leadingMargin" constant="126" id="mfa-jM-Bcv"/>
                             <constraint firstItem="HHK-GF-sPt" firstAttribute="top" secondItem="DyP-wG-qya" secondAttribute="bottom" constant="50" id="n0d-do-s3U"/>
+                            <constraint firstItem="izf-PP-DQh" firstAttribute="height" secondItem="00M-sT-NB3" secondAttribute="height" id="ngX-ho-abJ"/>
                             <constraint firstItem="Bth-VQ-NFx" firstAttribute="leading" secondItem="Lpx-sn-b5u" secondAttribute="leading" id="o6I-P7-ETD"/>
                             <constraint firstItem="DyP-wG-qya" firstAttribute="centerY" secondItem="qaW-D2-2dg" secondAttribute="centerY" id="onh-c1-m3x"/>
                             <constraint firstItem="DyP-wG-qya" firstAttribute="trailing" secondItem="HHK-GF-sPt" secondAttribute="trailing" id="rX3-qh-WkM"/>
