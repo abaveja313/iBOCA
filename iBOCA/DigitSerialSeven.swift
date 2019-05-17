@@ -196,6 +196,8 @@ class DigitSerialSeven:DigitBaseClass {
         base.lbShowRandomNumber.isHidden = true
         base.lbShowRandomNumber.text = ""
         
+        base.InfoLabel.text = "Press start to begin \(testName)"
+        
         let endTime = Foundation.Date()
         
         let result = Results()
