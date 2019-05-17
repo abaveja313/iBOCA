@@ -1446,6 +1446,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
+                                    <action selector="btnBackTapped:" destination="uIz-3z-MW0" eventType="touchUpInside" id="bTJ-po-EFC"/>
                                     <segue destination="RmL-Z6-Ri2" kind="show" id="eep-iX-tUz"/>
                                 </connections>
                             </button>
@@ -2176,7 +2177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EnL-3e-Mw3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5125.1953125" y="1837.5"/>
+            <point key="canvasLocation" x="-5110" y="1838"/>
         </scene>
         <!--Results-->
         <scene sceneID="Yc3-nS-dR8">
@@ -4281,9 +4282,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="Ahl-wP-pho"/>
+        <segue reference="eep-iX-tUz"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="ZXe-jH-G6o"/>
         <segue reference="HD1-tR-rkD"/>
     </inferredMetricsTieBreakers>
 </document>
