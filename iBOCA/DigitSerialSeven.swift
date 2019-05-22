@@ -120,7 +120,7 @@ class DigitSerialSeven:DigitBaseClass {
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Ask patiant for the selected start number minus 7, Enter it"
+        base.InfoLabel.text = "Ask patient to enter the selected start number minus 7"
     }
     
     @objc fileprivate func StartNumberButtonTapped(button: UIButton){
@@ -134,7 +134,7 @@ class DigitSerialSeven:DigitBaseClass {
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Ask patiant for the selected start number minus 7, Enter it"
+        base.InfoLabel.text = "Ask patient to enter the selected start number minus 7"
     }
     
     

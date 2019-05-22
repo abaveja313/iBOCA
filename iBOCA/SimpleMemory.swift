@@ -1001,7 +1001,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         for k in 0 ..< imagesSM.count {
             
             if(buttonTaps[k] == true) {
-                recallResult += "Recalled \(imagesSM[k]) correctly in \(recallTimes[k]) seconds\n"
+                recallResult += "Recalled \(imagesSM[k]) - Correct in \(recallTimes[k]) seconds\n"
                 correctRecall += 1
             }
             if(buttonTaps[k] == false) {
@@ -1011,11 +1011,11 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             }
             
             if(recognizeErrors[k] == 0){
-                recognizeResult += "Recognized \(imagesSM[k]) correctly in \(recognizeTimes[k]) seconds\n"
+                recognizeResult += "Recognized \(imagesSM[k]) - Correct in \(recognizeTimes[k]) seconds\n"
                 correctRecognize += 1
             }
             if(recognizeErrors[k] == 1){
-                recognizeResult += "Recognized \(imagesSM[k]) incorrectly in \(recognizeTimes[k]) seconds\n"
+                recognizeResult += "Recognized \(imagesSM[k]) - Incorrect in \(recognizeTimes[k]) seconds\n"
                 numErrors += 1
                 incorrectRecognize += 1
             }
@@ -1031,7 +1031,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
  */
         }
         
-        recallResult += "\(recallIncorrect) item(s) incorrectly recalled at times \(recallIncorrectTimes)\n"
+        recallResult += "\(recallIncorrect) item(s) - Incorrect recalled at times \(recallIncorrectTimes)\n"
         resultTitleLabel.text = "Result"
         resultLabel.text = imageSetResult + delayResult + recallResult + recognizeResult
         let result = Results()
@@ -1170,7 +1170,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             let delayResult = "Delay length of \(delayTime) seconds\n"
             var outputResult = ""
             var exactEsults = "Exact results are:"
-            let timeComplete = "\nThe time to complete the test is \(findTime()) seconds"
+            let timeComplete = "\nTest completed in \(findTime()) seconds"
             var correct = 0
             var incorrect = 0
             
@@ -1179,12 +1179,12 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
                 let cell = self.tableView.cellForRow(at: IndexPath.init(row: i, section: 0)) as! SMCell
                 guard let inputValue = cell.textField.text else {return}
                 if imagesSM.contains(inputValue.lowercased()) {
-                    outputResult += "Input \(inputValue) correctly\n"
+                    outputResult += "Input \(inputValue) - Correct\n"
                     correct += 1
                 }
                 else {
                     incorrect += 1
-                    outputResult += "Input \(inputValue) incorrectly\n"
+                    outputResult += "Input \(inputValue) - Incorrect\n"
                 }
             }
             
