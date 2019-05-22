@@ -70,14 +70,16 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     @IBOutlet weak var CommentEntry: UITextView!
     
     @IBAction func updateMR(_ sender: AnyObject) {
-        _ = PID.changeID(proposed: MRField.text!)
-        MRField.text = PID.getID()
+        guard let _patiantID = self.MRField.text else { return }
+        MRField.text = _patiantID
+        Settings.patiantID = _patiantID
     }
 
     @IBOutlet weak var PatientUID: UITextField!
     
     @IBAction func updatePUID(_ sender: UITextField) {
         PUID = sender.text!
+        Settings.PUID = sender.text!
     }
     
     @IBOutlet weak var protocolLabel: UILabel!
@@ -85,6 +87,27 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     var protocolData = ["A", "B", "C", "D", "E", "F", "G", "H"]
     
     @IBAction func NextPressed(_ sender: UIButton) {
+        // Save PID, PUID
+        guard
+            let _PID = MRField.text,
+            let _PUID = self.PatientUID.text,
+            let _genderUser = Gender,
+            let _ageUser = age,
+            let _educationUser = Education,
+            let _ethnicityUser = Ethnicity,
+            let _raceUser = Race
+        else { return }
+        
+        Settings.patiantID = _PID
+        Settings.genderUser = _genderUser
+        Settings.ageUser = _ageUser
+        Settings.educationUser = _educationUser
+        Settings.ethnicityUser = _ethnicityUser
+        Settings.raceUser = _raceUser
+        Settings.protocolUser = Protocol
+        Settings.commentsUser = Comments
+        Settings.PUID = _PUID
+        Settings.isGotoTest = true
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
         self.present(vc, animated: true, completion: nil)
@@ -169,6 +192,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     }
     
     @IBAction func CancelPressed(_ sender: Any) {
+        Settings.isGotoTest = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -214,7 +238,8 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         Race = raceData[0]
         lbRace.text = raceData[0]
         
-        MRField.text = PID.getID()
+        guard let _PID = Settings.patiantID else { return }
+        MRField.text = _PID
         
         CommentEntry.text = ""
         CommentEntry.layer.borderWidth = 1
@@ -224,6 +249,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         testStartTime = Foundation.Date()
         
         PUID = ""
+        Settings.PUID = nil
         if atBIDMCOn == true && theTestClass == 2 {
             ModeECT = true
         } else {
