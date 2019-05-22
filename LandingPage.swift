@@ -40,11 +40,16 @@ class LandingPage: ViewController {
     @IBOutlet weak var GotoTests: UIButton!
     
     @IBAction func GotoTests(_ sender: UIButton) {
-        
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Demographics")
-        self.present(nextViewController, animated:true, completion:nil)
+        if Settings.isGotoTest == true {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+            self.present(vc, animated: true, completion: nil)
+        }
+        else {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Demographics")
+            self.present(nextViewController, animated:true, completion:nil)
+        }
     }
     
     
@@ -70,19 +75,15 @@ class LandingPage: ViewController {
         Status[TestGDTResults] = TestStatus.NotStarted
         Status[TestGoldStandard] = TestStatus.NotStarted
         
-        if doneSetup {
+        if Settings.patiantID != nil {
             GotoTests.isEnabled = true
         } else {
             GotoTests.isEnabled = false
         }
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
 }

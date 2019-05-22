@@ -35,6 +35,8 @@ class Setup: ViewController, UIPickerViewDelegate  {
     @IBOutlet weak var testClass: UIPickerView!
     @IBOutlet weak var testClassLabel: UILabel!
     
+    var autoID: Int = Int()
+    
     @IBAction func transmitOnOff(_ sender: UISwitch) {
         transmitOn = transmitOnOff.isOn
         UserDefaults.standard.set(transmitOn, forKey: "Transmit")
@@ -116,6 +118,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
     @IBAction func adminNameChanged(_ sender: UITextField) {
         PID.nameSet(name: adminName.text!)
         adminInitials.text = PID.getInitials()
+        PID.currNum = self.autoID
         patiantID.text = PID.getID()
     }
     
@@ -126,6 +129,12 @@ class Setup: ViewController, UIPickerViewDelegate  {
         } else {
             patiantID.text = PID.getID()
         }
+    }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        guard let _patiantID = self.patiantID.text else { return }
+        Settings.patiantID = _patiantID
+        Settings.isGotoTest = false
     }
     
     override func viewDidLoad() {
@@ -147,6 +156,14 @@ class Setup: ViewController, UIPickerViewDelegate  {
         emailOnOff.isOn = emailOn
         email.text = emailAddress
     
+        // Get Current Date time
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        
+        self.autoID = Int("\(hour)\(minutes)")!
+        PID.currNum = self.autoID
         patiantID.text = PID.getID()
         adminName.text = PID.getName()
         adminInitials.text = PID.getInitials()
@@ -184,6 +201,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
             return ""
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == testClass {
             theTestClass = row
@@ -192,12 +210,8 @@ class Setup: ViewController, UIPickerViewDelegate  {
         }
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-
 }
