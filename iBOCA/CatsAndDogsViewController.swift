@@ -784,7 +784,7 @@ class CatsAndDogsViewController: ViewController {
                 
                 var r = ""
                 if k < self.break2 {
-                    r = "\(self.correctDogs[k]) dogs correctly selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats incorrectly selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places incorrectly selected. Time: \(self.times[k]) seconds\n"
+                    r = "\(self.correctDogs[k]) dogs - Correct selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats - Incorrect selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected. Time: \(self.times[k]) seconds\n"
                     let errors = self.missedDogs[k] + self.incorrectCats[k] + self.incorrectRandom[k]
                     result.numErrors += errors
                     var rl:[String:Any] = [:]
@@ -798,7 +798,7 @@ class CatsAndDogsViewController: ViewController {
                     reslist[String(k)] = rl
                 }
                 else {
-                    r = "\(self.correctDogs[k]) dogs incorrectly selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats correctly selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places incorrectly selected. Time: \(self.times[k]) seconds\n"
+                    r = "\(self.correctDogs[k]) dogs - Incorrect selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats - Correct selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected. Time: \(self.times[k]) seconds\n"
                     let errors = self.correctDogs[k] + self.missedCats[k] + self.incorrectRandom[k]
                     result.numErrors += errors
                     var rl:[String:Any] = [:]

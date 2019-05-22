@@ -844,12 +844,12 @@ class VATask: ViewController, UIPickerViewDelegate {
         for k in 0 ..< mixedImages.count {
             
             if(recallErrors[k] == 0){
-                result.longDescription.add("Recalled \(mixedImages[k]) correctly in \(recallTimes[k]) seconds")
-                recallResult += "Recalled \(mixedImages[k]) correctly in \(recallTimes[k]) seconds\n"
+                result.longDescription.add("Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds")
+                recallResult += "Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds\n"
             }
             if(recallErrors[k] == 1){
-                result.longDescription.add("Recalled \(mixedImages[k]) incorrectly in \(recallTimes[k]) seconds")
-                recallResult += "Recalled \(mixedImages[k]) incorrectly in \(recallTimes[k]) seconds\n"
+                result.longDescription.add("Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds")
+                recallResult += "Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds\n"
                 result.numErrors += 1
             }
             if(recallErrors[k] == 2){
@@ -860,12 +860,12 @@ class VATask: ViewController, UIPickerViewDelegate {
             
             
             if(recognizeErrors[k] == 0){
-                result.longDescription.add("Recognized \(mixedImages[k]) correctly in \(recognizeTimes[k]) seconds")
-                recognizeResult += "Recognized \(mixedImages[k]) correctly in \(recognizeTimes[k]) seconds\n"
+                result.longDescription.add("Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds")
+                recognizeResult += "Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds\n"
             }
             if(recognizeErrors[k] == 1){
-                result.longDescription.add("Recognized \(mixedImages[k]) incorrectly in \(recognizeTimes[k]) seconds ")
-                recognizeResult += "Recognized \(mixedImages[k]) incorrectly in \(recognizeTimes[k]) seconds\n"
+                result.longDescription.add("Recognized \(mixedImages[k]) - Incorrect in \(recognizeTimes[k]) seconds ")
+                recognizeResult += "Recognized \(mixedImages[k]) - Incorrect in \(recognizeTimes[k]) seconds\n"
                 result.numErrors += 1
             }
             
