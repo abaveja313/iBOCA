@@ -360,28 +360,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOo-OD-hLe">
-                                <rect key="frame" x="902" y="67" width="92" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="btnBackTapped:" destination="Soq-Lw-miz" eventType="touchUpInside" id="6FU-gk-pzO"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="ZXe-jH-G6o"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORv-Rw-hsI">
-                                <rect key="frame" x="56" y="71" width="150" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORv-Rw-hsI">
+                                <rect key="frame" x="942" y="67" width="62" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="startButton:" destination="Soq-Lw-miz" eventType="touchUpInside" id="kaa-2A-P9a"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCK-4i-97i">
-                                <rect key="frame" x="156" y="71" width="105" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCK-4i-97i">
+                                <rect key="frame" x="125" y="57.5" width="85" height="60"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
                                 <state key="normal" title="Next"/>
                             </button>
@@ -471,16 +459,31 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOo-OD-hLe">
+                                <rect key="frame" x="20" y="67" width="65" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="Soq-Lw-miz" eventType="touchUpInside" id="6FU-gk-pzO"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="ZXe-jH-G6o"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="oCK-4i-97i" firstAttribute="firstBaseline" secondItem="kOo-OD-hLe" secondAttribute="firstBaseline" id="2Mj-vn-pW3"/>
+                            <constraint firstItem="ORv-Rw-hsI" firstAttribute="trailing" secondItem="jqK-8W-CYm" secondAttribute="trailingMargin" id="4FE-Ut-Rt8"/>
                             <constraint firstItem="qdW-PQ-8fm" firstAttribute="centerY" secondItem="xvT-UQ-mje" secondAttribute="centerY" id="6T8-oF-m6Q"/>
+                            <constraint firstItem="kOo-OD-hLe" firstAttribute="top" secondItem="KZy-Si-ySZ" secondAttribute="bottom" constant="47" id="7Vz-Tl-isZ"/>
                             <constraint firstItem="xvT-UQ-mje" firstAttribute="centerY" secondItem="jqK-8W-CYm" secondAttribute="centerY" id="8z3-5T-sug"/>
                             <constraint firstItem="xvT-UQ-mje" firstAttribute="leading" secondItem="jqK-8W-CYm" secondAttribute="leading" constant="56" id="C5I-FH-AbH"/>
+                            <constraint firstItem="ORv-Rw-hsI" firstAttribute="firstBaseline" secondItem="kOo-OD-hLe" secondAttribute="firstBaseline" id="Ii1-Sj-8JZ"/>
                             <constraint firstItem="Y07-Xe-95y" firstAttribute="leading" secondItem="jqK-8W-CYm" secondAttribute="leading" constant="56" id="afZ-lI-KTj"/>
+                            <constraint firstItem="kOo-OD-hLe" firstAttribute="leading" secondItem="jqK-8W-CYm" secondAttribute="leadingMargin" id="co0-zi-wLE"/>
                             <constraint firstItem="Y07-Xe-95y" firstAttribute="top" secondItem="KZy-Si-ySZ" secondAttribute="bottom" constant="159" id="hTI-z4-4e4"/>
                             <constraint firstAttribute="trailing" secondItem="qdW-PQ-8fm" secondAttribute="trailing" constant="56" id="muH-ZN-3UT"/>
                             <constraint firstAttribute="trailing" secondItem="Y07-Xe-95y" secondAttribute="trailing" constant="56" id="qTy-JX-IpB"/>
+                            <constraint firstItem="oCK-4i-97i" firstAttribute="leading" secondItem="kOo-OD-hLe" secondAttribute="trailing" constant="40" id="s3X-Z9-QfK"/>
                             <constraint firstItem="QDC-WX-DA2" firstAttribute="top" secondItem="Y07-Xe-95y" secondAttribute="bottom" id="tXC-oe-hto"/>
                         </constraints>
                     </view>
@@ -4323,9 +4326,10 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="KbP-HI-14n"/>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="eep-iX-tUz"/>
+        <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="HD1-tR-rkD"/>
+        <segue reference="OeE-YP-4JC"/>
     </inferredMetricsTieBreakers>
 </document>

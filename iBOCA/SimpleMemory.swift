@@ -313,7 +313,9 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     }
     
     func startNewTask(){
-        
+        result = Results()
+        result.name = "Simple Memory"
+        result.startTime = Foundation.Date()
         totalTime = 60
         ended = true
         self.isStartNew = true
