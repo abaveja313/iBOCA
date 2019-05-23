@@ -14,6 +14,10 @@ enum CatsAndDogsType: String {
     case TapCatsNotDogs = "TapCatsNotDogs"
 }
 
+struct AnimalObject {
+    var value:Int
+}
+
 class CatsAndDogsVC: UIViewController {
     
     // MARK: - IBOutlet
@@ -26,8 +30,8 @@ class CatsAndDogsVC: UIViewController {
     var startTime2 = Foundation.Date()
     
     let dogsAlone = "2,3"//,4
-    let dogsNoCats = "(2,2),(3,2),(4,2)"//,(2,4),(3,4),(4,4)
-    let catsNoDogs = "(2,2),(2,3),(2,4)"//,(4,2),(4,3),(4,4)
+    let dogsNoCats = "(2,2)"//,(3,2),(4,2),(2,4),(3,4),(4,4)
+    let catsNoDogs = "(2,2),(2,3)"//,(2,4),(4,2),(4,3),(4,4)
     
     var buttonList = [UIButton]()
     var imageList = [UIImageView]()
@@ -39,8 +43,8 @@ class CatsAndDogsVC: UIViewController {
     
     var cats = Int() //# cats
     var dogs = Int() //# dogs
-    var dogList = [Int]()
-    var catList = [Int]()
+    var dogList = [AnimalObject]()
+    var catList = [AnimalObject]()
     var break1 = Int()
     var break2 = Int()
     
@@ -59,6 +63,9 @@ class CatsAndDogsVC: UIViewController {
     var incorrectRandom = [Int]()
     var resultTmpList : [String:Any] = [:]
     
+    var isTapDogError = false
+    var isTapCatError = false
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +83,13 @@ class CatsAndDogsVC: UIViewController {
     // MARK: - IBAction
     @IBAction func btnStartTapped(_ sender: Any) {
         self.btnStart.isHidden = true
-        self.startTest()
+        if self.ended == true {
+            self.resetTest()
+            self.startTest()
+        }
+        else {
+            self.startTest()
+        }
     }
     
     @IBAction func btnEndTapped(_ sender: Any) {
@@ -90,6 +103,10 @@ class CatsAndDogsVC: UIViewController {
     
     @IBAction func btnResetTapped(_ sender: Any) {
         print("in reset")
+        self.resetTest()
+    }
+    
+    private func resetTest() {
         for k in 0 ..< buttonList.count {
             buttonList[k].removeFromSuperview()
         }
@@ -102,8 +119,8 @@ class CatsAndDogsVC: UIViewController {
             boxList[j].removeFromSuperview()
         }
         
-        self.dogList = [Int]()
-        self.catList = [Int]()
+        self.dogList = [AnimalObject]()
+        self.catList = [AnimalObject]()
         self.buttonList = [UIButton]()
         self.imageList = [UIImageView]()
         self.boxList = [UIImageView]()
@@ -126,78 +143,41 @@ class CatsAndDogsVC: UIViewController {
         print("getting to start test")
         self.lbResult.text = ""
         self.lbResult.isHidden = true
-        
+        self.btnStart.isHidden = true
         // Dogs Alone
         let dogsAloneArr = self.dogsAlone.components(separatedBy: ",")
         dogsAloneArr.forEach { (obj) in
             if let iDog = Int(obj) {
-                self.dogList.append(iDog)
-                self.catList.append(0)
+                self.dogList.append(AnimalObject.init(value: iDog))
+                self.catList.append(AnimalObject.init(value: 0))
             }
         }
 
         // Dogs Not Cats
         let dogsNotCatsArr = self.dogsNoCats.components(separatedBy: String("),("))
         for i in 0...dogsNotCatsArr.count - 1 {
-            let split1 = dogsNotCatsArr[i].components(separatedBy: ",")
-            var x1: String = String()
-            var y1: Int = Int()
-            var x2: String = String()
-            var y2: Int = Int()
-            
-            if i == 0 {
-                x1 = split1[0].replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range:nil)
-                y1 = Int(x1) ?? 1
-                x2 = split1[1]
-                y2 = Int(x2) ?? 1
-            }
-            else if i == dogsNotCatsArr.count - 1 {
-                x1 = split1[0]
-                y1 = Int(x1) ?? 1
-                x2 = split1[1].replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range:nil)
-                y2 = Int(x2) ?? 1
-            }
-            else {
-                x1 = split1[0]
-                y1 = Int(x1) ?? 1
-                x2 = split1[1]
-                y2 = Int(x2) ?? 1
-            }
-            self.dogList.append(y1)
-            self.catList.append(y2)
+            let split1 = dogsNotCatsArr[i].components(separatedBy: ",").map{ $0.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range:nil).replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range: nil) }
+            let x1: String = split1[0]
+            let y1: Int = Int(x1) ?? 1
+            let x2: String = split1[1]
+            let y2: Int = Int(x2) ?? 1
+            self.dogList.append(AnimalObject.init(value: y1))
+            self.catList.append(AnimalObject.init(value: y2))
         }
         
         // Cats No Dogs
         let catsNoDogsArr = self.catsNoDogs.components(separatedBy: String("),("))
         for i in 0...catsNoDogsArr.count - 1 {
-            let split2 = catsNoDogsArr[i].components(separatedBy: ",")
-            var x1: String = String()
-            var y1: Int = Int()
-            var x2: String = String()
-            var y2: Int = Int()
-            
-            if i == 0 {
-                x1 = split2[0].replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range:nil)
-                y1 = Int(x1) ?? 1
-                x2 = split2[1]
-                y2 = Int(x2) ?? 1
-            }
-            else if i == catsNoDogsArr.count - 1 {
-                x1 = split2[0]
-                y1 = Int(x1) ?? 1
-                x2 = split2[1].replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range:nil)
-                y2 = Int(x2) ?? 1
-            }
-            else {
-                x1 = split2[0]
-                y1 = Int(x1) ?? 1
-                x2 = split2[1]
-                y2 = Int(x2) ?? 1
-            }
-            self.dogList.append(y1)
-            self.catList.append(y2)
+            let split2 = catsNoDogsArr[i].components(separatedBy: ",").map{ $0.replacingOccurrences(of: ")", with: "", options: NSString.CompareOptions.literal, range:nil).replacingOccurrences(of: "(", with: "", options: NSString.CompareOptions.literal, range: nil) }
+            let x1 = split2[0]
+            let y1 = Int(x1) ?? 1
+            let x2 = split2[1]
+            let y2 = Int(x2) ?? 1
+            self.dogList.append(AnimalObject.init(value: y1))
+            self.catList.append(AnimalObject.init(value: y2))
         }
-        
+        print("DogList: \n\(self.dogList)")
+        print("\(self.catList)")
         self.break1 = dogsAloneArr.count
         self.break2 = dogsAloneArr.count + dogsNotCatsArr.count
         // Save Data
@@ -206,8 +186,8 @@ class CatsAndDogsVC: UIViewController {
         UserDefaults.standard.set(self.catsNoDogs, forKey:"CandD-Cats-no-Dogs")
         UserDefaults.standard.synchronize()
         
-        self.cats = self.catList[0]
-        self.dogs = self.dogList[0]
+        self.cats = self.catList[0].value
+        self.dogs = self.dogList[0].value
         self.startAlert()
     }
     
@@ -264,8 +244,8 @@ class CatsAndDogsVC: UIViewController {
         
         ended = false
         self.level = 0
-        self.cats = self.catList[0]
-        self.dogs = self.dogList[0]
+        self.cats = self.catList[0].value
+        self.dogs = self.dogList[0].value
         self.alert(info: "Tap all the dogs", display: true, start: true)
     }
     
@@ -401,13 +381,17 @@ class CatsAndDogsVC: UIViewController {
         for k in 0 ..< self.pressed.count {
             if(self.pressed[k] < self.dogs){
                 dogCount += 1
+                self.isTapCatError = false
             }
             else {
+                self.isTapDogError = true
                 if(self.pressed[k] < self.dogs + self.cats) {
                     catCount += 1
+                    self.isTapDogError = false
                 }
                 else {
                     otherCount += 1
+                    self.isTapCatError = true
                 }
             }
         }
@@ -433,18 +417,34 @@ class CatsAndDogsVC: UIViewController {
             }
             else {
                 self.btnEnd.isHidden = true
-                self.btnReset.isHidden = false
+                self.btnReset.isHidden = true
                 self.btnStart.isHidden = false
                 self.lbResult.isHidden = false
+                self.isTapDogError = false
+                self.isTapCatError = false
                 self.doneTest()
             }
         }
         else {
             print("level: \(level)")
-            print("dogList[level]: \(self.dogList[level])")
-            print("catList[level]: \(self.catList[level])")
-            self.cats = self.catList[level]
-            self.dogs = self.dogList[level]
+            if self.level < break2 {
+                // Tap Dog
+                if self.isTapDogError == true {
+                    self.dogList[level].value -= 1
+                    self.isTapDogError = false
+                }
+            }
+            else {
+                // Tap Cat
+                if self.isTapCatError == true {
+                    self.catList[level].value -= 1
+                    self.isTapCatError = false
+                }
+            }
+            
+            self.cats = self.catList[level].value
+            self.dogs = self.dogList[level].value
+            
             self.randomizeOrder()
             print("order randomized; cats = \(cats), dogs = \(dogs)")
             for k in 0 ..< self.buttonList.count {
@@ -471,7 +471,7 @@ class CatsAndDogsVC: UIViewController {
                     self.view.addSubview(imageView)
                     self.imageList.append(imageView)
                 } else {
-                    if(i <= self.cats + self.dogs - 1) {
+                    if(i <= (self.cats + self.dogs) - 1) {
                         let image = UIImage(named: "cat1")!
                         let imageView = UIImageView(frame:CGRect(x: (x + (100-(100.0*(image.size.width)/(image.size.height)))/2), y: y, width: 100.0*(image.size.width)/(image.size.height), height: 100.0))
                         imageView.image = image
@@ -533,27 +533,27 @@ class CatsAndDogsVC: UIViewController {
             for k in 0 ..< self.level {
                 var r = ""
                 if k < self.break2 {
-                    r = "\(self.correctDogs[k]) dogs - Correct selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats - Incorrect selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
+                    r = "\(self.correctDogs[k]) dogs - Correct selected out of \(self.dogList[k]) dogs; \(self.incorrectCats[k]) cats - Incorrect selected out of \(self.catList[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
                     let errors = self.missedDogs[k] + self.incorrectCats[k] + self.incorrectRandom[k]
                     result.numErrors += errors
                     var rl:[String:Any] = [:]
                     rl["Dogs Correct"] = self.correctDogs[k]
-                    rl["Dogs Total"]  = self.missedDogs[k]+self.correctDogs[k]
+                    rl["Dogs Total"]  = self.dogList[k]
                     rl["Cats Incorrect"] = self.incorrectCats[k]
-                    rl["Cats Total"] = self.incorrectCats[k]+self.missedCats[k]
+                    rl["Cats Total"] = self.catList[k]
                     rl["Empty Incorrect"] = self.incorrectRandom[k]
                     rl["Num Errors"] = errors
                     reslist[String(k)] = rl
                 }
                 else {
-                    r = "\(self.correctDogs[k]) dogs - Incorrect selected out of \(self.missedDogs[k]+self.correctDogs[k]) dogs; \(self.incorrectCats[k]) cats - Correct selected out of \(self.incorrectCats[k]+self.missedCats[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
+                    r = "\(self.correctDogs[k]) dogs - Incorrect selected out of \(self.dogList[k]) dogs; \(self.incorrectCats[k]) cats - Correct selected out of \(self.catList[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
                     let errors = self.correctDogs[k] + self.missedCats[k] + self.incorrectRandom[k]
                     result.numErrors += errors
                     var rl:[String:Any] = [:]
                     rl["Dogs inorrect"] = self.correctDogs[k]
-                    rl["Dogs Total"]  = self.missedDogs[k]+self.correctDogs[k]
+                    rl["Dogs Total"]  = self.dogList[k]
                     rl["Cats correct"] = self.incorrectCats[k]
-                    rl["Cats Total"] = self.incorrectCats[k]+self.missedCats[k]
+                    rl["Cats Total"] = self.catList[k]
                     rl["Empty Incorrect"] = self.incorrectRandom[k]
                     rl["Num Errors"] = errors
                     reslist[String(k)] = rl
@@ -579,6 +579,16 @@ class CatsAndDogsVC: UIViewController {
             resultsArray.add(result)
             
             Status[TestCatsAndDogs] = TestStatus.Done
+            
+            self.dogList = [AnimalObject]()
+            self.catList = [AnimalObject]()
+            self.buttonList = [UIButton]()
+            self.imageList = [UIImageView]()
+            self.boxList = [UIImageView]()
+            self.order = [Int]()
+            self.pressed = [Int]()
+            self.level = 0 //current level
+            self.repetition = 0
         }
     }
 }
