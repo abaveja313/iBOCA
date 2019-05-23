@@ -2266,18 +2266,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMZ-3Z-SVK">
-                                <rect key="frame" x="871" y="46" width="87" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMZ-3Z-SVK">
+                                <rect key="frame" x="20" y="30" width="65" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="e4f-h0-eqr"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="axn-CN-i5a">
-                                <rect key="frame" x="20" y="84" width="984" height="684"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="axn-CN-i5a">
+                                <rect key="frame" x="20" y="78" width="984" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="mFE-dR-SxI" id="CqB-8c-hDK"/>
@@ -2286,6 +2284,14 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EMZ-3Z-SVK" firstAttribute="leading" secondItem="wTL-Pe-RDR" secondAttribute="leadingMargin" id="7wb-ur-xnT"/>
+                            <constraint firstItem="axn-CN-i5a" firstAttribute="leading" secondItem="wTL-Pe-RDR" secondAttribute="leadingMargin" id="M16-3d-Qml"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="axn-CN-i5a" secondAttribute="bottom" id="O9a-iV-gtj"/>
+                            <constraint firstItem="axn-CN-i5a" firstAttribute="trailing" secondItem="wTL-Pe-RDR" secondAttribute="trailingMargin" id="R2L-2L-w7I"/>
+                            <constraint firstItem="axn-CN-i5a" firstAttribute="top" secondItem="EMZ-3Z-SVK" secondAttribute="bottom" id="XHa-ga-8xT"/>
+                            <constraint firstItem="EMZ-3Z-SVK" firstAttribute="top" secondItem="tIi-Em-59u" secondAttribute="bottom" constant="10" id="gx5-Qo-yg8"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="axn-CN-i5a" id="V0B-Oh-Xva"/>
@@ -4357,8 +4363,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="kTw-7t-VZN"/>
+        <segue reference="eep-iX-tUz"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="Bhp-ON-e9m"/>
+        <segue reference="e4f-h0-eqr"/>
     </inferredMetricsTieBreakers>
 </document>
