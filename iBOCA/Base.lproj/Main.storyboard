@@ -1364,9 +1364,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebm-5t-8nE">
-                                <rect key="frame" x="828" y="20" width="127" height="88"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebm-5t-8nE">
+                                <rect key="frame" x="20" y="20" width="67" height="49"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
@@ -1435,6 +1434,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <accessibility key="accessibilityConfiguration" label="Credits"/>
+                        <constraints>
+                            <constraint firstItem="Ebm-5t-8nE" firstAttribute="top" secondItem="2P3-Em-S2j" secondAttribute="bottom" id="55u-rV-xaV"/>
+                            <constraint firstItem="Ebm-5t-8nE" firstAttribute="leading" secondItem="gOA-OW-sks" secondAttribute="leadingMargin" id="5dF-Cl-ZJv"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="versionLabel" destination="6E6-ae-4Db" id="ob4-xw-qup"/>
@@ -4354,7 +4357,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="Ahl-wP-pho"/>
+        <segue reference="kTw-7t-VZN"/>
         <segue reference="fV2-tM-D7d"/>
         <segue reference="Bhp-ON-e9m"/>
     </inferredMetricsTieBreakers>
