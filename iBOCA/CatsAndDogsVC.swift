@@ -30,8 +30,8 @@ class CatsAndDogsVC: UIViewController {
     var startTime2 = Foundation.Date()
     
     let dogsAlone = "2,3,4"//
-    let dogsNoCats = "(2,2),(3,2),(4,2),(2,4),(3,4),(4,4)"//
-    let catsNoDogs = "(2,2),(2,3),(2,4),(4,2),(4,3),(4,4)"//
+    let dogsNoCats = "(2,2),(3,2)"//,(4,2),(2,4),(3,4),(4,4)
+    let catsNoDogs = "(2,2),(2,3),(2,4)"//,(4,2),(4,3),(4,4)
     
     var buttonList = [UIButton]()
     var imageList = [UIImageView]()
@@ -144,6 +144,8 @@ class CatsAndDogsVC: UIViewController {
         self.btnReset.isHidden = true
         self.lbResult.isHidden = true
         self.result = Results()
+        self.isTapDogError = false
+        self.isTapCatError = false
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
@@ -389,25 +391,31 @@ class CatsAndDogsVC: UIViewController {
         for k in 0 ..< self.pressed.count {
             if(self.pressed[k] < self.dogs){
                 dogCount += 1
-                self.isTapCatError = false
             }
             else {
-                self.isTapDogError = true
                 if(self.pressed[k] < self.dogs + self.cats) {
                     catCount += 1
-                    if self.pressed[k] > self.cats {
-                        self.isTapCatError = true
-                    }
                 }
                 else {
                     otherCount += 1
-                    self.isTapCatError = true
                 }
             }
         }
         resultTmpList[String(level)] = ["Dogs":dogs, "Cats":cats, "Dogs found":dogCount, "Cats found":catCount]
         self.pressed = [Int]()
-        
+        if level >= break2 {
+            if cats-catCount > 0 {
+                self.isTapCatError = true
+            }
+        }
+        else {
+            if dogs-dogCount > 0 {
+                self.isTapDogError = true
+                if level == break2 - 1 {
+                    self.isTapCatError = true
+                }
+            }
+        }
         print("catCount = \(catCount), dogCount = \(dogCount), otherCount = \(otherCount)")
         self.correctDogs.append(dogCount)
         self.missedDogs.append(dogs-dogCount)
