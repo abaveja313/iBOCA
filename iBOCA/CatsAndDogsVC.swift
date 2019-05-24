@@ -29,9 +29,9 @@ class CatsAndDogsVC: UIViewController {
     
     var startTime2 = Foundation.Date()
     
-    let dogsAlone = "2,3"//,4
-    let dogsNoCats = "(2,2)"//,(3,2),(4,2),(2,4),(3,4),(4,4)
-    let catsNoDogs = "(2,2),(2,3)"//,(2,4),(4,2),(4,3),(4,4)
+    let dogsAlone = "2,3,4"//
+    let dogsNoCats = "(2,2),(3,2),(4,2),(2,4),(3,4),(4,4)"//
+    let catsNoDogs = "(2,2),(2,3),(2,4),(4,2),(4,3),(4,4)"//
     
     var buttonList = [UIButton]()
     var imageList = [UIImageView]()
@@ -66,6 +66,8 @@ class CatsAndDogsVC: UIViewController {
     var isTapDogError = false
     var isTapCatError = false
     
+    var result = Results()
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,11 +80,13 @@ class CatsAndDogsVC: UIViewController {
         self.btnEnd.isHidden = true
         self.btnReset.isHidden = true
         self.lbResult.isHidden = true
+        result = Results()
     }
     
     // MARK: - IBAction
     @IBAction func btnStartTapped(_ sender: Any) {
         self.btnStart.isHidden = true
+        self.startTime2 = Foundation.Date()
         if self.ended == true {
             self.resetTest()
             self.startTest()
@@ -126,13 +130,20 @@ class CatsAndDogsVC: UIViewController {
         self.boxList = [UIImageView]()
         self.order = [Int]()
         self.pressed = [Int]()
-        level = 0 //current level
-        repetition = 0
-        ended = false
+        self.correctDogs = [Int]()
+        self.missedDogs = [Int]()
+        self.incorrectCats = [Int]()
+        self.missedCats = [Int]()
+        self.incorrectRandom = [Int]()
+        self.resultTmpList = [:]
+        self.level = 0 //current level
+        self.repetition = 0
+        self.ended = false
         self.btnStart.isHidden = false
         self.btnEnd.isHidden = true
         self.btnReset.isHidden = true
         self.lbResult.isHidden = true
+        self.result = Results()
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
@@ -297,9 +308,6 @@ class CatsAndDogsVC: UIViewController {
             if(display == true){
                 self.display()
             }
-            if(start == true){
-                self.startTime2 = Foundation.Date()
-            }
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -387,7 +395,9 @@ class CatsAndDogsVC: UIViewController {
                 self.isTapDogError = true
                 if(self.pressed[k] < self.dogs + self.cats) {
                     catCount += 1
-                    self.isTapDogError = false
+                    if self.pressed[k] > self.cats {
+                        self.isTapCatError = true
+                    }
                 }
                 else {
                     otherCount += 1
@@ -512,7 +522,6 @@ class CatsAndDogsVC: UIViewController {
     
     func doneTest() {
         self.ended = true
-        let result = Results()
         result.name = "Cats and Dogs"
         result.startTime = startTime2 as Date
         result.endTime = Foundation.Date()
@@ -528,32 +537,32 @@ class CatsAndDogsVC: UIViewController {
             }
             
             var resulttxt = ""
-            result.numErrors = 0
+            self.result.numErrors = 0
             var reslist : [String:Any] = [:]
             for k in 0 ..< self.level {
                 var r = ""
                 if k < self.break2 {
-                    r = "\(self.correctDogs[k]) dogs - Correct selected out of \(self.dogList[k]) dogs; \(self.incorrectCats[k]) cats - Incorrect selected out of \(self.catList[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
-                    let errors = self.missedDogs[k] + self.incorrectCats[k] + self.incorrectRandom[k]
-                    result.numErrors += errors
+                    r = "\(self.correctDogs[k]) dogs - Correct selected out of \(self.dogList[k].value) dogs; \(self.incorrectCats[k]) cats - Incorrect selected out of \(self.catList[k].value) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
+                    let errors = self.missedDogs[k]// + self.incorrectCats[k] + self.incorrectRandom[k]
+                    self.result.numErrors += errors
                     var rl:[String:Any] = [:]
                     rl["Dogs Correct"] = self.correctDogs[k]
-                    rl["Dogs Total"]  = self.dogList[k]
+                    rl["Dogs Total"]  = self.dogList[k].value
                     rl["Cats Incorrect"] = self.incorrectCats[k]
-                    rl["Cats Total"] = self.catList[k]
+                    rl["Cats Total"] = self.catList[k].value
                     rl["Empty Incorrect"] = self.incorrectRandom[k]
                     rl["Num Errors"] = errors
                     reslist[String(k)] = rl
                 }
                 else {
-                    r = "\(self.correctDogs[k]) dogs - Incorrect selected out of \(self.dogList[k]) dogs; \(self.incorrectCats[k]) cats - Correct selected out of \(self.catList[k]) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
-                    let errors = self.correctDogs[k] + self.missedCats[k] + self.incorrectRandom[k]
-                    result.numErrors += errors
+                    r = "\(self.correctDogs[k]) dogs - Incorrect selected out of \(self.dogList[k].value) dogs; \(self.incorrectCats[k]) cats - Correct selected out of \(self.catList[k].value) cats; \(self.incorrectRandom[k]) empty places - Incorrect selected.\n"
+                    let errors = self.missedCats[k]// + self.correctDogs[k] + self.incorrectRandom[k]
+                    self.result.numErrors += errors
                     var rl:[String:Any] = [:]
                     rl["Dogs inorrect"] = self.correctDogs[k]
-                    rl["Dogs Total"]  = self.dogList[k]
+                    rl["Dogs Total"]  = self.dogList[k].value
                     rl["Cats correct"] = self.incorrectCats[k]
-                    rl["Cats Total"] = self.catList[k]
+                    rl["Cats Total"] = self.catList[k].value
                     rl["Empty Incorrect"] = self.incorrectRandom[k]
                     rl["Num Errors"] = errors
                     reslist[String(k)] = rl
@@ -569,14 +578,14 @@ class CatsAndDogsVC: UIViewController {
                     resulttxt.append(contentsOf: "\nTap all the cats.Do not tap the dogs.\n")
                 }
                 resulttxt.append(r)
-                result.longDescription.add(r)
+                self.result.longDescription.add(r)
             }
             
             print(resulttxt)
             self.lbResult.text = resulttxt
             
-            result.json = ["Passes":self.resultTmpList, "Score":reslist]
-            resultsArray.add(result)
+            self.result.json = ["Passes":self.resultTmpList, "Score":reslist]
+            resultsArray.add(self.result)
             
             Status[TestCatsAndDogs] = TestStatus.Done
             
