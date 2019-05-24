@@ -30,8 +30,8 @@ class CatsAndDogsVC: UIViewController {
     var startTime2 = Foundation.Date()
     
     let dogsAlone = "2,3,4"//
-    let dogsNoCats = "(2,2),(3,2)"//,(4,2),(2,4),(3,4),(4,4)
-    let catsNoDogs = "(2,2),(2,3),(2,4)"//,(4,2),(4,3),(4,4)
+    let dogsNoCats = "(2,2),(3,2),(4,2),(2,4),(3,4),(4,4)"//
+    let catsNoDogs = "(2,2),(2,3),(2,4),(4,2),(4,3),(4,4)"//
     
     var buttonList = [UIButton]()
     var imageList = [UIImageView]()
