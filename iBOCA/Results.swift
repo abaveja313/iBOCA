@@ -36,7 +36,7 @@ class Results: NSObject {
         let duration = Int(elapsedTime)
         var res = name! + " (" + String(duration) + " secs): "
         if numErrors > 0 {
-            res = res + "\(numErrors) Errors "
+            res = res + "\(numErrors) Error\(numErrors > 1 ? "s" : ""); "
         }
         if shortDescription != nil {
             res = res + shortDescription!
