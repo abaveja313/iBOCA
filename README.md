@@ -4,7 +4,7 @@ Assesses disorientation, memory loss and behavioural problem by giving the patie
 ## Simple Memory
 Assesses short term memory by showing the patient a series of images to remember and recall after a period of time. 
 ## Visual Association
-Assesses ___ by displaying a series images with two distinct objects in them and asks the patient to recall them after a period of time.
+Is a possible indicator for DAT type dementia by inducing robust incidental or effortless learning via displaying images with 2 distinct objects for patients to recognize and identify.
 ## Trails
 Assesses visual association, executive function and cognitive processing speed by having the patient connect numbered and lettered dots in acending number-letter-number-letter order.
 ## Forward/Backward Digit Span
@@ -18,6 +18,6 @@ Assesses concentration and memory by giving the patient a number and asking them
 ## Forward/Backward Spatial Span
 Assesses visuospatial ability and working memory capacity by giving the patient a series of numbers and asking them to repeat the series in the same(forwards) or reverse(backwards) order given.
 ## Naming Pictures
-Is a possible indicator for DAT type dementia by inducing robust incidental or effortless learning via displaying images wit h2 distinct objects for patients to recognize and name
+Assesses cognitive deterioration in Alzheimer patients, because it has been found that the number of pictures patients can name, and the types of errors they commit, change as the illness advances.
 ## Semantic List Generation
-Assesses frontal lobe function by asking the patient to list of as many words as they can from a certain category i.e. Fruits
+Assesses frontal lobe function by asking the patient to list of as many words as they can from a certain category i.e. Fruits.
