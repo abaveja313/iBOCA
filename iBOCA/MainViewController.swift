@@ -213,8 +213,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         
         
         if Status[TestVisualAssociation] == TestStatus.Running {
-            LabelVA.isHidden = false
-            LabelVA.text = getTimeDelay(startTime: startTimeVA)
+            LabelVA.isHidden = true
+//            LabelVA.text = getTimeDelay(startTime: startTimeVA)
             
         } else {
             LabelVA.isHidden = true

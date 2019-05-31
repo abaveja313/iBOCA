@@ -1371,20 +1371,49 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
+                                    <action selector="btnBackTapped:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="LlL-Ur-HPh"/>
                                     <segue destination="BYZ-38-t0r" kind="show" id="Bhp-ON-e9m"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPF-ek-IJ1">
+                                <rect key="frame" x="56" y="334" width="50" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="C5Q-9r-X8a"/>
+                                    <constraint firstAttribute="width" constant="50" id="Sgv-Yl-5fI"/>
+                                </constraints>
+                                <state key="normal" image="arrow_left"/>
+                                <connections>
+                                    <action selector="btnArrowLeftTapped:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="Q7c-SG-wVn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bh-0B-mFk">
+                                <rect key="frame" x="918" y="334" width="50" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="DdC-2K-zYp"/>
+                                    <constraint firstAttribute="height" constant="100" id="vK9-sp-dlU"/>
+                                </constraints>
+                                <state key="normal" image="arrow_right"/>
+                                <connections>
+                                    <action selector="btnArrowRightTapped:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="nRu-uH-zes"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="6Bh-0B-mFk" firstAttribute="centerY" secondItem="goU-XL-TJq" secondAttribute="centerY" id="MjF-mU-36d"/>
+                            <constraint firstItem="FPF-ek-IJ1" firstAttribute="leading" secondItem="goU-XL-TJq" secondAttribute="leading" constant="56" id="Rfc-Xd-HSG"/>
                             <constraint firstItem="WYa-6c-l75" firstAttribute="trailing" secondItem="goU-XL-TJq" secondAttribute="trailingMargin" id="SKp-eX-qGd"/>
+                            <constraint firstItem="FPF-ek-IJ1" firstAttribute="centerY" secondItem="goU-XL-TJq" secondAttribute="centerY" id="Wjp-of-8Y8"/>
                             <constraint firstItem="oc7-I2-y1A" firstAttribute="top" secondItem="Duy-pN-u0O" secondAttribute="bottom" constant="55" id="YCR-TN-fiZ"/>
+                            <constraint firstAttribute="trailing" secondItem="6Bh-0B-mFk" secondAttribute="trailing" constant="56" id="YR9-Fh-gg7"/>
                             <constraint firstItem="oc7-I2-y1A" firstAttribute="leading" secondItem="goU-XL-TJq" secondAttribute="leadingMargin" id="ezw-9n-8Ll"/>
                             <constraint firstItem="WYa-6c-l75" firstAttribute="firstBaseline" secondItem="oc7-I2-y1A" secondAttribute="firstBaseline" id="iPs-Tn-Cpn"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="back" destination="oc7-I2-y1A" id="Q0b-Ax-cGb"/>
+                        <outlet property="btnArrowLeft" destination="FPF-ek-IJ1" id="iKN-Qk-gOK"/>
+                        <outlet property="btnArrowRight" destination="6Bh-0B-mFk" id="VrI-if-pUx"/>
                         <outlet property="correct" destination="aSM-WW-JrH" id="Lmo-cC-Q6r"/>
                         <outlet property="delayLabel" destination="lye-qf-3JC" id="3Ov-dI-WpV"/>
                         <outlet property="dk" destination="t5T-4P-RY4" id="o8w-Mx-L4D"/>
@@ -4490,5 +4519,6 @@
         <segue reference="fV2-tM-D7d"/>
         <segue reference="4Ka-99-iNP"/>
         <segue reference="wuj-UQ-84Y"/>
+        <segue reference="ZXe-jH-G6o"/>
     </inferredMetricsTieBreakers>
 </document>
