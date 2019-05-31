@@ -597,6 +597,110 @@
             </objects>
             <point key="canvasLocation" x="-3001.171875" y="4947.65625"/>
         </scene>
+        <!--Cats And DogsVC-->
+        <scene sceneID="Pfq-G8-Iq4">
+            <objects>
+                <viewController storyboardIdentifier="CatsAndDogsVC" id="ufB-Xa-AAF" customClass="CatsAndDogsVC" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r2I-Hb-9in"/>
+                        <viewControllerLayoutGuide type="bottom" id="emz-1w-FzK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1h0-14-KgQ">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azp-Sh-Pag">
+                                <rect key="frame" x="917" y="66" width="87" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="cK6-hG-5Tg"/>
+                                    <constraint firstAttribute="width" constant="87" id="ulH-L9-Buv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="btnStartTapped:" destination="ufB-Xa-AAF" eventType="touchUpInside" id="GX8-tU-wov"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgN-7V-4QD">
+                                <rect key="frame" x="120" y="66" width="87" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="87" id="H9C-JL-hGg"/>
+                                    <constraint firstAttribute="height" constant="50" id="Oyz-kg-a44"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="End"/>
+                                <connections>
+                                    <action selector="btnEndTapped:" destination="ufB-Xa-AAF" eventType="touchUpInside" id="bCz-LL-rBN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1a-rR-BLM">
+                                <rect key="frame" x="227" y="66" width="108" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="Hgx-D2-XoY"/>
+                                    <constraint firstAttribute="height" constant="50" id="pnG-0V-f2o"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="btnResetTapped:" destination="ufB-Xa-AAF" eventType="touchUpInside" id="bvZ-Pa-Nsq"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sequence Selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5U-KZ-vba">
+                                <rect key="frame" x="376.5" y="73" width="271" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="30" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rYC-ha-XF7">
+                                <rect key="frame" x="20" y="141" width="984" height="552"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogk-PT-g0O">
+                                <rect key="frame" x="20" y="66" width="80" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="BNM-IL-iQ5"/>
+                                    <constraint firstAttribute="width" constant="80" id="hvJ-Mk-HmF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="ufB-Xa-AAF" eventType="touchUpInside" id="sBi-HE-JwJ"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="4Ka-99-iNP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="rYC-ha-XF7" secondAttribute="bottom" constant="25" id="8Vo-DP-Pzx"/>
+                            <constraint firstItem="azp-Sh-Pag" firstAttribute="firstBaseline" secondItem="ogk-PT-g0O" secondAttribute="firstBaseline" id="BFA-wq-lHC"/>
+                            <constraint firstItem="rYC-ha-XF7" firstAttribute="trailing" secondItem="azp-Sh-Pag" secondAttribute="trailing" id="BNh-TQ-f4J"/>
+                            <constraint firstItem="I1a-rR-BLM" firstAttribute="firstBaseline" secondItem="ogk-PT-g0O" secondAttribute="firstBaseline" id="DrF-uP-Lln"/>
+                            <constraint firstItem="UgN-7V-4QD" firstAttribute="leading" secondItem="ogk-PT-g0O" secondAttribute="trailing" constant="20" id="O70-dr-OSf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="azp-Sh-Pag" secondAttribute="trailing" id="V76-EL-mh0"/>
+                            <constraint firstItem="I1a-rR-BLM" firstAttribute="leading" secondItem="UgN-7V-4QD" secondAttribute="trailing" constant="20" id="a0L-pi-nq9"/>
+                            <constraint firstItem="ogk-PT-g0O" firstAttribute="leading" secondItem="1h0-14-KgQ" secondAttribute="leadingMargin" id="eW5-xd-pED"/>
+                            <constraint firstItem="v5U-KZ-vba" firstAttribute="centerX" secondItem="1h0-14-KgQ" secondAttribute="centerX" id="g8c-eW-fVI"/>
+                            <constraint firstItem="ogk-PT-g0O" firstAttribute="top" secondItem="r2I-Hb-9in" secondAttribute="bottom" constant="46" id="pEE-ER-mLv"/>
+                            <constraint firstItem="v5U-KZ-vba" firstAttribute="firstBaseline" secondItem="ogk-PT-g0O" secondAttribute="firstBaseline" id="qpE-QI-GP9"/>
+                            <constraint firstItem="UgN-7V-4QD" firstAttribute="firstBaseline" secondItem="ogk-PT-g0O" secondAttribute="firstBaseline" id="tqy-TN-jXu"/>
+                            <constraint firstItem="rYC-ha-XF7" firstAttribute="top" secondItem="ogk-PT-g0O" secondAttribute="bottom" constant="25" id="uYx-lk-8bf"/>
+                            <constraint firstItem="rYC-ha-XF7" firstAttribute="leading" secondItem="ogk-PT-g0O" secondAttribute="leading" id="yXe-iW-qlr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnBack" destination="ogk-PT-g0O" id="r7H-A6-aBU"/>
+                        <outlet property="btnEnd" destination="UgN-7V-4QD" id="Pqj-4R-Anq"/>
+                        <outlet property="btnReset" destination="I1a-rR-BLM" id="XxL-LO-Upl"/>
+                        <outlet property="btnStart" destination="azp-Sh-Pag" id="piZ-xr-dws"/>
+                        <outlet property="lbResult" destination="rYC-ha-XF7" id="XGS-uB-zKq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FMq-ow-8hD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2324.4140625" y="4950.78125"/>
+        </scene>
         <!--Tap In Order Backwards View Controller-->
         <scene sceneID="dBI-Cj-uEw">
             <objects>
@@ -874,7 +978,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="kzf-ng-R8q" kind="show" id="8Lr-4L-mv2"/>
+                                    <segue destination="ufB-Xa-AAF" kind="show" id="Bzt-TP-Szs"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="144-5O-YWO">
@@ -4413,6 +4517,8 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="eep-iX-tUz"/>
         <segue reference="fV2-tM-D7d"/>
+        <segue reference="4Ka-99-iNP"/>
+        <segue reference="wuj-UQ-84Y"/>
         <segue reference="ZXe-jH-G6o"/>
     </inferredMetricsTieBreakers>
 </document>

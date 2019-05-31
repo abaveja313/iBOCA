@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
@@ -161,6 +162,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsAndDogsVC.swift; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				E2B9F7FF1DD144A70035FE0B /* VATask.swift */,
 				F27AEA921EEC6E4200AFB3D1 /* DigitTests */,
 				43960F4B1E3C0758006FDC7B /* CatsAndDogsViewController.swift */,
+				0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */,
 				F261D4E41E3E33620039A545 /* Trails */,
 				1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */,
 				1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */,
@@ -750,6 +753,7 @@
 				1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */,
 				E5F13D1B22572CDF002FB4FF /* IQUIView+Hierarchy.swift in Sources */,
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
+				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
 				43343D461E3E66BC001779AC /* TapInOrderBackwardsViewController.swift in Sources */,
 				1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */,
