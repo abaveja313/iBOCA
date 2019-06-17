@@ -1592,31 +1592,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iBoca logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="b3O-WQ-2Bx">
-                                <rect key="frame" x="166" y="70" width="693" height="272"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iBoca logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="b3O-WQ-2Bx">
+                                <rect key="frame" x="165" y="70" width="694" height="272"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="272" id="rav-hH-Y4U"/>
+                                </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-Bz-fX3">
-                                <rect key="frame" x="386" y="400" width="253" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-Bz-fX3">
+                                <rect key="frame" x="389" y="392" width="246" height="70"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="48"/>
                                 <state key="normal" title="Go to Tests"/>
                                 <connections>
                                     <action selector="GotoTests:" destination="RmL-Z6-Ri2" eventType="touchUpInside" id="dwm-iy-sGX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lT2-9Y-5Dc">
-                                <rect key="frame" x="461" y="530" width="102" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lT2-9Y-5Dc">
+                                <rect key="frame" x="462" y="512" width="100" height="55"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <state key="normal" title="Setup"/>
                                 <connections>
                                     <segue destination="uIz-3z-MW0" kind="show" id="lm0-et-AEL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yws-ZT-SJu">
-                                <rect key="frame" x="370" y="682" width="285" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yws-ZT-SJu">
+                                <rect key="frame" x="372.5" y="617" width="279" height="48"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <state key="normal" title="Acknowledgements"/>
                                 <connections>
@@ -1625,6 +1624,18 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yws-ZT-SJu" firstAttribute="centerX" secondItem="b3O-WQ-2Bx" secondAttribute="centerX" id="EdQ-TS-wUW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="b3O-WQ-2Bx" secondAttribute="trailing" constant="145" id="Obl-Io-Zkb"/>
+                            <constraint firstItem="b3O-WQ-2Bx" firstAttribute="leading" secondItem="hIr-vh-fIp" secondAttribute="leadingMargin" constant="145" id="SkP-PI-zWQ"/>
+                            <constraint firstItem="yws-ZT-SJu" firstAttribute="top" secondItem="lT2-9Y-5Dc" secondAttribute="bottom" constant="50" id="USQ-M0-WLi"/>
+                            <constraint firstItem="lT2-9Y-5Dc" firstAttribute="top" secondItem="hkA-Bz-fX3" secondAttribute="bottom" constant="50" id="WFo-gZ-zyU"/>
+                            <constraint firstItem="b3O-WQ-2Bx" firstAttribute="centerX" secondItem="hIr-vh-fIp" secondAttribute="centerX" id="biC-6e-YiL"/>
+                            <constraint firstItem="lT2-9Y-5Dc" firstAttribute="centerX" secondItem="b3O-WQ-2Bx" secondAttribute="centerX" id="cT1-uu-rZh"/>
+                            <constraint firstItem="hkA-Bz-fX3" firstAttribute="centerX" secondItem="b3O-WQ-2Bx" secondAttribute="centerX" id="nAJ-wm-wqK"/>
+                            <constraint firstItem="b3O-WQ-2Bx" firstAttribute="top" secondItem="xmi-Xp-Iqt" secondAttribute="bottom" constant="50" id="oiY-Ok-bbu"/>
+                            <constraint firstItem="hkA-Bz-fX3" firstAttribute="top" secondItem="b3O-WQ-2Bx" secondAttribute="bottom" constant="50" id="pfT-hh-e1f"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="GotoTests" destination="hkA-Bz-fX3" id="Wsn-aC-fU5"/>
@@ -4514,11 +4525,10 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="1Ce-5F-Xm0"/>
         <segue reference="Ges-mF-PUS"/>
-        <segue reference="eep-iX-tUz"/>
+        <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="4Ka-99-iNP"/>
-        <segue reference="wuj-UQ-84Y"/>
         <segue reference="ZXe-jH-G6o"/>
     </inferredMetricsTieBreakers>
 </document>
