@@ -199,7 +199,6 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
             let newid = ((id < 8) ? id : id - 8)
             let spacing: CGFloat = 60.0
             let centerY: CGFloat = self.bottomConstraintButtonResults() + (CGFloat(newid) * spacing)
-            print("centerY: \(centerY) - \(newid)")
             button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: centerY).isActive = true
         }
     }

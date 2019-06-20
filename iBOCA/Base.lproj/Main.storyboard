@@ -820,7 +820,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eub-KA-jB3">
-                                <rect key="frame" x="730.5" y="78" width="150" height="35"/>
+                                <rect key="frame" x="730.5" y="63.5" width="150" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="MqF-BE-cHu"/>
                                     <constraint firstAttribute="width" constant="150" id="O2J-9X-hsw"/>
@@ -878,7 +878,6 @@
                             <constraint firstItem="yyG-aO-hwr" firstAttribute="leading" secondItem="hJe-BY-VQo" secondAttribute="trailing" constant="8" id="Luc-vV-DBa"/>
                             <constraint firstItem="hJe-BY-VQo" firstAttribute="leading" secondItem="yYV-Ns-n2M" secondAttribute="trailing" constant="40" id="OEW-3Q-cht"/>
                             <constraint firstItem="yYV-Ns-n2M" firstAttribute="leading" secondItem="eBt-vd-rcb" secondAttribute="leadingMargin" id="PPl-jj-WJn"/>
-                            <constraint firstItem="eub-KA-jB3" firstAttribute="firstBaseline" secondItem="yYV-Ns-n2M" secondAttribute="firstBaseline" id="RwH-VC-Kg2"/>
                             <constraint firstItem="5rw-Jj-8U9" firstAttribute="leading" secondItem="AcT-sn-nDc" secondAttribute="trailing" constant="20" id="VbP-31-8Gg"/>
                             <constraint firstItem="AcT-sn-nDc" firstAttribute="leading" secondItem="yyG-aO-hwr" secondAttribute="trailing" constant="30" id="WP7-5W-FuW"/>
                             <constraint firstItem="bCa-7d-rcb" firstAttribute="firstBaseline" secondItem="yYV-Ns-n2M" secondAttribute="firstBaseline" id="Xlv-J2-GB2"/>
@@ -886,6 +885,7 @@
                             <constraint firstItem="yYV-Ns-n2M" firstAttribute="height" secondItem="bCa-7d-rcb" secondAttribute="height" id="j2m-yZ-Rbo"/>
                             <constraint firstItem="yyG-aO-hwr" firstAttribute="centerY" secondItem="hJe-BY-VQo" secondAttribute="centerY" id="kQy-yE-eZL"/>
                             <constraint firstItem="yYV-Ns-n2M" firstAttribute="top" secondItem="xPU-jJ-9wr" secondAttribute="bottom" constant="46" id="pao-SX-Nin"/>
+                            <constraint firstItem="eub-KA-jB3" firstAttribute="centerY" secondItem="yYV-Ns-n2M" secondAttribute="centerY" id="tcT-Mo-Bja"/>
                         </constraints>
                     </view>
                     <connections>
@@ -4525,10 +4525,9 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tL4-Xu-c4y"/>
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="Bhp-ON-e9m"/>
+        <segue reference="OeE-YP-4JC"/>
     </inferredMetricsTieBreakers>
 </document>
