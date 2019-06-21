@@ -278,9 +278,19 @@ class PicturesViewController: ViewController {
             x = 575.0
             y = (575.0*(image.size.height)/(image.size.width))
         }
+        let bottomContraintButtonNext = self.bottomConstraintButtonNext()
+        imageView.frame = CGRect(x: (512.0-(x/2)), y: bottomContraintButtonNext, width: x, height: y)
         
-        imageView.frame = CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y)
-        
+    }
+    
+    // Get bottom constraint of button results
+    private func bottomConstraintButtonNext() -> CGFloat {
+        var bottomConstraint = self.btnNext.frame.origin.y + self.btnNext.frame.size.height + 20
+        if #available(iOS 11.0, *) { }
+        else {
+            bottomConstraint = self.btnNext.frame.origin.y + self.btnNext.frame.size.height + 40
+        }
+        return bottomConstraint
     }
     
     private func startNew() {

@@ -185,7 +185,9 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
             if(ectid != 0) {
                 let order = ProtocolOrder[Protocol]![Int(ectid-1)]
                 button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-                button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant:CGFloat(180+order*70)).isActive = true
+                let spacing: CGFloat = 60.0
+                let centerY: CGFloat = self.bottomConstraintButtonResults() + (CGFloat(order) * spacing)
+                button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: centerY).isActive = true
             }
         } else {
             if id < 8 {
@@ -193,9 +195,22 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
             } else {
                 button.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant:-250).isActive = true
             }
+
             let newid = ((id < 8) ? id : id - 8)
-            button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant:CGFloat(200+newid*70)).isActive = true
+            let spacing: CGFloat = 60.0
+            let centerY: CGFloat = self.bottomConstraintButtonResults() + (CGFloat(newid) * spacing)
+            button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: centerY).isActive = true
         }
+    }
+    
+    // Get bottom constraint of button results
+    private func bottomConstraintButtonResults() -> CGFloat {
+        var bottomConstraint = self.ButtonResults.frame.origin.y + self.ButtonResults.frame.size.height + 20
+        if #available(iOS 11.0, *) { }
+        else {
+        bottomConstraint = self.ButtonResults.frame.origin.y + self.ButtonResults.frame.size.height + 40
+        }
+        return bottomConstraint
     }
     
     func update(timer: Timer) {

@@ -360,8 +360,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         // Show Arrow
         self.btnArrowRight.isHidden = false
         self.btnArrowLeft.isHidden = true
-        
-        outputDisplayImage(mixedImages[testCount])
+        outputDisplayImage(withImageName: mixedImages[testCount])
     }
     
     func outputDisplayImage(_ name: String) {
@@ -440,7 +439,8 @@ class VATask: ViewController, UIPickerViewDelegate {
             y = (575.0*(image.size.height)/(image.size.width))
         }
         
-        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y))
+        let yPostion = self.back.frame.origin.y + self.back.frame.size.height
+        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: yPostion, width: x, height: y))
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
         self.view.addSubview(imageView)
@@ -599,7 +599,8 @@ class VATask: ViewController, UIPickerViewDelegate {
             y = (575.0*(image.size.height)/(image.size.width))
         }
         
-        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y))
+        let yPostion = self.back.frame.origin.y + self.back.frame.size.height
+        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: yPostion, width: x, height: y))
         
         imageView.image = image
         

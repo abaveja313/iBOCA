@@ -166,17 +166,18 @@ class TapInOrderViewController: ViewController {
             let(a,b) = places[i]
             
             let x : CGFloat = CGFloat(a)
-            let y : CGFloat = CGFloat(b)
+            let y : CGFloat = CGFloat(b - 50)
             
             let button = UIButton(type: UIButtonType.system)
             buttonList.append(button)
             button.frame = CGRect(x: x, y: y, width: 75, height: 75)
+            print(button.frame)
             button.backgroundColor = UIColor.red
             self.view.addSubview(button)
             
         }
         
-        print("order is \(order)")
+//        print("order is \(order)")
     }
     
     
