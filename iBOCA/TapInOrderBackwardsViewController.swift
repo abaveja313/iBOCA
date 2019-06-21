@@ -140,7 +140,7 @@ class TapInOrderBackwardsViewController: ViewController {
             let(a,b) = places[i]
             
             let x : CGFloat = CGFloat(a)
-            let y : CGFloat = CGFloat(b)
+            let y : CGFloat = CGFloat(b - 50)
             
             let button = UIButton(type: UIButtonType.system)
             buttonList.append(button)
