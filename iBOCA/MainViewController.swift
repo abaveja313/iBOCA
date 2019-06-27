@@ -48,6 +48,9 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     @IBOutlet weak var ButtonResults: UIButton!
     @IBOutlet weak var ButtonDWP: UIButton!
     
+    //MARK: - New UI
+    
+    @IBOutlet weak var mViewMain: UIView!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil

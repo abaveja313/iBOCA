@@ -1163,21 +1163,60 @@
                                     <segue destination="RmL-Z6-Ri2" kind="show" identifier="BackToLanding" id="Ahl-wP-pho"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_background" translatesAutoresizingMaskIntoConstraints="NO" id="ozH-LB-gKo">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9O-jK-IAf">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quu-ao-NlL" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
+                                        <rect key="frame" x="762" y="50" width="220" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="RRJ-HK-1RB"/>
+                                            <constraint firstAttribute="height" constant="54" id="hGM-rc-1NE"/>
+                                        </constraints>
+                                        <state key="normal" title="DONE WITH PATIENT"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vN-LH-FJt" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
+                                        <rect key="frame" x="546" y="50" width="196" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="196" id="7oB-aF-TKL"/>
+                                            <constraint firstAttribute="height" constant="54" id="hAL-rE-opZ"/>
+                                        </constraints>
+                                        <state key="normal" title="RESULT"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="1vN-LH-FJt" firstAttribute="centerY" secondItem="quu-ao-NlL" secondAttribute="centerY" id="6BF-cW-Bff"/>
+                                    <constraint firstAttribute="trailing" secondItem="quu-ao-NlL" secondAttribute="trailing" constant="42" id="7Vi-o1-DqG"/>
+                                    <constraint firstItem="quu-ao-NlL" firstAttribute="leading" secondItem="1vN-LH-FJt" secondAttribute="trailing" constant="20" id="8iO-oQ-vGZ"/>
+                                    <constraint firstItem="quu-ao-NlL" firstAttribute="top" secondItem="E9O-jK-IAf" secondAttribute="top" constant="50" id="ZAN-W5-0mY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ozH-LB-gKo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="99B-7p-H1e"/>
                             <constraint firstItem="LE9-Nm-3Tw" firstAttribute="leading" secondItem="9Yk-2H-hs0" secondAttribute="trailing" constant="50" id="Bnj-eA-nmJ"/>
                             <constraint firstItem="bV2-Na-iag" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="90" id="D3W-Ws-K2z"/>
+                            <constraint firstItem="E9O-jK-IAf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LCd-RT-djh"/>
+                            <constraint firstAttribute="trailing" secondItem="E9O-jK-IAf" secondAttribute="trailing" id="NUB-aD-Xdz"/>
                             <constraint firstItem="LE9-Nm-3Tw" firstAttribute="centerY" secondItem="9Yk-2H-hs0" secondAttribute="centerY" id="Pph-qt-LfS"/>
                             <constraint firstItem="bV2-Na-iag" firstAttribute="leading" secondItem="FhK-uw-Mtv" secondAttribute="trailing" constant="47" id="Tdi-VP-fEq"/>
+                            <constraint firstAttribute="trailing" secondItem="ozH-LB-gKo" secondAttribute="trailing" id="TnE-L0-nbR"/>
                             <constraint firstItem="FhK-uw-Mtv" firstAttribute="leading" secondItem="oPu-WI-pd0" secondAttribute="trailing" constant="100" id="W0n-Jb-Tph"/>
                             <constraint firstItem="FhK-uw-Mtv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="bsA-1u-sXM"/>
+                            <constraint firstItem="E9O-jK-IAf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gzX-tn-lOp"/>
                             <constraint firstItem="FhK-uw-Mtv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h6j-ZY-N3M"/>
                             <constraint firstItem="4Wv-7u-b6J" firstAttribute="leading" secondItem="2DB-z8-IDB" secondAttribute="trailing" constant="35" id="iio-Zm-zLb"/>
+                            <constraint firstAttribute="bottom" secondItem="E9O-jK-IAf" secondAttribute="bottom" id="nzq-DJ-9vK"/>
                             <constraint firstItem="fZ6-Ae-DEs" firstAttribute="top" secondItem="FhK-uw-Mtv" secondAttribute="bottom" id="pgN-zO-to2"/>
                             <constraint firstItem="4Wv-7u-b6J" firstAttribute="centerY" secondItem="2DB-z8-IDB" secondAttribute="centerY" id="sEB-2R-Xhb"/>
                             <constraint firstItem="fZ6-Ae-DEs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sfO-Je-Zz4"/>
+                            <constraint firstItem="ozH-LB-gKo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="sgK-xV-SkT"/>
                             <constraint firstItem="oPu-WI-pd0" firstAttribute="top" secondItem="bV2-Na-iag" secondAttribute="top" id="viT-sV-TQp"/>
+                            <constraint firstAttribute="bottom" secondItem="ozH-LB-gKo" secondAttribute="bottom" id="w3E-qn-ms5"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1204,11 +1243,12 @@
                         <outlet property="LabelSM" destination="LE9-Nm-3Tw" id="cQa-Iu-8er"/>
                         <outlet property="LabelVA" destination="4Wv-7u-b6J" id="BFb-xX-BV3"/>
                         <outlet property="PatiantID" destination="fZ6-Ae-DEs" id="tBs-EL-sdw"/>
+                        <outlet property="mViewMain" destination="E9O-jK-IAf" id="CSI-M5-WUW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4333.59375" y="1837.5"/>
+            <point key="canvasLocation" x="-4334.1796875" y="1837.5"/>
         </scene>
         <!--Tap In Order View Controller-->
         <scene sceneID="6pb-xV-nzR">
@@ -4544,9 +4584,10 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ycE-uf-lWw"/>
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="dL7-Sq-hiA"/>
+        <segue reference="Raf-vC-nZd"/>
     </inferredMetricsTieBreakers>
 </document>
