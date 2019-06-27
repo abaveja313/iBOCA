@@ -12,6 +12,7 @@
 		0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */; };
 		0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */; };
 		0E1A22DF22C468C400C8CFDF /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */; };
+		0E1A22E122C475D500C8CFDF /* FontConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22E022C475D400C8CFDF /* FontConstants.swift */; };
 		0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
@@ -190,6 +191,7 @@
 		0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientConstants.swift; sourceTree = "<group>"; };
 		0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		0E1A22E022C475D400C8CFDF /* FontConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontConstants.swift; sourceTree = "<group>"; };
 		0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsAndDogsVC.swift; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 		0E1A22DB22C4688500C8CFDF /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				0E1A22E022C475D400C8CFDF /* FontConstants.swift */,
 				0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */,
 				0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */,
 			);
@@ -916,6 +919,7 @@
 				F261D4E81E3E33D00039A545 /* DrawingViewTrails.swift in Sources */,
 				0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */,
 				E5F13D1922572CDF002FB4FF /* IQUIViewController+Additions.swift in Sources */,
+				0E1A22E122C475D500C8CFDF /* FontConstants.swift in Sources */,
 				E5F13D1C22572CDF002FB4FF /* IQNSArray+Sort.swift in Sources */,
 				F2A0F12F1F02682500A92B1F /* MOCAandGDT.swift in Sources */,
 				E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */,

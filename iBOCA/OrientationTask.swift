@@ -165,6 +165,9 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         TimeOK = false
     }
     
+    @IBOutlet weak var btnComplete: GradientButton!
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -193,6 +196,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupViews()
         //declare pickerviews
         WeekPicker.delegate = self
         StatePicker.delegate = self
@@ -458,5 +462,14 @@ extension Date {
         
         let randomDate = gregorian?.date(byAdding: offsetComponents, to: today, options: .init(rawValue: 0) )
         return randomDate
+    }
+}
+
+// MARK: - Setup UI
+extension OrientationTask {
+    fileprivate func setupViews() {
+        let colors = [Color.color(hexString: "#69C394").cgColor, Color.color(hexString: "#40B578").cgColor]
+        let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7).cgColor
+        self.btnComplete.setTitleWithFont(title: "COMPLETE", font: Font.font(size: 18.0, weight: UIFontWeightBold), colors: colors, shadowColor: shadowColor)
     }
 }
