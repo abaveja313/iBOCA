@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22D322C4654E00C8CFDF /* GradientButton.swift */; };
+		0E1A22D722C4659300C8CFDF /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22D622C4659300C8CFDF /* BaseButton.swift */; };
+		0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */; };
+		0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */; };
+		0E1A22DF22C468C400C8CFDF /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */; };
 		0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
@@ -162,6 +167,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E1A22D322C4654E00C8CFDF /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		0E1A22D622C4659300C8CFDF /* BaseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
+		0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientConstants.swift; sourceTree = "<group>"; };
+		0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsAndDogsVC.swift; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
@@ -273,6 +283,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E1A22CC22C4651D00C8CFDF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A22D222C4653300C8CFDF /* Common */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		0E1A22D222C4653300C8CFDF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A22D322C4654E00C8CFDF /* GradientButton.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		0E1A22D522C4658100C8CFDF /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A22D622C4659300C8CFDF /* BaseButton.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		0E1A22D822C4677D00C8CFDF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		0E1A22DB22C4688500C8CFDF /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */,
+				0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		0E9D5080228D40400055B676 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +357,10 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				0E1A22DB22C4688500C8CFDF /* Constants */,
+				0E1A22D822C4677D00C8CFDF /* Extensions */,
+				0E1A22D522C4658100C8CFDF /* Base */,
+				0E1A22CC22C4651D00C8CFDF /* Views */,
 				0E9D5080228D40400055B676 /* Settings */,
 				E5A6AFE9226D715400493187 /* Manager */,
 				E5F13CF322572CA0002FB4FF /* ExternalLib */,
@@ -767,13 +822,16 @@
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
+				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
 				F24E6E6E1E1BC2C300E29995 /* AllResults.swift in Sources */,
 				F261D4E81E3E33D00039A545 /* DrawingViewTrails.swift in Sources */,
+				0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */,
 				E5F13D1922572CDF002FB4FF /* IQUIViewController+Additions.swift in Sources */,
 				E5F13D1C22572CDF002FB4FF /* IQNSArray+Sort.swift in Sources */,
 				F2A0F12F1F02682500A92B1F /* MOCAandGDT.swift in Sources */,
 				E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */,
+				0E1A22D722C4659300C8CFDF /* BaseButton.swift in Sources */,
 				E5F13D1222572CDF002FB4FF /* IQInvocation.swift in Sources */,
 				67E389232283D32600A8277C /* SMCell.swift in Sources */,
 				E5F13D1622572CDF002FB4FF /* IQKeyboardReturnKeyHandler.swift in Sources */,
@@ -782,6 +840,7 @@
 				F261D4EA1E3E33F00039A545 /* Bubbles.swift in Sources */,
 				F24E6E6D1E1BC2C300E29995 /* Results.swift in Sources */,
 				E5F13D1322572CDF002FB4FF /* IQKeyboardManagerConstantsInternal.swift in Sources */,
+				0E1A22DF22C468C400C8CFDF /* ColorConstants.swift in Sources */,
 				43343D441E3E66A3001779AC /* TapInOrderViewController.swift in Sources */,
 				43343D481E3E66D5001779AC /* PicturesViewController.swift in Sources */,
 				E5F13D1122572CDF002FB4FF /* IQUIView+IQKeyboardToolbar.swift in Sources */,
@@ -789,6 +848,7 @@
 				E5F13D1A22572CDF002FB4FF /* IQUITextFieldView+Additions.swift in Sources */,
 				E5F13D0F22572CDF002FB4FF /* IQBarButtonItem.swift in Sources */,
 				F27728A61E33C91A004F8A6E /* MainViewController.swift in Sources */,
+				0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */,
 				F239513B1EFFE6A1004B09E5 /* PatiantID.swift in Sources */,
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,
 				F27AEA941EEC6E7B00AFB3D1 /* DigitBase.swift in Sources */,
