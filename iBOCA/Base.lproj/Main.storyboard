@@ -1063,9 +1063,6 @@
                                 <rect key="frame" x="209" y="110" width="105" height="48"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <state key="normal" title="Results"/>
-                                <connections>
-                                    <segue destination="mFE-dR-SxI" kind="show" id="mXl-NW-Ww1"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOc-f8-JO1">
                                 <rect key="frame" x="128" y="520" width="267" height="48"/>
@@ -1176,6 +1173,9 @@
                                             <constraint firstAttribute="height" constant="54" id="hGM-rc-1NE"/>
                                         </constraints>
                                         <state key="normal" title="DONE WITH PATIENT"/>
+                                        <connections>
+                                            <action selector="sendEmail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vsd-RB-AOD"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vN-LH-FJt" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
                                         <rect key="frame" x="546" y="50" width="196" height="54"/>
@@ -1184,6 +1184,9 @@
                                             <constraint firstAttribute="height" constant="54" id="hAL-rE-opZ"/>
                                         </constraints>
                                         <state key="normal" title="RESULT"/>
+                                        <connections>
+                                            <segue destination="mFE-dR-SxI" kind="show" id="5Sa-TM-SyL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1243,6 +1246,8 @@
                         <outlet property="LabelSM" destination="LE9-Nm-3Tw" id="cQa-Iu-8er"/>
                         <outlet property="LabelVA" destination="4Wv-7u-b6J" id="BFb-xX-BV3"/>
                         <outlet property="PatiantID" destination="fZ6-Ae-DEs" id="tBs-EL-sdw"/>
+                        <outlet property="mBtnDWP" destination="quu-ao-NlL" id="8Ip-K1-vtJ"/>
+                        <outlet property="mBtnResult" destination="1vN-LH-FJt" id="JIP-vi-fgx"/>
                         <outlet property="mViewMain" destination="E9O-jK-IAf" id="CSI-M5-WUW"/>
                     </connections>
                 </viewController>
@@ -3386,13 +3391,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBB-4p-3Wn">
-                                <rect key="frame" x="42" y="75" width="232" height="34"/>
+                                <rect key="frame" x="42" y="75" width="243" height="34"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="LzA-Ld-jF0">
-                                        <rect key="frame" x="0.0" y="0.0" width="12" height="34"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="LzA-Ld-jF0">
+                                        <rect key="frame" x="0.0" y="0.0" width="14" height="34"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ORIENTATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-s9-9yx">
-                                        <rect key="frame" x="42" y="0.0" width="190" height="34"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ORIENTATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-s9-9yx">
+                                        <rect key="frame" x="44" y="0.0" width="199" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="h5B-JE-Sfv"/>
                                         </constraints>
@@ -4618,10 +4623,10 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ycE-uf-lWw"/>
+        <segue reference="5Sa-TM-SyL"/>
         <segue reference="Ges-mF-PUS"/>
         <segue reference="Ahl-wP-pho"/>
         <segue reference="fV2-tM-D7d"/>
-        <segue reference="Raf-vC-nZd"/>
+        <segue reference="e4f-h0-eqr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -51,6 +51,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     //MARK: - New UI
     
     @IBOutlet weak var mViewMain: UIView!
+    @IBOutlet weak var mBtnResult: GradientButton!
+    @IBOutlet weak var mBtnDWP: GradientButton!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
@@ -162,6 +164,9 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         
         segueToLanding = false
         iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        
+        //NEW UI
+        setupButton()
     }
     
     
@@ -270,5 +275,22 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     }
     
     
+}
+
+//MARK: - New UI
+extension MainViewController {
+    func setupButton(){
+        mBtnResult.setTitle(title: "RESULT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        mBtnResult.setupShadow(withColor: Color.color(hexString: "FDECBF"), sketchBlur: 9, opacity: 1)
+        mBtnResult.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        mBtnResult.render()
+        mBtnResult.addTextSpacing(-0.36)
+        //
+        mBtnDWP.setTitle(title: "DONE WITH PATIENT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        mBtnDWP.setupShadow(withColor: Color.color(hexString: "FE8275"), sketchBlur: 9, opacity: 1)
+        mBtnDWP.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        mBtnDWP.render()
+        mBtnDWP.addTextSpacing(-0.36)
+    }
 }
 

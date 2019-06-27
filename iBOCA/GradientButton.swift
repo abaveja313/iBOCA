@@ -14,6 +14,37 @@
 
 import UIKit
 
+enum DirectionGradient {
+    //NOTE:
+    // (0,0) corresponds to the smallest coordinates of the layer's bounds rectangle, which on iOS is its upper-left corner
+    // (1,1) corresponds to the largest coordinates of the layer's bounds rectangle, which on iOS is its lower-right corner
+    case lefToRight
+    case bottomToTop
+    case topToBottom
+    
+    var toStartPoint : CGPoint{
+        switch self {
+        case .lefToRight:
+            return CGPoint.zero
+        case .bottomToTop:
+            return CGPoint.init(x: 0.5, y: 1)
+        case .topToBottom:
+            return CGPoint.init(x: 0.5, y: 0)
+        }
+    }
+    
+    var toEndPoint : CGPoint{
+        switch self {
+        case .lefToRight:
+            return CGPoint.zero
+        case .bottomToTop:
+            return CGPoint.init(x: 0.5, y: 0)
+        case .topToBottom:
+            return CGPoint.init(x: 0.5, y: 1)
+        }
+    }
+}
+
 @IBDesignable
 class GradientButton: BaseButton {
     
@@ -23,9 +54,16 @@ class GradientButton: BaseButton {
     
     /// Set color from, color to
     var colors: [CGColor] = [Color.gradientFrom.cgColor, Color.gradientTo.cgColor]
+    var directGradient : DirectionGradient = DirectionGradient.bottomToTop
     
     /// Set color shadow
     var shadowColor: CGColor = Color.gradientShadow.cgColor
+    var cornerShadow : CGFloat = 8
+    var radiusShadow : CGFloat = 4.5
+    var opacityShadow : Float = 0.7
+    
+    
+    
 
     // MARK: - Setup button
     override func setupButton() {
@@ -60,6 +98,34 @@ extension GradientButton {
         self.shadowLayer.removeFromSuperlayer()
         self.configureGradient()
     }
+    
+    func setTitle(title:String,withFont font:UIFont){
+        self.setTitle(title, for: .normal)
+        self.titleLabel?.font = font
+    }
+    
+    
+    /// setup shadow for this Button
+    ///
+    /// - Parameters:
+    ///   - withColor: color of shadow
+    ///   - blur: blur indicate from file Sketch
+    func setupShadow(withColor color: UIColor,sketchBlur blur:CGFloat,opacity:Float){
+        self.shadowColor = color.cgColor
+        self.radiusShadow = blur * 0.5
+        self.opacityShadow = opacity
+        self.shadowLayer.removeFromSuperlayer()
+    }
+    
+    func setupGradient(arrColor:[UIColor],direction:DirectionGradient){
+        self.colors = arrColor.map { return $0.cgColor }
+        self.directGradient = direction
+        self.graLayer.removeFromSuperlayer()
+    }
+    
+    func render(){
+        configureShadowAndGradient()
+    }
 }
 
 
@@ -69,18 +135,41 @@ extension GradientButton {
     fileprivate func configureGradient() {
         self.graLayer = Gradient.getHorizontalGradient(withColors: [self.colors[0], self.colors[1]], frame: CGRect.init(x: 0, y: 0, width: frame.width, height: frame.height))
         
-        self.graLayer.cornerRadius = 8
+        self.graLayer.cornerRadius = cornerShadow
         self.layer.addSublayer(self.graLayer)
         
         self.shadowLayer = CAShapeLayer()
         
-        self.shadowLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: 8).cgPath
+        self.shadowLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerShadow).cgPath
         self.shadowLayer.fillColor = self.shadowColor
         self.shadowLayer.shadowColor = self.shadowColor
         self.shadowLayer.shadowPath = self.shadowLayer.path
         self.shadowLayer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-        self.shadowLayer.shadowOpacity = 0.7
-        self.shadowLayer.shadowRadius = 5
+        self.shadowLayer.shadowOpacity = opacityShadow
+        self.shadowLayer.shadowRadius = radiusShadow
+        
+        self.layer.insertSublayer(self.shadowLayer, at: 0)
+        
+        if let label = self.titleLabel {
+            self.bringSubview(toFront: label)
+        }
+    }
+    
+    fileprivate func configureShadowAndGradient() {
+        self.graLayer = Gradient.creGradient(withColors: self.colors, frame: self.bounds, start: directGradient.toStartPoint, end: directGradient.toEndPoint)
+        
+        self.graLayer.cornerRadius = cornerShadow
+        self.layer.addSublayer(self.graLayer)
+        
+        self.shadowLayer = CAShapeLayer()
+        
+        self.shadowLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerShadow).cgPath
+        self.shadowLayer.fillColor = self.shadowColor
+        self.shadowLayer.shadowColor = self.shadowColor
+        self.shadowLayer.shadowPath = self.shadowLayer.path
+        self.shadowLayer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        self.shadowLayer.shadowOpacity = opacityShadow
+        self.shadowLayer.shadowRadius = radiusShadow
         
         self.layer.insertSublayer(self.shadowLayer, at: 0)
         
