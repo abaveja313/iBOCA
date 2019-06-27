@@ -39,6 +39,7 @@ public struct Font {
         public static let regular: String       = "Montserrat-Regular"
         public static let thinItalic: String    = "Montserrat-ThinItalic"
         public static let thin: String          = "Montserrat-Thin"
+        public static let semiBold: String      = "Montserrat-SemiBold"
     }
     
     public struct LucidaGrande {

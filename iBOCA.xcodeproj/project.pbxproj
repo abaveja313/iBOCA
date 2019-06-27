@@ -51,6 +51,8 @@
 		4A328A7822C47B9100034075 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A328A6622C47B9100034075 /* Montserrat-Light.ttf */; };
 		4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A328A6722C47B9100034075 /* Montserrat-Thin.ttf */; };
 		4A328A7A22C47B9100034075 /* Montserrat-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A328A6822C47B9100034075 /* Montserrat-ExtraBoldItalic.ttf */; };
+		4A64C09822C4BD2D005A6F94 /* GoToTestCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64C09622C4BD2D005A6F94 /* GoToTestCollectionCell.swift */; };
+		4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */; };
 		67E389232283D32600A8277C /* SMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E389222283D32600A8277C /* SMCell.swift */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
@@ -239,6 +241,8 @@
 		4A328A6622C47B9100034075 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		4A328A6722C47B9100034075 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		4A328A6822C47B9100034075 /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		4A64C09622C4BD2D005A6F94 /* GoToTestCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToTestCollectionCell.swift; sourceTree = "<group>"; };
+		4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoToTestCollectionCell.xib; sourceTree = "<group>"; };
 		67E389222283D32600A8277C /* SMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCell.swift; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				4A64C08F22C4BCE5005A6F94 /* Cells */,
 				4A328A5522C47B6A00034075 /* Resource */,
 				0E1A22DB22C4688500C8CFDF /* Constants */,
 				0E1A22D822C4677D00C8CFDF /* Extensions */,
@@ -502,6 +507,23 @@
 				4A328A5F22C47B8F00034075 /* Montserrat-ThinItalic.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4A64C08F22C4BCE5005A6F94 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4A64C09522C4BD06005A6F94 /* MainView */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4A64C09522C4BD06005A6F94 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				4A64C09622C4BD2D005A6F94 /* GoToTestCollectionCell.swift */,
+				4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */,
+			);
+			path = MainView;
 			sourceTree = "<group>";
 		};
 		E2037F1B1E47E7F000EE13EB /* Pictures */ = {
@@ -847,6 +869,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
 				4A328A7622C47B9100034075 /* Montserrat-MediumItalic.ttf in Resources */,
 				E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */,
@@ -952,6 +975,7 @@
 				0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */,
 				F239513B1EFFE6A1004B09E5 /* PatiantID.swift in Sources */,
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,
+				4A64C09822C4BD2D005A6F94 /* GoToTestCollectionCell.swift in Sources */,
 				F27AEA941EEC6E7B00AFB3D1 /* DigitBase.swift in Sources */,
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,

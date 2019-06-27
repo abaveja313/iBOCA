@@ -14,6 +14,22 @@ var screenSize : CGRect?
 
 var testName:String?
 
+class GoToTestCellModel : NSObject{
+    var title = ""
+    var icon = ""
+    var segueID = ""
+    var isComplete = false
+    
+    class func cre(ititle:String,pathIcon:String,iSegueID:String,completed : Bool = false)->GoToTestCellModel{
+        let model = GoToTestCellModel()
+        model.title = ititle
+        model.icon = pathIcon
+        model.segueID = iSegueID
+        model.isComplete = completed
+        return model
+    }
+}
+
 class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     var mailSubject : String = "iBOCA Results of "
     
@@ -54,9 +70,15 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     @IBOutlet weak var mBtnResult: GradientButton!
     @IBOutlet weak var mBtnDWP: GradientButton!
     
+    var mCollection : UICollectionView?
+    var arrData : [GoToTestCellModel] = [GoToTestCellModel]()
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
         testName = segue.identifier
+        
+        
     }
     
     var doSecondEmail = false
@@ -167,6 +189,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         
         //NEW UI
         setupButton()
+        setupCollectionView()
+        setupData()
     }
     
     
@@ -281,16 +305,83 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
 extension MainViewController {
     func setupButton(){
         mBtnResult.setTitle(title: "RESULT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
-        mBtnResult.setupShadow(withColor: Color.color(hexString: "FDECBF"), sketchBlur: 9, opacity: 1)
+        mBtnResult.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
         mBtnResult.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         mBtnResult.render()
         mBtnResult.addTextSpacing(-0.36)
         //
         mBtnDWP.setTitle(title: "DONE WITH PATIENT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
-        mBtnDWP.setupShadow(withColor: Color.color(hexString: "FE8275"), sketchBlur: 9, opacity: 1)
+        mBtnDWP.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
         mBtnDWP.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
         mBtnDWP.render()
         mBtnDWP.addTextSpacing(-0.36)
     }
+    
+    func setupCollectionView(){
+        let layout = UICollectionViewFlowLayout.init()
+        layout.scrollDirection = .vertical
+        mCollection = UICollectionView.init(frame: .zero, collectionViewLayout: layout)
+        mCollection?.translatesAutoresizingMaskIntoConstraints = false
+        mViewMain.addSubview(mCollection!)
+        mCollection?.topAnchor.constraint(equalTo: mBtnResult.bottomAnchor, constant: 30).isActive = true
+        mCollection?.leadingAnchor.constraint(equalTo: mViewMain.leadingAnchor, constant: 42).isActive = true
+        mCollection?.trailingAnchor.constraint(equalTo: mViewMain.trailingAnchor, constant: -42).isActive = true
+        mCollection?.bottomAnchor.constraint(equalTo: mViewMain.bottomAnchor, constant: -42).isActive = true
+        mCollection?.backgroundColor = UIColor.clear
+        mCollection?.register(UINib.init(nibName: "GoToTestCollectionCell", bundle: nil), forCellWithReuseIdentifier: "GoToTestCollectionCell")
+        mCollection?.delegate = self
+        mCollection?.dataSource = self
+        mCollection?.clipsToBounds = false
+    }
+    
+    func setupData(){
+        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Cats and Dogs","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","Semantic List\nGeneration","MOCA"]
+        let arrIcon = ["orientation","simple-memory","visual-association","trails","catsanddogs","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","semantic-list-generation","moca"]
+        let arrSegueID = ["orientation","simple-memory","visual-association","trails","catsanddogs","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","semantic-list-generation","moca"]
+        arrData.removeAll()
+        for (index,item) in arrTitle.enumerated(){
+            let model = GoToTestCellModel.cre(ititle: item, pathIcon: arrIcon[index],iSegueID: arrSegueID[index])
+            arrData.append(model)
+        }
+        mCollection?.reloadData()
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return arrData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GoToTestCollectionCell", for: indexPath) as! GoToTestCollectionCell
+        let item = arrData[indexPath.row]
+        cell.setupInfo(model: item)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize.init(width: 180, height: 180)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 22
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = arrData[indexPath.row]
+        performSegue(withIdentifier: item.segueID, sender: nil)
+    }
+    
+    
 }
 
