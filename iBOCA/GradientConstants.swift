@@ -46,6 +46,16 @@ public struct Gradient {
         return gradient
     }
     
+    public static func creGradient(withColors colors: [CGColor], frame: CGRect,start:CGPoint,end:CGPoint) -> CAGradientLayer {
+        let gradient = CAGradientLayer()
+        gradient.frame = frame
+        gradient.colors = colors
+        gradient.locations = [0, 1]
+        gradient.startPoint = start
+        gradient.endPoint = end
+        return gradient
+    }
+    
     public static func creatGradientImage(withLayer layer: CAGradientLayer) -> UIImage? {
         var image: UIImage?
         UIGraphicsBeginImageContext(layer.bounds.size)
