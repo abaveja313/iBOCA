@@ -14,6 +14,9 @@
 		0E1A22DF22C468C400C8CFDF /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */; };
 		0E1A22E122C475D500C8CFDF /* FontConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22E022C475D400C8CFDF /* FontConstants.swift */; };
 		0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */; };
+		0E3E1D9022C49E4F008E69EC /* UILableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */; };
+		0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */; };
+		0E3E1D9422C4A015008E69EC /* CGFloatExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
@@ -193,6 +196,9 @@
 		0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		0E1A22E022C475D400C8CFDF /* FontConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontConstants.swift; sourceTree = "<group>"; };
 		0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsAndDogsVC.swift; sourceTree = "<group>"; };
+		0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILableExtensions.swift; sourceTree = "<group>"; };
+		0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatExtensions.swift; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
@@ -348,7 +354,10 @@
 		0E1A22D822C4677D00C8CFDF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */,
+				0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */,
 				0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */,
+				0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -946,8 +955,11 @@
 				F27AEA941EEC6E7B00AFB3D1 /* DigitBase.swift in Sources */,
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
+				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
 				F24E6E701E1BC2C300E29995 /* ScaleView.swift in Sources */,
 				F2A0F1281F02626D00A92B1F /* LandingPage.swift in Sources */,
+				0E3E1D9022C49E4F008E69EC /* UILableExtensions.swift in Sources */,
+				0E3E1D9422C4A015008E69EC /* CGFloatExtensions.swift in Sources */,
 				E5F13D0D22572CDF002FB4FF /* IQPreviousNextView.swift in Sources */,
 				E5A6AFF0226D717100493187 /* LocationManager.swift in Sources */,
 				1BC2DFEF1D4F821F0020D430 /* AppDelegate.swift in Sources */,
