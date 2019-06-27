@@ -26,19 +26,19 @@ public struct Font {
         return UIFont.systemFont(ofSize: size)
     }
     
-    public struct BrandonGrotesque {
-        public static let blackItalic: String   = "BrandonGrotesque-BlackItalic"
-        public static let black: String         = "BrandonGrotesque-Black"
-        public static let boldItalic: String    = "BrandonGrotesque-BoldItalic"
-        public static let bold: String          = "BrandonGrotesque-Bold"
-        public static let lightItalic: String   = "BrandonGrotesque-LightItalic"
-        public static let light: String         = "BrandonGrotesque-Light"
-        public static let mediumItalic: String  = "BrandonGrotesque-MediumItalic"
-        public static let medium: String        = "BrandonGrotesque-Medium"
-        public static let regularItalic: String = "BrandonGrotesque-RegularItalic"
-        public static let regular: String       = "BrandonGrotesque-Regular"
-        public static let thinItalic: String    = "BrandonGrotesque-ThinItalic"
-        public static let thin: String          = "BrandonGrotesque-Thin"
+    public struct Montserrat {
+        public static let blackItalic: String   = "Montserrat-BlackItalic"
+        public static let black: String         = "Montserrat-Black"
+        public static let boldItalic: String    = "Montserrat-BoldItalic"
+        public static let bold: String          = "Montserrat-Bold"
+        public static let lightItalic: String   = "Montserrat-LightItalic"
+        public static let light: String         = "Montserrat-Light"
+        public static let mediumItalic: String  = "Montserrat-MediumItalic"
+        public static let medium: String        = "Montserrat-Medium"
+        public static let regularItalic: String = "Montserrat-Italic"
+        public static let regular: String       = "Montserrat-Regular"
+        public static let thinItalic: String    = "Montserrat-ThinItalic"
+        public static let thin: String          = "Montserrat-Thin"
     }
     
     public struct LucidaGrande {
