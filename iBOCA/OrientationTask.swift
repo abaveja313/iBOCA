@@ -165,6 +165,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         TimeOK = false
     }
     
+    @IBOutlet weak var lblBack: UILabel!
     @IBOutlet weak var btnComplete: GradientButton!
     
     
@@ -468,8 +469,16 @@ extension Date {
 // MARK: - Setup UI
 extension OrientationTask {
     fileprivate func setupViews() {
+        
+        // Setup Label Back
+        self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        self.lblBack.addTextSpacing(-0.56)
+        
+        // Setup button complete
         let colors = [Color.color(hexString: "#69C394").cgColor, Color.color(hexString: "#40B578").cgColor]
         let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7).cgColor
-        self.btnComplete.setTitleWithFont(title: "COMPLETE", font: Font.font(size: 18.0, weight: UIFontWeightBold), colors: colors, shadowColor: shadowColor)
+        self.btnComplete.setTitleWithFont(title: "COMPLETE", font: Font.font(name: Font.Montserrat.bold, size: 18.0), colors: colors, shadowColor: shadowColor)
+        self.btnComplete.addTextSpacing(-0.36)
     }
 }

@@ -3345,6 +3345,45 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_background" translatesAutoresizingMaskIntoConstraints="NO" id="h49-99-ERt">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBB-4p-3Wn">
+                                <rect key="frame" x="42" y="75" width="232" height="34"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="LzA-Ld-jF0">
+                                        <rect key="frame" x="0.0" y="0.0" width="12" height="34"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ORIENTATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-s9-9yx">
+                                        <rect key="frame" x="42" y="0.0" width="190" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="h5B-JE-Sfv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cdC-re-Tb9">
+                                        <rect key="frame" x="60" y="-7" width="112" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="dL7-Sq-hiA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="LzA-Ld-jF0" secondAttribute="bottom" id="22N-5Q-fQy"/>
+                                    <constraint firstItem="cdC-re-Tb9" firstAttribute="top" secondItem="XBB-4p-3Wn" secondAttribute="top" id="9h7-t1-dhP"/>
+                                    <constraint firstAttribute="bottom" secondItem="cdC-re-Tb9" secondAttribute="bottom" id="Epu-iu-TcM"/>
+                                    <constraint firstAttribute="trailing" secondItem="LbU-s9-9yx" secondAttribute="trailing" id="IhW-9F-MfE"/>
+                                    <constraint firstItem="cdC-re-Tb9" firstAttribute="leading" secondItem="XBB-4p-3Wn" secondAttribute="leading" id="Qj8-P4-gkC"/>
+                                    <constraint firstAttribute="bottom" secondItem="LbU-s9-9yx" secondAttribute="bottom" id="TYI-GQ-Y7i"/>
+                                    <constraint firstItem="LzA-Ld-jF0" firstAttribute="leading" secondItem="XBB-4p-3Wn" secondAttribute="leading" id="VOW-4J-vCB"/>
+                                    <constraint firstItem="LbU-s9-9yx" firstAttribute="top" secondItem="XBB-4p-3Wn" secondAttribute="top" id="WNn-Tz-r4b"/>
+                                    <constraint firstItem="LbU-s9-9yx" firstAttribute="leading" secondItem="LzA-Ld-jF0" secondAttribute="trailing" constant="30" id="Wve-Sx-8XG"/>
+                                    <constraint firstAttribute="trailing" secondItem="cdC-re-Tb9" secondAttribute="trailing" id="hRt-34-hn6"/>
+                                    <constraint firstItem="LzA-Ld-jF0" firstAttribute="top" secondItem="XBB-4p-3Wn" secondAttribute="top" id="iNV-l4-lIs"/>
+                                    <constraint firstAttribute="height" constant="34" id="ndO-bZ-uy3"/>
+                                </constraints>
+                            </view>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5RO-Hz-93f">
                                 <rect key="frame" x="20" y="510" width="298" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3386,15 +3425,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cdC-re-Tb9">
-                                <rect key="frame" x="12" y="62" width="112" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="dL7-Sq-hiA"/>
-                                </connections>
-                            </button>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Oj7-GR-ZMQ">
                                 <rect key="frame" x="677" y="510" width="327" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3505,8 +3535,10 @@
                             <constraint firstAttribute="bottom" secondItem="h49-99-ERt" secondAttribute="bottom" id="IAc-z8-Lss"/>
                             <constraint firstAttribute="trailing" secondItem="ZDq-15-Yl5" secondAttribute="trailing" constant="48" id="JAX-6W-ghB"/>
                             <constraint firstItem="h49-99-ERt" firstAttribute="top" secondItem="t9W-Lu-KdL" secondAttribute="top" id="S5f-q5-XV9"/>
+                            <constraint firstItem="XBB-4p-3Wn" firstAttribute="top" secondItem="fom-GM-ejq" secondAttribute="bottom" constant="55" id="WrK-wk-jvT"/>
                             <constraint firstItem="ZDq-15-Yl5" firstAttribute="top" secondItem="fom-GM-ejq" secondAttribute="bottom" constant="42" id="o0E-vc-zn5"/>
                             <constraint firstAttribute="trailing" secondItem="h49-99-ERt" secondAttribute="trailing" id="p9K-q6-2AY"/>
+                            <constraint firstItem="XBB-4p-3Wn" firstAttribute="leading" secondItem="t9W-Lu-KdL" secondAttribute="leading" constant="42" id="vmx-zK-6ZD"/>
                         </constraints>
                     </view>
                     <connections>
@@ -3521,6 +3553,7 @@
                         <outlet property="btnDontKnowYear" destination="lw1-LA-Gp3" id="Yvs-XK-CIb"/>
                         <outlet property="currentDate" destination="slc-lJ-ird" id="YYa-GY-vpc"/>
                         <outlet property="currentTime" destination="Oj7-GR-ZMQ" id="tML-Sw-NtW"/>
+                        <outlet property="lblBack" destination="LbU-s9-9yx" id="oO6-r1-pcW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUE-cG-5MM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4538,6 +4571,7 @@
         <image name="cnbs" width="612" height="89"/>
         <image name="ellison1.jpg" width="960" height="960"/>
         <image name="iBoca logo.png" width="1376" height="594"/>
+        <image name="ic_arrow_left" width="14" height="24"/>
         <image name="ic_caret_down" width="18" height="10"/>
         <image name="img_background" width="1024" height="768"/>
         <image name="izzy1.jpg" width="960" height="960"/>
