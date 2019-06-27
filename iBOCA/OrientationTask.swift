@@ -22,36 +22,19 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     var Time : String?
     var TimeOK : Bool = false
     var DateOK : Bool = false
+    
     var dkDate : Bool = false {
-        didSet {
-            if dkDate {
-                btnDontKnowDate.setTitleColor(UIColor.red, for: .normal)
-            }
-            else {
-                btnDontKnowDate.setTitleColor(defaultBlueColor, for: .normal)
-            }
-        }
+        didSet { }
     }
+    
     var dkMonth : Bool = false {
-        didSet {
-            if dkMonth {
-                btnDontKnowMonth.setTitleColor(UIColor.red, for: .normal)
-            }
-            else {
-                btnDontKnowMonth.setTitleColor(defaultBlueColor, for: .normal)
-            }
-        }
+        didSet { }
     }
+    
     var dkYear : Bool = false {
-        didSet {
-            if dkYear {
-                btnDontKnowYear.setTitleColor(UIColor.red, for: .normal)
-            }
-            else {
-                btnDontKnowYear.setTitleColor(defaultBlueColor, for: .normal)
-            }
-        }
+        didSet { }
     }
+    
     var dkWeek : Bool = false {
         didSet {
             if dkWeek {
@@ -168,6 +151,9 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     @IBOutlet weak var lblBack: UILabel!
     @IBOutlet weak var btnComplete: GradientButton!
     
+    @IBOutlet weak var vShadowCurrentDate: UIView!
+    @IBOutlet weak var vCurrentDate: UIView!
+    @IBOutlet weak var lblCurrentDate: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -469,16 +455,78 @@ extension Date {
 // MARK: - Setup UI
 extension OrientationTask {
     fileprivate func setupViews() {
-        
-        // Setup Label Back
+        // Label Back
         self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
         self.lblBack.textColor = Color.color(hexString: "#013AA5")
         self.lblBack.addTextSpacing(-0.56)
         
-        // Setup button complete
+        // Button complete
         let colors = [Color.color(hexString: "#69C394").cgColor, Color.color(hexString: "#40B578").cgColor]
         let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7).cgColor
         self.btnComplete.setTitleWithFont(title: "COMPLETE", font: Font.font(name: Font.Montserrat.bold, size: 18.0), colors: colors, shadowColor: shadowColor)
         self.btnComplete.addTextSpacing(-0.36)
+        
+        // View Current Date
+        self.setupViewCurrentDate()
+        
+        // 3 button Don't know month, date, year
+        self.setupGroupButton()
+        
+    }
+    
+    // Setup View Current Date
+    fileprivate func setupViewCurrentDate() {
+        self.lblCurrentDate.font = Font.font(name: Font.Montserrat.bold, size: 18.0)
+        
+        self.vShadowCurrentDate.layer.cornerRadius = 8.0
+        self.vShadowCurrentDate.layer.shadowColor = UIColor.init(red: 100/255.0, green: 155/255.0, blue: 255/255.0, alpha: 0.32).cgColor
+        self.vShadowCurrentDate.layer.shadowOpacity = 1.0
+        self.vShadowCurrentDate.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vShadowCurrentDate.layer.shadowRadius = 10 / 2.0
+        self.vShadowCurrentDate.layer.shadowPath = nil
+        self.vShadowCurrentDate.layer.masksToBounds = false
+        
+        self.vCurrentDate.clipsToBounds = true
+        self.vCurrentDate.backgroundColor = UIColor.white
+        self.vCurrentDate.layer.cornerRadius = 8.0
+    }
+    
+    // Setup 3 button Don't know month, date, year
+    fileprivate func setupGroupButton() {
+        // Button Don't Know Month
+        self.btnDontKnowMonth.titleLabel?.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.btnDontKnowMonth.setTitleColor(UIColor.black, for: .normal)
+        self.btnDontKnowMonth.setTitleColor(UIColor.black, for: .selected)
+        self.btnDontKnowMonth.tintColor = UIColor.black
+        self.btnDontKnowMonth.setTitle("Don't know month", for: .normal)
+        self.btnDontKnowMonth.setTitle("Don't know month", for: .selected)
+        self.btnDontKnowMonth.backgroundColor = UIColor.white
+        self.btnDontKnowMonth.layer.cornerRadius = 8.0
+        self.btnDontKnowMonth.layer.borderWidth = 2.0
+        self.btnDontKnowMonth.layer.borderColor = Color.color(hexString: "#FE786A").cgColor
+        
+        // Button Don't Know Date
+        self.btnDontKnowDate.titleLabel?.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.btnDontKnowDate.setTitleColor(UIColor.white, for: .normal)
+        self.btnDontKnowDate.setTitleColor(UIColor.white, for: .selected)
+        self.btnDontKnowDate.tintColor = UIColor.white
+        self.btnDontKnowDate.setTitle("Don't know date", for: .normal)
+        self.btnDontKnowDate.setTitle("Don't know date", for: .selected)
+        self.btnDontKnowDate.backgroundColor = Color.color(hexString: "#FE786A")
+        self.btnDontKnowDate.layer.cornerRadius = 8.0
+        self.btnDontKnowDate.layer.borderWidth = 2.0
+        self.btnDontKnowDate.layer.borderColor = Color.color(hexString: "#FE786A").cgColor
+        
+        // Button Don't Know Year
+        self.btnDontKnowYear.titleLabel?.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.btnDontKnowYear.setTitleColor(UIColor.black, for: .normal)
+        self.btnDontKnowYear.setTitleColor(UIColor.black, for: .selected)
+        self.btnDontKnowYear.tintColor = UIColor.black
+        self.btnDontKnowYear.setTitle("Don't know year", for: .normal)
+        self.btnDontKnowYear.setTitle("Don't know year", for: .selected)
+        self.btnDontKnowYear.backgroundColor = UIColor.white
+        self.btnDontKnowYear.layer.cornerRadius = 8.0
+        self.btnDontKnowYear.layer.borderWidth = 2.0
+        self.btnDontKnowYear.layer.borderColor = Color.color(hexString: "#FE786A").cgColor
     }
 }
