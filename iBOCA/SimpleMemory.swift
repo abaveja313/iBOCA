@@ -57,7 +57,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     var isStartNew = false
     
     @IBOutlet weak var next1: UIButton!
-    @IBOutlet weak var start: UIButton!
+    @IBOutlet weak var start: GradientButton!
     @IBOutlet weak var back: UIButton!
     
     @IBOutlet weak var btnArrowLeft: UIButton!
@@ -105,6 +105,14 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var lblDescTask: UILabel!
     
     @IBOutlet weak var collectionViewLevel: UICollectionView!
+    
+    @IBOutlet weak var vShadowTask: UIView!
+    @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var ivTask: UIImageView!
+    
+    @IBOutlet weak var vDelay: UIView!
+    @IBOutlet weak var lblDescDelay: UILabel!
+    
     
     override func viewDidLoad() {
         
@@ -190,6 +198,13 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
 //            startAlert()
         }
+        
+        // MARK: - TODO
+        self.testPicker.isHidden = true
+        self.incorrectPicker.isHidden = true
+        self.testPickerLabel.isHidden = true
+        self.incorrectPickerLabel.isHidden = true
+        self.start.isHidden = true
     }
     
     func setupTestSelectButtons() {
@@ -202,7 +217,9 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             button.addTarget(self, action: #selector(SimpleMemoryTask.StartSelectButtonTapped), for: .touchDown)
             button.isHidden = false
             testSelectButtons.append(button)
-            view.addSubview(button)
+            
+            // MARK: - TODO
+//            view.addSubview(button)
         }
     }
     
@@ -361,6 +378,14 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     }
     
     func startDisplayAlert(){
+        // TODO: -
+        self.collectionViewLevel.isHidden = true
+        self.lblBack.text = "BACK"
+        self.lblDescTask.isHidden = true
+        
+        self.vShadowTask.isHidden = false
+        self.vTask.isHidden = false
+        
         Status[TestSimpleMemory] = TestStatus.Running
         
         start.isHidden = true
@@ -516,9 +541,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         // Show Arrow
         self.btnArrowRight.isHidden = false
         self.btnArrowLeft.isHidden = true
-        
-        outputImage(name: imagesSM[testCount])
-        
+//        outputImage(name: imagesSM[testCount])
+        self.outputImage(withImageName: imagesSM[testCount])
     }
     
     func outputImage(name: String){
@@ -576,26 +600,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             self.btnArrowRight.isHidden = false
         }
         
-        imageView.removeFromSuperview()
-        imageName = name
-        image = UIImage(named: imageName)!
-        
-        var x = CGFloat()
-        var y = CGFloat()
-        if 0.56*image.size.width < image.size.height {
-            y = 575.0
-            x = (575.0*(image.size.width)/(image.size.height)) - 50.0
-        }
-        else {
-            x = 575.0 - 50.0
-            y = (575.0*(image.size.height)/(image.size.width))
-        }
-        
-        imageView = UIImageView(frame:CGRect(x: (512.0-(x/2)), y: (471.0-(y/2)), width: x, height: y))
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        self.view.addSubview(imageView)
-        self.view.sendSubview(toBack: imageView)
+        self.ivTask.image = UIImage(named: name)!
     }
     
     func outputRecognizeImages(name1: String, name2: String){
@@ -651,31 +656,27 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             self.view.addSubview(self.arrowButton1)
             self.view.addSubview(self.arrowButton2)
         }
-        
-        
-        
     }
     
     func beginDelay(){
         // Hide Arrow
         self.btnArrowLeft.isHidden = true
         self.btnArrowRight.isHidden = true
+        self.ivTask.isHidden = true
+        self.vDelay.isHidden = false
         imageView.removeFromSuperview()
         print("in delay!")
         
-        delayLabel.text = "Recommended delay: 1 minute"
+        self.delayLabel.text = "Recommended delay: 1 minute"
         
         afterBreakSM = true
         
-        start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-        start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-        start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        self.start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+        self.start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+        self.start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         
-        //back.isEnabled = true
+        self.start.isHidden = false
         
-        start.isHidden = false
-        
-//        timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
         timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerSM.fire()
         startTimeSM = NSDate.timeIntervalSinceReferenceDate
@@ -1136,7 +1137,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         testCount -= 1
         if testCount >= 0 {
             print("pic: \(testCount)")
-            outputImage(withImageName: imagesSM[testCount])
+            self.outputImage(withImageName: imagesSM[testCount])
         }
     }
     
@@ -1146,11 +1147,11 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         if(testCount == imagesSM.count) {
             imageView.removeFromSuperview()
             print("delay")
-            beginDelay()
+            self.beginDelay()
         }
         else {
             print("pic: \(testCount)")
-            outputImage(withImageName: imagesSM[testCount])
+            self.outputImage(withImageName: imagesSM[testCount])
         }
     }
     
@@ -1287,6 +1288,16 @@ extension SimpleMemoryTask {
         
         // Collection View Level
         self.setupCollectionView()
+        
+        // View Task
+        self.setupViewTask()
+        
+        // View Delay
+        self.setupViewDelay()
+        
+        self.vShadowTask.isHidden = true
+        self.vTask.isHidden = true
+        self.vDelay.isHidden = true
     }
     
     fileprivate func setupCollectionView() {
@@ -1295,22 +1306,121 @@ extension SimpleMemoryTask {
         self.collectionViewLevel.delegate = self
         self.collectionViewLevel.dataSource = self
     }
+    
+    fileprivate func setupViewTask() {
+        self.vShadowTask.layer.cornerRadius = 8.0
+        self.vShadowTask.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.vShadowTask.layer.shadowOpacity = 1.0
+        self.vShadowTask.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vShadowTask.layer.shadowRadius = 10 / 2.0
+        self.vShadowTask.layer.shadowPath = nil
+        self.vShadowTask.layer.masksToBounds = false
+        
+        self.vTask.clipsToBounds = true
+        self.vTask.backgroundColor = UIColor.white
+        self.vTask.layer.cornerRadius = 8.0
+        
+        // Button Arrow Left, Right
+        self.btnArrowLeft.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.btnArrowLeft.layer.cornerRadius = self.btnArrowLeft.frame.size.height / 2.0
+        self.btnArrowRight.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.btnArrowRight.layer.cornerRadius = self.btnArrowRight.frame.size.height / 2.0
+    }
+    
+    fileprivate func setupViewDelay() {
+        self.lblDescDelay.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblDescDelay.textColor = Color.color(hexString: "#8A9199")
+        self.lblDescDelay.text = "Ask Patient to name the items that were displayed  earlier. Record their answers"
+        self.lblDescDelay.addLineSpacing(15.0)
+        self.lblDescDelay.addTextSpacing(-0.36)
+        self.lblDescDelay.textAlignment = .center
+        
+        self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.delayLabel.textColor = Color.color(hexString: "#013AA5")
+        self.delayLabel.text = "Recommended Delay : 1 minute"
+        self.delayLabel.addTextSpacing(-0.56)
+        
+        self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
+        self.timerLabel.textColor = Color.color(hexString: "#013AA5")
+        self.timerLabel.addTextSpacing(-1.44)
+        
+        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
+        self.start.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.start.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.start.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.start.addTextSpacing(-0.36)
+        self.start.render()
+    }
 }
 
 
-extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
+        let widthCell = (widthCollectionView / 4) - 20
+        return CGSize.init(width: widthCell, height: 235.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
-        
+        let idx = indexPath.row + 1
+        cell.ivLevel.image = UIImage.init(named: "level_\(idx)")
+        cell.lblTitle.text = "LEVEL \(idx)"
         return cell
     }
     
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let idx = indexPath.item
+        print("Selected Item \(idx)")
+        switch idx {
+        case 0:
+            imagesSM = images0
+            imageSetSM = 0
+            recognizeIncorrectSM = images4
+            incorrectImageSetSM = 4
+        case 1:
+            imagesSM = images1
+            imageSetSM = 1
+            recognizeIncorrectSM = images5
+            incorrectImageSetSM = 5
+        case 2:
+            imagesSM = images2
+            imageSetSM = 2
+            recognizeIncorrectSM = images6
+            incorrectImageSetSM = 6
+        case 3:
+            imagesSM = images3
+            imageSetSM = 3
+            recognizeIncorrectSM = images7
+            incorrectImageSetSM = 7
+        default:
+            imagesSM = images0
+            imageSetSM = 0
+            recognizeIncorrectSM = images0
+            incorrectImageSetSM = 0
+        }
+        
+        self.startDisplayAlert()
+        
+    }
 }
