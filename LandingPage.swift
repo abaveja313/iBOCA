@@ -125,7 +125,7 @@ class LandingPage: ViewController {
     }
     
     @IBAction func tapSelfAdmin(_ sender: Any) {
-        
+        performSegue(withIdentifier: "tap-administered", sender: nil)
     }
     
     @IBAction func tapProctored(_ sender: Any) {
