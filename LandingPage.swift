@@ -39,6 +39,13 @@ class LandingPage: ViewController {
     
     @IBOutlet weak var GotoTests: UIButton!
     
+    @IBOutlet weak var mBtnSelfAdmin: GradientButton!
+    
+    @IBOutlet weak var mBtnProctored: UIButton!
+    
+    @IBOutlet weak var mAcknowled: UIButton!
+    
+    
     @IBAction func GotoTests(_ sender: UIButton) {
         if Settings.isGotoTest == true {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -80,10 +87,55 @@ class LandingPage: ViewController {
         } else {
             GotoTests.isEnabled = false
         }
+        
+        setupUI()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    //MARK: - NEW UI
+    func setupUI(){
+        //self administered button
+        
+        mBtnSelfAdmin.setTitle(title: "SELF ADMINISTERED", withFont: Font.font(name: Font.Montserrat.bold, size: 22))
+        mBtnSelfAdmin.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        mBtnSelfAdmin.setupGradient(arrColor: [Color.color(hexString: "FFDC6E"),Color.color(hexString: "FFC556")], direction: .topToBottom)
+        mBtnSelfAdmin.render()
+        mBtnSelfAdmin.addTextSpacing(-0.44)
+        mBtnSelfAdmin.layer.cornerRadius = 8
+        mBtnSelfAdmin.layer.masksToBounds = true
+        //proctored button
+        mBtnProctored.setTitle("PROCTORED", for: .normal)
+        mBtnProctored.setBackgroundColor(Color.color(hexString: "EEF3F9"), forState: .normal)
+        mBtnProctored.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22)
+        mBtnProctored.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        mBtnProctored.layer.cornerRadius = 8
+        mBtnProctored.layer.masksToBounds = true
+        //
+        mAcknowled.setTitle("ACKNOWLEDGEMENTS", for: .normal)
+        mAcknowled.setBackgroundColor(Color.color(hexString: "EEF3F9"), forState: .normal)
+        mAcknowled.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22)
+        mAcknowled.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        mAcknowled.layer.cornerRadius = 8
+        mAcknowled.layer.masksToBounds = true
+    }
+    
+    @IBAction func tapSelfAdmin(_ sender: Any) {
+        
+    }
+    
+    @IBAction func tapProctored(_ sender: Any) {
+        //tap-proctored
+        performSegue(withIdentifier: "tap-proctored", sender: nil)
+    }
+    
+    @IBAction func tapAcknowled(_ sender: Any) {
+        //tap-acknowled
+        performSegue(withIdentifier: "tap-acknowled", sender: nil)
+    }
+    
 }

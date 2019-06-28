@@ -338,13 +338,26 @@ extension MainViewController {
         let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Cats and Dogs","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","Semantic List\nGeneration","MOCA"]
         let arrIcon = ["orientation","simple-memory","visual-association","trails","catsanddogs","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","semantic-list-generation","moca"]
         let arrSegueID = ["orientation","simple-memory","visual-association","trails","catsanddogs","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","semantic-list-generation","moca"]
+        let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestCatsAndDogs,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestSemanticListGeneration,TestMOCAResults]
         arrData.removeAll()
         for (index,item) in arrTitle.enumerated(){
-            let model = GoToTestCellModel.cre(ititle: item, pathIcon: arrIcon[index],iSegueID: arrSegueID[index])
+            let iTestStatus = Status[arrTag[index]]
+            let model = GoToTestCellModel.cre(ititle: item, pathIcon: arrIcon[index],iSegueID: arrSegueID[index],completed: checkStatusDone(fromTestStatus: iTestStatus))
             arrData.append(model)
         }
         mCollection?.reloadData()
     }
+    
+    func checkStatusDone(fromTestStatus status:TestStatus)->Bool{
+        switch status {
+        case .Done:
+            return true
+        case .NotStarted,.Running:
+            return false
+        }
+    }
+    
+    
 }
 
 //MARK: - UICollectionViewDelegate

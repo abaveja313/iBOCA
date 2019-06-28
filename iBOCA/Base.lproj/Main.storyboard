@@ -1730,7 +1730,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <state key="normal" title="Setup"/>
                                 <connections>
-                                    <segue destination="uIz-3z-MW0" kind="show" id="lm0-et-AEL"/>
+                                    <segue destination="uIz-3z-MW0" kind="show" identifier="tap-proctored" id="lm0-et-AEL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yws-ZT-SJu">
@@ -1738,14 +1738,78 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <state key="normal" title="Acknowledgements"/>
                                 <connections>
-                                    <segue destination="crm-7O-3rs" kind="show" id="vvj-hT-lCK"/>
+                                    <segue destination="crm-7O-3rs" kind="show" identifier="tap-acknowled" id="vvj-hT-lCK"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nY-Vp-c4E" userLabel="View Main">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="brain-landing" translatesAutoresizingMaskIntoConstraints="NO" id="MY9-rK-piy">
+                                        <rect key="frame" x="42" y="154" width="464" height="498"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="498" id="GZV-SD-Lke"/>
+                                            <constraint firstAttribute="width" constant="464" id="dpF-7X-Dpa"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iBoca logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="JGK-Nf-7Rl">
+                                        <rect key="frame" x="570" y="118" width="444" height="192"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="192" id="RBg-ML-qdr"/>
+                                            <constraint firstAttribute="width" constant="444" id="cpL-Xi-U3i"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0z-Qm-1yk" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
+                                        <rect key="frame" x="602" y="360" width="380" height="72"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="380" id="3nd-47-B5M"/>
+                                            <constraint firstAttribute="height" constant="72" id="YA5-Ms-3rW"/>
+                                        </constraints>
+                                        <state key="normal" title="Self Administered"/>
+                                        <connections>
+                                            <action selector="tapSelfAdmin:" destination="RmL-Z6-Ri2" eventType="touchUpInside" id="OAl-eg-U9R"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hL9-WH-mBl">
+                                        <rect key="frame" x="602" y="470" width="380" height="72"/>
+                                        <state key="normal" title="Proctored"/>
+                                        <connections>
+                                            <action selector="tapProctored:" destination="RmL-Z6-Ri2" eventType="touchUpInside" id="1eN-cg-B0x"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ly-sv-U3Q">
+                                        <rect key="frame" x="602" y="580" width="380" height="72"/>
+                                        <state key="normal" title="Acknowledgements"/>
+                                        <connections>
+                                            <action selector="tapAcknowled:" destination="RmL-Z6-Ri2" eventType="touchUpInside" id="O9R-KI-g7E"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JGK-Nf-7Rl" secondAttribute="trailing" constant="10" id="001-jJ-UfL"/>
+                                    <constraint firstItem="MY9-rK-piy" firstAttribute="leading" secondItem="0nY-Vp-c4E" secondAttribute="leading" constant="42" id="1Ba-c3-fxf"/>
+                                    <constraint firstItem="4ly-sv-U3Q" firstAttribute="height" secondItem="w0z-Qm-1yk" secondAttribute="height" id="7Cb-O8-Mln"/>
+                                    <constraint firstItem="JGK-Nf-7Rl" firstAttribute="top" secondItem="0nY-Vp-c4E" secondAttribute="top" constant="118" id="D1a-1a-3bO"/>
+                                    <constraint firstItem="w0z-Qm-1yk" firstAttribute="centerX" secondItem="JGK-Nf-7Rl" secondAttribute="centerX" id="HX8-Vb-bPq"/>
+                                    <constraint firstItem="hL9-WH-mBl" firstAttribute="top" secondItem="w0z-Qm-1yk" secondAttribute="bottom" constant="38" id="OcP-LT-bnu"/>
+                                    <constraint firstItem="hL9-WH-mBl" firstAttribute="centerX" secondItem="w0z-Qm-1yk" secondAttribute="centerX" id="OkC-ia-nBp"/>
+                                    <constraint firstItem="w0z-Qm-1yk" firstAttribute="top" secondItem="JGK-Nf-7Rl" secondAttribute="bottom" constant="50" id="bJT-Cf-Eug"/>
+                                    <constraint firstItem="4ly-sv-U3Q" firstAttribute="centerX" secondItem="w0z-Qm-1yk" secondAttribute="centerX" id="f2L-uT-bdK"/>
+                                    <constraint firstItem="4ly-sv-U3Q" firstAttribute="width" secondItem="w0z-Qm-1yk" secondAttribute="width" id="h60-fe-a0x"/>
+                                    <constraint firstItem="MY9-rK-piy" firstAttribute="top" secondItem="0nY-Vp-c4E" secondAttribute="top" constant="154" id="jff-vH-VrV"/>
+                                    <constraint firstItem="hL9-WH-mBl" firstAttribute="height" secondItem="w0z-Qm-1yk" secondAttribute="height" id="rBd-98-3FE"/>
+                                    <constraint firstItem="hL9-WH-mBl" firstAttribute="width" secondItem="w0z-Qm-1yk" secondAttribute="width" id="wpi-lM-U8i"/>
+                                    <constraint firstItem="4ly-sv-U3Q" firstAttribute="top" secondItem="hL9-WH-mBl" secondAttribute="bottom" constant="38" id="xd2-71-snd"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="0nY-Vp-c4E" secondAttribute="bottom" id="83M-Kx-ccf"/>
                             <constraint firstItem="yws-ZT-SJu" firstAttribute="centerX" secondItem="b3O-WQ-2Bx" secondAttribute="centerX" id="EdQ-TS-wUW"/>
+                            <constraint firstAttribute="trailing" secondItem="0nY-Vp-c4E" secondAttribute="trailing" id="Ixu-yA-mVR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="b3O-WQ-2Bx" secondAttribute="trailing" constant="145" id="Obl-Io-Zkb"/>
+                            <constraint firstItem="0nY-Vp-c4E" firstAttribute="leading" secondItem="hIr-vh-fIp" secondAttribute="leading" id="ShB-gT-enn"/>
                             <constraint firstItem="b3O-WQ-2Bx" firstAttribute="leading" secondItem="hIr-vh-fIp" secondAttribute="leadingMargin" constant="145" id="SkP-PI-zWQ"/>
                             <constraint firstItem="yws-ZT-SJu" firstAttribute="top" secondItem="lT2-9Y-5Dc" secondAttribute="bottom" constant="50" id="USQ-M0-WLi"/>
                             <constraint firstItem="lT2-9Y-5Dc" firstAttribute="top" secondItem="hkA-Bz-fX3" secondAttribute="bottom" constant="50" id="WFo-gZ-zyU"/>
@@ -1754,10 +1818,14 @@
                             <constraint firstItem="hkA-Bz-fX3" firstAttribute="centerX" secondItem="b3O-WQ-2Bx" secondAttribute="centerX" id="nAJ-wm-wqK"/>
                             <constraint firstItem="b3O-WQ-2Bx" firstAttribute="top" secondItem="xmi-Xp-Iqt" secondAttribute="bottom" constant="50" id="oiY-Ok-bbu"/>
                             <constraint firstItem="hkA-Bz-fX3" firstAttribute="top" secondItem="b3O-WQ-2Bx" secondAttribute="bottom" constant="50" id="pfT-hh-e1f"/>
+                            <constraint firstItem="0nY-Vp-c4E" firstAttribute="top" secondItem="hIr-vh-fIp" secondAttribute="top" id="s2C-v3-Li6"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="GotoTests" destination="hkA-Bz-fX3" id="Wsn-aC-fU5"/>
+                        <outlet property="mAcknowled" destination="4ly-sv-U3Q" id="mXU-dv-XTg"/>
+                        <outlet property="mBtnProctored" destination="hL9-WH-mBl" id="iNR-v5-mQ5"/>
+                        <outlet property="mBtnSelfAdmin" destination="w0z-Qm-1yk" id="VRZ-5g-Ko6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qx-4e-i3I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4855,6 +4923,7 @@
     <resources>
         <image name="arrow_left" width="33" height="33"/>
         <image name="arrow_right" width="33" height="33"/>
+        <image name="brain-landing" width="463" height="498"/>
         <image name="cnbs" width="612" height="89"/>
         <image name="ellison1.jpg" width="960" height="960"/>
         <image name="iBoca logo.png" width="1376" height="594"/>

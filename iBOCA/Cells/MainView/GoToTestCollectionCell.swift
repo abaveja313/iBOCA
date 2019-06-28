@@ -51,10 +51,16 @@ class GoToTestCollectionCell: UICollectionViewCell {
         mTitle.text = model.title
         mImg.image =  UIImage.init(named: model.icon)
         if model.isComplete == false{
-            
+            self.shadowLayer?.opacity = 1
+            self.shadowLayer?.fillColor = UIColor.white.cgColor
+            mTitle.alpha = 1
+            mImg.alpha = 1
         }
         else{
-            
+            self.shadowLayer?.opacity = 0
+            self.shadowLayer?.fillColor = Color.color(hexString: "E9F0F9").cgColor
+            mTitle.alpha = 0.2
+            mImg.alpha = 0.2
         }
     }
     
