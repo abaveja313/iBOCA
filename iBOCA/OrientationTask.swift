@@ -476,10 +476,13 @@ extension OrientationTask {
         self.lblBack.addTextSpacing(-0.56)
         
         // Button complete
-        let colors = [Color.color(hexString: "#69C394").cgColor, Color.color(hexString: "#40B578").cgColor]
-        let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7).cgColor
-        self.btnComplete.setTitleWithFont(title: "COMPLETE", font: Font.font(name: Font.Montserrat.bold, size: 18.0), colors: colors, shadowColor: shadowColor)
+        let colors = [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")]
+        let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7)
+        self.btnComplete.setTitle(title: "COMPLETE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.btnComplete.setupShadow(withColor: shadowColor, sketchBlur: 9.0, opacity: 1)
+        self.btnComplete.setupGradient(arrColor: colors, direction: .topToBottom)
         self.btnComplete.addTextSpacing(-0.36)
+        self.btnComplete.render()
         
         // View Current Date
         self.setupViewCurrentDate()
