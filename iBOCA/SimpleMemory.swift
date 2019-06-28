@@ -101,10 +101,18 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     
     var result: Results!
     
+    @IBOutlet weak var lblBack: UILabel!
+    @IBOutlet weak var lblDescTask: UILabel!
+    
+    @IBOutlet weak var collectionViewLevel: UICollectionView!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.setupViews()
+        
         result = Results()
         result.name = "Simple Memory"
         result.startTime = StartTimer
@@ -1258,4 +1266,51 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
+}
+
+// MARK: - Setup UI
+extension SimpleMemoryTask {
+    fileprivate func setupViews() {
+        // Label Back
+        self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        self.lblBack.addTextSpacing(-0.56)
+        self.lblBack.text = "SIMPLE MEMORY"
+        
+        // Label Description Task
+        self.lblDescTask.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
+        self.lblDescTask.textColor = Color.color(hexString: "#013AA5")
+        self.lblDescTask.alpha = 0.67
+        self.lblDescTask.text = "Ask Patient to name and remember these images"
+        self.lblDescTask.addLineSpacing(15.0)
+        self.lblDescTask.addTextSpacing(-0.36)
+        
+        // Collection View Level
+        self.setupCollectionView()
+    }
+    
+    fileprivate func setupCollectionView() {
+        self.collectionViewLevel.backgroundColor = UIColor.clear
+        self.collectionViewLevel.register(LevelCell.nib(), forCellWithReuseIdentifier: LevelCell.identifier())
+        self.collectionViewLevel.delegate = self
+        self.collectionViewLevel.dataSource = self
+    }
+}
+
+
+extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
+        
+        return cell
+    }
+    
+
 }

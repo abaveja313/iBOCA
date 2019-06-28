@@ -17,6 +17,8 @@
 		0E3E1D9022C49E4F008E69EC /* UILableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */; };
 		0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */; };
 		0E3E1D9422C4A015008E69EC /* CGFloatExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */; };
+		0E3E1DBE22C5C983008E69EC /* LevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBC22C5C983008E69EC /* LevelCell.swift */; };
+		0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBD22C5C983008E69EC /* LevelCell.xib */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
@@ -201,6 +203,8 @@
 		0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILableExtensions.swift; sourceTree = "<group>"; };
 		0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatExtensions.swift; sourceTree = "<group>"; };
+		0E3E1DBC22C5C983008E69EC /* LevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCell.swift; sourceTree = "<group>"; };
+		0E3E1DBD22C5C983008E69EC /* LevelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelCell.xib; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
@@ -376,6 +380,15 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
+		0E3E1DB622C5C94D008E69EC /* Level Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0E3E1DBC22C5C983008E69EC /* LevelCell.swift */,
+				0E3E1DBD22C5C983008E69EC /* LevelCell.xib */,
+			);
+			path = "Level Cell";
+			sourceTree = "<group>";
+		};
 		0E9D5080228D40400055B676 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +525,7 @@
 		4A64C08F22C4BCE5005A6F94 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0E3E1DB622C5C94D008E69EC /* Level Cell */,
 				4A64C09522C4BD06005A6F94 /* MainView */,
 			);
 			path = Cells;
@@ -879,6 +893,7 @@
 				1BC2DFF91D4F821F0020D430 /* LaunchScreen.storyboard in Resources */,
 				E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */,
 				4A328A6B22C47B9100034075 /* Montserrat-BoldItalic.ttf in Resources */,
+				0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */,
 				1BC2DFF61D4F821F0020D430 /* Assets.xcassets in Resources */,
 				4A328A7222C47B9100034075 /* Montserrat-LightItalic.ttf in Resources */,
 				4A328A7422C47B9100034075 /* Montserrat-ExtraLight.ttf in Resources */,
@@ -948,6 +963,7 @@
 				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
 				F24E6E6E1E1BC2C300E29995 /* AllResults.swift in Sources */,
+				0E3E1DBE22C5C983008E69EC /* LevelCell.swift in Sources */,
 				F261D4E81E3E33D00039A545 /* DrawingViewTrails.swift in Sources */,
 				0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */,
 				E5F13D1922572CDF002FB4FF /* IQUIViewController+Additions.swift in Sources */,
