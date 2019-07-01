@@ -170,6 +170,8 @@ class CustomAlertView: UIView {
     }
     
     private func setStyleForButton(btn:UIButton,istyle:CustomAlertItemStyle){
+        btn.layer.masksToBounds = true
+        btn.layer.cornerRadius = 8
         if istyle == .cancel{
             btn.setBackgroundColor(Color.color(hexString: "E9E9E9"), forState: .normal)
             btn.setTitleColor(Color.color(hexString: "505259"), for: .normal)
@@ -183,7 +185,46 @@ class CustomAlertView: UIView {
     }
     
     private func renderThreeItem(){
+        let first = items[0]
+        let second = items[1]
+        let three = items[2]
         
+        let btn2 = UIButton()
+        btn2.translatesAutoresizingMaskIntoConstraints = false
+        viewContent.addSubview(btn2)
+        btn2.widthAnchor.constraint(equalToConstant: sizeItem.width).isActive = true
+        btn2.heightAnchor.constraint(equalToConstant: sizeItem.height).isActive = true
+        btn2.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor, constant: 0).isActive = true
+        btn2.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: -60).isActive = true
+        btn2.setTitle(second.title.uppercased(), for: .normal)
+        btn2.tag = second.tag
+        setStyleForButton(btn: btn2, istyle: second.style)
+        //
+        let btn1 = UIButton()
+        btn1.translatesAutoresizingMaskIntoConstraints = false
+        viewContent.addSubview(btn1)
+        btn1.widthAnchor.constraint(equalToConstant: sizeItem.width).isActive = true
+        btn1.heightAnchor.constraint(equalToConstant: sizeItem.height).isActive = true
+        btn1.trailingAnchor.constraint(equalTo: btn2.leadingAnchor, constant: -11).isActive = true
+        btn1.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: -60).isActive = true
+        btn1.setTitle(first.title.uppercased(), for: .normal)
+        btn1.tag = 1
+        setStyleForButton(btn: btn1, istyle: first.style)
+        //
+        let btn3 = UIButton()
+        btn3.translatesAutoresizingMaskIntoConstraints = false
+        viewContent.addSubview(btn3)
+        btn3.widthAnchor.constraint(equalToConstant: sizeItem.width).isActive = true
+        btn3.heightAnchor.constraint(equalToConstant: sizeItem.height).isActive = true
+        btn3.leadingAnchor.constraint(equalTo: btn2.trailingAnchor, constant: 11).isActive = true
+        btn3.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: -60).isActive = true
+        btn3.setTitle(three.title.uppercased(), for: .normal)
+        btn3.tag = 2
+        setStyleForButton(btn: btn3, istyle: three.style)
+        //
+        btn1.addTarget(self, action: #selector(tapButtonItem(sender:)), for: .touchUpInside)
+        btn2.addTarget(self, action: #selector(tapButtonItem(sender:)), for: .touchUpInside)
+        btn3.addTarget(self, action: #selector(tapButtonItem(sender:)), for: .touchUpInside)
     }
     
     ///tap action: String is title of Item, Int is tag of Item
