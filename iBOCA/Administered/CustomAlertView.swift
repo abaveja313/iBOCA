@@ -37,8 +37,11 @@ class CustomAlertView: UIView {
     fileprivate var heightContent : CGFloat = 360
     fileprivate var widthContent : CGFloat = 467 // default have two item
     fileprivate var items : [CustomAlertItem] = [CustomAlertItem]()
+    fileprivate var mTextContent = UILabel()
+    fileprivate var blockTapButtonItem : ( (CustomAlertView,String,Int)->Void )?
     
     var title : String = ""
+    var textContent : String = ""
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -96,7 +99,23 @@ class CustomAlertView: UIView {
         btnClose.setImage(UIImage.init(named: "close-alert"), for: .normal)
         btnClose.transform = CGAffineTransform.init(rotationAngle: CGFloat.pi / 4 )
         //
+        mTextContent.translatesAutoresizingMaskIntoConstraints = false
+        viewContent.addSubview(mTextContent)
+        mTextContent.topAnchor.constraint(equalTo: headerContent.bottomAnchor, constant: 33).isActive = true
+        mTextContent.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 68).isActive = true
+        mTextContent.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -68).isActive = true
+        mTextContent.text = textContent
+        mTextContent.font = Font.font(name: Font.Montserrat.medium, size: 18)
+        mTextContent.textColor = UIColor.black
+        mTextContent.numberOfLines = 0
+        mTextContent.lineBreakMode = .byWordWrapping
+        mTextContent.addTextSpacing(-0.36)
+        mTextContent.addLineSpacing(34 * 0.5)
+        mTextContent.textAlignment = .center
+        //
         setupItems()
+        //add actions
+        btnClose.addTarget(self, action: #selector(tapClose), for: .touchUpInside)
         
         
     }
@@ -132,6 +151,7 @@ class CustomAlertView: UIView {
         btn1.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 18).isActive = true
         btn1.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: -60).isActive = true
         btn1.setTitle(first.title.uppercased(), for: .normal)
+        btn1.tag = 0
         setStyleForButton(btn: btn1, istyle: first.style)
         //
         let btn2 = UIButton()
@@ -142,9 +162,11 @@ class CustomAlertView: UIView {
         btn2.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -18).isActive = true
         btn2.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: -60).isActive = true
         btn2.setTitle(second.title.uppercased(), for: .normal)
+        btn2.tag = 1
         setStyleForButton(btn: btn2, istyle: second.style)
-        
-        
+        //
+        btn1.addTarget(self, action: #selector(tapButtonItem(sender:)), for: .touchUpInside)
+        btn2.addTarget(self, action: #selector(tapButtonItem(sender:)), for: .touchUpInside)
     }
     
     private func setStyleForButton(btn:UIButton,istyle:CustomAlertItemStyle){
@@ -164,13 +186,15 @@ class CustomAlertView: UIView {
         
     }
     
-    class func showAlert(withTitle title:String, andItems items: [CustomAlertItem],inView parent:UIView){
+    ///tap action: String is title of Item, Int is tag of Item
+    class func showAlert(withTitle title:String,andTextContent content:String, andItems items: [CustomAlertItem],inView parent:UIView,tapAction:@escaping(CustomAlertView,String,Int)->Void){
         let alert = CustomAlertView()
         alert.widthContent = alert.getWidthFrom(countItem: items.count)
         alert.title = title
         alert.items = items
+        alert.textContent = content
         alert.setupUI(withParent: parent)
-        
+        alert.blockTapButtonItem = tapAction
     }
     
     
@@ -183,5 +207,27 @@ class CustomAlertView: UIView {
             return 467
         }
     }
+    
+    func dismiss(){
+        UIView.animate(withDuration: 0.3, animations: {
+            self.alpha = 0
+        }) { (isok) in
+            self.removeFromSuperview()
+        }
+    }
+    
+    
+    //MARK: - Action Method
+    
+    @objc func tapClose(){
+       dismiss()
+    }
+    
+    @objc func tapButtonItem(sender:UIButton){
+        let index = sender.tag
+        let item = items[index]
+        blockTapButtonItem?(self,item.title,item.tag)
+    }
+    
 
 }

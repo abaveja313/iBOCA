@@ -76,20 +76,12 @@ class AdministeredViewController: UIViewController {
     }
     
     private func showAlertTurnOnConsent(){
-//        let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to provide test data.", preferredStyle: .alert)
-//        let cancel = UIAlertAction.init(title: "Cancel", style: .cancel) { (iaction) in
-//            self.mSwitch.setOn(false, animated: true)
-//        }
-//        let approve = UIAlertAction.init(title: "Approve", style: .default) { (iaction) in
-//        }
-//        alert.addAction(cancel)
-//        alert.addAction(approve)
-//        self.present(alert, animated: true, completion: nil)
-        
-        CustomAlertView.showAlert(withTitle: "Conset Request", andItems:
-            [.cre(title: "Cancel", itag: 0, istyle: .cancel),
-             .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view)
-        
+        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to provide test data", andItems:  [.cre(title: "Cancel", itag: 0, istyle: .cancel),                                                                                                                       .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view) {[weak self](alert,title, itag) in
+            if itag == 0{
+                self?.mSwitch.isOn = false
+            }
+            alert.dismiss()
+        }
     }
     
     
