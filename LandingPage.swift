@@ -25,6 +25,7 @@ let TestSemanticListGeneration = 13
 let TestMOCAResults = 14
 let TestGDTResults = 15
 let TestGoldStandard = 16
+let TestSpeechToText = 17
 
 
 enum TestStatus {

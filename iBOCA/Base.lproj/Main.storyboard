@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RmL-Z6-Ri2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RmL-Z6-Ri2">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -2015,10 +2015,16 @@
                                             <constraint firstAttribute="height" constant="72" id="jRD-E5-csT"/>
                                         </constraints>
                                         <state key="normal" title="SELECT TESTS"/>
+                                        <connections>
+                                            <action selector="tapSelectTest:" destination="4Zp-pd-2Vi" eventType="touchUpInside" id="0FS-Cv-OXl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brZ-Tn-kr6">
                                         <rect key="frame" x="218" y="0.0" width="210" height="72"/>
                                         <state key="normal" title="QUICK START"/>
+                                        <connections>
+                                            <action selector="tapQuickStart:" destination="4Zp-pd-2Vi" eventType="touchUpInside" id="HSD-4u-xhK"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5169,7 +5175,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jXy-KL-eph"/>
-        <segue reference="eep-iX-tUz"/>
+        <segue reference="o9k-wN-m3X"/>
         <segue reference="vHL-fv-LLl"/>
         <segue reference="ZXe-jH-G6o"/>
     </inferredMetricsTieBreakers>
