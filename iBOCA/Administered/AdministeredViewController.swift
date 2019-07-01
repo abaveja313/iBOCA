@@ -76,13 +76,7 @@ class AdministeredViewController: UIViewController {
     }
     
     private func showAlertTurnOnConsent(){
-        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\ provide test data", andItems:
-            [.cre(title: "Start New Task", itag: 0, istyle: .normal),                                                                                                                       .cre(title: "Resume Task", itag: 1, istyle: .normal),                                                                                                                                .cre(title: "Cancel", itag: 2, istyle: .cancel)], inView: self.view) {[weak self](alert,title, itag) in
-            if itag == 0{
-                self?.mSwitch.isOn = false
-            }
-            alert.dismiss()
-        }
+       
     }
     
     

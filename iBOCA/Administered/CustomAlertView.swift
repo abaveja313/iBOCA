@@ -13,6 +13,21 @@ enum CustomAlertItemStyle{
     case cancel
 }
 
+//Example
+/*
+CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\ provide test data", andItems:
+    [.cre(title: "Cancel", itag: 0, istyle: .normal),                                                                                                                       .cre(title: "Approve", itag: 1, istyle: .cancel), inView: self.view) {[weak self](alert,title, itag) in
+        if itag == 0{
+        self?.mSwitch.isOn = false
+        }
+        alert.dismiss()
+}
+*/
+ 
+ 
+ 
+
+
 class CustomAlertItem : NSObject{
     
     var title : String = ""
