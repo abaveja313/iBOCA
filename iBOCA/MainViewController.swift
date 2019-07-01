@@ -14,6 +14,11 @@ var screenSize : CGRect?
 
 var testName:String?
 
+enum TestMode {
+    case patient
+    case admin
+}
+
 class GoToTestCellModel : NSObject{
     var title = ""
     var icon = ""
@@ -72,12 +77,12 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     
     var mCollection : UICollectionView?
     var arrData : [GoToTestCellModel] = [GoToTestCellModel]()
+    var mode : TestMode = TestMode.admin
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
         testName = segue.identifier
-        
         
     }
     
@@ -310,11 +315,17 @@ extension MainViewController {
         mBtnResult.render()
         mBtnResult.addTextSpacing(-0.36)
         //
-        mBtnDWP.setTitle(title: "DONE WITH PATIENT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        switch mode {
+        case .admin:
+            mBtnDWP.setTitle(title: "DONE WITH TEST", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        case .patient:
+            mBtnDWP.setTitle(title: "DONE WITH PATIENT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        }
         mBtnDWP.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
         mBtnDWP.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
         mBtnDWP.render()
         mBtnDWP.addTextSpacing(-0.36)
+
     }
     
     func setupCollectionView(){
@@ -335,10 +346,10 @@ extension MainViewController {
     }
     
     func setupData(){
-        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Cats and Dogs","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","Semantic List\nGeneration","MOCA"]
-        let arrIcon = ["orientation","simple-memory","visual-association","trails","catsanddogs","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","semantic-list-generation","moca"]
-        let arrSegueID = ["orientation","simple-memory","visual-association","trails","catsanddogs","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","semantic-list-generation","moca"]
-        let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestCatsAndDogs,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestSemanticListGeneration,TestMOCAResults]
+        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","MOCA"]
+        let arrIcon = ["orientation","simple-memory","visual-association","trails","speech-to-text","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","moca"]
+        let arrSegueID = ["orientation","simple-memory","visual-association","trails","speech-to-text","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","moca"]
+        let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestSpeechToText,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestMOCAResults]
         arrData.removeAll()
         for (index,item) in arrTitle.enumerated(){
             let iTestStatus = Status[arrTag[index]]
@@ -392,7 +403,21 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = arrData[indexPath.row]
-        performSegue(withIdentifier: item.segueID, sender: nil)
+        if item.segueID == "speech-to-text"{
+            showAlertCommingSoon()
+        }
+        else{
+            performSegue(withIdentifier: item.segueID, sender: nil)
+        }
+        
+    }
+    
+    func showAlertCommingSoon(){
+        let alert = UIAlertController.init(title: ErrorMessage.generalTitle, message: "Coming soon!", preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: { (iaction) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     

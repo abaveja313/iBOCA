@@ -75,8 +75,28 @@ class AdministeredViewController: UIViewController {
         }
     }
     
+    @IBAction func tapSelectTest(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+            vc.mode = .admin
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+    }
+    
+    @IBAction func tapQuickStart(_ sender: Any) {
+    }
+    
+    
     private func showAlertTurnOnConsent(){
-       
+        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\nprovide test data", andItems:
+        [.cre(title: "Cancel", itag: 0, istyle: .normal),                                                                                                                      .cre(title: "Approve", itag: 1, istyle: .cancel)], inView: self.view) {[weak self](alert, title, itag) in
+            if itag == 0 || itag == -1{
+                //-1 is this when user tap close button
+                self?.mSwitch.isOn = false
+            }
+            alert.dismiss()
+        }
     }
     
     

@@ -276,7 +276,7 @@ class CustomAlertView: UIView {
     //MARK: - Action Method
     
     @objc func tapClose(){
-       dismiss()
+       blockTapButtonItem?(self,"close",-1)
     }
     
     @objc func tapButtonItem(sender:UIButton){
