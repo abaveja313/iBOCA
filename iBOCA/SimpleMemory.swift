@@ -41,8 +41,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var testPickerLabel: UILabel!
     @IBOutlet weak var incorrectPickerLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
-    
     var resultList : [String:Any] = [:]
     var recognizeErrors = [Int]()
     var recognizeTimes = [Double]()
@@ -56,7 +54,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     var ended = false
     var isStartNew = false
     
-    @IBOutlet weak var next1: UIButton!
+    @IBOutlet weak var next1: GradientButton!
     @IBOutlet weak var start: GradientButton!
     @IBOutlet weak var back: UIButton!
     
@@ -113,6 +111,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var vDelay: UIView!
     @IBOutlet weak var lblDescDelay: UILabel!
     
+    @IBOutlet weak var collectionViewObjectName: UICollectionView!
     
     override func viewDidLoad() {
         
@@ -147,57 +146,52 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         
         afterBreakSM = false
         
-        // Setup tableView
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.isHidden = true
-        
-        if(afterBreakSM == true){
-//            timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
-            timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
-            timerSM.fire()
-            delayLabel.text = "Recommended delay: 1 minute"
-//            start.isHidden = false
-            testPicker.isHidden = true
-            incorrectPicker.isHidden = true
-            
-            testPickerLabel.isHidden = true
-            incorrectPickerLabel.isHidden = true
-            for b in testSelectButtons {
-                b.isHidden = true
-            }
-            
-            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-            start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-            start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
-        }
-        else{
-//            start.isHidden = true
-            testPicker.reloadAllComponents()
-            incorrectPicker.reloadAllComponents()
-            
-            testPicker.selectRow(0, inComponent: 0, animated: true)
-            incorrectPicker.selectRow(0, inComponent: 0, animated: true)
-            
-            testPicker.isHidden = false
-            incorrectPicker.isHidden = false
-            
-            testPickerLabel.isHidden = false
-            incorrectPickerLabel.isHidden = false
-            setupTestSelectButtons()
-            
-            imageSetSM = 0
-            incorrectImageSetSM = 0
-            recognizeIncorrectSM = images0
-            imagesSM = images0
-            
-            start.isEnabled = false
-            
-            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-            start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
-            start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-//            startAlert()
-        }
+//        if(afterBreakSM == true){
+////            timerSM = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
+//            timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
+//            timerSM.fire()
+//            delayLabel.text = "Recommended delay: 1 minute"
+////            start.isHidden = false
+//            testPicker.isHidden = true
+//            incorrectPicker.isHidden = true
+//
+//            testPickerLabel.isHidden = true
+//            incorrectPickerLabel.isHidden = true
+//            for b in testSelectButtons {
+//                b.isHidden = true
+//            }
+//
+//            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+//            start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+//            start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+//        }
+//        else{
+////            start.isHidden = true
+//            testPicker.reloadAllComponents()
+//            incorrectPicker.reloadAllComponents()
+//
+//            testPicker.selectRow(0, inComponent: 0, animated: true)
+//            incorrectPicker.selectRow(0, inComponent: 0, animated: true)
+//
+//            testPicker.isHidden = false
+//            incorrectPicker.isHidden = false
+//
+//            testPickerLabel.isHidden = false
+//            incorrectPickerLabel.isHidden = false
+//            setupTestSelectButtons()
+//
+//            imageSetSM = 0
+//            incorrectImageSetSM = 0
+//            recognizeIncorrectSM = images0
+//            imagesSM = images0
+//
+//            start.isEnabled = false
+//
+//            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+//            start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
+//            start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+////            startAlert()
+//        }
         
         // MARK: - TODO
         self.testPicker.isHidden = true
@@ -344,7 +338,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         totalTime = 60
         ended = true
         self.isStartNew = true
-        self.tableView.reloadData()
+        self.collectionViewObjectName.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.isStartNew = false
         }
@@ -751,8 +745,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             print("recalling...")
 //            self.recall()
             //action
-            self.tableView.isHidden = false
-            self.tableView.reloadData()
+            self.collectionViewObjectName.isHidden = false
+            self.collectionViewObjectName.reloadData()
             self.next1.isHidden = false
             self.next1.isEnabled = true
             self.next1.addTarget(self, action: #selector(self.doneSM), for: UIControlEvents.touchUpInside)
@@ -993,7 +987,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         ended = true
         //back.isEnabled = true
         totalTime = 60
-        self.tableView.isHidden = true
+        self.collectionViewObjectName.isHidden = true
         afterBreakSM = false
         var numErrors = 0
         
@@ -1174,7 +1168,7 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         else {
             ended = true
             totalTime = 60
-            self.tableView.isHidden = true
+            self.collectionViewObjectName.isHidden = true
             afterBreakSM = false
             self.next1.isHidden = true
             
@@ -1187,8 +1181,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
             
             for i in 0 ..< imagesSM.count {
                 exactEsults += " \(imagesSM[i]),"
-                let cell = self.tableView.cellForRow(at: IndexPath.init(row: i, section: 0)) as! SMCell
-                guard let inputValue = cell.textField.text else {return}
+                let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
+                guard let inputValue = cell.tfObjectName.text else {return}
                 if imagesSM.contains(inputValue.lowercased()) {
                     outputResult += "Input \(inputValue) - Correct\n"
                     correct += 1
@@ -1234,8 +1228,8 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
     private func checkValid() -> Bool {
         var countEmpty = 0
         for i in 0 ..< imagesSM.count {
-            let cell = self.tableView.cellForRow(at: IndexPath.init(row: i, section: 0)) as! SMCell
-            if let inputValue = cell.textField.text, inputValue.isEmpty {
+            let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
+            if let inputValue = cell.tfObjectName.text, inputValue.isEmpty {
                 countEmpty += 1
             }
         }
@@ -1248,25 +1242,6 @@ class SimpleMemoryTask: ViewController, UIPickerViewDelegate {
         }
     }
     
-}
-// MARK: - TableView Delegate, DataSource
-extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imagesSM.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SMCell", for: indexPath) as! SMCell
-        cell.lbTitle.text = "Object name \(indexPath.row + 1):"
-        if self.isStartNew == true {
-            cell.textField.text = ""
-        }
-        return cell
-    }
 }
 
 // MARK: - Setup UI
@@ -1298,6 +1273,9 @@ extension SimpleMemoryTask {
         self.vShadowTask.isHidden = true
         self.vTask.isHidden = true
         self.vDelay.isHidden = true
+        
+        // View Object Name
+        self.setupViewObjectName()
     }
     
     fileprivate func setupCollectionView() {
@@ -1351,6 +1329,22 @@ extension SimpleMemoryTask {
         self.start.addTextSpacing(-0.36)
         self.start.render()
     }
+    
+    fileprivate func setupViewObjectName() {
+        // Table View
+        self.collectionViewObjectName.register(SimpleMemoryCell.nib(), forCellWithReuseIdentifier: SimpleMemoryCell.identifier())
+        self.collectionViewObjectName.delegate = self
+        self.collectionViewObjectName.dataSource = self
+        self.collectionViewObjectName.isHidden = true
+        
+        // Button complete
+        let colors = [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")]
+        self.next1.setTitle(title: "COMPLETE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.next1.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.next1.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.next1.addTextSpacing(-0.36)
+        self.next1.render()
+    }
 }
 
 
@@ -1360,13 +1354,25 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        if collectionView == self.collectionViewLevel {
+            return 4
+        }
+        else {
+            return 6
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
-        let widthCell = (widthCollectionView / 4) - 20
-        return CGSize.init(width: widthCell, height: 235.0)
+        if collectionView == self.collectionViewLevel {
+            let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
+            let widthCell = (widthCollectionView / 4) - 20
+            return CGSize.init(width: widthCell, height: 235.0)
+        }
+        else {
+            let widthCollectionView: CGFloat = self.collectionViewObjectName.frame.size.width
+            let widthCell = (widthCollectionView / 2) - 20
+            return CGSize.init(width: widthCell, height: 74.0)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -1374,53 +1380,75 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        if collectionView == self.collectionViewLevel {
+            return 0
+        }
+        else {
+            return 20.0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        if collectionView == self.collectionViewLevel {
+            return 0
+        }
+        else {
+            return 20.0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
-        let idx = indexPath.row + 1
-        cell.ivLevel.image = UIImage.init(named: "level_\(idx)")
-        cell.lblTitle.text = "LEVEL \(idx)"
-        return cell
+        if collectionView == self.collectionViewLevel {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
+            let idx = indexPath.row + 1
+            cell.ivLevel.image = UIImage.init(named: "level_\(idx)")
+            cell.lblTitle.text = "LEVEL \(idx)"
+            return cell
+        }
+        else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimpleMemoryCell.identifier(), for: indexPath) as! SimpleMemoryCell
+            cell.lblTitle.text = "Object name \(indexPath.row + 1):"
+            if self.isStartNew == true {
+                cell.tfObjectName.text = ""
+            }
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let idx = indexPath.item
-        print("Selected Item \(idx)")
-        switch idx {
-        case 0:
-            imagesSM = images0
-            imageSetSM = 0
-            recognizeIncorrectSM = images4
-            incorrectImageSetSM = 4
-        case 1:
-            imagesSM = images1
-            imageSetSM = 1
-            recognizeIncorrectSM = images5
-            incorrectImageSetSM = 5
-        case 2:
-            imagesSM = images2
-            imageSetSM = 2
-            recognizeIncorrectSM = images6
-            incorrectImageSetSM = 6
-        case 3:
-            imagesSM = images3
-            imageSetSM = 3
-            recognizeIncorrectSM = images7
-            incorrectImageSetSM = 7
-        default:
-            imagesSM = images0
-            imageSetSM = 0
-            recognizeIncorrectSM = images0
-            incorrectImageSetSM = 0
+        if collectionView == self.collectionViewLevel {
+            let idx = indexPath.item
+            print("Selected Item \(idx)")
+            switch idx {
+            case 0:
+                imagesSM = images0
+                imageSetSM = 0
+                recognizeIncorrectSM = images4
+                incorrectImageSetSM = 4
+            case 1:
+                imagesSM = images1
+                imageSetSM = 1
+                recognizeIncorrectSM = images5
+                incorrectImageSetSM = 5
+            case 2:
+                imagesSM = images2
+                imageSetSM = 2
+                recognizeIncorrectSM = images6
+                incorrectImageSetSM = 6
+            case 3:
+                imagesSM = images3
+                imageSetSM = 3
+                recognizeIncorrectSM = images7
+                incorrectImageSetSM = 7
+            default:
+                imagesSM = images0
+                imageSetSM = 0
+                recognizeIncorrectSM = images0
+                incorrectImageSetSM = 0
+            }
+            
+            self.startDisplayAlert()
         }
-        
-        self.startDisplayAlert()
-        
     }
 }

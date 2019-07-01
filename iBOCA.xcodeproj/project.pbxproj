@@ -20,6 +20,9 @@
 		0E3E1DBE22C5C983008E69EC /* LevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBC22C5C983008E69EC /* LevelCell.swift */; };
 		0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBD22C5C983008E69EC /* LevelCell.xib */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
+		0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */; };
+		0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */; };
+		0EB10B6022C9B0A9001997BB /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
 		1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */; };
@@ -206,6 +209,9 @@
 		0E3E1DBC22C5C983008E69EC /* LevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCell.swift; sourceTree = "<group>"; };
 		0E3E1DBD22C5C983008E69EC /* LevelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelCell.xib; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMemoryCell.swift; sourceTree = "<group>"; };
+		0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleMemoryCell.xib; sourceTree = "<group>"; };
+		0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
 		1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticListGeneration.swift; sourceTree = "<group>"; };
@@ -364,6 +370,7 @@
 			children = (
 				0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */,
 				0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */,
+				0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */,
 				0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */,
 				0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */,
 			);
@@ -395,6 +402,16 @@
 				0E9D5086228D40610055B676 /* Settings.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		0EB10B4922C99BCF001997BB /* SimpleMemoryTask */ = {
+			isa = PBXGroup;
+			children = (
+				67E389222283D32600A8277C /* SMCell.swift */,
+				0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */,
+				0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */,
+			);
+			path = SimpleMemoryTask;
 			sourceTree = "<group>";
 		};
 		1BC2DFE21D4F821F0020D430 = {
@@ -449,7 +466,6 @@
 				F2229C9D1F01B049000F2CBA /* CryptoSwift.xcodeproj */,
 				E2901DCE1D4F8C3700080F82 /* OrientationTask.swift */,
 				4386775B1E33D551000309F2 /* SimpleMemory.swift */,
-				67E389222283D32600A8277C /* SMCell.swift */,
 				E2B9F7FF1DD144A70035FE0B /* VATask.swift */,
 				F27AEA921EEC6E4200AFB3D1 /* DigitTests */,
 				43960F4B1E3C0758006FDC7B /* CatsAndDogsViewController.swift */,
@@ -525,6 +541,7 @@
 		4A64C08F22C4BCE5005A6F94 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0EB10B4922C99BCF001997BB /* SimpleMemoryTask */,
 				0E3E1DB622C5C94D008E69EC /* Level Cell */,
 				4A64C09522C4BD06005A6F94 /* MainView */,
 			);
@@ -883,6 +900,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */,
 				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
 				4A328A7622C47B9100034075 /* Montserrat-MediumItalic.ttf in Resources */,
@@ -956,6 +974,8 @@
 				1BC2DFF11D4F821F0020D430 /* ViewController.swift in Sources */,
 				E272DF021D74957F002F8295 /* Demographics.swift in Sources */,
 				4386775C1E33D551000309F2 /* SimpleMemory.swift in Sources */,
+				0EB10B6022C9B0A9001997BB /* UITextFieldExtensions.swift in Sources */,
+				0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */,
 				E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */,
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
