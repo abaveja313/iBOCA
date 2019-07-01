@@ -65,6 +65,8 @@
 		4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */; };
 		4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58E4922CA08B90021E17C /* ErrorMessage.swift */; };
 		67E389232283D32600A8277C /* SMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E389222283D32600A8277C /* SMCell.swift */; };
+		B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */; };
+		B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -266,6 +268,8 @@
 		4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		4AF58E4922CA08B90021E17C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		67E389222283D32600A8277C /* SMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCell.swift; sourceTree = "<group>"; };
+		B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisualAssociationCell.xib; sourceTree = "<group>"; };
+		B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualAssociationCell.swift; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -404,6 +408,8 @@
 		0E3E1DB622C5C94D008E69EC /* Level Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */,
+				B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */,
 				0E3E1DBC22C5C983008E69EC /* LevelCell.swift */,
 				0E3E1DBD22C5C983008E69EC /* LevelCell.xib */,
 			);
@@ -962,6 +968,7 @@
 				4A328A7022C47B9100034075 /* Montserrat-SemiBold.ttf in Resources */,
 				4A328A7722C47B9100034075 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				4A328A6922C47B9100034075 /* Montserrat-Black.ttf in Resources */,
+				B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */,
 				4A328A7522C47B9100034075 /* Montserrat-Bold.ttf in Resources */,
 				4A328A7A22C47B9100034075 /* Montserrat-ExtraBoldItalic.ttf in Resources */,
 			);
@@ -1003,6 +1010,7 @@
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
 				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
+				B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */,
 				43343D461E3E66BC001779AC /* TapInOrderBackwardsViewController.swift in Sources */,
 				1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */,
 				F27AEAA61EEC948600AFB3D1 /* DigitSpanForward.swift in Sources */,

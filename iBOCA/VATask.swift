@@ -112,9 +112,21 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     var testCount = Int()
     
+    
+    @IBOutlet weak var lblBack: UILabel!
+    @IBOutlet weak var lblDescTask: UILabel!
+    @IBOutlet weak var collectionViewLevel: UICollectionView!
+    @IBOutlet weak var vShadowTask: UIView!
+    @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var ivTask: UIImageView!
+    @IBOutlet weak var vDelay: UIView!
+    @IBOutlet weak var lblDescDelay: UILabel!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.setupView()
         // Do any additional setup after loading the view, typically from a nib.
         //navigationItem.title = "back"
         
@@ -146,8 +158,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         else{
             testPicker.reloadAllComponents()
             testPicker.selectRow(0, inComponent: 0, animated: true)
-            testPicker.isHidden = false
-            testPickerLabel.isHidden = false
+//            testPicker.isHidden = false
+//            testPickerLabel.isHidden = false
             
             imageSetVA = 0
             mixedImages = mixed0
@@ -263,6 +275,12 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     func startDisplayAlert() {
+        self.collectionViewLevel.isHidden = true
+        self.lblBack.text = "BACK"
+        self.lblDescTask.isHidden = true
+        
+        self.vShadowTask.isHidden = false
+        self.vTask.isHidden = false
         
         Status[TestVisualAssociation] = TestStatus.Running
         
@@ -360,7 +378,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         // Show Arrow
         self.btnArrowRight.isHidden = false
         self.btnArrowLeft.isHidden = true
-        outputDisplayImage(withImageName: mixedImages[testCount])
+        outputImage(withImageName: mixedImages[testCount])
     }
     
     func outputDisplayImage(_ name: String) {
@@ -406,6 +424,24 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         self.view.addSubview(imageView)
         
+    }
+    
+    func outputImage(withImageName name: String) {
+        // Check Show/ Hide Arrow
+        if testCount == 0 {
+            self.btnArrowLeft.isHidden = true
+            self.btnArrowRight.isHidden = false
+        }
+        else if testCount == imagesSM.count {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = true
+        }
+        else {
+            self.btnArrowLeft.isHidden = false
+            self.btnArrowRight.isHidden = false
+        }
+        
+        self.ivTask.image = UIImage(named: name)!
     }
     
     func outputDisplayImage(withImageName name: String) {
@@ -504,6 +540,11 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     func beginDelay(){
+        // Hide Arrow
+        self.btnArrowLeft.isHidden = true
+        self.btnArrowRight.isHidden = true
+        self.ivTask.isHidden = true
+        self.vDelay.isHidden = false
         imageView.removeFromSuperview()
         print("in delay...")
         
@@ -630,6 +671,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     func recall(){
+        btnArrowLeft.isHidden = false
+        btnArrowRight.isHidden = false
         
         correct.isHidden = false
         incorrect.isHidden = false
@@ -911,7 +954,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         else{
             arrowButton1.isEnabled = true
             arrowButton2.isEnabled = true
-        
+            
             if(orderRecognize[testCount] == 0) {
                 outputRecognizeImages(mixedImages[testCount], name2: recognizeIncorrectVA[testCount])
             }
@@ -932,7 +975,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         result.endTime = Foundation.Date()
         
         Status[TestVisualAssociation] = TestStatus.Done
-
+        
         //back.isEnabled = true
         start.isEnabled = true
         
@@ -1049,7 +1092,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         testCount -= 1
         if testCount >= 0 {
             print("pic: \(testCount)")
-            self.outputDisplayImage(withImageName: mixedImages[testCount])
+            self.outputImage(withImageName: mixedImages[testCount])
         }
     }
     
@@ -1060,30 +1103,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         if(testCount == mixedImages.count) {
             imageView.removeFromSuperview()
             print("delay")
-            if(firstDisplay == false) {
-                imageView.removeGestureRecognizer(gestureDisplay)
-                // Hide arrow
-                self.btnArrowLeft.isHidden = true
-                self.btnArrowRight.isHidden = true
-                beginDelay()
-            }
-            else {
-                firstDisplay = false
-                // Hide arrow
-                self.btnArrowLeft.isHidden = true
-                self.btnArrowRight.isHidden = true
-                let nextAlert = UIAlertController(title: "Display", message: "Ask patient to name and remember the two items in the photograph again.", preferredStyle: .alert)
-                nextAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
-                    print("Continue")
-                    self.display()
-                    //action
-                }))
-                present(nextAlert, animated: true, completion: nil)
-            }
+            beginDelay()
         }
         else {
             print("pic: \(testCount)")
-            self.outputDisplayImage(withImageName: mixedImages[testCount])
+            self.outputImage(withImageName: mixedImages[testCount])
         }
     }
     
@@ -1095,3 +1119,163 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
 }
+
+extension VATask {
+    fileprivate func setupView() {
+        // Label Back
+        self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        self.lblBack.addTextSpacing(-0.56)
+        self.lblBack.text = "VISUAL ASSOCIATION"
+        
+        // Label Description Task
+        self.lblDescTask.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
+        self.lblDescTask.textColor = Color.color(hexString: "#013AA5")
+        self.lblDescTask.alpha = 0.67
+        self.lblDescTask.text = "Ask Patient to name and remember the two items in the photograph"
+        self.lblDescTask.addLineSpacing(15.0)
+        self.lblDescTask.addTextSpacing(-0.36)
+        
+        // Collection View Level
+        self.setupCollectionView()
+        
+        // View Task
+        self.setupViewTask()
+        
+        // View Delay
+        self.setupViewDelay()
+        
+        self.vShadowTask.isHidden = true
+        self.vTask.isHidden = true
+        self.vDelay.isHidden = true
+    }
+    
+    fileprivate func setupCollectionView() {
+        self.collectionViewLevel.backgroundColor = UIColor.clear
+        self.collectionViewLevel.register(VisualAssociationCell.nib(), forCellWithReuseIdentifier: VisualAssociationCell.identifier())
+        self.collectionViewLevel.delegate = self
+        self.collectionViewLevel.dataSource = self
+    }
+    
+    fileprivate func setupViewTask() {
+        self.vShadowTask.layer.cornerRadius = 8.0
+        self.vShadowTask.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.vShadowTask.layer.shadowOpacity = 1.0
+        self.vShadowTask.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vShadowTask.layer.shadowRadius = 10 / 2.0
+        self.vShadowTask.layer.shadowPath = nil
+        self.vShadowTask.layer.masksToBounds = false
+        
+        self.vTask.clipsToBounds = true
+        self.vTask.backgroundColor = UIColor.white
+        self.vTask.layer.cornerRadius = 8.0
+        
+        // Button Arrow Left, Right
+        self.btnArrowLeft.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.btnArrowLeft.layer.cornerRadius = self.btnArrowLeft.frame.size.height / 2.0
+        self.btnArrowRight.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.btnArrowRight.layer.cornerRadius = self.btnArrowRight.frame.size.height / 2.0
+    }
+    
+    fileprivate func setupViewDelay() {
+//        self.lblDescDelay.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+//        self.lblDescDelay.textColor = Color.color(hexString: "#8A9199")
+//        self.lblDescDelay.text = "Ask Patient to name the items that were displayed  earlier. Record their answers"
+//        self.lblDescDelay.addLineSpacing(15.0)
+//        self.lblDescDelay.addTextSpacing(-0.36)
+//        self.lblDescDelay.textAlignment = .center
+//
+//        self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+//        self.delayLabel.textColor = Color.color(hexString: "#013AA5")
+//        self.delayLabel.text = "Recommended Delay : 1 minute"
+//        self.delayLabel.addTextSpacing(-0.56)
+//
+//        self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
+//        self.timerLabel.textColor = Color.color(hexString: "#013AA5")
+//        self.timerLabel.addTextSpacing(-1.44)
+        
+//        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
+//        self.start.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+//        self.start.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+//        self.start.setupGradient(arrColor: colors, direction: .topToBottom)
+//        self.start.addTextSpacing(-0.36)
+//        self.start.render()
+    }
+}
+
+extension VATask: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VisualAssociationCell.identifier(), for: indexPath) as! VisualAssociationCell
+        var imageName: String!
+        switch indexPath.row {
+        case 0:
+            imageName = mixed0[0]
+        case 1:
+            imageName = mixed1[1]
+        case 2:
+            imageName = mixed2[0]
+        case 3:
+            imageName = mixed3[0]
+        default:
+            imageName = mixed4[0]
+        }
+        
+        cell.ivLevel.image = UIImage.init(named: imageName)
+        cell.lblTitle.text = "LEVEL \(indexPath.row + 1)"
+        return cell
+    }
+    
+    
+}
+
+extension VATask: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
+        let widthCell = (widthCollectionView / 4) - 20
+        return CGSize.init(width: widthCell, height: 235.0)
+    }
+}
+
+extension VATask: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            imageSetVA = 0
+            mixedImages = mixed0
+            halfImages = half0
+            recognizeIncorrectVA = incorrect0
+        case 1:
+            imageSetVA = 1
+            mixedImages = mixed1
+            halfImages = half1
+            recognizeIncorrectVA = incorrect1
+        case 2:
+            imageSetVA = 2
+            mixedImages = mixed2
+            halfImages = half2
+            recognizeIncorrectVA = incorrect2
+        case 3:
+            imageSetVA = 3
+            mixedImages = mixed3
+            halfImages = half3
+            recognizeIncorrectVA = incorrect3
+        default:
+            imageSetVA = 4
+            mixedImages = mixed4
+            halfImages = half4
+            recognizeIncorrectVA = incorrect4
+        }
+        self.startDisplayAlert()
+    }
+}
+
+
