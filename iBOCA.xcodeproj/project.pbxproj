@@ -23,6 +23,9 @@
 		0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */; };
 		0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */; };
 		0EB10B6022C9B0A9001997BB /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */; };
+		0EB10B7322C9E512001997BB /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */; };
+		0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B7422C9F229001997BB /* SMResultCell.swift */; };
+		0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B7522C9F229001997BB /* SMResultCell.xib */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
 		1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */; };
@@ -214,6 +217,9 @@
 		0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMemoryCell.swift; sourceTree = "<group>"; };
 		0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleMemoryCell.xib; sourceTree = "<group>"; };
 		0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
+		0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensions.swift; sourceTree = "<group>"; };
+		0EB10B7422C9F229001997BB /* SMResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMResultCell.swift; sourceTree = "<group>"; };
+		0EB10B7522C9F229001997BB /* SMResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMResultCell.xib; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
 		1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticListGeneration.swift; sourceTree = "<group>"; };
@@ -372,6 +378,7 @@
 		0E1A22D822C4677D00C8CFDF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */,
 				0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */,
 				0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */,
 				0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */,
@@ -414,6 +421,8 @@
 				67E389222283D32600A8277C /* SMCell.swift */,
 				0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */,
 				0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */,
+				0EB10B7422C9F229001997BB /* SMResultCell.swift */,
+				0EB10B7522C9F229001997BB /* SMResultCell.xib */,
 			);
 			path = SimpleMemoryTask;
 			sourceTree = "<group>";
@@ -930,6 +939,7 @@
 				4A328A7222C47B9100034075 /* Montserrat-LightItalic.ttf in Resources */,
 				4A328A7422C47B9100034075 /* Montserrat-ExtraLight.ttf in Resources */,
 				4A328A6A22C47B9100034075 /* Montserrat-Italic.ttf in Resources */,
+				0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */,
 				4A328A7822C47B9100034075 /* Montserrat-Light.ttf in Resources */,
 				4A328A7122C47B9100034075 /* Montserrat-ThinItalic.ttf in Resources */,
 				1BC2DFF41D4F821F0020D430 /* Main.storyboard in Resources */,
@@ -1011,6 +1021,7 @@
 				E5F13D1222572CDF002FB4FF /* IQInvocation.swift in Sources */,
 				67E389232283D32600A8277C /* SMCell.swift in Sources */,
 				E5F13D1622572CDF002FB4FF /* IQKeyboardReturnKeyHandler.swift in Sources */,
+				0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */,
 				E2901DCF1D4F8C3700080F82 /* OrientationTask.swift in Sources */,
 				E5F13D0C22572CDF002FB4FF /* IQTextView.swift in Sources */,
 				F261D4EA1E3E33F00039A545 /* Bubbles.swift in Sources */,
@@ -1029,6 +1040,7 @@
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,
 				4A64C09822C4BD2D005A6F94 /* GoToTestCollectionCell.swift in Sources */,
 				F27AEA941EEC6E7B00AFB3D1 /* DigitBase.swift in Sources */,
+				0EB10B7322C9E512001997BB /* NSAttributedStringExtensions.swift in Sources */,
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
