@@ -138,8 +138,7 @@ class SimpleMemoryTask: ViewController {
         self.start.isHidden = true
     }
     
-    func startAlert(){
-        
+    func startAlert() {
         //back.isEnabled = false
         next1.isHidden = true
         
