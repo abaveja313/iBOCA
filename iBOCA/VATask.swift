@@ -33,14 +33,11 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     var resultList : [String:Any] = [:]
     
-    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var back: UIButton!
-    @IBOutlet weak var start: UIButton!
     
     
     @IBOutlet weak var resultLabel: UILabel!
     
-    @IBOutlet weak var delayLabel: UILabel!
     
     var delayTime = Double()
     
@@ -113,14 +110,30 @@ class VATask: ViewController, UIPickerViewDelegate {
     var testCount = Int()
     
     
-    @IBOutlet weak var lblBack: UILabel!
-    @IBOutlet weak var lblDescTask: UILabel!
+    @IBOutlet weak var startButton: GradientButton!
+    
+    @IBOutlet weak var backButton: UILabel!
+    @IBOutlet weak var backLabel: UILabel!
+    
     @IBOutlet weak var collectionViewLevel: UICollectionView!
-    @IBOutlet weak var vShadowTask: UIView!
-    @IBOutlet weak var vTask: UIView!
-    @IBOutlet weak var ivTask: UIImageView!
-    @IBOutlet weak var vDelay: UIView!
-    @IBOutlet weak var lblDescDelay: UILabel!
+    
+    @IBOutlet weak var taskView: UIView!
+    @IBOutlet weak var shadowTaskView: UIView!
+    @IBOutlet weak var taskImageView: UIImageView!
+    
+    @IBOutlet weak var delayView: UIView!
+    @IBOutlet weak var delayDescriptionLabel: UILabel!
+    @IBOutlet weak var delayLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
+    
+    @IBOutlet weak var rememberLabel: UILabel!
+    @IBOutlet weak var rememberContinueButton: GradientButton!
+    @IBOutlet weak var viewRememberAgain: UIView!
+    
+    @IBOutlet weak var viewRegconize: UIView!
+    @IBOutlet weak var firstButton: UIButton!
+    @IBOutlet weak var secondButton: UIButton!
+    @IBOutlet weak var startNewButton: GradientButton!
     
     override func viewDidLoad() {
         
@@ -145,14 +158,14 @@ class VATask: ViewController, UIPickerViewDelegate {
 //            timerVA = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
             timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
             timerVA.fire()
-            delayLabel.text = "Recommended delay: 5 minutes"
+//            delayLabel.text = "Recommended delay: 5 minutes"
             
             testPicker.isHidden = true
             testPickerLabel.isHidden = true
             
-            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-            start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-            start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+            startButton.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+            startButton.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+            startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         }
             
         else{
@@ -166,31 +179,36 @@ class VATask: ViewController, UIPickerViewDelegate {
             halfImages = half0
             recognizeIncorrectVA = incorrect0
             
-            start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-            start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
-            start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+            startButton.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+            startButton.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
+            startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
             
         }
         
         print(afterBreakVA)
         
         //back.isEnabled = true
-        start.isEnabled = true
+        startButton.isEnabled = true
         
         correct.isHidden = true
         incorrect.isHidden = true
         dk.isHidden = true
         
     }
+    @IBOutlet weak var viewRecommendDelay: UIView!
     
     func startAlert() {
-        //back.isEnabled = false
-        
         let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
         
         startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
             print("start new")
 //            Status[TestVisualAssociation] = TestStatus.Running
+            
+            self.startNewButton.isHidden = true
+            self.isRecommendDelayHidden(true)
+            self.isCollectionViewHidden(false)
+            self.backButton.text = "VISUAL ASSOCIATION"
+            self.isTaskViewHidden(true)
             
             imageSetVA = 0
             mixedImages = self.mixed0
@@ -201,9 +219,8 @@ class VATask: ViewController, UIPickerViewDelegate {
             
             self.testPicker.selectRow(0, inComponent: 0, animated: true)
             
-            self.testPicker.isHidden = false
-            
-            self.testPickerLabel.isHidden = false
+//            self.testPicker.isHidden = false
+//            self.testPickerLabel.isHidden = false
             
             self.startNewTask()
             //action
@@ -213,21 +230,15 @@ class VATask: ViewController, UIPickerViewDelegate {
             startAlert.addAction(UIAlertAction(title: "Resume Task", style: .default, handler: { (action) -> Void in
                 print("resume old")
                 
-                self.testPicker.isHidden = true
-                
-                self.testPickerLabel.isHidden = true
-                
-                self.start.isHidden = true
-                
+//                self.testPicker.isHidden = true
+//                self.testPickerLabel.isHidden = true
+                self.isRecommendDelayHidden(true)
                 self.resumeTask()
-                //action
             }))
         }
         
         startAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in
             print("cancel")
-            //self.back.isEnabled = true
-            //action
         }))
         
         self.present(startAlert, animated: true, completion: nil)
@@ -235,7 +246,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     func startNewTask(){
-        
         Status[TestVisualAssociation] = TestStatus.NotStarted
         timerVA.invalidate()
         self.totalTime = 300
@@ -246,50 +256,50 @@ class VATask: ViewController, UIPickerViewDelegate {
         orderRecognize = [Int]()
         testCount = 0
         resultLabel.text = ""
-        timerLabel.text = ""
-        delayLabel.text = ""
         afterBreakVA = false
-        
-        
         firstDisplay = true
-        timerLabel.text = ""
-        delayLabel.text = ""
         
-        testPicker.reloadAllComponents()
-        testPicker.selectRow(0, inComponent: 0, animated: true)
-        testPicker.isHidden = false
-        testPickerLabel.isHidden = false
+//        timerLabel.text = ""
+//        delayLabel.text = ""
+        
+        
+//        timerLabel.text = ""
+//        delayLabel.text = ""
+        
+//        testPicker.reloadAllComponents()
+//        testPicker.selectRow(0, inComponent: 0, animated: true)
+//        testPicker.isHidden = false
+//        testPickerLabel.isHidden = false
         
         imageSetVA = 0
         mixedImages = mixed0
         halfImages = half0
         recognizeIncorrectVA = incorrect0
         
-        start.isHidden = false
-        start.isEnabled = true
+        self.collectionViewLevel.isHidden = false
+        startButton.isHidden = false
+        startButton.isEnabled = true
         
-        start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-        start.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
-        start.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+        startButton.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+        startButton.removeTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         
     }
     
     func startDisplayAlert() {
         self.collectionViewLevel.isHidden = true
-        self.lblBack.text = "BACK"
-        self.lblDescTask.isHidden = true
+        self.backButton.text = "BACK"
+        self.backLabel.isHidden = true
         
-        self.vShadowTask.isHidden = false
-        self.vTask.isHidden = false
+        self.shadowTaskView.isHidden = false
+        self.taskView.isHidden = false
         
         Status[TestVisualAssociation] = TestStatus.Running
         
-        start.isHidden = true
+        startButton.isHidden = true
         testPicker.isHidden = true
         
         testPickerLabel.isHidden = true
-        
-        //back.isEnabled = false
         
         firstDisplay = true
         
@@ -364,7 +374,7 @@ class VATask: ViewController, UIPickerViewDelegate {
                 recognizeIncorrectVA = incorrect4
             }
             
-            start.isEnabled = true
+            startButton.isEnabled = true
             
         }
         
@@ -376,8 +386,14 @@ class VATask: ViewController, UIPickerViewDelegate {
         testCount = 0
         
         // Show Arrow
+//        self.lblDescDelay.isHidden = true
+//        self.start.isHidden = true
+        self.taskImageView.isHidden = false
         self.btnArrowRight.isHidden = false
         self.btnArrowLeft.isHidden = true
+        isRememberAgainViewHidden(true)
+//        self.rememberLabel.isHidden = true
+//        self.rememberStartButton.isHidden = true
         outputImage(withImageName: mixedImages[testCount])
     }
     
@@ -441,7 +457,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             self.btnArrowRight.isHidden = false
         }
         
-        self.ivTask.image = UIImage(named: name)!
+        self.taskImageView.image = UIImage(named: name)!
     }
     
     func outputDisplayImage(withImageName name: String) {
@@ -541,24 +557,15 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     func beginDelay(){
         // Hide Arrow
-        self.btnArrowLeft.isHidden = true
-        self.btnArrowRight.isHidden = true
-        self.ivTask.isHidden = true
-        self.vDelay.isHidden = false
+        isImageViewHidden(true)
+        isRecommendDelayHidden(false)
+        
         imageView.removeFromSuperview()
         print("in delay...")
-        
-        delayLabel.text = "Recommended delay: 5 minutes"
-        
         afterBreakVA = true
         
-        //back.isEnabled = true
-        start.isEnabled = true
-        start.isHidden = false
-        
-        start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-        start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-        start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        startButton.removeTarget(self, action: nil, for:.allEvents)
+        startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         
 //        timerVA = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateInDelay), userInfo: nil, repeats: true)
         timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
@@ -604,7 +611,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.totalTime = 300
         self.testPicker.isHidden = true
         self.testPickerLabel.isHidden = true
-        self.start.isHidden = true
+        self.startButton.isHidden = true
         self.resumeTask()
     }
     
@@ -656,8 +663,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         delayTime = 300.0 - Double(self.totalTime)//findTime()
         
         timerVA.invalidate()
-        timerLabel.text = ""
-        delayLabel.text = ""
         
         let recallAlert = UIAlertController(title: "Recall", message: "Ask patient to name which item is missing from the picture and record their answer.", preferredStyle: .alert)
         recallAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
@@ -673,6 +678,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     func recall(){
         btnArrowLeft.isHidden = false
         btnArrowRight.isHidden = false
+        taskImageView.isHidden = false
         
         correct.isHidden = false
         incorrect.isHidden = false
@@ -684,7 +690,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         testCount = 0
         
-        outputImage(halfImages[testCount])
+//        outputImage(halfImages[testCount])
+        outputImage(withImageName: halfImages[testCount])
         
         startTimeVA = NSDate.timeIntervalSinceReferenceDate
         
@@ -737,17 +744,19 @@ class VATask: ViewController, UIPickerViewDelegate {
             correct.isHidden = true
             incorrect.isHidden = true
             dk.isHidden = true
-            let recognizeAlert = UIAlertController(title: "Recognize", message: "Ask patient to choose the photograph they have seen before.", preferredStyle: .alert)
-            recognizeAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
-                print("recognizing...")
-                self.recognize()
-                //action
-            }))
-            self.present(recognizeAlert, animated: true, completion: nil)
+            
+            isImageViewHidden(true)
+            isRememberAgainViewHidden(false)
+            self.rememberLabel.text = "Ask Patient to choose the photograph they have seen before"
+            self.rememberContinueButton.setTitle(title: "CONTINUE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+            self.rememberContinueButton.render()
+            self.rememberContinueButton.removeTarget(nil, action: nil, for: .allEvents)
+            self.rememberContinueButton.addTarget(self, action: #selector(recognize), for: .touchUpInside)
         }
         else {
             print("next pic!")
-            outputImage(halfImages[testCount])
+            outputImage(withImageName: halfImages[testCount])
+//            outputImage(halfImages[testCount])
             correct.isEnabled = true
             incorrect.isEnabled = true
             dk.isEnabled = true
@@ -814,6 +823,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     func recognize(){
         
         print("IN RECOGNIZE!!!")
+        isRememberAgainViewHidden(true)
         
         testCount = 0
         
@@ -838,8 +848,9 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     func outputRecognizeImages(_ name1: String, name2: String){
         
-        arrowButton1.removeFromSuperview()
-        arrowButton2.removeFromSuperview()
+//        arrowButton1.removeFromSuperview()
+//        arrowButton2.removeFromSuperview()
+        isViewRegconizeHidden(false)
         
         imageName1 = name1
         imageName2 = name2
@@ -847,48 +858,48 @@ class VATask: ViewController, UIPickerViewDelegate {
         image1 = UIImage(named: name1)!
         image2 = UIImage(named: name2)!
         
-        var x1 = CGFloat()
-        var x2 = CGFloat()
+//        var x1 = CGFloat()
+//        var x2 = CGFloat()
+//
+//        var y1 = CGFloat()
+//        var y2 = CGFloat()
+//
+//        if 0.56*image1.size.width < image1.size.height {
+//            y1 = 350.0
+//            x1 = (350.0*(image1.size.width)/(image1.size.height))
+//        }
+//        else {
+//            x1 = 350.0
+//            y1 = (350.0*(image1.size.height)/(image1.size.width))
+//        }
+//
+//        if 0.56*image2.size.width < image2.size.height {
+//            y2 = 350.0
+//            x2 = (350.0*(image2.size.width)/(image2.size.height))
+//        }
+//        else {
+//            x2 = 350.0
+//            y2 = (350.0*(image2.size.height)/(image2.size.width))
+//        }
         
-        var y1 = CGFloat()
-        var y2 = CGFloat()
-        
-        if 0.56*image1.size.width < image1.size.height {
-            y1 = 350.0
-            x1 = (350.0*(image1.size.width)/(image1.size.height))
-        }
-        else {
-            x1 = 350.0
-            y1 = (350.0*(image1.size.height)/(image1.size.width))
-        }
-        
-        if 0.56*image2.size.width < image2.size.height {
-            y2 = 350.0
-            x2 = (350.0*(image2.size.width)/(image2.size.height))
-        }
-        else {
-            x2 = 350.0
-            y2 = (350.0*(image2.size.height)/(image2.size.width))
-        }
-        
-        arrowButton1.frame = CGRect(x: (256.0-(x1/2)), y: (471.0-(y1/2)), width: x1, height: y1)
-        arrowButton1.setImage(image1, for: .normal)
-        arrowButton1.removeTarget(nil, action:nil, for: .allEvents)
+//        arrowButton1.frame = CGRect(x: (256.0-(x1/2)), y: (471.0-(y1/2)), width: 419, height: 419)
+        firstButton.setImage(image1, for: .normal)
+        firstButton.removeTarget(nil, action:nil, for: .allEvents)
         
         
-        arrowButton2.frame = CGRect(x: (768.0-(x2/2)), y: (471.0-(y2/2)), width: x2, height: y2)
-        arrowButton2.setImage(image2, for: .normal)
-        arrowButton2.removeTarget(nil, action:nil, for: .allEvents)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-            self.arrowButton1.addTarget(self, action: #selector(VATask.recognize1), for:.touchUpInside)
-            self.arrowButton2.addTarget(self, action: #selector(VATask.recognize2), for:.touchUpInside)
-        }
+//        arrowButton2.frame = CGRect(x: (768.0-(x2/2)), y: (471.0-(y2/2)), width: 419, height: 419)
+        secondButton.setImage(image2, for: .normal)
+        secondButton.removeTarget(nil, action:nil, for: .allEvents)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-            self.view.addSubview(self.arrowButton1)
-            self.view.addSubview(self.arrowButton2)
+            self.firstButton.addTarget(self, action: #selector(VATask.recognize1), for:.touchUpInside)
+            self.secondButton.addTarget(self, action: #selector(VATask.recognize2), for:.touchUpInside)
         }
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+//            self.view.addSubview(self.arrowButton1)
+//            self.view.addSubview(self.arrowButton2)
+//        }
     }
     
     func randomizeRecognize(){
@@ -943,12 +954,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         testCount += 1
         
         if(testCount == mixedImages.count){
-            
-            arrowButton1.isHidden = true
-            arrowButton2.isHidden = true
-            
+            isViewRegconizeHidden(true)
             done()
-            
         }
             
         else{
@@ -968,6 +975,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     func done() {
+        self.startNewButton.isHidden = false
+        self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
         totalTime = 300
         let result = Results()
         result.name = "Visual Association"
@@ -977,7 +986,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         Status[TestVisualAssociation] = TestStatus.Done
         
         //back.isEnabled = true
-        start.isEnabled = true
+        startButton.isEnabled = true
         
         afterBreakVA = false
         
@@ -1057,11 +1066,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         resultList = [:]
         
-        start.isHidden = false
-        start.isEnabled = true
-        start.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
-        start.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
-        start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        startButton.isHidden = false
+        startButton.isEnabled = true
+        startButton.removeTarget(self, action: #selector(startNewTask), for:.touchUpInside)
+        startButton.removeTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+        startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         
     }
     
@@ -1103,7 +1112,17 @@ class VATask: ViewController, UIPickerViewDelegate {
         if(testCount == mixedImages.count) {
             imageView.removeFromSuperview()
             print("delay")
-            beginDelay()
+            isImageViewHidden(true)
+            if(firstDisplay == false) {
+                imageView.removeGestureRecognizer(gestureDisplay)
+                beginDelay()
+            }
+            else {
+                firstDisplay = false
+                isRememberAgainViewHidden(false)
+                self.rememberContinueButton.removeTarget(nil, action: nil, for: .allEvents)
+                self.rememberContinueButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+            }
         }
         else {
             print("pic: \(testCount)")
@@ -1123,18 +1142,18 @@ class VATask: ViewController, UIPickerViewDelegate {
 extension VATask {
     fileprivate func setupView() {
         // Label Back
-        self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
-        self.lblBack.textColor = Color.color(hexString: "#013AA5")
-        self.lblBack.addTextSpacing(-0.56)
-        self.lblBack.text = "VISUAL ASSOCIATION"
+        self.backButton.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.backButton.textColor = Color.color(hexString: "#013AA5")
+        self.backButton.addTextSpacing(-0.56)
+        self.backButton.text = "VISUAL ASSOCIATION"
         
         // Label Description Task
-        self.lblDescTask.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
-        self.lblDescTask.textColor = Color.color(hexString: "#013AA5")
-        self.lblDescTask.alpha = 0.67
-        self.lblDescTask.text = "Ask Patient to name and remember the two items in the photograph"
-        self.lblDescTask.addLineSpacing(15.0)
-        self.lblDescTask.addTextSpacing(-0.36)
+        self.backLabel.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
+        self.backLabel.textColor = Color.color(hexString: "#013AA5")
+        self.backLabel.alpha = 0.67
+        self.backLabel.text = "Ask Patient to name and remember the two items in the photograph"
+        self.backLabel.addLineSpacing(15.0)
+        self.backLabel.addTextSpacing(-0.36)
         
         // Collection View Level
         self.setupCollectionView()
@@ -1145,9 +1164,11 @@ extension VATask {
         // View Delay
         self.setupViewDelay()
         
-        self.vShadowTask.isHidden = true
-        self.vTask.isHidden = true
-        self.vDelay.isHidden = true
+        isTaskViewHidden(true)
+        isRecommendDelayHidden(true)
+        isRememberAgainViewHidden(true)
+        isViewRegconizeHidden(true)
+        startNewButton.isHidden = true
     }
     
     fileprivate func setupCollectionView() {
@@ -1158,17 +1179,17 @@ extension VATask {
     }
     
     fileprivate func setupViewTask() {
-        self.vShadowTask.layer.cornerRadius = 8.0
-        self.vShadowTask.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
-        self.vShadowTask.layer.shadowOpacity = 1.0
-        self.vShadowTask.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.vShadowTask.layer.shadowRadius = 10 / 2.0
-        self.vShadowTask.layer.shadowPath = nil
-        self.vShadowTask.layer.masksToBounds = false
+        self.shadowTaskView.layer.cornerRadius = 8.0
+        self.shadowTaskView.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.shadowTaskView.layer.shadowOpacity = 1.0
+        self.shadowTaskView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.shadowTaskView.layer.shadowRadius = 10 / 2.0
+        self.shadowTaskView.layer.shadowPath = nil
+        self.shadowTaskView.layer.masksToBounds = false
         
-        self.vTask.clipsToBounds = true
-        self.vTask.backgroundColor = UIColor.white
-        self.vTask.layer.cornerRadius = 8.0
+        self.taskView.clipsToBounds = true
+        self.taskView.backgroundColor = UIColor.white
+        self.taskView.layer.cornerRadius = 8.0
         
         // Button Arrow Left, Right
         self.btnArrowLeft.backgroundColor = Color.color(hexString: "#EEF3F9")
@@ -1178,28 +1199,83 @@ extension VATask {
     }
     
     fileprivate func setupViewDelay() {
-//        self.lblDescDelay.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-//        self.lblDescDelay.textColor = Color.color(hexString: "#8A9199")
-//        self.lblDescDelay.text = "Ask Patient to name the items that were displayed  earlier. Record their answers"
-//        self.lblDescDelay.addLineSpacing(15.0)
-//        self.lblDescDelay.addTextSpacing(-0.36)
-//        self.lblDescDelay.textAlignment = .center
-//
-//        self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
-//        self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-//        self.delayLabel.text = "Recommended Delay : 1 minute"
-//        self.delayLabel.addTextSpacing(-0.56)
-//
-//        self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
-//        self.timerLabel.textColor = Color.color(hexString: "#013AA5")
-//        self.timerLabel.addTextSpacing(-1.44)
+        self.delayDescriptionLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.delayDescriptionLabel.textColor = Color.color(hexString: "#8A9199")
+        self.delayDescriptionLabel.text = "Ask Patient to name which item is missing from the picture and record their answer"
+        self.delayDescriptionLabel.addLineSpacing(15.0)
+        self.delayDescriptionLabel.addTextSpacing(-0.36)
+        self.delayDescriptionLabel.textAlignment = .center
+
+        self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.delayLabel.textColor = Color.color(hexString: "#013AA5")
+        self.delayLabel.text = "Recommended Delay : 5 minute"
+        self.delayLabel.addTextSpacing(-0.56)
+
+        self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
+        self.timerLabel.textColor = Color.color(hexString: "#013AA5")
+        self.timerLabel.addTextSpacing(-1.44)
         
-//        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
-//        self.start.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-//        self.start.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-//        self.start.setupGradient(arrColor: colors, direction: .topToBottom)
-//        self.start.addTextSpacing(-0.36)
-//        self.start.render()
+        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
+        self.startButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.startButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.startButton.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.startButton.addTextSpacing(-0.36)
+        self.startButton.render()
+        
+        self.rememberLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.rememberLabel.textColor = Color.color(hexString: "#000000")
+        self.rememberLabel.text = "Ask Patient to name and remember the two items in the photograph again"
+        self.rememberLabel.addLineSpacing(15.0)
+        self.rememberLabel.addTextSpacing(-0.36)
+        self.rememberLabel.textAlignment = .center
+        
+        self.rememberContinueButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.rememberContinueButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.rememberContinueButton.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.rememberContinueButton.addTextSpacing(-0.36)
+        self.rememberContinueButton.render()
+        
+        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.startNewButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.startNewButton.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.startNewButton.addTextSpacing(-0.36)
+        self.startNewButton.render()
+    }
+    
+    func isCollectionViewHidden(_ isHidden: Bool) {
+        self.backLabel.isHidden = isHidden
+        self.collectionViewLevel.isHidden = isHidden
+    }
+    
+    func isTaskViewHidden(_ isHidden: Bool) {
+        self.taskView.isHidden = isHidden
+        self.shadowTaskView.isHidden = isHidden
+    }
+    
+    func isImageViewHidden(_ isHidden: Bool) {
+        self.btnArrowLeft.isHidden = isHidden
+        self.btnArrowRight.isHidden = isHidden
+        self.taskImageView.isHidden = isHidden
+    }
+    
+    func isRememberAgainViewHidden(_ isHidden: Bool) {
+        self.viewRememberAgain.isHidden = isHidden
+        self.rememberLabel.isHidden = isHidden
+        self.rememberContinueButton.isHidden = isHidden
+    }
+    
+    func isRecommendDelayHidden(_ isHidden: Bool) {
+        self.delayView.isHidden = isHidden
+        self.delayDescriptionLabel.isHidden = isHidden
+        self.startButton.isHidden = isHidden
+        self.delayLabel.isHidden = isHidden
+        self.timerLabel.isHidden = isHidden
+    }
+    
+    func isViewRegconizeHidden(_ isHidden: Bool) {
+        self.viewRegconize.isHidden = isHidden
+        self.firstButton.isHidden = isHidden
+        self.secondButton.isHidden = isHidden
     }
 }
 
