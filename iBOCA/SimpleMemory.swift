@@ -422,7 +422,9 @@ class SimpleMemoryTask: ViewController {
         ended = true
         timerSM.invalidate()
         afterBreakSM = false
-        Status[TestSimpleMemory] = TestStatus.NotStarted
+        if Status[TestSimpleMemory] != TestStatus.Done {
+            Status[TestSimpleMemory] = TestStatus.NotStarted
+        }
     }
     
     @objc private func doneSM() {
