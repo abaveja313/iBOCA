@@ -113,7 +113,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             mixedImages = mixed0
             halfImages = half0
             recognizeIncorrectVA = incorrect0
-
+            
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
         
@@ -184,7 +184,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         resultLabel.text = ""
         firstDisplay = true
     }
- 
+    
     @objc fileprivate func display() {
         testCount = 0
         self.taskImageView.isHidden = false
@@ -295,6 +295,12 @@ class VATask: ViewController, UIPickerViewDelegate {
         isImageViewHidden(true)
         taskImageView.isHidden = false
         
+        self.noticeLabel.text = "Choose the photograph that you were previously asked to remember"
+        self.noticeButton.updateTitle(title: "CONTINUE", spacing: -0.36)
+        self.noticeButton.render()
+        self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
+        self.noticeButton.addTarget(self, action: #selector(recognize), for: .touchUpInside)
+        
         startTimeVA = NSDate.timeIntervalSinceReferenceDate
     }
     
@@ -314,12 +320,6 @@ class VATask: ViewController, UIPickerViewDelegate {
             
             isImageViewHidden(true)
             isRememberAgainViewHidden(false)
-            
-            self.noticeLabel.text = "Choose the photograph that you were previously asked to remember"
-            self.noticeButton.updateTitle(title: "CONTINUE", spacing: -0.36)
-            self.noticeButton.render()
-            self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
-            self.noticeButton.addTarget(self, action: #selector(recognize), for: .touchUpInside)
         } else {
             print("next pic!")
             outputDisplayImage(withImageName: halfImages[testCount])
@@ -560,7 +560,7 @@ class VATask: ViewController, UIPickerViewDelegate {
 extension VATask {
     fileprivate func setupView() {
         // Label Back
-        self.backTitleLabel.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
         self.backTitleLabel.addTextSpacing(-0.56)
         self.backTitleLabel.text = "VISUAL ASSOCIATION"
@@ -570,12 +570,20 @@ extension VATask {
         self.descriptionLabel.textColor = Color.color(hexString: "#013AA5")
         self.descriptionLabel.alpha = 0.67
         self.descriptionLabel.text = "Ask Patient to name and remember the two items in the photograph"
-        self.descriptionLabel.addLineSpacing(15.0)
+        self.descriptionLabel.addLineSpacing(10.0)
         self.descriptionLabel.addTextSpacing(-0.36)
+        
+        // Button Start New
+        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.startNewButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.startNewButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.startNewButton.addTextSpacing(-0.36)
+        self.startNewButton.render()
         
         self.setupCollectionView()
         self.setupViewTask()
         self.setupViewDelay()
+        self.setupViewNotice()
         
         isTaskViewHidden(true)
         isImageViewHidden(true)
@@ -632,13 +640,14 @@ extension VATask {
         self.timerLabel.textColor = Color.color(hexString: "#013AA5")
         self.timerLabel.addTextSpacing(-1.44)
         
-        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
         self.startButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.startButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.startButton.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.startButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.startButton.addTextSpacing(-0.36)
         self.startButton.render()
-        
+    }
+    
+    fileprivate func setupViewNotice() {
         self.noticeLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.noticeLabel.textColor = Color.color(hexString: "#000000")
         self.noticeLabel.text = "Name out loud and remember the two items in the photographs again"
@@ -648,15 +657,9 @@ extension VATask {
         
         self.noticeButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.noticeButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.noticeButton.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.noticeButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.noticeButton.addTextSpacing(-0.36)
         self.noticeButton.render()
-        
-        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-        self.startNewButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.startNewButton.setupGradient(arrColor: colors, direction: .topToBottom)
-        self.startNewButton.addTextSpacing(-0.36)
-        self.startNewButton.render()
     }
     
     fileprivate func isCollectionViewHidden(_ isHidden: Bool) {
@@ -723,16 +726,26 @@ extension VATask: UICollectionViewDataSource {
         }
         
         cell.ivLevel.image = UIImage.init(named: imageName)
-        cell.lblTitle.text = "LEVEL \(indexPath.row + 1)"
+        cell.lblTitle.text = "Level \(indexPath.row + 1)"
         return cell
     }
 }
 
 extension VATask: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
-        let widthCell = (widthCollectionView / 4) - 20
-        return CGSize.init(width: widthCell, height: 235.0)
+        return CGSize.init(width: 220, height: 235.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 27
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
 
