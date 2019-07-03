@@ -535,7 +535,7 @@ class SimpleMemoryTask: ViewController {
 extension SimpleMemoryTask {
     fileprivate func setupViews() {
         // Label Back
-        self.lblBack.font = Font.font(name: Font.Montserrat.bold, size: 28.0)
+        self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.lblBack.textColor = Color.color(hexString: "#013AA5")
         self.lblBack.addTextSpacing(-0.56)
         self.lblBack.text = "SIMPLE MEMORY"
@@ -545,8 +545,8 @@ extension SimpleMemoryTask {
         self.lblDescTask.textColor = Color.color(hexString: "#013AA5")
         self.lblDescTask.alpha = 0.67
         self.lblDescTask.text = "Ask Patient to name and remember these images"
-        self.lblDescTask.addLineSpacing(15.0)
         self.lblDescTask.addTextSpacing(-0.36)
+        self.lblDescTask.addLineSpacing(10.0)
         
         // Collection View Level
         self.setupCollectionView()
@@ -601,8 +601,8 @@ extension SimpleMemoryTask {
         self.lblDescDelay.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.lblDescDelay.textColor = Color.color(hexString: "#8A9199")
         self.lblDescDelay.text = "Ask Patient to name the items that were displayed  earlier. Record their answers"
-        self.lblDescDelay.addLineSpacing(15.0)
         self.lblDescDelay.addTextSpacing(-0.36)
+        self.lblDescDelay.addLineSpacing(10.0)
         self.lblDescDelay.textAlignment = .center
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
@@ -614,12 +614,11 @@ extension SimpleMemoryTask {
         self.timerLabel.textColor = Color.color(hexString: "#013AA5")
         self.timerLabel.addTextSpacing(-1.44)
         
-        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
-        self.start.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-        self.start.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.start.setupGradient(arrColor: colors, direction: .topToBottom)
-        self.start.addTextSpacing(-0.36)
+        self.start.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
+        self.start.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.start.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.start.render()
+        self.start.addTextSpacing(-0.44)
     }
     
     fileprivate func setupViewObjectName() {
@@ -634,8 +633,8 @@ extension SimpleMemoryTask {
         self.next1.setTitle(title: "COMPLETE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.next1.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.next1.setupGradient(arrColor: colors, direction: .topToBottom)
-        self.next1.addTextSpacing(-0.36)
         self.next1.render()
+        self.next1.addTextSpacing(-0.36)
     }
     
     fileprivate func setupViewResults() {
@@ -662,8 +661,8 @@ extension SimpleMemoryTask {
         self.btnStartNew.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.btnStartNew.setupShadow(withColor: shadowColor, sketchBlur: 9.0, opacity: 1.0)
         self.btnStartNew.setupGradient(arrColor: colors, direction: .topToBottom)
-        self.btnStartNew.addTextSpacing(-0.36)
         self.btnStartNew.render()
+        self.btnStartNew.addTextSpacing(-0.36)
         
         // TableView Results
         self.tableViewResults.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
@@ -690,12 +689,12 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.collectionViewLevel {
             let widthCollectionView: CGFloat = self.collectionViewLevel.frame.size.width
-            let widthCell = (widthCollectionView / 4) - 20
+            let widthCell = ((widthCollectionView - 60) / 4)
             return CGSize.init(width: widthCell, height: 235.0)
         }
         else {
             let widthCollectionView: CGFloat = self.collectionViewObjectName.frame.size.width
-            let widthCell = (widthCollectionView / 2) - 20
+            let widthCell = ((widthCollectionView - 27) / 2)
             return CGSize.init(width: widthCell, height: 74.0)
         }
     }
@@ -706,19 +705,19 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == self.collectionViewLevel {
-            return 0
+            return 20.0
         }
         else {
-            return 20.0
+            return 27.0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == self.collectionViewLevel {
-            return 0
+            return 20.0
         }
         else {
-            return 20.0
+            return 27.0
         }
     }
     
@@ -727,7 +726,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
             let idx = indexPath.row + 1
             cell.ivLevel.image = UIImage.init(named: "level_\(idx)")
-            cell.lblTitle.text = "LEVEL \(idx)"
+            cell.lblTitle.text = "Level \(idx)"
             return cell
         }
         else {
