@@ -1055,7 +1055,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ed-7V-lnU">
-                                <rect key="frame" x="190" y="180" width="144" height="48"/>
+                                <rect key="frame" x="189" y="180" width="144" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Orientation"/>
@@ -1121,7 +1121,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="144-5O-YWO">
-                                <rect key="frame" x="228" y="384" width="67" height="48"/>
+                                <rect key="frame" x="227" y="383" width="67" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Trails"/>
@@ -1145,7 +1145,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZh-ak-pPY">
-                                <rect key="frame" x="625" y="384" width="310" height="48"/>
+                                <rect key="frame" x="624" y="383" width="310" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Backwards Spatial Span"/>
@@ -1157,7 +1157,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0w-I5-XUL">
-                                <rect key="frame" x="675" y="452" width="211" height="48"/>
+                                <rect key="frame" x="674" y="452" width="211" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Naming Pictures"/>
@@ -1204,7 +1204,7 @@
                                 <state key="normal" title="Results"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOc-f8-JO1">
-                                <rect key="frame" x="128" y="520" width="267" height="48"/>
+                                <rect key="frame" x="127" y="520" width="267" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Backward Digit Span"/>
@@ -1216,7 +1216,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKJ-ex-fQi">
-                                <rect key="frame" x="139" y="452" width="244" height="48"/>
+                                <rect key="frame" x="138" y="452" width="244" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Forward Digit Span"/>
@@ -1246,7 +1246,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UOp-qd-NwX">
-                                <rect key="frame" x="610" y="588" width="340" height="48"/>
+                                <rect key="frame" x="609" y="588" width="340" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Geriatric Depression Scale"/>
@@ -1258,7 +1258,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqt-bI-meL">
-                                <rect key="frame" x="768" y="656" width="185" height="48"/>
+                                <rect key="frame" x="767" y="655" width="185" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Gold Standard"/>
@@ -1280,7 +1280,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1r-mh-Dpa">
-                                <rect key="frame" x="612" y="656" width="88" height="48"/>
+                                <rect key="frame" x="612" y="655" width="88" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="MOCA"/>
@@ -1663,8 +1663,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cK-bZ-Yee">
-                                                <rect key="frame" x="-38" y="-51" width="598" height="286"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cK-bZ-Yee">
+                                                <rect key="frame" x="0.0" y="107.5" width="523" height="90"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="75"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1755,17 +1755,6 @@
                                     <action selector="correctButton:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="Q8v-0w-eGb"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Version" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elR-0K-3f8">
-                                <rect key="frame" x="440" y="90" width="145" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eT2-Ze-Y2j">
-                                <rect key="frame" x="292" y="119" width="440" height="79"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1795,21 +1784,22 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="arrowLeftButton" destination="FPF-ek-IJ1" id="iKN-Qk-gOK"/>
+                        <outlet property="arrowRightButton" destination="6Bh-0B-mFk" id="VrI-if-pUx"/>
                         <outlet property="back" destination="oc7-I2-y1A" id="Q0b-Ax-cGb"/>
-                        <outlet property="backButton" destination="yff-iL-aBN" id="baJ-fr-hfW"/>
-                        <outlet property="backLabel" destination="lYH-nT-eYa" id="Th6-iJ-yCi"/>
-                        <outlet property="btnArrowLeft" destination="FPF-ek-IJ1" id="iKN-Qk-gOK"/>
-                        <outlet property="btnArrowRight" destination="6Bh-0B-mFk" id="VrI-if-pUx"/>
+                        <outlet property="backTitleLabel" destination="yff-iL-aBN" id="baJ-fr-hfW"/>
                         <outlet property="collectionViewLevel" destination="rVP-EB-s5S" id="g0J-wY-KU7"/>
                         <outlet property="correct" destination="aSM-WW-JrH" id="Lmo-cC-Q6r"/>
                         <outlet property="delayDescriptionLabel" destination="Wle-R6-FCS" id="EwA-fN-Cof"/>
                         <outlet property="delayLabel" destination="lye-qf-3JC" id="KLB-gX-mtF"/>
                         <outlet property="delayView" destination="Nbs-Xe-x88" id="siQ-KW-aEf"/>
+                        <outlet property="descriptionLabel" destination="lYH-nT-eYa" id="Th6-iJ-yCi"/>
                         <outlet property="dk" destination="t5T-4P-RY4" id="o8w-Mx-L4D"/>
                         <outlet property="firstButton" destination="iIe-uh-Hg1" id="kIv-VM-QnV"/>
                         <outlet property="incorrect" destination="2LH-ZP-KZP" id="IMp-ty-4IB"/>
-                        <outlet property="rememberContinueButton" destination="pIl-Be-Wq6" id="n5v-Sa-CAi"/>
-                        <outlet property="rememberLabel" destination="GQ5-10-p70" id="Bsj-un-S8t"/>
+                        <outlet property="noticeButton" destination="pIl-Be-Wq6" id="n5v-Sa-CAi"/>
+                        <outlet property="noticeLabel" destination="GQ5-10-p70" id="Bsj-un-S8t"/>
+                        <outlet property="noticeView" destination="Jbc-gp-T6u" id="GGD-xo-l4N"/>
                         <outlet property="resultLabel" destination="sT6-7b-2dr" id="TA1-nO-ysM"/>
                         <outlet property="secondButton" destination="fMS-Zd-jW3" id="Zcj-3U-Sbd"/>
                         <outlet property="shadowTaskView" destination="If5-tm-J9h" id="gNw-XN-XWo"/>
@@ -1817,11 +1807,8 @@
                         <outlet property="startNewButton" destination="AHY-gt-Jro" id="9kC-W6-XDm"/>
                         <outlet property="taskImageView" destination="6Bp-pK-BG5" id="i49-gY-LWk"/>
                         <outlet property="taskView" destination="zz8-91-CDs" id="dtd-A5-Kqd"/>
-                        <outlet property="testPicker" destination="eT2-Ze-Y2j" id="e4A-wh-tfh"/>
-                        <outlet property="testPickerLabel" destination="elR-0K-3f8" id="dAs-hA-4rR"/>
                         <outlet property="timerLabel" destination="4cK-bZ-Yee" id="rxZ-Vp-WnK"/>
                         <outlet property="viewRegconize" destination="A6G-s0-yBN" id="qyN-cc-ESm"/>
-                        <outlet property="viewRememberAgain" destination="Jbc-gp-T6u" id="GGD-xo-l4N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lY2-XL-PeT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3912,7 +3899,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eyl-7T-31Y">
-                                <rect key="frame" x="153" y="31" width="175" height="104"/>
+                                <rect key="frame" x="153" y="31" width="424" height="104"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MK0-oR-YjC">
@@ -3931,7 +3918,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7CD-eC-O0b">
-                                <rect key="frame" x="513" y="41" width="175" height="85"/>
+                                <rect key="frame" x="513" y="41" width="424" height="85"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J7A-7c-Gy8">
@@ -5381,9 +5368,9 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jXy-KL-eph"/>
-        <segue reference="Ahl-wP-pho"/>
+        <segue reference="Ges-mF-PUS"/>
+        <segue reference="o9k-wN-m3X"/>
         <segue reference="vHL-fv-LLl"/>
-        <segue reference="Bhp-ON-e9m"/>
+        <segue reference="e4f-h0-eqr"/>
     </inferredMetricsTieBreakers>
 </document>

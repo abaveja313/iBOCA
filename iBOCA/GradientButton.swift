@@ -104,6 +104,11 @@ extension GradientButton {
         self.titleLabel?.font = font
     }
     
+    func updateTitle(title: String, spacing: CGFloat) {
+        let attributedString = NSMutableAttributedString(string: title)
+        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length))
+        self.setAttributedTitle(attributedString, for: .normal)
+    }
     
     /// setup shadow for this Button
     ///
