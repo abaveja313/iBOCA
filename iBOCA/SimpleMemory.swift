@@ -629,10 +629,9 @@ extension SimpleMemoryTask {
         self.collectionViewObjectName.isHidden = true
         
         // Button complete
-        let colors = [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")]
         self.next1.setTitle(title: "COMPLETE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.next1.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.next1.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.next1.setupGradient(arrColor: [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")], direction: .topToBottom)
         self.next1.render()
         self.next1.addTextSpacing(-0.36)
     }
@@ -656,11 +655,9 @@ extension SimpleMemoryTask {
         self.lblTimeCompleteTask.textAlignment = .center
         
         // Button Start New
-        let colors = [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")]
-        let shadowColor = Color.color(hexString: "#FDECBF")
         self.btnStartNew.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-        self.btnStartNew.setupShadow(withColor: shadowColor, sketchBlur: 9.0, opacity: 1.0)
-        self.btnStartNew.setupGradient(arrColor: colors, direction: .topToBottom)
+        self.btnStartNew.setupShadow(withColor: Color.color(hexString: "#FDECBF"), sketchBlur: 9.0, opacity: 1.0)
+        self.btnStartNew.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.btnStartNew.render()
         self.btnStartNew.addTextSpacing(-0.36)
         
