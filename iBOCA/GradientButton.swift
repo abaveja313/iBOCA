@@ -189,7 +189,7 @@ extension GradientButton {
             if self.shadowLayer != nil && self.graLayer != nil {
                 self.graLayer.removeFromSuperlayer()
                 self.shadowLayer.removeFromSuperlayer()
-                self.configureGradient()
+                render()
             }
         }
     }
