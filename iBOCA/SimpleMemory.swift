@@ -138,8 +138,7 @@ class SimpleMemoryTask: ViewController {
         self.start.isHidden = true
     }
     
-    func startAlert(){
-        
+    func startAlert() {
         //back.isEnabled = false
         next1.isHidden = true
         
@@ -423,7 +422,9 @@ class SimpleMemoryTask: ViewController {
         ended = true
         timerSM.invalidate()
         afterBreakSM = false
-        Status[TestSimpleMemory] = TestStatus.NotStarted
+        if Status[TestSimpleMemory] != TestStatus.Done {
+            Status[TestSimpleMemory] = TestStatus.NotStarted
+        }
     }
     
     @objc private func doneSM() {
