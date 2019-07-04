@@ -130,6 +130,7 @@ class ThreeDFigureCopy: ViewController {
         self.drawfrom = UIImageView(frame:CGRect(x: 0, y: 0, width: self.vDrawImage.size.width, height: self.vDrawImage.size.height))
         let image = UIImage(named: self.imagelist[self.curr])
         self.drawfrom!.image = image
+        self.drawfrom?.contentMode = .scaleAspectFit
         self.vDrawImage.addSubview(self.drawfrom!)
     }
     
@@ -142,6 +143,7 @@ class ThreeDFigureCopy: ViewController {
         self.resultImages.removeAll()
         self.resultTime.removeAll()
         self.vDraw.drawandclearResults()
+        startTime2 = Foundation.Date()
         self.startTask()
     }
     
