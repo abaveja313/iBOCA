@@ -140,6 +140,7 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         picker.setToRecipients(address)
         
         let data = encryptString(str: resultsArray.toJson())
+        
         picker.addAttachmentData(data, mimeType: "application/aes", fileName: "Encrypted-JSON-\(PID.getID()).aes")
         
         present(picker, animated: true)
@@ -159,6 +160,7 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         
         LabelSM.isHidden = true
         LabelVA.isHidden = true
+        
         PatiantID.text = PID.getID()
         
         updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])

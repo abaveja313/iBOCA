@@ -33,6 +33,19 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    func savePID(){
+        Settings.patiantID = PID.getID()
+    }
 
+    func showPopup(_ title: String, message: String, okAction: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert    )
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            okAction()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AdministeredViewController: UIViewController {
+class AdministeredViewController: ViewController {
 
     
     @IBOutlet weak var mTitleBack: UILabel!
@@ -78,6 +78,7 @@ class AdministeredViewController: UIViewController {
     @IBAction func tapSelectTest(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+            savePID()
             vc.mode = .admin
             self.present(vc, animated: true, completion: nil)
         }
@@ -85,6 +86,7 @@ class AdministeredViewController: UIViewController {
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
+        savePID()
     }
     
     
@@ -100,6 +102,7 @@ class AdministeredViewController: UIViewController {
     }
     
     
+
 
 
 }

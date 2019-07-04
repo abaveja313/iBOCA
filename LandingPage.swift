@@ -36,6 +36,9 @@ var Status  = [TestStatus](repeating: TestStatus.NotStarted, count: 20)
 
 var doneSetup = false
 
+// Patient ID use through app
+let PID = PatiantID()
+
 class LandingPage: ViewController {
     
     @IBOutlet weak var GotoTests: UIButton!
@@ -90,6 +93,8 @@ class LandingPage: ViewController {
         }
         
         setupUI()
+        
+        setupPIDFirstTime()
     }
     
     override func didReceiveMemoryWarning() {
@@ -137,6 +142,19 @@ class LandingPage: ViewController {
     @IBAction func tapAcknowled(_ sender: Any) {
         //tap-acknowled
         performSegue(withIdentifier: "tap-acknowled", sender: nil)
+    }
+    
+    //MARK: - Logic Method
+    func setupPIDFirstTime(){
+        // Get Current Date time
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        
+        let auto_id = Int("\(hour)\(minutes)")!
+        PID.currNum = auto_id
+        print("generated PID \(PID.getID())")
     }
     
 }

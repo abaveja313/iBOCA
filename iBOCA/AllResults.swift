@@ -48,7 +48,6 @@ class AllResults  {
         e += "</style>\n"
         e += "</head>\n"
         e += "<body>\n"
-        
         e += "<h4>Patiant ID : \(PID.getID())</h4>\n"
         e += "<h4>Tester : \(PID.getName())</h4>\n"
         if atBIDMCOn {
@@ -166,7 +165,6 @@ class AllResults  {
     func toJson() -> String {
         var e : String = ""
         var jst : [String:String] = [:]
-        
         jst["Patiant ID #"] = PID.getID()
         jst["Tester Name"] = PID.getName()
         jst["Done at BIDMC"] = String(atBIDMCOn)
