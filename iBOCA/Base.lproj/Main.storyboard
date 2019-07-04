@@ -2298,7 +2298,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <connections>
-                                            <action selector="btnBackTapped:" destination="uIz-3z-MW0" eventType="touchUpInside" id="bTJ-po-EFC"/>
+                                            <action selector="actionBack:" destination="uIz-3z-MW0" eventType="touchUpInside" id="bTJ-po-EFC"/>
                                             <segue destination="RmL-Z6-Ri2" kind="show" id="eep-iX-tUz"/>
                                         </connections>
                                     </button>
@@ -2395,7 +2395,7 @@
                                 <rect key="frame" x="42" y="434" width="51" height="31"/>
                                 <color key="onTintColor" red="0.41176470588235292" green="0.76470588235294112" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="transmitOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="Dg7-pS-LQg"/>
+                                    <action selector="actionProvideData:" destination="uIz-3z-MW0" eventType="valueChanged" id="Dg7-pS-LQg"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Consent to provide data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRY-0z-msi">
@@ -2419,7 +2419,6 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CeD-5e-8A3">
                                 <rect key="frame" x="42" y="535" width="408" height="40"/>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="eZJ-p9-zgg"/>
                                 </constraints>
@@ -2437,49 +2436,49 @@
                                     <action selector="actionBegin:" destination="uIz-3z-MW0" eventType="touchUpInside" id="Xxp-1R-Bi1"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00M-sT-NB3">
+                            <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="00M-sT-NB3">
                                 <rect key="frame" x="552" y="549" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="atBIDMCOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="2Hy-HV-qka"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Testing is done within BIDMC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-PP-DQh">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Testing is done within BIDMC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-PP-DQh">
                                 <rect key="frame" x="630" y="549" width="301.5" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bth-VQ-NFx">
+                            <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bth-VQ-NFx">
                                 <rect key="frame" x="510" y="683" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="emailOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="Fka-bV-NLA"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Initials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKX-0D-676">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Initials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKX-0D-676">
                                 <rect key="frame" x="849" y="161" width="109" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.88031684027777779" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email the Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZB-af-wx7">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email the Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZB-af-wx7">
                                 <rect key="frame" x="585" y="683" width="176.5" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-Np-KYX">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-Np-KYX">
                                 <rect key="frame" x="552" y="613" width="106" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-an-SEC">
+                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-an-SEC">
                                 <rect key="frame" x="683" y="591" width="176" height="73"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
@@ -2536,11 +2535,11 @@
                         <outlet property="patiantIDTextField" destination="DyP-wG-qya" id="TE0-5s-1HD"/>
                         <outlet property="patientIdLabel" destination="qaW-D2-2dg" id="Hhl-0j-yVc"/>
                         <outlet property="provideDataLabel" destination="WRY-0z-msi" id="ydL-rp-jql"/>
+                        <outlet property="provideDataSwitch" destination="Lpx-sn-b5u" id="WD5-Qs-kg9"/>
                         <outlet property="testClass" destination="Pws-an-SEC" id="bTO-M4-qGc"/>
                         <outlet property="testClassLabel" destination="z6c-Np-KYX" id="IGf-is-MkI"/>
                         <outlet property="testingPasscodeLabel" destination="aNE-L0-jDn" id="Um4-I4-Pvl"/>
                         <outlet property="testingPasscodeTextField" destination="CeD-5e-8A3" id="2Rg-Ri-Npi"/>
-                        <outlet property="transmitOnOff" destination="Lpx-sn-b5u" id="WD5-Qs-kg9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eiV-TE-RcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -39,5 +39,13 @@ class ViewController: UIViewController {
         Settings.patiantID = PID.getID()
     }
 
+    func showPopup(_ title: String, message: String, okAction: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert    )
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            okAction()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
