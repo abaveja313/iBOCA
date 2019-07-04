@@ -574,7 +574,7 @@ extension VATask {
         self.descriptionLabel.addTextSpacing(-0.36)
         
         // Button Start New
-        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
         self.startNewButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.startNewButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.startNewButton.addTextSpacing(-0.36)
@@ -640,7 +640,7 @@ extension VATask {
         self.timerLabel.textColor = Color.color(hexString: "#013AA5")
         self.timerLabel.addTextSpacing(-1.44)
         
-        self.startButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.startButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
         self.startButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.startButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.startButton.addTextSpacing(-0.36)
@@ -655,7 +655,7 @@ extension VATask {
         self.noticeLabel.addTextSpacing(-0.36)
         self.noticeLabel.textAlignment = .center
         
-        self.noticeButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.noticeButton.setTitle(title: "START NOW", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
         self.noticeButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.noticeButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.noticeButton.addTextSpacing(-0.36)
