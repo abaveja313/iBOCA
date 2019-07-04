@@ -93,6 +93,8 @@ class LandingPage: ViewController {
         }
         
         setupUI()
+        
+        setupPIDFirstTime()
     }
     
     override func didReceiveMemoryWarning() {
