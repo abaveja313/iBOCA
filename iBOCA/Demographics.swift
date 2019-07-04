@@ -72,6 +72,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     @IBAction func updateMR(_ sender: AnyObject) {
         guard let _patiantID = self.MRField.text else { return }
         MRField.text = _patiantID
+        //TODO: change flow PID
         Settings.patiantID = _patiantID
     }
 
@@ -97,7 +98,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
             let _ethnicityUser = Ethnicity,
             let _raceUser = Race
         else { return }
-        
+        //TODO: change flow PID
         Settings.patiantID = _PID
         Settings.genderUser = _genderUser
         Settings.ageUser = _ageUser

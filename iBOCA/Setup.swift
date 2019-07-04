@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-let PID = PatiantID()
+
 
 var transmitOn : Bool = false
 var atBIDMCOn  : Bool = false
@@ -116,23 +116,26 @@ class Setup: ViewController, UIPickerViewDelegate  {
     }
     
     @IBAction func adminNameChanged(_ sender: UITextField) {
-        PID.nameSet(name: adminName.text!)
-        adminInitials.text = PID.getInitials()
-        PID.currNum = self.autoID
-        patiantID.text = PID.getID()
+        //TODO: need to move PID.nameSet.. it to PROCTORED SCREEN
+//        PID.nameSet(name: adminName.text!)
+//        adminInitials.text = PID.getInitials()
+//        PID.currNum = self.autoID
+//        patiantID.text = PID.getID()
     }
     
     
     @IBAction func patiantIDEdited(_ sender: UITextField) {
-        if !PID.changeID(proposed: patiantID.text!) {
-            patiantID.text = PID.getID()
-        } else {
-            patiantID.text = PID.getID()
-        }
+        //TODO: change flow PID
+//        if !PID.changeID(proposed: patiantID.text!) {
+//            patiantID.text = PID.getID()
+//        } else {
+//            patiantID.text = PID.getID()
+//        }
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
         guard let _patiantID = self.patiantID.text else { return }
+        //TODO: change flow PID
         Settings.patiantID = _patiantID
         Settings.isGotoTest = false
     }
@@ -156,17 +159,11 @@ class Setup: ViewController, UIPickerViewDelegate  {
         emailOnOff.isOn = emailOn
         email.text = emailAddress
     
-        // Get Current Date time
-        let date = Date()
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        
-        self.autoID = Int("\(hour)\(minutes)")!
-        PID.currNum = self.autoID
-        patiantID.text = PID.getID()
-        adminName.text = PID.getName()
-        adminInitials.text = PID.getInitials()
+
+        //TODO: change flow PID
+//        patiantID.text = PID.getID()
+//        adminName.text = PID.getName()
+//        adminInitials.text = PID.getInitials()
         
         testClass.delegate = self
         if atBIDMCOn == true {
