@@ -22,8 +22,8 @@ let testClassName = ["CNU", "COMM", "ECT", "DW", "PHY", "ICU", "B1", "B2", "B3",
 let BIDMCpassKey = "PressOn"
 
 class Setup: ViewController, UIPickerViewDelegate  {
-
-    @IBOutlet weak var transmitOnOff: UISwitch!
+    var autoID: Int = Int()
+    
     @IBOutlet weak var atBIDMCOnOff:  UISwitch!
     @IBOutlet weak var emailOnOff:    UISwitch!
     @IBOutlet weak var adminInitials: UILabel!
@@ -43,20 +43,19 @@ class Setup: ViewController, UIPickerViewDelegate  {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     
+    @IBOutlet weak var provideDataSwitch: UISwitch!
     @IBOutlet weak var provideDataLabel: UILabel!
     
     @IBOutlet weak var testingPasscodeLabel: UILabel!
     @IBOutlet weak var testingPasscodeTextField: UITextField!
     
-    var autoID: Int = Int()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
+        provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
+        emailTextField.text = UserDefaults.standard.string(forKey: "emailAddress")
         
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
-        transmitOnOff.isOn = transmitOn
         
         atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
         atBIDMCOnOff.isOn = atBIDMCOn
@@ -70,32 +69,73 @@ class Setup: ViewController, UIPickerViewDelegate  {
         emailOnOff.isOn = emailOn
         emailTextField.text = emailAddress
         
-        
         //TODO: change flow PID
         //        patiantID.text = PID.getID()
         //        adminName.text = PID.getName()
         //        adminInitials.text = PID.getInitials()
         
         testClass.delegate = self
-        if atBIDMCOn == true {
-            testClass.isHidden = false
-            testClassLabel.isHidden = false
-        } else {
-            testClass.isHidden = true
-            testClassLabel.isHidden = true
-        }
+        //        if atBIDMCOn == true {
+        //            testClass.isHidden = false
+        //            testClassLabel.isHidden = false
+        //        } else {
+        //            testClass.isHidden = true
+        //            testClassLabel.isHidden = true
+        //        }
         theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
         testClass.selectRow(theTestClass, inComponent: 0, animated: true)
         
         doneSetup = true
     }
     
-    @IBAction func transmitOnOff(_ sender: UISwitch) {
-        transmitOn = transmitOnOff.isOn
-        UserDefaults.standard.set(transmitOn, forKey: "Transmit")
+    // MARK: Action
+    @IBAction func actionBegin(_ sender: Any) {
+        if validate() {
+            guard let _patiantID = self.patiantIDTextField.text else { return }
+            Settings.patiantID = _patiantID
+            Settings.isGotoTest = true
+            
+            UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
+            UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+                vc.mode = .patient
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @IBAction func actionBack(_ sender: Any) {
+        if validate() {
+            guard let _patiantID = self.patiantIDTextField.text else { return }
+            Settings.patiantID = _patiantID
+            
+            UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
+            UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+        }
+    }
+    
+    @IBAction func actionProvideData(_ sender: UISwitch) {
+        UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
         UserDefaults.standard.synchronize()
     }
     
+    private func validate() -> Bool {
+        if !emailAddress.isValidEmail() {
+            self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
+            return false
+        }
+        
+        if (testingPasscodeTextField.text?.isEmpty)! {
+            self.showPopup(ErrorMessage.errorTitle, message: "Passcode must not be empty", okAction: {})
+            return false
+        }
+        
+        return true
+    }
+    
+    // MARK: Unused code
     @IBAction func atBIDMCOnOff(_ sender: UISwitch) {
         if(atBIDMCOnOff.isOn) { // Trying to use BIDMC content
             if(UserDefaults.standard.object(forKey: "BIDMCproceedKey") == nil) { // See if the person has permission
@@ -117,7 +157,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
                 
                 //the cancel action, no key
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-                     self.atBIDMCOnOff.isOn = false
+                    self.atBIDMCOnOff.isOn = false
                 }
                 
                 //adding textfields to our dialog box
@@ -131,7 +171,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
                 //finally presenting the dialog box
                 self.present(alertController, animated: true, completion: nil)
             } else { // key exist in the system, should be OK
-            setAtBIDMC()
+                setAtBIDMC()
             }
         } else { // trying to set it off, should be OK
             setAtBIDMC()
@@ -152,7 +192,6 @@ class Setup: ViewController, UIPickerViewDelegate  {
         }
     }
     
-    
     @IBAction func emailOnOff(_ sender: Any) {
         emailOn = emailOnOff.isOn
         emailTextField.isEnabled = emailOn
@@ -161,11 +200,8 @@ class Setup: ViewController, UIPickerViewDelegate  {
         UserDefaults.standard.synchronize()
     }
     
-
     @IBAction func emailChanged(_ sender: Any) {
         emailAddress = emailTextField.text!
-        UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
-        UserDefaults.standard.synchronize()
     }
     
     @IBAction func adminNameChanged(_ sender: UITextField) {
@@ -179,17 +215,11 @@ class Setup: ViewController, UIPickerViewDelegate  {
     
     @IBAction func patiantIDEdited(_ sender: UITextField) {
         //TODO: change flow PID
-        //        if !PID.changeID(proposed: patiantID.text!) {
-        //            patiantID.text = PID.getID()
-        //        } else {
-        //            patiantID.text = PID.getID()
-        //        }
-        
-    }
-    @IBAction func btnBackTapped(_ sender: Any) {
-        guard let _patiantID = self.patiantIDTextField.text else { return }
-        Settings.patiantID = _patiantID
-        Settings.isGotoTest = false
+//                if !PID.changeID(proposed: patiantID.text!) {
+//                    patiantID.text = PID.getID()
+//                } else {
+//                    patiantID.text = PID.getID()
+//                }
     }
     
     func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
@@ -224,16 +254,6 @@ class Setup: ViewController, UIPickerViewDelegate  {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // MARK: Action
-    @IBAction func actionBegin(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-    
 }
 
 extension Setup {
@@ -290,5 +310,11 @@ extension Setup {
         self.testingPasscodeTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.testingPasscodeTextField.layer.cornerRadius = 5
         self.testingPasscodeTextField.layer.masksToBounds = true
+    }
+}
+
+extension Setup: UITextFieldDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
