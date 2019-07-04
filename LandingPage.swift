@@ -154,6 +154,7 @@ class LandingPage: ViewController {
         
         let auto_id = Int("\(hour)\(minutes)")!
         PID.currNum = auto_id
+        print("generated PID \(PID.getID())")
     }
     
 }

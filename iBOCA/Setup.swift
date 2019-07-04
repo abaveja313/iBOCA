@@ -69,10 +69,8 @@ class Setup: ViewController, UIPickerViewDelegate  {
         emailOnOff.isOn = emailOn
         emailTextField.text = emailAddress
         
-        //TODO: change flow PID
-        //        patiantID.text = PID.getID()
-        //        adminName.text = PID.getName()
-        //        adminInitials.text = PID.getInitials()
+        patiantIDTextField.text = PID.getID()
+        adminNameTextField.text = PID.getName()
         
         testClass.delegate = self
         //        if atBIDMCOn == true {
@@ -205,21 +203,17 @@ class Setup: ViewController, UIPickerViewDelegate  {
     }
     
     @IBAction func adminNameChanged(_ sender: UITextField) {
-        //TODO: need to move PID.nameSet.. it to PROCTORED SCREEN
-        //        PID.nameSet(name: adminName.text!)
-        //        adminInitials.text = PID.getInitials()
-        //        PID.currNum = self.autoID
-        //        patiantID.text = PID.getID()
+        PID.nameSet(name: adminNameTextField.text!)
+        patiantIDTextField.text = PID.getID()
     }
     
     
     @IBAction func patiantIDEdited(_ sender: UITextField) {
-        //TODO: change flow PID
-//                if !PID.changeID(proposed: patiantID.text!) {
-//                    patiantID.text = PID.getID()
-//                } else {
-//                    patiantID.text = PID.getID()
-//                }
+        if !PID.changeID(proposed: patiantIDTextField.text!) {
+            patiantIDTextField.text = PID.getID()
+        } else {
+            patiantIDTextField.text = PID.getID()
+        }
     }
     
     func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
