@@ -2387,9 +2387,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                                <connections>
-                                    <action selector="emailChanged:" destination="uIz-3z-MW0" eventType="editingDidEnd" id="kFh-hU-hza"/>
-                                </connections>
                             </textField>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lpx-sn-b5u">
                                 <rect key="frame" x="42" y="434" width="51" height="31"/>

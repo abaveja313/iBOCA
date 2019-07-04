@@ -53,24 +53,24 @@ class Setup: ViewController, UIPickerViewDelegate  {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
+        
+        if let email = UserDefaults.standard.string(forKey: "emailAddress") {
+            emailTextField.text = email
+        }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
-        emailTextField.text = UserDefaults.standard.string(forKey: "emailAddress")
+        patiantIDTextField.text = PID.getID()
+        adminNameTextField.text = PID.getName()
+        
+        
         
         
         atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
         atBIDMCOnOff.isOn = atBIDMCOn
         
-        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
-            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
-        }
-        emailTextField.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        emailOnOff.isOn = emailOn
-        emailTextField.text = emailAddress
-        
-        patiantIDTextField.text = PID.getID()
-        adminNameTextField.text = PID.getName()
+//        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
+//        emailTextField.isEnabled = emailOn
+//        emailLabel.isEnabled = emailOn
+//        emailOnOff.isOn = emailOn
         
         testClass.delegate = self
         //        if atBIDMCOn == true {
@@ -87,12 +87,12 @@ class Setup: ViewController, UIPickerViewDelegate  {
     }
     
     private func validate() -> Bool {
-        if !emailAddress.isEmpty {
-            if !emailAddress.isValidEmail() {
+        if !emailTextField.text!.isEmpty {
+            if !emailTextField.text!.isValidEmail() {
                 self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
                 return false
             } else {
-                UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
+                UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
                 return true
             }
         }
@@ -155,10 +155,6 @@ class Setup: ViewController, UIPickerViewDelegate  {
             UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
             UserDefaults.standard.synchronize()
         }
-    }
-    
-    @IBAction func emailChanged(_ sender: Any) {
-        emailAddress = emailTextField.text!
     }
     
     @IBAction func adminNameChanged(_ sender: UITextField) {
@@ -235,7 +231,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
     
     @IBAction func emailOnOff(_ sender: Any) {
         emailOn = emailOnOff.isOn
-        emailTextField.isEnabled = emailOn
+//        emailTextField.isEnabled = emailOn
         emailLabel.isEnabled = emailOn
         UserDefaults.standard.set(emailOn, forKey: "emailOn")
         UserDefaults.standard.synchronize()
