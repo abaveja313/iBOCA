@@ -26,16 +26,75 @@ class Setup: ViewController, UIPickerViewDelegate  {
     @IBOutlet weak var transmitOnOff: UISwitch!
     @IBOutlet weak var atBIDMCOnOff:  UISwitch!
     @IBOutlet weak var emailOnOff:    UISwitch!
-    @IBOutlet weak var email:         UITextField!
-    @IBOutlet weak var emailLabel:    UILabel!
-    @IBOutlet weak var adminName:     UITextField!
     @IBOutlet weak var adminInitials: UILabel!
-    @IBOutlet weak var patiantID:     UITextField!
-    
     @IBOutlet weak var testClass: UIPickerView!
     @IBOutlet weak var testClassLabel: UILabel!
     
+    // MARK: Outlet
+    @IBOutlet weak var backTitleLabel: UILabel!
+    @IBOutlet weak var beginButton: GradientButton!
+    
+    @IBOutlet weak var adminNameLabel: UILabel!
+    @IBOutlet weak var adminNameTextField: UITextField!
+    
+    @IBOutlet weak var patientIdLabel: UILabel!
+    @IBOutlet weak var patiantIDTextField: UITextField!
+    
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var provideDataLabel: UILabel!
+    
+    @IBOutlet weak var testingPasscodeLabel: UILabel!
+    @IBOutlet weak var testingPasscodeTextField: UITextField!
+    
     var autoID: Int = Int()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        self.swtupView()
+        
+        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
+        transmitOnOff.isOn = transmitOn
+        
+        atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
+        atBIDMCOnOff.isOn = atBIDMCOn
+        
+        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
+        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
+            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
+        }
+        emailTextField.isEnabled = emailOn
+        emailLabel.isEnabled = emailOn
+        emailOnOff.isOn = emailOn
+        emailTextField.text = emailAddress
+        
+        // Get Current Date time
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        
+        self.autoID = Int("\(hour)\(minutes)")!
+        PID.currNum = self.autoID
+        patiantIDTextField.text = PID.getID()
+        adminNameTextField.text = PID.getName()
+        adminInitials.text = PID.getInitials()
+        
+        testClass.delegate = self
+        if atBIDMCOn == true {
+            testClass.isHidden = false
+            testClassLabel.isHidden = false
+        } else {
+            testClass.isHidden = true
+            testClassLabel.isHidden = true
+        }
+        theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
+        testClass.selectRow(theTestClass, inComponent: 0, animated: true)
+        
+        doneSetup = true
+    }
     
     @IBAction func transmitOnOff(_ sender: UISwitch) {
         transmitOn = transmitOnOff.isOn
@@ -89,7 +148,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
         atBIDMCOn = atBIDMCOnOff.isOn
         UserDefaults.standard.set(atBIDMCOn, forKey: "AtBIDMC")
         UserDefaults.standard.synchronize()
-        patiantID.text = PID.getID()
+        patiantIDTextField.text = PID.getID()
         if atBIDMCOn == true {
             testClass.isHidden = false
             testClassLabel.isHidden = false
@@ -102,7 +161,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
     
     @IBAction func emailOnOff(_ sender: Any) {
         emailOn = emailOnOff.isOn
-        email.isEnabled = emailOn
+        emailTextField.isEnabled = emailOn
         emailLabel.isEnabled = emailOn
         UserDefaults.standard.set(emailOn, forKey: "emailOn")
         UserDefaults.standard.synchronize()
@@ -110,76 +169,31 @@ class Setup: ViewController, UIPickerViewDelegate  {
     
 
     @IBAction func emailChanged(_ sender: Any) {
-        emailAddress = email.text!
+        emailAddress = emailTextField.text!
         UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
         UserDefaults.standard.synchronize()
     }
     
     @IBAction func adminNameChanged(_ sender: UITextField) {
-        PID.nameSet(name: adminName.text!)
+        PID.nameSet(name: adminNameTextField.text!)
         adminInitials.text = PID.getInitials()
         PID.currNum = self.autoID
-        patiantID.text = PID.getID()
+        patiantIDTextField.text = PID.getID()
     }
     
     
     @IBAction func patiantIDEdited(_ sender: UITextField) {
-        if !PID.changeID(proposed: patiantID.text!) {
-            patiantID.text = PID.getID()
+        if !PID.changeID(proposed: patiantIDTextField.text!) {
+            patiantIDTextField.text = PID.getID()
         } else {
-            patiantID.text = PID.getID()
+            patiantIDTextField.text = PID.getID()
         }
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
-        guard let _patiantID = self.patiantID.text else { return }
+        guard let _patiantID = self.patiantIDTextField.text else { return }
         Settings.patiantID = _patiantID
         Settings.isGotoTest = false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
-        transmitOnOff.isOn = transmitOn
-        
-        atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
-        atBIDMCOnOff.isOn = atBIDMCOn
-       
-        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
-            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
-        }
-        email.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        emailOnOff.isOn = emailOn
-        email.text = emailAddress
-    
-        // Get Current Date time
-        let date = Date()
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        
-        self.autoID = Int("\(hour)\(minutes)")!
-        PID.currNum = self.autoID
-        patiantID.text = PID.getID()
-        adminName.text = PID.getName()
-        adminInitials.text = PID.getInitials()
-        
-        testClass.delegate = self
-        if atBIDMCOn == true {
-            testClass.isHidden = false
-            testClassLabel.isHidden = false
-        } else {
-            testClass.isHidden = true
-            testClassLabel.isHidden = true
-        }
-        theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
-        testClass.selectRow(theTestClass, inComponent: 0, animated: true)
-        
-        doneSetup = true
     }
     
     func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
@@ -213,5 +227,72 @@ class Setup: ViewController, UIPickerViewDelegate  {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Action
+    @IBAction func actionBegin(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+            vc.mode = .patient
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+}
+
+extension Setup {
+    fileprivate func swtupView() {
+        // Label Back
+        self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
+        self.backTitleLabel.addTextSpacing(-0.56)
+        self.backTitleLabel.text = "PROCTORED"
+        
+        // Button Start New
+        self.beginButton.setTitle(title: "BEGIN", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
+        self.beginButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.beginButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.beginButton.addTextSpacing(-0.36)
+        self.beginButton.render()
+        
+        self.adminNameLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.adminNameLabel.textColor = Color.color(hexString: "#8A9199")
+        self.adminNameLabel.addTextSpacing(-0.36)
+        
+        self.adminNameTextField.layer.borderWidth = 1
+        self.adminNameTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.adminNameTextField.layer.cornerRadius = 5
+        self.adminNameTextField.layer.masksToBounds = true
+        
+        self.patientIdLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.patientIdLabel.textColor = Color.color(hexString: "#8A9199")
+        self.patientIdLabel.addTextSpacing(-0.36)
+        
+        self.patiantIDTextField.layer.borderWidth = 1
+        self.patiantIDTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.patiantIDTextField.layer.cornerRadius = 5
+        self.patiantIDTextField.layer.masksToBounds = true
+        
+        self.emailLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.emailLabel.textColor = Color.color(hexString: "#8A9199")
+        self.emailLabel.addTextSpacing(-0.36)
+        
+        self.emailTextField.layer.borderWidth = 1
+        self.emailTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.emailTextField.layer.cornerRadius = 5
+        self.emailTextField.layer.masksToBounds = true
+        
+        self.provideDataLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.provideDataLabel.textColor = Color.color(hexString: "#000000")
+        self.provideDataLabel.addTextSpacing(-0.36)
+        
+        self.testingPasscodeLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.testingPasscodeLabel.textColor = Color.color(hexString: "#8A9199")
+        self.testingPasscodeLabel.addTextSpacing(-0.36)
+        
+        self.testingPasscodeTextField.layer.borderWidth = 1
+        self.testingPasscodeTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.testingPasscodeTextField.layer.cornerRadius = 5
+        self.testingPasscodeTextField.layer.masksToBounds = true
     }
 }
