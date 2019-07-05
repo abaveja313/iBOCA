@@ -198,6 +198,8 @@ class DigitSerialSeven:DigitBaseClass {
         if (lastNum - 7 <= 0)  { // || (level >= 5)
             // Done test
             base.InfoLabel.text = "Test Ended"
+            base.startTimeTask = Foundation.Date()
+            base.totalTimeCounter.invalidate()
             base.numKeyboard.isEnabled(false)
 //            DoEnd()
             return

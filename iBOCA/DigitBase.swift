@@ -32,10 +32,19 @@ class DigitBase: ViewController {
     
     var NumKeys:[UIButton] = []
     
+    
+    var value: String = ""
+    
+    var ended = false
+    
+    
+    let speechSynthesizer = AVSpeechSynthesizer()
+    
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var lbCorrectAnswer: UILabel!
     
     
+    @IBOutlet var contentView: UIView!
     @IBOutlet weak var numKeyboard: NumberKeyboardView!
     @IBOutlet weak var innerShadowView: UIView!
     @IBOutlet weak var backTitleLabel: UILabel!
@@ -46,11 +55,11 @@ class DigitBase: ViewController {
     @IBOutlet weak var quitButton: GradientButton!
     @IBOutlet weak var resetButton: GradientButton!
     
-    var value: String = ""
+    var counterTimeView: CounterTimeView!
+    var totalTimeCounter = Timer()
+    var startTimeTask = Foundation.Date()
     
-    var ended = false
-    
-    let speechSynthesizer = AVSpeechSynthesizer()
+    var timerOrientationTask = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +82,7 @@ class DigitBase: ViewController {
         base!.DoInitialize()
         base!.DoStart()
         
+        setupCounterTimeView()
         
         NumKeys.append(Button_1)
         NumKeys.append(Button_2)
@@ -88,7 +98,6 @@ class DigitBase: ViewController {
         NumKeys.append(Button_delete)
         
         value = ""
-        InfoLabel.text = ""
         NumberLabel.text = ""
         KeypadLabel.text = ""
         
@@ -97,6 +106,15 @@ class DigitBase: ViewController {
         BackButton.isHidden = false
     }
     
+    fileprivate func runTimer() {
+        self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.totalTimeCounter.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+    }
+
     func enableKeypad() {
         for key in NumKeys {
             key.isHidden = false
@@ -154,9 +172,10 @@ class DigitBase: ViewController {
     }
     
     @IBAction func EndPressed(_ sender: UIButton) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
         base!.DoEnd()
-//        NumberLabel.isHidden = true
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
             self.present(vc, animated: true, completion: nil)
@@ -164,8 +183,13 @@ class DigitBase: ViewController {
     }
     
     @IBAction func actionReset(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+        
         base!.DoStart()
     }
+    
     // This may be call more than when EndPressed, DoEnd may be call within the subclass, which should call this
     func EndTest() {
         ended = true
@@ -223,6 +247,8 @@ class DigitBase: ViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         if !ended {
             base!.DoEnd()
         }
@@ -272,7 +298,15 @@ extension DigitBase {
         
         self.randomNumberLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.randomNumberLabel.textColor = Color.color(hexString: "#FF5430")
-        
+    }
+    
+    fileprivate func setupCounterTimeView() {
+        counterTimeView = CounterTimeView()
+        contentView.addSubview(counterTimeView!)
+        counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        counterTimeView?.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor).isActive = true
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
     }
     
     func isNumKeyboardHidden(isHidden: Bool) {

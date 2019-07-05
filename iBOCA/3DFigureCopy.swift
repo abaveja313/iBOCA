@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ThreeDFigureCopy: ViewController {
 
@@ -20,6 +21,7 @@ class ThreeDFigureCopy: ViewController {
     @IBOutlet weak var btnReset: GradientButton!
     @IBOutlet weak var btnQuit: GradientButton!
     
+    @IBOutlet weak var vCounterTimer: UIView!
     
     @IBOutlet weak var vTaskShadow: UIView!
     @IBOutlet weak var vTask: UIView!
@@ -45,11 +47,18 @@ class ThreeDFigureCopy: ViewController {
     
     var drawfrom : UIImageView? = nil
     
+    var counterTime: CounterTimeView!
+    var timer3DFigureCopy = Timer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setupView()
         self.startTask()
+    }
+    
+    deinit {
+        self.timer3DFigureCopy.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +82,8 @@ class ThreeDFigureCopy: ViewController {
         else {
             self.CorrectButton.isEnabled = false
             self.IncorrectButton.isEnabled = false
+            self.timer3DFigureCopy.invalidate()
+            
             self.saveResult()
             self.completeTask()
         }
@@ -143,7 +154,12 @@ class ThreeDFigureCopy: ViewController {
         self.resultImages.removeAll()
         self.resultTime.removeAll()
         self.vDraw.drawandclearResults()
-        startTime2 = Foundation.Date()
+        
+        // Couter Timer
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        self.runTimer()
+        
         self.startTask()
     }
     
@@ -155,7 +171,7 @@ class ThreeDFigureCopy: ViewController {
     }
     
     fileprivate func saveResult() {
-        self.result.startTime = startTime2
+        self.result.startTime = self.startTime2
         self.result.endTime = Foundation.Date()
         self.result.longDescription.add("Tests: \(imagelist)")
         self.result.longDescription.add("Test Outcomes: \(resultCondition)")
@@ -195,8 +211,28 @@ class ThreeDFigureCopy: ViewController {
 // MARK: - Setup Views
 extension ThreeDFigureCopy {
     fileprivate func setupView() {
+        self.setupViewCounterTimer()
         self.setupViewTask()
         self.setupButtonGradient()
+    }
+    
+    fileprivate func setupViewCounterTimer() {
+        // View Couter Timer
+        self.counterTime = CounterTimeView()
+        self.vCounterTimer.backgroundColor = .clear
+        self.vCounterTimer.addSubview(self.counterTime)
+        
+        self.timer3DFigureCopy.invalidate()
+        self.runTimer()
+    }
+    
+    fileprivate func runTimer() {
+        self.timer3DFigureCopy = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.timer3DFigureCopy.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTime.setTimeWith(startTime: self.startTime2, currentTime: Foundation.Date())
     }
     
     fileprivate func setupViewTask() {

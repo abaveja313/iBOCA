@@ -41,6 +41,17 @@ enum DemographicsCategory: String {
 
 class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate {
     
+    @IBOutlet weak var vBack: UIView!
+    @IBOutlet weak var lblBack: UILabel!
+    @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var vTaskShadow: UIView!
+    @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var btnNext: UIButton!
+    //=========
+    
     @IBOutlet weak var lbGender: UILabel!
     @IBOutlet weak var btnGender: UIButton!
     @IBOutlet weak var lbAge: UILabel!
@@ -272,6 +283,8 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         protocolLabel.isHidden = false
         viewProtocol.isHidden = false
         btnProcotol.isHidden = false
+        
+        self.setupView()
     }
    
     override func didReceiveMemoryWarning() {
@@ -313,14 +326,19 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     }
 
     @IBAction func TestDone(_ sender: AnyObject) {
-    Results1.append(PID.getID())
-    Results1.append(Gender!)
-    Results1.append(Ethnicity!)
-    Results1.append(Education!)
-    Results1.append(age!)
-    Results1.append(Race!)
-    print(Results1)
+        Results1.append(PID.getID())
+        Results1.append(Gender!)
+        Results1.append(Ethnicity!)
+        Results1.append(Education!)
+        Results1.append(age!)
+        Results1.append(Race!)
+        print(Results1)
     }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension Demographics {
@@ -333,5 +351,42 @@ extension Demographics {
             return true
         }
         return Int(string) != nil
+    }
+}
+
+// MARK: - Setup View
+extension Demographics {
+    fileprivate func setupView() {
+        // View Back
+        self.lblBack.addTextSpacing(-0.56)
+        self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        
+        // View Task
+        self.setupViewTask()
+    }
+    
+    fileprivate func setupViewTask() {
+        self.vTaskShadow.layer.cornerRadius = 8.0
+        self.vTaskShadow.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.vTaskShadow.layer.shadowOpacity = 1.0
+        self.vTaskShadow.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vTaskShadow.layer.shadowRadius = 10 / 2.0
+        self.vTaskShadow.layer.shadowPath = nil
+        self.vTaskShadow.layer.masksToBounds = false
+    
+        self.vTask.clipsToBounds = true
+        self.vTask.backgroundColor = UIColor.white
+        self.vTask.layer.cornerRadius = 8.0
+        
+        self.btnCancel.addTextSpacing(-0.44)
+        self.btnCancel.tintColor = Color.color(hexString: "#505259")
+        self.btnCancel.layer.cornerRadius = 8.0
+        self.btnCancel.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        
+        self.btnNext.addTextSpacing(-0.44)
+        self.btnNext.tintColor = Color.color(hexString: "#013AA5")
+        self.btnNext.layer.cornerRadius = 8.0
+        self.btnNext.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
     }
 }
