@@ -8,13 +8,23 @@
 
 import UIKit
 
+//SAMPLE:
+/*
+mCounterTimeView = CounterTimeView()
+mViewMain.addSubview(mCounterTimeView!)
+mCounterTimeView?.centerYAnchor.constraint(equalTo: mBtnResult.centerYAnchor).isActive = true
+mCounterTimeView?.trailingAnchor.constraint(equalTo: mBtnResult.leadingAnchor, constant: -30).isActive = true
+
+*/
+
+
 class CounterTimeView: UIView {
 
     // size of this view
     private var mSize = CGSize.init(width: 90, height: 34)
     //
     private var mLbCounterTime = UILabel()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -23,6 +33,11 @@ class CounterTimeView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+    }
+    
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        setupUI()
     }
     
     private func setupUI(){
@@ -61,7 +76,7 @@ class CounterTimeView: UIView {
     }
     
     
-    /// show seconds with format hh:mm
+    /// show counter time with format hh:mm
     ///
     /// - Parameter seconds: total seconds
     func setSeconds(seconds:Int){
@@ -74,5 +89,12 @@ class CounterTimeView: UIView {
             textTime = String.init(format: "%02d:%02d:%02d",timeComp.hour,timeComp.minute,timeComp.seconds)
         }
         setTextForAttributeLabel(title: textTime)
+    }
+    
+    /// show counter time with format hh:mm
+    func setTimeWith(startTime:Date,currentTime:Date){
+        let elapsed = currentTime.timeIntervalSince(startTime)
+        let seconds = Int(elapsed)
+        setSeconds(seconds: seconds)
     }
 }

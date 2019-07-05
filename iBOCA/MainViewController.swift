@@ -79,6 +79,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     var arrData : [GoToTestCellModel] = [GoToTestCellModel]()
     var mode : TestMode = TestMode.admin
     
+    var mCounterTimeView : CounterTimeView?
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
@@ -198,9 +200,9 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         setupButton()
         setupCollectionView()
         setupData()
+        
     }
-    
-    
+
     func updateButton(id: UInt, ectid: UInt, button: UIButton, status : TestStatus) {
         switch(status) {
         case .NotStarted:
