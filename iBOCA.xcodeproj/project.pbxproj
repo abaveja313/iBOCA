@@ -63,6 +63,7 @@
 		4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */; };
 		4A6963BF22C5F6B90084E5E1 /* AdministeredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6963BE22C5F6B90084E5E1 /* AdministeredViewController.swift */; };
 		4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */; };
+		4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */; };
 		4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58E4922CA08B90021E17C /* ErrorMessage.swift */; };
 		67E389232283D32600A8277C /* SMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E389222283D32600A8277C /* SMCell.swift */; };
 		B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */; };
@@ -267,6 +268,7 @@
 		4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoToTestCollectionCell.xib; sourceTree = "<group>"; };
 		4A6963BE22C5F6B90084E5E1 /* AdministeredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdministeredViewController.swift; sourceTree = "<group>"; };
 		4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterTimeView.swift; sourceTree = "<group>"; };
 		4AF58E4922CA08B90021E17C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		67E389222283D32600A8277C /* SMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCell.swift; sourceTree = "<group>"; };
 		B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisualAssociationCell.xib; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				4A70EDC922CEE88600E8E533 /* CustomView */,
 				4AA3050622CB3E7C0033E5DC /* Proctored */,
 				4A6963B822C5F6A60084E5E1 /* Administered */,
 				4A64C08F22C4BCE5005A6F94 /* Cells */,
@@ -591,6 +594,14 @@
 				4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */,
 			);
 			path = Administered;
+			sourceTree = "<group>";
+		};
+		4A70EDC922CEE88600E8E533 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		4AA3050622CB3E7C0033E5DC /* Proctored */ = {
@@ -1040,6 +1051,7 @@
 				E5F13D1C22572CDF002FB4FF /* IQNSArray+Sort.swift in Sources */,
 				F2A0F12F1F02682500A92B1F /* MOCAandGDT.swift in Sources */,
 				E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */,
+				4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */,
 				4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */,
 				0E1A22D722C4659300C8CFDF /* BaseButton.swift in Sources */,
 				E5F13D1222572CDF002FB4FF /* IQInvocation.swift in Sources */,
