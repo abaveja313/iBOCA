@@ -42,6 +42,15 @@ class TapInOrderViewController: ViewController {
     var levelStartTime = Foundation.Date()
     var resultList : [String:Any] = [:]
 
+    //MARK: NEW UI
+    @IBOutlet weak var mViewMain: UIView!
+    @IBOutlet weak var mBtnBack: UIButton!
+    @IBOutlet weak var mImgBack: UIImageView!
+    @IBOutlet weak var mLbBack: UILabel!
+    @IBOutlet weak var mBtnQuit: GradientButton!
+    @IBOutlet weak var mBtnReset: GradientButton!
+    @IBOutlet weak var mViewContent: UIView!
+    
     
     
     //randomize 1st order; light up 1st button
@@ -67,7 +76,15 @@ class TapInOrderViewController: ViewController {
         
         randomizeOrder()
         
+        setupUI()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startTest()
+    }
+    
+    
     
     
     //start from 1st button; reset all info
@@ -170,9 +187,8 @@ class TapInOrderViewController: ViewController {
             
             let button = UIButton(type: UIButtonType.system)
             buttonList.append(button)
-            button.frame = CGRect(x: x, y: y, width: 75, height: 75)
-            print(button.frame)
-            button.backgroundColor = UIColor.red
+            button.frame = CGRect(x: x, y: y, width: 61, height: 61)
+            button.backgroundColor = Color.color(hexString: "649BFF")
             self.view.addSubview(button)
             
         }
@@ -276,7 +292,7 @@ class TapInOrderViewController: ViewController {
             result.endTime = Foundation.Date()
             
             for (index, _) in self.order.enumerated() {
-                self.buttonList[index].backgroundColor = UIColor.darkGray
+                self.buttonList[index].backgroundColor = Color.color(hexString: "D8E5FA")
             }
             
             self.statusLabel.text = "Spatial span: \(self.numplaces)"
@@ -305,31 +321,34 @@ class TapInOrderViewController: ViewController {
     func drawSequenceRecursively(num:Int){
         if (forwardNotBackward && num > numplaces) ||
             (!forwardNotBackward && num < 0){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                if self.forwardNotBackward {
-                    self.statusLabel.text = "Tap in the order of the pattern observed"
-                } else {
-                    self.statusLabel.text = "Tap in reverse order of the pattern observed"
-                }
-                print("...enabling buttons...numplaces = \(self.numplaces+2)")
-                
-                for (index, _) in self.order.enumerated() {
-                    self.buttonList[index].backgroundColor = UIColor.brown
-                }
-                self.enableButtons()
-                self.levelStartTime = Foundation.Date()
-                self.resultTmpList.removeAll()
+            var textAlert = "Tap in the order of the pattern observed"
+            if self.forwardNotBackward == false {
+                textAlert = "Tap in reverse order of the pattern observed"
             }
+            self.statusLabel.text = textAlert
+            print("...enabling buttons...numplaces = \(self.numplaces+2)")
+            
+            let alert = UIAlertController.init(title: "Confirm", message: textAlert, preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: { (iaction) in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                    for (index, _) in self.order.enumerated() {
+                        self.buttonList[index].backgroundColor = Color.color(hexString: "649BFF")
+                    }
+                    self.enableButtons()
+                    self.levelStartTime = Foundation.Date()
+                    self.resultTmpList.removeAll()
+//                }
+            }))
+            self.present(alert, animated: true, completion: nil)
         } else {
             if ended == false {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4){
                     if self.ended == false {
-                        self.buttonList[num].backgroundColor = UIColor.green
+                        self.buttonList[num].backgroundColor = Color.color(hexString: "3EE48D")
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
                             if self.ended == false{
-                                self.buttonList[num].backgroundColor = UIColor.red
+                                self.buttonList[num].backgroundColor = Color.color(hexString: "649BFF")
                                 print("Drawing \(self.index)")
-                                
                                 var num2 : Int = num
                                 if self.forwardNotBackward {
                                     num2 += 1
@@ -377,11 +396,13 @@ class TapInOrderViewController: ViewController {
         } else {
             
             if numplaces < buttonList.count - 1{
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
-                    self.next()
+                    let alert = UIAlertController.init(title: "Confirm", message: "Observe the pattern", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: { (iaction) in
+                        self.next()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
-                
             } else {
                 //account for delay when changing black back to red for most recently pressed button
                 donetest()
@@ -404,7 +425,7 @@ class TapInOrderViewController: ViewController {
             
             if self.ended == false {
                 for (index, _) in self.order.enumerated() {
-                    self.buttonList[index].backgroundColor = UIColor.lightGray
+                    self.buttonList[index].backgroundColor = Color.color(hexString: "D8E5FA")
                 }
             }
         }
@@ -449,7 +470,7 @@ class TapInOrderViewController: ViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.2){
                     self.statusLabel.text = "Observe the pattern"
                     for (index, _) in self.order.enumerated() {
-                        self.buttonList[index].backgroundColor = UIColor.red
+                        self.buttonList[index].backgroundColor = Color.color(hexString: "649BFF")
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.forwardNotBackward {
@@ -479,7 +500,7 @@ class TapInOrderViewController: ViewController {
                 sender.backgroundColor = UIColor.black
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                    sender.backgroundColor = UIColor.brown
+                    sender.backgroundColor = Color.color(hexString: "649BFF")
                 }
                 
                 //get out of loop if it's the wrong button; will eventually lead to repeat()
@@ -522,4 +543,68 @@ class TapInOrderViewController: ViewController {
     }
  */
     
+    //MARK: - NEW UI
+    func setupUI(){
+        mLbBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28)
+        mLbBack.textColor = Color.color(hexString: "013AA5")
+        //
+        mBtnQuit.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        mBtnQuit.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        mBtnQuit.setupGradient(arrColor: [Color.color(hexString: "#FFAFA6"),Color.color(hexString: "#FE786A")], direction: .topToBottom)
+        mBtnQuit.render()
+        mBtnQuit.addTextSpacing(-0.36)
+        //
+        mBtnReset.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        mBtnReset.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        mBtnReset.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        mBtnReset.render()
+        mBtnReset.addTextSpacing(-0.36)
+        //
+        mViewContent.layer.cornerRadius = 8.0
+        mViewContent.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        mViewContent.layer.shadowOpacity = 1.0
+        mViewContent.layer.shadowOffset = CGSize(width: 0, height: 2)
+        mViewContent.layer.shadowRadius = 10 / 2.0
+        mViewContent.layer.shadowPath = nil
+        mViewContent.layer.masksToBounds = false
+        
+    }
+    
+    func startTest(){
+        
+        ended = false
+        startButton.isEnabled = false
+        endButton.isEnabled = true
+        resetButton.isEnabled = true
+    
+        numplaces = 0
+        numRepeats = 0
+        numErrors = 0
+        
+        randomizeOrder()
+       
+        statusLabel.text = "Observe the pattern"
+        let alert = UIAlertController.init(title: "", message: "Observe the pattern" , preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: { (iaction) in
+            if self.forwardNotBackward {
+                self.drawSequenceRecursively(num: 0)
+            } else {
+                self.drawSequenceRecursively(num: self.numplaces)
+            }
+            self.startTime2 = Foundation.Date()
+            self.currpressed = 0
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+//        if self.forwardNotBackward {
+//            self.statusLabel.text = "Tap in the order of the pattern observed"
+//        } else {
+//            self.statusLabel.text = "Tap in reverse order of the pattern observed"
+//        }
+    }
+    
+    @IBAction func tapBtnBack(_ sender: Any) {
+        debugPrint("tap btn back")
+        self.dismiss(animated: true, completion: nil)
+    }
 }
