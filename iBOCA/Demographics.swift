@@ -41,6 +41,17 @@ enum DemographicsCategory: String {
 
 class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate {
     
+    @IBOutlet weak var vBack: UIView!
+    @IBOutlet weak var lblBack: UILabel!
+    @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var vTaskShadow: UIView!
+    @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var btnNext: UIButton!
+    //=========
+    
     @IBOutlet weak var lbGender: UILabel!
     @IBOutlet weak var btnGender: UIButton!
     @IBOutlet weak var lbAge: UILabel!
@@ -313,14 +324,19 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     }
 
     @IBAction func TestDone(_ sender: AnyObject) {
-    Results1.append(PID.getID())
-    Results1.append(Gender!)
-    Results1.append(Ethnicity!)
-    Results1.append(Education!)
-    Results1.append(age!)
-    Results1.append(Race!)
-    print(Results1)
+        Results1.append(PID.getID())
+        Results1.append(Gender!)
+        Results1.append(Ethnicity!)
+        Results1.append(Education!)
+        Results1.append(age!)
+        Results1.append(Race!)
+        print(Results1)
     }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension Demographics {
@@ -334,4 +350,9 @@ extension Demographics {
         }
         return Int(string) != nil
     }
+}
+
+// MARK: - Setup View
+extension Demographics {
+    
 }

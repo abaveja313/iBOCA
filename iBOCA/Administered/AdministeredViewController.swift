@@ -76,17 +76,35 @@ class AdministeredViewController: ViewController {
     }
     
     @IBAction func tapSelectTest(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
-            savePID()
-            vc.mode = .admin
-            self.present(vc, animated: true, completion: nil)
+        if mSwitch.isOn == true {
+            if Settings.isGotoTest == true {
+                self.goToSelectTest()
+            }
+            else {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
         }
-        
+        else {
+            Settings.isGotoTest = false
+            self.goToSelectTest()
+        }
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
-        savePID()
+        if mSwitch.isOn == true {
+            if Settings.isGotoTest == true {
+                savePID()
+            }
+            else {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
+        }
+        else {
+            Settings.isGotoTest = false
+            savePID()
+        }
     }
     
     
@@ -101,8 +119,19 @@ class AdministeredViewController: ViewController {
         }
     }
     
-    
+    fileprivate func goToDemoGraphics() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
+            self.present(vc, animated:true, completion:nil)
+        }
+    }
 
-
-
+    fileprivate func goToSelectTest() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController {
+            savePID()
+            vc.mode = .admin
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
 }
