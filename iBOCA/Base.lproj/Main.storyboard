@@ -583,6 +583,14 @@
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
                                 <state key="normal" title="START NEW"/>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M9K-RS-kO2" userLabel="View Counter Timer">
+                                <rect key="frame" x="467" y="55" width="90" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="C97-tN-jRi"/>
+                                    <constraint firstAttribute="height" constant="34" id="sCB-1m-5tc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -593,12 +601,14 @@
                             <constraint firstItem="QcJ-IP-eBP" firstAttribute="top" secondItem="jqK-8W-CYm" secondAttribute="top" id="Nrj-il-Rpu"/>
                             <constraint firstItem="auw-Ng-nQ6" firstAttribute="top" secondItem="KZy-Si-ySZ" secondAttribute="bottom" constant="35" id="OCZ-xk-iEj"/>
                             <constraint firstItem="AKQ-oi-aIl" firstAttribute="trailing" secondItem="MIo-PI-Fpb" secondAttribute="trailing" id="Pe1-DD-dhg"/>
+                            <constraint firstItem="M9K-RS-kO2" firstAttribute="centerY" secondItem="auw-Ng-nQ6" secondAttribute="centerY" id="Q17-Ib-gGh"/>
                             <constraint firstAttribute="bottomMargin" secondItem="MIo-PI-Fpb" secondAttribute="bottom" constant="47" id="RSN-jc-PAZ"/>
                             <constraint firstItem="MIo-PI-Fpb" firstAttribute="leading" secondItem="auw-Ng-nQ6" secondAttribute="leading" id="XJ7-FR-ZZt"/>
                             <constraint firstItem="yKN-ST-Nt5" firstAttribute="bottom" secondItem="AKQ-oi-aIl" secondAttribute="bottom" id="Yry-Sq-su1"/>
                             <constraint firstItem="ZcR-vd-Pur" firstAttribute="centerX" secondItem="AKQ-oi-aIl" secondAttribute="centerX" id="aZa-yj-MYa"/>
                             <constraint firstItem="ZJE-4H-0TA" firstAttribute="leading" secondItem="hSh-Nm-H5O" secondAttribute="leading" id="aZe-kT-idD"/>
                             <constraint firstAttribute="trailing" secondItem="QcJ-IP-eBP" secondAttribute="trailing" id="b3S-na-Tu2"/>
+                            <constraint firstItem="M9K-RS-kO2" firstAttribute="centerX" secondItem="jqK-8W-CYm" secondAttribute="centerX" id="fe5-cI-5w5"/>
                             <constraint firstItem="QcJ-IP-eBP" firstAttribute="leading" secondItem="jqK-8W-CYm" secondAttribute="leading" id="fjm-uM-Rgw"/>
                             <constraint firstItem="ZJE-4H-0TA" firstAttribute="top" secondItem="auw-Ng-nQ6" secondAttribute="bottom" constant="25" id="gVS-79-Ce7"/>
                             <constraint firstAttribute="trailing" secondItem="MIo-PI-Fpb" secondAttribute="trailing" constant="42" id="ggY-IU-b1a"/>
@@ -637,6 +647,7 @@
                         <outlet property="start" destination="ORv-Rw-hsI" id="S8Z-aN-lmB"/>
                         <outlet property="tableViewResults" destination="CY0-SG-evJ" id="hEb-jD-2vQ"/>
                         <outlet property="timerLabel" destination="ZSG-Q9-ZmP" id="bE2-TY-CYs"/>
+                        <outlet property="vCounterTimer" destination="M9K-RS-kO2" id="6IL-KV-Yzu"/>
                         <outlet property="vDelay" destination="ff7-AP-4gM" id="00d-ln-1Mc"/>
                         <outlet property="vResults" destination="yKN-ST-Nt5" id="j1B-Qr-ka9"/>
                         <outlet property="vShadowTask" destination="AKQ-oi-aIl" id="xX7-gz-4mu"/>
@@ -3472,11 +3483,20 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGN-p9-QqV" userLabel="View Counter Timer">
+                                <rect key="frame" x="467" y="59" width="90" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="mYB-C0-pFn"/>
+                                    <constraint firstAttribute="width" constant="90" id="ucu-Mg-oyZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wnc-Mu-1YK" firstAttribute="leading" secondItem="evz-Ms-ecY" secondAttribute="trailing" constant="11" id="8d6-uG-TWW"/>
                             <constraint firstItem="9op-SD-gR4" firstAttribute="leading" secondItem="vLl-Ey-dbX" secondAttribute="leading" id="96m-Jb-LWN"/>
+                            <constraint firstItem="KGN-p9-QqV" firstAttribute="centerY" secondItem="AFk-ot-vNr" secondAttribute="centerY" id="9S5-bU-oVC"/>
                             <constraint firstItem="AFk-ot-vNr" firstAttribute="top" secondItem="vLl-Ey-dbX" secondAttribute="top" constant="59" id="Baa-zu-t8q"/>
                             <constraint firstItem="rhE-YU-3Tm" firstAttribute="bottom" secondItem="tzF-fr-iuP" secondAttribute="bottom" id="DkV-ec-O9f"/>
                             <constraint firstItem="9op-SD-gR4" firstAttribute="top" secondItem="vLl-Ey-dbX" secondAttribute="top" id="FpN-i1-grn"/>
@@ -3491,6 +3511,7 @@
                             <constraint firstAttribute="trailing" secondItem="9op-SD-gR4" secondAttribute="trailing" id="m90-sf-sf3"/>
                             <constraint firstItem="rhE-YU-3Tm" firstAttribute="trailing" secondItem="tzF-fr-iuP" secondAttribute="trailing" id="syY-nO-Ak2"/>
                             <constraint firstItem="evz-Ms-ecY" firstAttribute="top" secondItem="wnc-Mu-1YK" secondAttribute="top" id="tDF-1h-Dpe"/>
+                            <constraint firstItem="KGN-p9-QqV" firstAttribute="centerX" secondItem="vLl-Ey-dbX" secondAttribute="centerX" id="tgn-sb-e75"/>
                             <constraint firstAttribute="trailing" secondItem="tzF-fr-iuP" secondAttribute="trailing" constant="42" id="yNI-mO-WZD"/>
                             <constraint firstItem="AFk-ot-vNr" firstAttribute="leading" secondItem="vLl-Ey-dbX" secondAttribute="leading" constant="42" id="yya-id-FED"/>
                         </constraints>
@@ -3505,6 +3526,7 @@
                         <outlet property="lblBack" destination="4ys-Rz-2ng" id="zoU-GA-qRd"/>
                         <outlet property="lblErase" destination="WDy-2M-dXz" id="nO8-qP-PG7"/>
                         <outlet property="vBack" destination="AFk-ot-vNr" id="2gW-OA-gbL"/>
+                        <outlet property="vCounterTimer" destination="KGN-p9-QqV" id="dva-Fn-yYh"/>
                         <outlet property="vDraw" destination="40e-6t-kA0" id="MlI-Ai-XLn"/>
                         <outlet property="vDrawImage" destination="BHH-SF-Yzr" id="S3f-r5-3RG"/>
                         <outlet property="vDrawLine" destination="712-Bs-Q67" id="fnq-wa-snB"/>
@@ -4650,6 +4672,14 @@
                                     <action selector="DontKnowMonth:" destination="5Cz-GR-ydt" eventType="touchUpInside" id="fId-DW-zXT"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="342-nB-lhO" userLabel="View Counter Timer">
+                                <rect key="frame" x="467" y="55" width="90" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="oqR-8H-Tbw"/>
+                                    <constraint firstAttribute="height" constant="34" id="xif-vS-3wt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -4662,10 +4692,12 @@
                             <constraint firstItem="h49-99-ERt" firstAttribute="leading" secondItem="t9W-Lu-KdL" secondAttribute="leading" id="7l0-Se-INY"/>
                             <constraint firstItem="jcz-hw-sGy" firstAttribute="leading" secondItem="Q5C-ge-FUR" secondAttribute="trailing" constant="17" id="CAz-Qq-YKb"/>
                             <constraint firstItem="ukp-Ds-fga" firstAttribute="leading" secondItem="JfY-bh-V3b" secondAttribute="leading" id="CUH-X1-NwZ"/>
+                            <constraint firstItem="342-nB-lhO" firstAttribute="centerY" secondItem="XBB-4p-3Wn" secondAttribute="centerY" id="Ce8-mN-K3u"/>
                             <constraint firstItem="zbg-ij-Bfs" firstAttribute="trailing" secondItem="tOS-fx-ldD" secondAttribute="trailing" id="Cz8-Jh-dgD"/>
                             <constraint firstItem="3Ms-wM-ffM" firstAttribute="leading" secondItem="jcz-hw-sGy" secondAttribute="trailing" constant="17" id="G1y-kL-Uu8"/>
                             <constraint firstAttribute="bottom" secondItem="h49-99-ERt" secondAttribute="bottom" id="IAc-z8-Lss"/>
                             <constraint firstAttribute="trailing" secondItem="ZDq-15-Yl5" secondAttribute="trailing" constant="48" id="JAX-6W-ghB"/>
+                            <constraint firstItem="342-nB-lhO" firstAttribute="centerX" secondItem="t9W-Lu-KdL" secondAttribute="centerX" id="Jnc-Be-fHo"/>
                             <constraint firstItem="lw1-LA-Gp3" firstAttribute="trailing" secondItem="JfY-bh-V3b" secondAttribute="trailing" id="KyX-8i-TDN"/>
                             <constraint firstItem="tOS-fx-ldD" firstAttribute="centerY" secondItem="3Ms-wM-ffM" secondAttribute="centerY" id="MrD-n9-8aa"/>
                             <constraint firstItem="JfY-bh-V3b" firstAttribute="trailing" secondItem="ZDq-15-Yl5" secondAttribute="trailing" id="NEI-fx-PnH"/>
@@ -4719,6 +4751,7 @@
                         <outlet property="lblCurrentState" destination="RDr-XH-t4m" id="4CC-is-a02"/>
                         <outlet property="lblCurrentTime" destination="X2c-tW-4bD" id="WZD-6T-c8C"/>
                         <outlet property="lblDayOfTheWeek" destination="UFY-hX-gnh" id="krg-uV-TG1"/>
+                        <outlet property="vCounterTimer" destination="342-nB-lhO" id="8ih-zw-tAD"/>
                         <outlet property="vCurrentDate" destination="aQr-b3-ze7" id="etm-9B-iHV"/>
                         <outlet property="vCurrentState" destination="0on-gJ-cKp" id="Flw-D0-s93"/>
                         <outlet property="vCurrentTime" destination="tOS-fx-ldD" id="KQ9-K2-b7g"/>
@@ -5758,6 +5791,6 @@
         <segue reference="Ges-mF-PUS"/>
         <segue reference="eep-iX-tUz"/>
         <segue reference="vHL-fv-LLl"/>
-        <segue reference="lnl-8U-qJ1"/>
+        <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>

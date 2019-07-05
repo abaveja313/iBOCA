@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import Foundation
 
 var firstTimeThrough = true
 //declare variables to be defined by pickerviews
@@ -148,6 +149,12 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
     @IBOutlet weak var vCurrentTime: UIView!
     @IBOutlet weak var lblCurrentTime: UILabel!
     
+    @IBOutlet weak var vCounterTimer: UIView!
+    
+    var counterTime: CounterTimeView!
+    var timerOrientationTask = Timer()
+    var startTimeTask = Foundation.Date()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -230,6 +237,10 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         startTime = Foundation.Date()
     }
     
+    deinit {
+        self.timerOrientationTask.invalidate()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -269,6 +280,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         
         let noAction = UIAlertAction.init(title: "No", style: .cancel, handler: nil)
         let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
+            self.timerOrientationTask.invalidate()
             self.completeTest()
             // Show MainViewController
             self.dismiss(animated: true, completion: nil)
@@ -475,6 +487,9 @@ extension OrientationTask {
         self.lblBack.textColor = Color.color(hexString: "#013AA5")
         self.lblBack.addTextSpacing(-0.56)
         
+        // View Counter Timer
+        self.setupViewCounterTimer()
+        
         // Button complete
         let colors = [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")]
         let shadowColor = Color.color(hexString: "#69C394").withAlphaComponent(0.7)
@@ -498,6 +513,26 @@ extension OrientationTask {
         
         // View Current Time
         self.setupViewCurrentTime()
+    }
+    
+    fileprivate func setupViewCounterTimer() {
+        // View Couter Timer
+        self.counterTime = CounterTimeView()
+        self.vCounterTimer.backgroundColor = .clear
+        self.vCounterTimer.addSubview(self.counterTime)
+        
+        self.startTimeTask = Foundation.Date()
+        self.timerOrientationTask.invalidate()
+        self.runTimer()
+    }
+    
+    fileprivate func runTimer() {
+        self.timerOrientationTask = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.timerOrientationTask.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
     // Setup View Current Date
