@@ -53,24 +53,24 @@ class Setup: ViewController, UIPickerViewDelegate  {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
+        
+        if let email = UserDefaults.standard.string(forKey: "emailAddress") {
+            emailTextField.text = email
+        }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
-        emailTextField.text = UserDefaults.standard.string(forKey: "emailAddress")
+        patiantIDTextField.text = PID.getID()
+        adminNameTextField.text = PID.getName()
+        
+        
         
         
         atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
         atBIDMCOnOff.isOn = atBIDMCOn
         
-        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
-            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
-        }
-        emailTextField.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        emailOnOff.isOn = emailOn
-        emailTextField.text = emailAddress
-        
-        patiantIDTextField.text = PID.getID()
-        adminNameTextField.text = PID.getName()
+//        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
+//        emailTextField.isEnabled = emailOn
+//        emailLabel.isEnabled = emailOn
+//        emailOnOff.isOn = emailOn
         
         testClass.delegate = self
         //        if atBIDMCOn == true {
@@ -86,6 +86,34 @@ class Setup: ViewController, UIPickerViewDelegate  {
         doneSetup = true
     }
     
+    private func validate() -> Bool {
+        if !emailTextField.text!.isEmpty {
+            if !emailTextField.text!.isValidEmail() {
+                self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
+                return false
+            } else {
+                UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                return true
+            }
+        }
+        
+        return true
+    }
+    
+    private func showAlertTurnOnConsent(){
+        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\nprovide test data", andItems:
+        [.cre(title: "Cancel", itag: 0, istyle: .cancel),                                                                                                                      .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view) {[weak self](alert, title, itag) in
+            if itag == 0 || itag == -1{
+                //-1 is this when user tap close button
+                self?.provideDataSwitch.isOn = false
+            } else {
+                UserDefaults.standard.set(self!.provideDataSwitch.isOn, forKey: "Transmit")
+                UserDefaults.standard.synchronize()
+            }
+            alert.dismiss()
+        }
+    }
+    
     // MARK: Action
     @IBAction func actionBegin(_ sender: Any) {
         if validate() {
@@ -93,8 +121,11 @@ class Setup: ViewController, UIPickerViewDelegate  {
             Settings.patiantID = _patiantID
             Settings.isGotoTest = true
             
-            UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
-            UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+            if let passcode = testingPasscodeTextField.text {
+                if !passcode.isEmpty {
+                    UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+                }
+            }
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
@@ -109,28 +140,36 @@ class Setup: ViewController, UIPickerViewDelegate  {
             guard let _patiantID = self.patiantIDTextField.text else { return }
             Settings.patiantID = _patiantID
             
-            UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
-            UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+            if let passcode = testingPasscodeTextField.text {
+                if !passcode.isEmpty {
+                    UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+                }
+            }
         }
     }
     
     @IBAction func actionProvideData(_ sender: UISwitch) {
-        UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
-        UserDefaults.standard.synchronize()
+        if provideDataSwitch.isOn {
+            showAlertTurnOnConsent()
+        } else {
+            UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
+            UserDefaults.standard.synchronize()
+        }
     }
     
-    private func validate() -> Bool {
-        if !emailAddress.isValidEmail() {
-            self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
-            return false
+    @IBAction func adminNameChanged(_ sender: UITextField) {
+        let curNum = PID.currNum
+        PID.nameSet(name: adminNameTextField.text!)
+        PID.currNum = curNum
+        patiantIDTextField.text = PID.getID()
+    }
+    
+    @IBAction func patiantIDEdited(_ sender: UITextField) {
+        if !PID.changeID(proposed: patiantIDTextField.text!) {
+            patiantIDTextField.text = PID.getID()
+        } else {
+            patiantIDTextField.text = PID.getID()
         }
-        
-        if (testingPasscodeTextField.text?.isEmpty)! {
-            self.showPopup(ErrorMessage.errorTitle, message: "Passcode must not be empty", okAction: {})
-            return false
-        }
-        
-        return true
     }
     
     // MARK: Unused code
@@ -192,28 +231,10 @@ class Setup: ViewController, UIPickerViewDelegate  {
     
     @IBAction func emailOnOff(_ sender: Any) {
         emailOn = emailOnOff.isOn
-        emailTextField.isEnabled = emailOn
+//        emailTextField.isEnabled = emailOn
         emailLabel.isEnabled = emailOn
         UserDefaults.standard.set(emailOn, forKey: "emailOn")
         UserDefaults.standard.synchronize()
-    }
-    
-    @IBAction func emailChanged(_ sender: Any) {
-        emailAddress = emailTextField.text!
-    }
-    
-    @IBAction func adminNameChanged(_ sender: UITextField) {
-        PID.nameSet(name: adminNameTextField.text!)
-        patiantIDTextField.text = PID.getID()
-    }
-    
-    
-    @IBAction func patiantIDEdited(_ sender: UITextField) {
-        if !PID.changeID(proposed: patiantIDTextField.text!) {
-            patiantIDTextField.text = PID.getID()
-        } else {
-            patiantIDTextField.text = PID.getID()
-        }
     }
     
     func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
