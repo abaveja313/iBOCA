@@ -69,6 +69,8 @@
 		B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */; };
 		B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */; };
 		B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD0E922CDE992008A195C /* String+Extensions.swift */; };
+		B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD11822CE212A008A195C /* NumberKeyboardView.swift */; };
+		B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -274,6 +276,8 @@
 		B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisualAssociationCell.xib; sourceTree = "<group>"; };
 		B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualAssociationCell.swift; sourceTree = "<group>"; };
 		B10BD0E922CDE992008A195C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		B10BD11822CE212A008A195C /* NumberKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberKeyboardView.swift; sourceTree = "<group>"; };
+		B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberKeyboardView.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -467,6 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				4A70EDC922CEE88600E8E533 /* CustomView */,
+				B10BD11722CE2104008A195C /* NumberKeyboardView */,
 				4AA3050622CB3E7C0033E5DC /* Proctored */,
 				4A6963B822C5F6A60084E5E1 /* Administered */,
 				4A64C08F22C4BCE5005A6F94 /* Cells */,
@@ -609,6 +614,15 @@
 			children = (
 			);
 			path = Proctored;
+			sourceTree = "<group>";
+		};
+		B10BD11722CE2104008A195C /* NumberKeyboardView */ = {
+			isa = PBXGroup;
+			children = (
+				B10BD11822CE212A008A195C /* NumberKeyboardView.swift */,
+				B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */,
+			);
+			name = NumberKeyboardView;
 			sourceTree = "<group>";
 		};
 		E2037F1B1E47E7F000EE13EB /* Pictures */ = {
@@ -954,6 +968,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */,
 				0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */,
 				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
@@ -1016,6 +1031,7 @@
 				F20FF4C61F04757300B806B7 /* GeriatricDepressionScale.swift in Sources */,
 				E5F13D0E22572CDF002FB4FF /* IQTitleBarButtonItem.swift in Sources */,
 				E5F13D2D225736EA002FB4FF /* PickerViewController.swift in Sources */,
+				B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */,
 				4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */,
 				E27BA37F1D523B8400619C07 /* BackwardDigitSpan.swift in Sources */,
 				E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */,
