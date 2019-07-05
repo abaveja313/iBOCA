@@ -77,32 +77,20 @@ class AdministeredViewController: ViewController {
     
     @IBAction func tapSelectTest(_ sender: Any) {
         if mSwitch.isOn == true {
-            if Settings.isGotoTest == true {
-                self.goToSelectTest()
-            }
-            else {
-                // Consent to provide data
-                self.goToDemoGraphics()
-            }
+            // Consent to provide data
+            self.goToDemoGraphics()
         }
         else {
-            Settings.isGotoTest = false
             self.goToSelectTest()
         }
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
         if mSwitch.isOn == true {
-            if Settings.isGotoTest == true {
-                savePID()
-            }
-            else {
-                // Consent to provide data
-                self.goToDemoGraphics()
-            }
+            // Consent to provide data
+            self.goToDemoGraphics()
         }
         else {
-            Settings.isGotoTest = false
             savePID()
         }
     }
