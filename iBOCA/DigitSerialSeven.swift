@@ -53,6 +53,9 @@ class DigitSerialSeven:DigitBaseClass {
     }
     
     override func DoStart() {
+        testName =  "Serial Sevens Test"
+        testStatus = TestSerialSevens
+        level = -1
         let startingNumbers = [50, 60, 70, 80, 90, 100]
         let randomIndex = Int(arc4random_uniform(UInt32(startingNumbers.count)))
         let randomStartingNumber = startingNumbers[randomIndex]
@@ -213,9 +216,8 @@ class DigitSerialSeven:DigitBaseClass {
         timer?.invalidate()
         
         // Hide countdown
-        base.lbShowRandomNumber.isHidden = true
         
-        base.InfoLabel.text = "Press start to begin \(testName)"
+//        base.InfoLabel.text = "Press start to begin \(testName)"
         
         let endTime = Foundation.Date()
         
@@ -249,6 +251,7 @@ class DigitSerialSeven:DigitBaseClass {
         resultsArray.add(result)
         Status[testStatus] = TestStatus.Done
     
+        base.InfoLabel.text = "Test ended"
         base.EndTest()
     }
 }

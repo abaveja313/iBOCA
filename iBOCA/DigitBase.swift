@@ -15,7 +15,6 @@ class DigitBase: ViewController {
     var base:DigitBaseClass? = nil  // Cannot do a subclass, so using composition
 
     @IBOutlet weak var StartButton: UIButton!
-    @IBOutlet weak var BackButton: UIButton!
     
     @IBOutlet weak var Button_1: UIButton!
     @IBOutlet weak var Button_2: UIButton!
@@ -52,6 +51,7 @@ class DigitBase: ViewController {
     @IBOutlet weak var InfoLabel: UILabel!
     @IBOutlet weak var lbShowRandomNumber: UILabel!
     @IBOutlet weak var randomNumberLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var quitButton: GradientButton!
     @IBOutlet weak var resetButton: GradientButton!
     
@@ -65,7 +65,6 @@ class DigitBase: ViewController {
         super.viewDidLoad()
         setupView()
         numKeyboard.delegate = self
-        self.isNumKeyboardHidden(isHidden: true)
         
         hideKeypad()
         // Dispatch according to incoming
@@ -79,7 +78,7 @@ class DigitBase: ViewController {
             assert(true, "Error, got here with wrong name")
         }
         base!.base = self
-        base!.DoInitialize()
+//        base!.DoInitialize()
         base!.DoStart()
         
         setupCounterTimeView()
@@ -103,7 +102,7 @@ class DigitBase: ViewController {
         
         StartButton.isHidden = true
 //        EndButton.isHidden = true
-        BackButton.isHidden = false
+        backButton.isHidden = false
     }
     
     fileprivate func runTimer() {
@@ -200,12 +199,12 @@ class DigitBase: ViewController {
 
 //        disableKeypad()
         
-        isNumKeyboardHidden(isHidden: true)
+//        isNumKeyboardHidden(isHidden: true)
         
-        StartButton.isHidden = false
+//        StartButton.isHidden = false
 //        EndButton.isHidden = true
-        BackButton.isHidden = false
-        lbCorrectAnswer.isHidden = true
+//        backButton.isHidden = false
+//        lbCorrectAnswer.isHidden = true
     }
     
     func showCorrectAnswer(value: Int) {
@@ -214,7 +213,7 @@ class DigitBase: ViewController {
     }
     
     func DisplayStringShowContinue(val:String) {
-        if BackButton.isHidden == true {
+//        if BackButton.isHidden == true {
             // digit utterances in the sequence with a short delay in between
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                 if val.characters.count == 0 {
@@ -224,13 +223,12 @@ class DigitBase: ViewController {
                     self.KeypadLabel.text = ""
                     self.base!.levelStartTime = Foundation.Date()
 //                    self.base!.gotKeys = [:]
-//                    self.enableKeypad()
-                    self.isNumKeyboardHidden(isHidden: false)
+                    self.setButtonEnabled(true)
                 } else {
                     let c = String(val.characters.first!)
                     self.value = self.value + c
                     let rest = String(Array(repeating: ".", count: self.base!.level - self.value.characters.count + 1))
-                    
+    
                     if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
                         self.NumberLabel.text = self.value + rest
                     }
@@ -241,7 +239,7 @@ class DigitBase: ViewController {
                     self.DisplayStringShowContinue(val: String(val.characters.dropFirst(1)))
                 }
             }
-        }
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -312,6 +310,13 @@ extension DigitBase {
     func isNumKeyboardHidden(isHidden: Bool) {
         self.numKeyboard.isHidden = isHidden
         self.KeypadLabel.isHidden = isHidden
+    }
+    
+    func setButtonEnabled(_ isEnabled: Bool) {
+        self.quitButton.isEnabled = isEnabled
+        self.backButton.isEnabled = isEnabled
+        self.resetButton.isEnabled = isEnabled
+        self.numKeyboard.isEnabled(isEnabled)
     }
 }
 

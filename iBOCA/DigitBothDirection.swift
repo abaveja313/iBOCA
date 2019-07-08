@@ -35,6 +35,8 @@ class DigitBothDirection:DigitBaseClass {
     }
     
     override func DoStart() {
+        TestInitialize()
+        base.setButtonEnabled(false)
         base.InfoLabel.text = "Tell the patient the numbers, followed by intering his/her response"
         level = LevelStart() - 1
         redo = 0
@@ -52,9 +54,9 @@ class DigitBothDirection:DigitBaseClass {
     
     func StartDisplay() {
         genval = ""
-        base.value = ""
-        base.NumberLabel.text = ""
-        base.KeypadLabel.text = ""
+//        base.value = ""
+//        base.NumberLabel.text = ""
+//        base.KeypadLabel.text = ""
         var candidate = [0, 1, 2, 4, 5, 6, 7, 8, 9]
         for _ in 0...level {
             let pos = (Int)(arc4random_uniform(UInt32(candidate.count)))
@@ -68,7 +70,7 @@ class DigitBothDirection:DigitBaseClass {
         base.disableKeypad()
         
         genStrings.append(genval)
-        gotStrings.append(base.value)
+        gotStrings.append(base.KeypadLabel.text!)
         gotLevels.append(level+1)
         let levelEndTime = Foundation.Date()
         let elapsedTime = (Int)(1000*levelEndTime.timeIntervalSince(levelStartTime))
@@ -76,7 +78,7 @@ class DigitBothDirection:DigitBaseClass {
         
         var tempList:[String:Any] = [:]
         tempList["Generated"] = genval
-        tempList["Entered"] = base.value
+        tempList["Entered"] = base.KeypadLabel.text
         tempList["ElapsedTime (msec)"] = elapsedTime
         tempList["Keystrokes (msec:key)"] = gotKeys
         
@@ -86,27 +88,38 @@ class DigitBothDirection:DigitBaseClass {
         
         
         let pgenval = ProcesString(val: genval)
-        if base.value == pgenval {
+        if base.KeypadLabel.text == pgenval {
             base.InfoLabel.text = "Correct! Tell the next set of numbers"
             level += 1
             if level >= LevelEnd() {
                 base.InfoLabel.text = "Correct!, test done"
-                EndTest()
+                base.startTimeTask = Foundation.Date()
+                base.totalTimeCounter.invalidate()
+                base.setButtonEnabled(true)
+                base.numKeyboard.isEnabled(false)
+//                EndTest()
             } else {
                 redo = 0
+                base.setButtonEnabled(false)
                 StartDisplay()
             }
         } else {
             redo += 1
             totErrors += 1
             if redo >= MAX_REDO {
-                base.InfoLabel.text = "Too many incorrect answers, test ending"
-                EndTest()
+                base.InfoLabel.text = "Too many incorrect answers, test ended"
+                base.startTimeTask = Foundation.Date()
+                base.totalTimeCounter.invalidate()
+                base.setButtonEnabled(true)
+                base.numKeyboard.isEnabled(false)
             } else {
                 base.InfoLabel.text = "Incorrect, Repeat with new numbers"
+                base.setButtonEnabled(false)
                 StartDisplay()
             }
         }
+        
+        base.KeypadLabel.text = ""
     }
     
     override func DoEnd() {
