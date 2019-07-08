@@ -3110,7 +3110,7 @@
                                             <color key="titleColor" red="0.0039215686274509803" green="0.22745098039215686" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="CancelPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="pUF-Fr-S2s"/>
+                                            <action selector="NextPressed:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="Iix-LV-hQo"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -64,14 +64,24 @@
                                     <constraint firstItem="UL3-5v-ehM" firstAttribute="leading" secondItem="IZa-NV-vcD" secondAttribute="trailing" constant="11" id="yKN-od-W1j"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NAc-br-Yuy">
+                                <rect key="frame" x="0.0" y="34" width="379" height="40"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="NAc-br-Yuy" firstAttribute="trailing" secondItem="hom-OI-rxW" secondAttribute="trailing" id="9qM-Xf-lIe"/>
                             <constraint firstItem="Nru-tG-jLl" firstAttribute="leading" secondItem="RlA-yQ-E45" secondAttribute="leading" id="DXD-TA-gMv"/>
+                            <constraint firstItem="NAc-br-Yuy" firstAttribute="leading" secondItem="hom-OI-rxW" secondAttribute="leading" id="DoP-AG-fUj"/>
+                            <constraint firstItem="NAc-br-Yuy" firstAttribute="height" secondItem="hom-OI-rxW" secondAttribute="height" id="MXl-cZ-y5m"/>
                             <constraint firstAttribute="trailing" secondItem="hom-OI-rxW" secondAttribute="trailing" id="TgA-zo-GPs"/>
                             <constraint firstAttribute="bottom" secondItem="hom-OI-rxW" secondAttribute="bottom" id="WAq-23-P8c"/>
                             <constraint firstItem="hom-OI-rxW" firstAttribute="leading" secondItem="RlA-yQ-E45" secondAttribute="leading" id="l1a-Qv-byg"/>
                             <constraint firstItem="Nru-tG-jLl" firstAttribute="top" secondItem="RlA-yQ-E45" secondAttribute="top" id="lgj-5R-OH0"/>
+                            <constraint firstItem="NAc-br-Yuy" firstAttribute="bottom" secondItem="hom-OI-rxW" secondAttribute="bottom" id="oAw-kM-CXS"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -87,6 +97,7 @@
                 <outlet property="btnSelected" destination="4Ah-vC-0qt" id="057-Gy-uJj"/>
                 <outlet property="lblSelected" destination="IZa-NV-vcD" id="cWw-cD-0er"/>
                 <outlet property="lblTitle" destination="Nru-tG-jLl" id="6ym-XA-CQl"/>
+                <outlet property="textField" destination="NAc-br-Yuy" id="VJr-O3-Jq2"/>
                 <outlet property="vSelected" destination="hom-OI-rxW" id="gkq-VF-0wT"/>
             </connections>
             <point key="canvasLocation" x="53.600000000000001" y="111.54422788605699"/>

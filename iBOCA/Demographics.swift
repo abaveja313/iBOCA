@@ -10,7 +10,6 @@ import UIKit
 import MessageUI
 import AVFoundation
 
-
 var testStartTime = Foundation.Date()
 
 var age : String?
@@ -23,8 +22,6 @@ var Comments : String = ""
 var PUID: String = ""
 var ModeECT = false
 var Protocol = "A"
-
-
 
 func makeAgeData() -> [String] {
     var str:[String] = []
@@ -39,7 +36,7 @@ enum DemographicsCategory: String {
     case Ethnicity = "Ethnicity"
 }
 
-class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate {
+class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate {
     
     @IBOutlet weak var vBack: UIView!
     @IBOutlet weak var lblBack: UILabel!
@@ -75,6 +72,28 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     
     var ageData:[String] = makeAgeData()
     
+    var arrDemoGraphicsStyle: [DemoGraphicsCellStyle] = [.PaientIDNumber,
+                                                    .Ethnicity,
+                                                    .Gender,
+                                                    .Race,
+                                                    .Age,
+                                                    .PatientUID,
+                                                    .Education,
+                                                    .Protocols]
+    
+    // Object Load Data
+    struct Objects {
+        var title: DemoGraphicsCellStyle!
+        var value: String!
+    }
+    
+    var objectArray = [Objects]()
+    
+    // MARK: - DropDown's
+    var dropDown: UITableView = UITableView()
+    var dropDownData: [String] = [String]()
+    var selectedStyle: DemoGraphicsCellStyle?
+    
     @IBOutlet weak var MRLabel: UILabel!
     @IBOutlet weak var MRField: UITextField!
     
@@ -100,30 +119,77 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     
     @IBAction func NextPressed(_ sender: UIButton) {
         // Save PID, PUID
-        guard
-            let _PID = MRField.text,
-            let _PUID = self.PatientUID.text,
-            let _genderUser = Gender,
-            let _ageUser = age,
-            let _educationUser = Education,
-            let _ethnicityUser = Ethnicity,
-            let _raceUser = Race
-        else { return }
-        //TODO: change flow PID
-        Settings.patiantID = _PID
-        Settings.genderUser = _genderUser
-        Settings.ageUser = _ageUser
-        Settings.educationUser = _educationUser
-        Settings.ethnicityUser = _ethnicityUser
-        Settings.raceUser = _raceUser
-        Settings.protocolUser = Protocol
-        Settings.commentsUser = Comments
-        Settings.PUID = _PUID
-        Settings.isGotoTest = true
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-        self.present(vc, animated: true, completion: nil)
+//        guard
+//            let _PID = MRField.text,
+//            let _PUID = self.PatientUID.text,
+//            let _genderUser = Gender,
+//            let _ageUser = age,
+//            let _educationUser = Education,
+//            let _ethnicityUser = Ethnicity,
+//            let _raceUser = Race
+//        else { return }
+//        //TODO: change flow PID
+//        Settings.patiantID = _PID
+//        Settings.genderUser = _genderUser
+//        Settings.ageUser = _ageUser
+//        Settings.educationUser = _educationUser
+//        Settings.ethnicityUser = _ethnicityUser
+//        Settings.raceUser = _raceUser
+//        Settings.protocolUser = Protocol
+//        Settings.commentsUser = Comments
+//        Settings.PUID = _PUID
+//        Settings.isGotoTest = true
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+//        self.present(vc, animated: true, completion: nil)
         
+        var _PID = String()
+        var _PUID = String()
+        var _genderUser = String()
+        var _ageUser = String()
+        var _educationUser = String()
+        var _ethnicityUser = String()
+        var _raceUser = String()
+        var _protocol = String()
+        
+        for i in 0..<self.objectArray.count {
+            let idx = IndexPath.init(row: i, section: 0)
+            if let cell = self.collectionView.cellForItem(at: idx) as? DemographicsCell, let style = cell.style {
+                if style == .PaientIDNumber {
+                    _PID = cell.textField.text!
+                }
+                else if style == .Ethnicity {
+                    _ethnicityUser = cell.lblSelected.text!
+                }
+                else if style == .Gender {
+                    _genderUser = cell.lblSelected.text!
+                }
+                else if style == .Race {
+                    _raceUser = cell.lblSelected.text!
+                }
+                else if style == .Age {
+                    _ageUser = cell.lblSelected.text!
+                }
+                else if style == .PatientUID {
+                    _PUID = cell.textField.text!
+                }
+                else if style == .Education {
+                    _educationUser = cell.lblSelected.text!
+                }
+                else {
+                    _protocol = cell.lblSelected.text!
+                }
+            }
+        }
+        
+        print(_PID)
+        print(_PUID)
+        print(_genderUser)
+        print(_ageUser)
+        print(_educationUser)
+        print(_ethnicityUser)
+        print(_raceUser)
+        print(_protocol)
     }
     
     @IBAction func GenderPressed(_ sender: Any) {
@@ -227,8 +293,6 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         self.present(alert, animated: true, completion: nil)
         
     } */
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -388,5 +452,161 @@ extension Demographics {
         self.btnNext.tintColor = Color.color(hexString: "#013AA5")
         self.btnNext.layer.cornerRadius = 8.0
         self.btnNext.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        
+        self.collectionView.register(DemographicsCell.nib(), forCellWithReuseIdentifier: DemographicsCell.identifier())
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        
+        // Setup First Data
+        guard let _PID = Settings.patiantID else { return }
+        self.arrDemoGraphicsStyle.forEach { (style) in
+            if style == .PaientIDNumber {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: _PID))
+            }
+            else if style == .Ethnicity {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ethnicData[0]))
+            }
+            else if style == .Gender {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.genderData[0]))
+            }
+            else if style == .Race {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.raceData[0]))
+            }
+            else if style == .Age {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ageData[40]))
+            }
+            else if style == .PatientUID {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: PUID))
+            }
+            else if style == .Education {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.educationData[12]))
+            }
+            else {
+                // Protocol
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.protocolData[0]))
+            }
+        }
+        self.collectionView.reloadData()
+        
+        self.vTask.addSubview(self.dropDown)
+        self.dropDown.isHidden = true
+        self.dropDown.delegate = self
+        self.dropDown.dataSource = self
+        self.dropDown.separatorStyle = .none
+        self.dropDown.layer.borderWidth = 1.0
+        self.dropDown.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+    }
+}
+
+// MARK: - UICollectionView Delegate, DataSource, DelegateFlowLayout
+extension Demographics: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.objectArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let widthCollectionView: CGFloat = self.collectionView.frame.size.width
+        let widthCell = ((widthCollectionView - 27) / 2)
+        return CGSize.init(width: widthCell, height: 74.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 27.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 27.0
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DemographicsCell.identifier(), for: indexPath) as! DemographicsCell
+        let obj = self.objectArray[indexPath.row]
+        cell.bindData(style: obj.title, value: obj.value)
+        cell.delegate = self
+        cell.indexPath = indexPath
+        
+        return cell
+    }
+}
+
+// MARK: - DemoGraphicsCell Delegate
+extension Demographics: DemoGraphicsCellDelegate {
+    func showDropDown(indexPath: IndexPath, style: DemoGraphicsCellStyle) {
+        if let theAttributes = self.collectionView.layoutAttributesForItem(at: indexPath) {
+            let cellFrameInSuperview = self.collectionView.convert(theAttributes.frame, to: collectionView.superview)
+            self.selectedStyle = style
+            if style == .Gender {
+                self.dropDownData = self.genderData
+            }
+            else if style == .Education  {
+                self.dropDownData = self.educationData
+            }
+            else if style == .Race  {
+                self.dropDownData = self.raceData
+            }
+            else if style == .Ethnicity  {
+                self.dropDownData = self.ethnicData
+            }
+            else if style == .Age  {
+                self.dropDownData = self.ageData
+            }
+            else if style == .Protocols  {
+                self.dropDownData = self.protocolData
+            }
+            
+            self.dropDown.frame = CGRect.init(x: cellFrameInSuperview.origin.x, y: cellFrameInSuperview.origin.y + cellFrameInSuperview.size.height + 4.0, width: cellFrameInSuperview.size.width, height: 118.0)
+            self.dropDown.isHidden = false
+            self.dropDown.reloadData()
+            
+            // Disable scroll collectionView
+            self.collectionView.isScrollEnabled = false
+        }
+    }
+}
+
+// MARK: - UICollectionView Delegate, DataSource, DelegateFlowLayout
+extension Demographics: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dropDownData.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 118.0/3.0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.addTextSpacing(-0.36)
+        cell.textLabel?.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        cell.textLabel?.textColor = .black
+        if self.dropDownData.count > 0 {
+            cell.textLabel?.text = self.dropDownData[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let strData = self.dropDownData[indexPath.row]
+        if let style = self.selectedStyle {
+            for i in 0..<self.objectArray.count {
+                if self.objectArray[i].title == style {
+                    self.objectArray[i].value = strData
+                }
+            }
+            self.dropDown.isHidden = true
+            // Enabled scroll collectionView
+            self.collectionView.isScrollEnabled = true
+            self.collectionView.reloadData()
+        }
     }
 }
