@@ -1047,8 +1047,8 @@
                                             <action selector="btnNextTapped:" destination="wNj-51-lN4" eventType="touchUpInside" id="bCY-aP-GQp"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMd-Je-ERf">
-                                        <rect key="frame" x="55" y="113" width="829" height="362"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMd-Je-ERf">
+                                        <rect key="frame" x="55" y="294" width="830" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2418,10 +2418,10 @@
                                     <constraint firstItem="F14-mH-nOA" firstAttribute="leading" secondItem="fuk-dQ-HKU" secondAttribute="leading" id="yVx-ac-UnN"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-proctored" translatesAutoresizingMaskIntoConstraints="NO" id="Ao1-5K-Uo8">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="proctored-image" translatesAutoresizingMaskIntoConstraints="NO" id="Ao1-5K-Uo8">
                                 <rect key="frame" x="492" y="0.0" width="532" height="768"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="532" id="0wo-Pu-0nK"/>
+                                    <constraint firstAttribute="width" constant="512" id="0wo-Pu-0nK"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Administrator Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Piw-Hj-uba">
@@ -5974,9 +5974,9 @@
         <image name="ic_caret_down" width="18" height="10"/>
         <image name="ic_erase" width="35" height="37"/>
         <image name="image-administered" width="512" height="768"/>
-        <image name="image-proctored" width="512" height="768"/>
         <image name="img_background" width="1024" height="768"/>
         <image name="izzy1.jpg" width="960" height="960"/>
+        <image name="proctored-image" width="512" height="768"/>
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
