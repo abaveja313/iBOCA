@@ -17,23 +17,27 @@ class PicturesViewController: ViewController {
     var corr = 0
     var back = 0
     
-    @IBOutlet weak var placeLabel: UILabel!
     
     var order = [Bool]()
     var startTime2 = NSDate()
     var startTime = Foundation.Date()
     
-    @IBOutlet weak var undoButton: UIButton! //"Undo" button
+    @IBOutlet weak var placeLabel: UILabel!
     
-    @IBOutlet weak var resetButton: UIButton!
-    
-    @IBOutlet weak var homeButton: UIButton! //"Back" button
+    @IBOutlet weak var resetButton: GradientButton!
     
     @IBOutlet weak var resultsLabel: UILabel!
     
     @IBOutlet weak var lbObjectName: UILabel!
     @IBOutlet weak var tfObjectName: UITextField!
-    @IBOutlet weak var btnNext: UIButton!
+    
+    @IBOutlet weak var innerShadowView: UIView!
+    @IBOutlet weak var namingImageView: UIImageView!
+    @IBOutlet weak var arrowLeftButton: UIButton!
+    @IBOutlet weak var arrowRightButton: UIButton!
+    @IBOutlet weak var backTitleLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var quitButton: GradientButton!
     
     var imageView = UIImageView()
     
@@ -47,6 +51,14 @@ class PicturesViewController: ViewController {
     var resultObjectName : [String] = []
     var isStartNew: Bool = false
     var isUndo: Bool = false
+    
+    // MARK: - viewDidLoad
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupView()
+        self.startNew()
+    }
+    
     // MARK: - IBAction
     @IBAction func btnNextTapped(_ sender: UIButton) {
         self.view.endEditing(true)
@@ -60,11 +72,24 @@ class PicturesViewController: ViewController {
     
     @IBAction func reset(_ sender: Any) {
         self.view.endEditing(true)
-        resetButton.isEnabled = false
-        undoButton.isEnabled = false
-        self.navigationItem.setHidesBackButton(false, animated:true)
-        
-        done()
+//        resetButton.isEnabled = false
+//        self.resultsLabel.isHidden = true
+//        arrowLeftButton.isHidden = false
+//        arrowRightButton.isHidden = false
+//        arrowLeftButton.isEnabled = false
+//        namingImageView.isHidden = false
+//        self.navigationItem.setHidesBackButton(false, animated:true)
+        self.startNew()
+//        done()
+    }
+    
+    @IBAction func actionQuit(_ sender: Any) {
+        self.view.endEditing(true)
+        Status[TestNampingPictures] = TestStatus.NotStarted
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
+            vc.mode = .patient
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func undoTapped(_ sender: Any) {
@@ -103,22 +128,25 @@ class PicturesViewController: ViewController {
 //        placeLabel.text = "\(count+1)/\(namingImages.count)"
         
         
-        homeButton.isEnabled = false
-        resetButton.isEnabled = true
-        undoButton.isEnabled = true
+//        backButton.isEnabled = false
+//        resetButton.isEnabled = true
+        arrowLeftButton.isEnabled = true
         isUndo = true
         count -= 1
         back = count
         self.tfObjectName.text = self.resultObjectName[count]
         if count == 0 {
-            resetButton.isEnabled = false
-            undoButton.isEnabled = false
+//            resetButton.isEnabled = false
+            arrowLeftButton.isEnabled = false
             self.navigationItem.setHidesBackButton(false, animated:true)
         }
         imageName = getImageName()
         let image3 = UIImage(named: imageName)
-        fixDimensions(image: image3!)
-        imageView.image = image3
+//        fixDimensions(image: image3!)
+//        imageView.image = image3
+        
+        namingImageView.image = image3
+        
         placeLabel.text = "\(count+1)/\(namingImages.count)"
         print("UNDO")
         print("count: \(count)")
@@ -180,17 +208,19 @@ class PicturesViewController: ViewController {
 //        }
 //        self.resultsLabel.text = str
         
-        undoButton.isEnabled = false
-        resetButton.isEnabled = false
-        homeButton.isEnabled = true
-
+        arrowLeftButton.isHidden = true
+        arrowRightButton.isHidden = true
+//        resetButton.isEnabled = false
+        backButton.isEnabled = true
+        
+        self.namingImageView.isHidden = true
         self.lbObjectName.isHidden = true
         self.tfObjectName.isHidden = true
         self.isStartNew = true
-        self.btnNext.setTitle("Start New", for: .normal)
-        self.btnNext.setTitle("Start New", for: .selected)
+//        self.arrowRightButton.setTitle("Start New", for: .normal)
+//        self.arrowRightButton.setTitle("Start New", for: .selected)
 
-        imageView.removeFromSuperview()
+//        imageView.removeFromSuperview()
         placeLabel.text = ""
         self.wrongList.removeAll()
         corr = 0
@@ -247,15 +277,12 @@ class PicturesViewController: ViewController {
         resultTime.removeAll()
         resultImage.removeAll()
         let image4 = UIImage(named: imageName)
-        fixDimensions(image: image4!)
-        imageView.image = image4
+//        fixDimensions(image: image4!)
+//        imageView.image = image4
+        
+        namingImageView.image = image4
+        
         placeLabel.text = "\(count+1)/\(namingImages.count)"
-    }
-    
-    // MARK: - viewDidLoad
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.startNew()
     }
     
     func getImageName()->String{
@@ -285,21 +312,24 @@ class PicturesViewController: ViewController {
     
     // Get bottom constraint of button results
     private func bottomConstraintButtonNext() -> CGFloat {
-        var bottomConstraint = self.btnNext.frame.origin.y + self.btnNext.frame.size.height + 20
+        var bottomConstraint = self.arrowRightButton.frame.origin.y + self.arrowRightButton.frame.size.height + 20
         if #available(iOS 11.0, *) { }
         else {
-            bottomConstraint = self.btnNext.frame.origin.y + self.btnNext.frame.size.height + 40
+            bottomConstraint = self.arrowRightButton.frame.origin.y + self.arrowRightButton.frame.size.height + 40
         }
         return bottomConstraint
     }
     
     private func startNew() {
+        placeLabel.isHidden = true
+        placeLabel.text = "\(count+1)/\(namingImages.count)"
         print(selectedTest, terminator: "")
         self.title = "Naming Pictures"
         startTime2 = NSDate()
         totalCount = namingImages.count
         
         self.resultsLabel.text = ""
+        self.tfObjectName.text = ""
         
         count = 0
         corr = 0
@@ -308,23 +338,29 @@ class PicturesViewController: ViewController {
         
         let image = UIImage(named: imageName)
         
-        imageView = UIImageView()
+//        imageView = UIImageView()
+//
+//        fixDimensions(image: image!)
+//
+//        imageView.image = image
         
-        fixDimensions(image: image!)
+        namingImageView.image = image
         
-        imageView.image = image
-        self.view.addSubview(imageView)
+//        self.view.addSubview(imageView)
         
-        undoButton.isEnabled = false
-        resetButton.isEnabled = false
-        homeButton.isEnabled = true
+        arrowLeftButton.isHidden = false
+        arrowRightButton.isHidden = false
+        arrowLeftButton.isEnabled = false
+//        resetButton.isEnabled = false
+        backButton.isEnabled = true
+        self.namingImageView.isHidden = false
         
         self.isStartNew = false
         self.resultObjectName.removeAll()
         self.lbObjectName.isHidden = false
         self.tfObjectName.isHidden = false
-        self.btnNext.setTitle("Next", for: .normal)
-        self.btnNext.setTitle("Next", for: .selected)
+//        self.arrowRightButton.setTitle("Next", for: .normal)
+//        self.arrowRightButton.setTitle("Next", for: .selected)
     }
     
     private func resumeTest() {
@@ -337,9 +373,9 @@ class PicturesViewController: ViewController {
             return
         }
         
-        homeButton.isEnabled = true
-        resetButton.isEnabled = true
-        undoButton.isEnabled = true
+        backButton.isEnabled = true
+//        resetButton.isEnabled = true
+        arrowLeftButton.isEnabled = true
         
         if isUndo == true, self.resultObjectName.count != count {
             self.resultObjectName[count] = strObjName
@@ -364,8 +400,11 @@ class PicturesViewController: ViewController {
         else {
             imageName = getImageName()
             let image1 = UIImage(named: imageName)
-            fixDimensions(image: image1!)
-            imageView.image = image1
+//            fixDimensions(image: image1!)
+//            imageView.image = image1
+            
+            namingImageView.image = image1
+            
             if count != namingImages.count {
                 placeLabel.text = "\(count+1)/\(namingImages.count)"
             }
@@ -373,5 +412,51 @@ class PicturesViewController: ViewController {
         print(self.resultObjectName)
     }
     
+}
+
+extension PicturesViewController {
+    fileprivate func setupView() {
+        self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
+        self.backTitleLabel.addTextSpacing(-0.56)
+        self.backTitleLabel.text = "BACK"
+        
+        self.innerShadowView.layer.cornerRadius = 8
+        self.innerShadowView.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.innerShadowView.layer.shadowOpacity = 1
+        self.innerShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.innerShadowView.layer.shadowRadius = 10 / 2
+        self.innerShadowView.layer.shadowPath = nil
+        self.innerShadowView.layer.masksToBounds = false
+        
+        self.lbObjectName.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lbObjectName.textColor = Color.color(hexString: "#8A9199")
+        self.lbObjectName.addTextSpacing(-0.36)
+        self.lbObjectName.text = "Object Name"
+        
+        self.tfObjectName.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.tfObjectName.backgroundColor = Color.color(hexString: "#F7F7F7")
+        self.tfObjectName.layer.borderWidth = 1
+        self.tfObjectName.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        self.tfObjectName.layer.cornerRadius = 8
+        self.tfObjectName.layer.masksToBounds = true
+        
+        self.arrowLeftButton.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.arrowLeftButton.layer.cornerRadius = self.arrowLeftButton.frame.size.height / 2.0
+        self.arrowRightButton.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.arrowRightButton.layer.cornerRadius = self.arrowRightButton.frame.size.height / 2.0
+        
+        self.resetButton.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.resetButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.resetButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.resetButton.render()
+        self.resetButton.addTextSpacing(-0.36)
+        
+        self.quitButton.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.quitButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        self.quitButton.render()
+        self.quitButton.addTextSpacing(-0.36)
+    }
 }
 
