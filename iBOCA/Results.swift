@@ -23,6 +23,10 @@ class Results: NSObject {
     
     var collapsed : Bool = true // for use by the View Controller
     
+    var rounds: Int?
+    var numCorrects: Int = -1
+    var originalImages: [String]?
+    
     // Constructor
     func Results(_ nm:String, startTime:Foundation.Date, endTime:Foundation.Date) {
         name = nm
@@ -32,8 +36,7 @@ class Results: NSObject {
     
     // Return the string function to put on the header
     func header() -> String {
-        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
-        let duration = Int(elapsedTime)
+        let duration = totalElapsedSeconds()
         var res = name! + " (" + String(duration) + " secs): "
         if numErrors > 0 {
             res = res + "\(numErrors) Error\(numErrors > 1 ? "s" : ""); "
@@ -44,6 +47,11 @@ class Results: NSObject {
         return res
     }
     
+    func totalElapsedSeconds() -> Int {
+        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
+        let duration = Int(elapsedTime)
+        return duration
+    }
     
     // Number of rows should be long description + # of screenshots
     func numRows() -> Int {

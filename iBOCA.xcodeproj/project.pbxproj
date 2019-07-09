@@ -19,6 +19,8 @@
 		0E3E1D9422C4A015008E69EC /* CGFloatExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */; };
 		0E3E1DBE22C5C983008E69EC /* LevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBC22C5C983008E69EC /* LevelCell.swift */; };
 		0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBD22C5C983008E69EC /* LevelCell.xib */; };
+		0E77854A22CF3B8B0082794B /* DemographicsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77854822CF3B8B0082794B /* DemographicsCell.swift */; };
+		0E77854B22CF3B8B0082794B /* DemographicsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E77854922CF3B8B0082794B /* DemographicsCell.xib */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */; };
 		0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */; };
@@ -63,10 +65,16 @@
 		4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */; };
 		4A6963BF22C5F6B90084E5E1 /* AdministeredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6963BE22C5F6B90084E5E1 /* AdministeredViewController.swift */; };
 		4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */; };
+		4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */; };
 		4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58E4922CA08B90021E17C /* ErrorMessage.swift */; };
 		67E389232283D32600A8277C /* SMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E389222283D32600A8277C /* SMCell.swift */; };
+		B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104C0F422D47AF600EB24F9 /* VACell.swift */; };
+		B104C0F722D47AF600EB24F9 /* VACell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B104C0F522D47AF600EB24F9 /* VACell.xib */; };
 		B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */; };
 		B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */; };
+		B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD0E922CDE992008A195C /* String+Extensions.swift */; };
+		B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD11822CE212A008A195C /* NumberKeyboardView.swift */; };
+		B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -216,6 +224,8 @@
 		0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatExtensions.swift; sourceTree = "<group>"; };
 		0E3E1DBC22C5C983008E69EC /* LevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCell.swift; sourceTree = "<group>"; };
 		0E3E1DBD22C5C983008E69EC /* LevelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelCell.xib; sourceTree = "<group>"; };
+		0E77854822CF3B8B0082794B /* DemographicsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemographicsCell.swift; sourceTree = "<group>"; };
+		0E77854922CF3B8B0082794B /* DemographicsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemographicsCell.xib; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMemoryCell.swift; sourceTree = "<group>"; };
 		0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleMemoryCell.xib; sourceTree = "<group>"; };
@@ -266,10 +276,16 @@
 		4A64C09722C4BD2D005A6F94 /* GoToTestCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoToTestCollectionCell.xib; sourceTree = "<group>"; };
 		4A6963BE22C5F6B90084E5E1 /* AdministeredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdministeredViewController.swift; sourceTree = "<group>"; };
 		4A6963C022C615CD0084E5E1 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterTimeView.swift; sourceTree = "<group>"; };
 		4AF58E4922CA08B90021E17C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		67E389222283D32600A8277C /* SMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCell.swift; sourceTree = "<group>"; };
+		B104C0F422D47AF600EB24F9 /* VACell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VACell.swift; sourceTree = "<group>"; };
+		B104C0F522D47AF600EB24F9 /* VACell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VACell.xib; sourceTree = "<group>"; };
 		B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisualAssociationCell.xib; sourceTree = "<group>"; };
 		B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualAssociationCell.swift; sourceTree = "<group>"; };
+		B10BD0E922CDE992008A195C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		B10BD11822CE212A008A195C /* NumberKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberKeyboardView.swift; sourceTree = "<group>"; };
+		B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberKeyboardView.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -390,6 +406,7 @@
 				0EB10B5F22C9B0A9001997BB /* UITextFieldExtensions.swift */,
 				0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */,
 				0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */,
+				B10BD0E922CDE992008A195C /* String+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -414,6 +431,15 @@
 				0E3E1DBD22C5C983008E69EC /* LevelCell.xib */,
 			);
 			path = "Level Cell";
+			sourceTree = "<group>";
+		};
+		0E77854722CF3B550082794B /* Demographics */ = {
+			isa = PBXGroup;
+			children = (
+				0E77854822CF3B8B0082794B /* DemographicsCell.swift */,
+				0E77854922CF3B8B0082794B /* DemographicsCell.xib */,
+			);
+			path = Demographics;
 			sourceTree = "<group>";
 		};
 		0E9D5080228D40400055B676 /* Settings */ = {
@@ -461,6 +487,8 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				4A70EDC922CEE88600E8E533 /* CustomView */,
+				B10BD11722CE2104008A195C /* NumberKeyboardView */,
 				4AA3050622CB3E7C0033E5DC /* Proctored */,
 				4A6963B822C5F6A60084E5E1 /* Administered */,
 				4A64C08F22C4BCE5005A6F94 /* Cells */,
@@ -565,6 +593,8 @@
 		4A64C08F22C4BCE5005A6F94 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B104C0EE22D47AC300EB24F9 /* VACell */,
+				0E77854722CF3B550082794B /* Demographics */,
 				0EB10B4922C99BCF001997BB /* SimpleMemoryTask */,
 				0E3E1DB622C5C94D008E69EC /* Level Cell */,
 				4A64C09522C4BD06005A6F94 /* MainView */,
@@ -590,11 +620,37 @@
 			path = Administered;
 			sourceTree = "<group>";
 		};
+		4A70EDC922CEE88600E8E533 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		4AA3050622CB3E7C0033E5DC /* Proctored */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Proctored;
+			sourceTree = "<group>";
+		};
+		B104C0EE22D47AC300EB24F9 /* VACell */ = {
+			isa = PBXGroup;
+			children = (
+				B104C0F422D47AF600EB24F9 /* VACell.swift */,
+				B104C0F522D47AF600EB24F9 /* VACell.xib */,
+			);
+			path = VACell;
+			sourceTree = "<group>";
+		};
+		B10BD11722CE2104008A195C /* NumberKeyboardView */ = {
+			isa = PBXGroup;
+			children = (
+				B10BD11822CE212A008A195C /* NumberKeyboardView.swift */,
+				B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */,
+			);
+			name = NumberKeyboardView;
 			sourceTree = "<group>";
 		};
 		E2037F1B1E47E7F000EE13EB /* Pictures */ = {
@@ -940,6 +996,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */,
 				0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */,
 				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
@@ -949,6 +1006,7 @@
 				E2037F231E47F3E600EE13EB /* iBoca logo.png in Resources */,
 				4A328A6F22C47B9100034075 /* Montserrat-Regular.ttf in Resources */,
 				1BC2DFF91D4F821F0020D430 /* LaunchScreen.storyboard in Resources */,
+				B104C0F722D47AF600EB24F9 /* VACell.xib in Resources */,
 				E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */,
 				4A328A6B22C47B9100034075 /* Montserrat-BoldItalic.ttf in Resources */,
 				0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */,
@@ -967,6 +1025,7 @@
 				E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */,
 				4A328A7022C47B9100034075 /* Montserrat-SemiBold.ttf in Resources */,
 				4A328A7722C47B9100034075 /* Montserrat-SemiBoldItalic.ttf in Resources */,
+				0E77854B22CF3B8B0082794B /* DemographicsCell.xib in Resources */,
 				4A328A6922C47B9100034075 /* Montserrat-Black.ttf in Resources */,
 				B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */,
 				4A328A7522C47B9100034075 /* Montserrat-Bold.ttf in Resources */,
@@ -1002,16 +1061,19 @@
 				F20FF4C61F04757300B806B7 /* GeriatricDepressionScale.swift in Sources */,
 				E5F13D0E22572CDF002FB4FF /* IQTitleBarButtonItem.swift in Sources */,
 				E5F13D2D225736EA002FB4FF /* PickerViewController.swift in Sources */,
+				B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */,
 				4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */,
 				E27BA37F1D523B8400619C07 /* BackwardDigitSpan.swift in Sources */,
 				E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */,
 				1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */,
 				E5F13D1B22572CDF002FB4FF /* IQUIView+Hierarchy.swift in Sources */,
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
+				B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */,
 				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
 				B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */,
 				43343D461E3E66BC001779AC /* TapInOrderBackwardsViewController.swift in Sources */,
+				0E77854A22CF3B8B0082794B /* DemographicsCell.swift in Sources */,
 				1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */,
 				F27AEAA61EEC948600AFB3D1 /* DigitSpanForward.swift in Sources */,
 				F2229C7D1F01AC39000F2CBA /* crypto.swift in Sources */,
@@ -1021,6 +1083,7 @@
 				4386775C1E33D551000309F2 /* SimpleMemory.swift in Sources */,
 				0EB10B6022C9B0A9001997BB /* UITextFieldExtensions.swift in Sources */,
 				0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */,
+				B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */,
 				E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */,
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
@@ -1036,6 +1099,7 @@
 				E5F13D1C22572CDF002FB4FF /* IQNSArray+Sort.swift in Sources */,
 				F2A0F12F1F02682500A92B1F /* MOCAandGDT.swift in Sources */,
 				E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */,
+				4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */,
 				4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */,
 				0E1A22D722C4659300C8CFDF /* BaseButton.swift in Sources */,
 				E5F13D1222572CDF002FB4FF /* IQInvocation.swift in Sources */,
