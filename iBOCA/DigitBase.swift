@@ -59,8 +59,6 @@ class DigitBase: ViewController {
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
     
-    var timerOrientationTask = Timer()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
