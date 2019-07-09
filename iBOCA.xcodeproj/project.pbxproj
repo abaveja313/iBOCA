@@ -68,6 +68,8 @@
 		4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */; };
 		4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58E4922CA08B90021E17C /* ErrorMessage.swift */; };
 		67E389232283D32600A8277C /* SMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E389222283D32600A8277C /* SMCell.swift */; };
+		B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104C0F422D47AF600EB24F9 /* VACell.swift */; };
+		B104C0F722D47AF600EB24F9 /* VACell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B104C0F522D47AF600EB24F9 /* VACell.xib */; };
 		B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */; };
 		B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */; };
 		B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD0E922CDE992008A195C /* String+Extensions.swift */; };
@@ -283,6 +285,8 @@
 		4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterTimeView.swift; sourceTree = "<group>"; };
 		4AF58E4922CA08B90021E17C /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		67E389222283D32600A8277C /* SMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCell.swift; sourceTree = "<group>"; };
+		B104C0F422D47AF600EB24F9 /* VACell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VACell.swift; sourceTree = "<group>"; };
+		B104C0F522D47AF600EB24F9 /* VACell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VACell.xib; sourceTree = "<group>"; };
 		B10A016322CA21D2005188D7 /* VisualAssociationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisualAssociationCell.xib; sourceTree = "<group>"; };
 		B10A016922CA21D2005188D7 /* VisualAssociationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualAssociationCell.swift; sourceTree = "<group>"; };
 		B10BD0E922CDE992008A195C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -602,6 +606,7 @@
 			isa = PBXGroup;
 			children = (
 				E5B4A7B522D31FE700CB6218 /* Results */,
+				B104C0EE22D47AC300EB24F9 /* VACell */,
 				0E77854722CF3B550082794B /* Demographics */,
 				0EB10B4922C99BCF001997BB /* SimpleMemoryTask */,
 				0E3E1DB622C5C94D008E69EC /* Level Cell */,
@@ -641,6 +646,15 @@
 			children = (
 			);
 			path = Proctored;
+			sourceTree = "<group>";
+		};
+		B104C0EE22D47AC300EB24F9 /* VACell */ = {
+			isa = PBXGroup;
+			children = (
+				B104C0F422D47AF600EB24F9 /* VACell.swift */,
+				B104C0F522D47AF600EB24F9 /* VACell.xib */,
+			);
+			path = VACell;
 			sourceTree = "<group>";
 		};
 		B10BD11722CE2104008A195C /* NumberKeyboardView */ = {
@@ -1018,6 +1032,7 @@
 				E2037F231E47F3E600EE13EB /* iBoca logo.png in Resources */,
 				4A328A6F22C47B9100034075 /* Montserrat-Regular.ttf in Resources */,
 				1BC2DFF91D4F821F0020D430 /* LaunchScreen.storyboard in Resources */,
+				B104C0F722D47AF600EB24F9 /* VACell.xib in Resources */,
 				E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */,
 				4A328A6B22C47B9100034075 /* Montserrat-BoldItalic.ttf in Resources */,
 				0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */,
@@ -1083,6 +1098,7 @@
 				1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */,
 				E5F13D1B22572CDF002FB4FF /* IQUIView+Hierarchy.swift in Sources */,
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
+				B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */,
 				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
 				B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */,
