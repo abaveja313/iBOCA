@@ -12,122 +12,111 @@ class ResultsViewController: ViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private var headerView: UIView?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        if headerView == nil {
+            if let hView = UINib.init(nibName: ResultsHeaderView.identifier(), bundle: nil).instantiate(withOwner: self, options: nil).first as? ResultsHeaderView {
+                self.headerView = hView
+                self.tableView.tableHeaderView = self.headerView
+                
+                tableView.layoutTableHeaderView()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    
+        configureUI()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
-        return resultsArray.numResults()+2
-    }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        if section == 0 {
-            //return resultsArray.numResults()
-        } else if section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(section-1)
-            if(res.collapsed == false)
-            {
-                let res:Results = resultsArray.get(section-1)
-                return res.numRows()
-            }
-        }
-        return 0;
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "ABC"
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            
-        } else if indexPath.section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(indexPath.section-1)
-            if(res.collapsed == false){
-                return CGFloat(res.heightForRow(indexPath.row))
-            }
-        }
+   
+    private func configureUI() {
+        tableView.register(UINib.init(nibName: "ResultsHeaderSectionView", bundle: nil), forHeaderFooterViewReuseIdentifier: "ResultsHeaderSectionView")
+        tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        return 2;
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-        } else if section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(section-1)
-            
-            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-            headerView.backgroundColor = UIColor.gray
-            headerView.tag = section
-            
-            let headerString = UILabel(frame: CGRect(x: 10, y: 10, width: tableView.frame.size.width-10, height: 30)) as UILabel
-            headerString.text = String(section) + ".  " + res.header()
-            headerView.addSubview(headerString)
-            
-            let headerTapped = UITapGestureRecognizer (target: self, action:#selector(ResultsViewController.sectionHeaderTapped(_:)))
-            headerView.addGestureRecognizer(headerTapped)
-            
-            return headerView
-        } else {
-            let scaleViewFrame = CGRect(x: 0.0, y: 85.0, width: view.bounds.width, height: 50)
-            let scaleView = ScaleView(frame: scaleViewFrame)
-            return scaleView
-        }
-    }
-    
-    func sectionHeaderTapped(_ recognizer: UITapGestureRecognizer) {
-        let loc = recognizer.location(in: view)
-        let subview = view?.hitTest(loc, with: nil)
-        let tag = subview!.tag
-        let indexPath : NSIndexPath = NSIndexPath(row: 0, section:tag)
-        let res:Results = resultsArray.get(indexPath.section-1)
-        if (indexPath.row == 0) {
-            res.collapsed = !res.collapsed
-            
-            //reload specific section animated
-            let range = NSMakeRange(indexPath.section, 1)
-            let sectionToReload = IndexSet(integersIn:range.toRange()!)
-            self.tableView.reloadSections(sectionToReload as IndexSet, with:UITableViewRowAnimation.fade)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
-        let CellIdentifier = "Cell"
-        var cell :UITableViewCell
-        cell = self.tableView.dequeueReusableCell(withIdentifier: CellIdentifier)! as UITableViewCell
         
-        if indexPath.section == 0 {
-            
-        } else if indexPath.section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(indexPath.section - 1)
-            
-            if (res.collapsed) {
-                cell.textLabel?.text = "click to enlarge"
-            }
-            else{
-                res.setRow(indexPath.row, cell:cell)
-            }
-        }
-        
-        return cell
     }
 
 }
+
+extension ResultsViewController: ResultsHeaderSectionViewDelegate {
+    
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+        return resultsArray.numResults()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        let result = resultsArray.get(section)
+        return result.collapsed ? 0 : result.screenshot.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        
+        return 190
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ResultsHeaderSectionView") as? ResultsHeaderSectionView
+        cell?.delegate = self
+        cell?.bindData(result: resultsArray.get(section), section: section)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
+        cell.bindData(result: resultsArray.get(indexPath.section), row: indexPath.row)
+        
+        return cell
+    }
+ 
+    
+    func resultsHeaderSectionView(didExpand expand: Bool, at section: Int, sender: ResultsHeaderSectionView) {
+        resultsArray.get(section).collapsed = !expand
+        tableView.reloadSections([section], with: .fade)
+    }
+    
+}
+
+
+
+extension UITableView {
+    
+    func layoutTableHeaderView() {
+        
+        guard let headerView = self.tableHeaderView else { return }
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let headerWidth = headerView.bounds.size.width;
+        let temporaryWidthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "[headerView(width)]", options: NSLayoutFormatOptions(rawValue: UInt(0)), metrics: ["width": headerWidth], views: ["headerView": headerView])
+        
+        headerView.addConstraints(temporaryWidthConstraints)
+        
+        headerView.setNeedsLayout()
+        headerView.layoutIfNeeded()
+        
+        let headerSize = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        let height = headerSize.height
+        var frame = headerView.frame
+
+        frame.size.height = height
+        headerView.frame = frame
+        
+        self.tableHeaderView = headerView
+        
+//        headerView.removeConstraints(temporaryWidthConstraints)
+//        headerView.translatesAutoresizingMaskIntoConstraints = true
+        
+    }
+}
+

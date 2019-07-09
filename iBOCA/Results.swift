@@ -23,6 +23,21 @@ class Results: NSObject {
     
     var collapsed : Bool = true // for use by the View Controller
     
+    var elapsedTime: String {
+        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
+        let duration = Int(elapsedTime)
+        let secondString = duration <= 1 ? "sec" : "secs"
+        return "\(duration) \(secondString)"
+    }
+    
+    var numOfErrors: String {
+        if numErrors == 0 || numErrors == 1 {
+            return "\(numErrors) Error"
+        }
+        
+        return "\(numErrors) Errors"
+    }
+    
     // Constructor
     func Results(_ nm:String, startTime:Foundation.Date, endTime:Foundation.Date) {
         name = nm
