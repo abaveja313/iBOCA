@@ -207,14 +207,15 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
             if let result = textField.text, !result.isEmpty {
                 //do something if it's not empty
                 self.raceData.insert(result, at: self.raceData.count-1)
-                Race = result
                 self.objectArray[indexPath.item].value = self.raceData[self.raceData.count-2]
                 Race = self.raceData[self.raceData.count-2]
-                self.collectionView.reloadItems(at: [indexPath])
+                self.txtSelected = self.raceData[self.raceData.count-2]
             }
             else {
                 alert.dismiss(animated: true, completion: nil)
             }
+            self.collectionView.reloadItems(at: [indexPath])
+            self.dropDown.isHidden = true
         }))
         
         // 4. Present the alert.
@@ -298,7 +299,15 @@ extension Demographics {
         if string.isEmpty {
             return true
         }
-        return Int(string) != nil
+        
+        if textField.tag == 1 {
+            // PaientIDNumber only number
+            return Int(string) != nil
+        }
+        else {
+            // PatientUID
+            return true
+        }
     }
     
     @objc func updatePaientIDNumber(_ textField: UITextField) {
@@ -420,10 +429,11 @@ extension Demographics: UICollectionViewDelegate, UICollectionViewDataSource, UI
         let obj = self.objectArray[indexPath.item]
         cell.bindData(style: obj.title, value: obj.value)
         if obj.title == DemoGraphicsCellStyle.PaientIDNumber {
-            cell.textField.delegate = self
+            cell.textField.tag = 1
             cell.textField.addTarget(self, action: #selector(self.updatePaientIDNumber(_:)), for: .editingDidEnd)
         }
         
+        cell.textField.delegate = self
         cell.delegate = self
         cell.indexPath = indexPath
         
@@ -490,8 +500,15 @@ extension Demographics: DemoGraphicsCellDelegate {
             if let collectionViewCell = self.collectionView.cellForItem(at: indexPath) as? DemographicsCell, let lblSelected = collectionViewCell.lblSelected.text {
                 self.txtSelected = lblSelected
             }
-            
+
             self.dropDown.reloadData()
+            
+            for i in 0..<self.dropDownData.count {
+                if self.dropDownData[i] == self.txtSelected {
+                    let idx = IndexPath.init(row: i, section: 0)
+                    self.dropDown.scrollToRow(at: idx, at: .middle, animated: false)
+                }
+            }
             // Disable scroll collectionView
             self.collectionView.isScrollEnabled = false
         }
@@ -534,20 +551,16 @@ extension Demographics: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let strData = self.dropDownData[indexPath.row]
-        if let style = self.selectedStyle {
-            for i in 0..<self.objectArray.count {
-                if self.objectArray[i].title == style {
-                    if style == .Race && strData == "Add more" {
-                        let idx = IndexPath.init(item: i, section: 0)
-                        self.showAddMoreRace(indexPath: idx)
-                        self.dropDown.isHidden = true
-                        return
-                    }
-                    else {
-                        self.objectArray[i].value = strData
-                        self.collectionView.reloadItems(at: [IndexPath.init(item: i, section: 0)])
-                    }
-                }
+        if let style = self.selectedStyle, let idx = self.objectArray.firstIndex(where: { $0.title == style }) {
+            if style == .Race && strData == "Add more" {
+                self.objectArray[idx].value = strData
+                self.collectionView.reloadItems(at: [IndexPath.init(item: idx, section: 0)])
+                self.showAddMoreRace(indexPath: IndexPath.init(row: idx, section: 0))
+            }
+            else {
+                self.objectArray[idx].value = strData
+                self.collectionView.reloadItems(at: [IndexPath.init(item: idx, section: 0)])
+                self.dropDown.isHidden = true
             }
             self.dropDown.isHidden = true
             // Enabled scroll collectionView
