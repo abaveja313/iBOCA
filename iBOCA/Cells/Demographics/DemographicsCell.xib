@@ -43,21 +43,11 @@
                                             <constraint firstAttribute="width" constant="20" id="glm-ew-FWY"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ah-vC-0qt">
-                                        <rect key="frame" x="0.0" y="0.0" width="379" height="40"/>
-                                        <connections>
-                                            <action selector="btnSelectedTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="JTV-Ni-W61"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="4Ah-vC-0qt" secondAttribute="trailing" id="480-9W-8nj"/>
-                                    <constraint firstItem="4Ah-vC-0qt" firstAttribute="top" secondItem="hom-OI-rxW" secondAttribute="top" id="9Rf-B7-PZu"/>
                                     <constraint firstAttribute="trailing" secondItem="UL3-5v-ehM" secondAttribute="trailing" constant="19" id="BVD-a7-cMH"/>
-                                    <constraint firstItem="4Ah-vC-0qt" firstAttribute="leading" secondItem="hom-OI-rxW" secondAttribute="leading" id="S7w-ja-k3c"/>
                                     <constraint firstItem="UL3-5v-ehM" firstAttribute="centerY" secondItem="hom-OI-rxW" secondAttribute="centerY" id="boO-AU-o4R"/>
-                                    <constraint firstAttribute="bottom" secondItem="4Ah-vC-0qt" secondAttribute="bottom" id="jjm-qo-0fQ"/>
                                     <constraint firstAttribute="height" constant="40" id="kvE-WA-rJO"/>
                                     <constraint firstItem="IZa-NV-vcD" firstAttribute="centerY" secondItem="hom-OI-rxW" secondAttribute="centerY" id="lG3-sN-0ec"/>
                                     <constraint firstItem="IZa-NV-vcD" firstAttribute="leading" secondItem="hom-OI-rxW" secondAttribute="leading" constant="11" id="liN-Ai-jgg"/>
@@ -94,7 +84,6 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
-                <outlet property="btnSelected" destination="4Ah-vC-0qt" id="057-Gy-uJj"/>
                 <outlet property="lblSelected" destination="IZa-NV-vcD" id="cWw-cD-0er"/>
                 <outlet property="lblTitle" destination="Nru-tG-jLl" id="6ym-XA-CQl"/>
                 <outlet property="textField" destination="NAc-br-Yuy" id="VJr-O3-Jq2"/>

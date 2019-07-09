@@ -28,7 +28,6 @@ class DemographicsCell: UICollectionViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var vSelected: UIView!
     @IBOutlet weak var lblSelected: UILabel!
-    @IBOutlet weak var btnSelected: UIButton!
     
     @IBOutlet weak var textField: UITextField!
     
@@ -36,6 +35,26 @@ class DemographicsCell: UICollectionViewCell {
     var indexPath: IndexPath?
     
     weak var delegate: DemoGraphicsCellDelegate?
+    
+    override var isSelected: Bool {
+        didSet {
+            if let style = self.style {
+                if style == .PaientIDNumber || style == .PatientUID { }
+                else {
+                    if isSelected == true {
+                        self.vSelected.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+                    }
+                    else {
+                        self.vSelected.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+                    }
+                    
+                    if let style = self.style, let indexPath = self.indexPath {
+                        self.delegate?.showDropDown(indexPath: indexPath, style: style)
+                    }
+                }
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -102,13 +121,6 @@ class DemographicsCell: UICollectionViewCell {
         }
         else {
             self.lblTitle.text = "Protocol"
-        }
-    }
-    
-    @IBAction func btnSelectedTapped(_ sender: Any) {
-        print("Selected Tapped")
-        if let style = self.style, let indexPath = self.indexPath {
-            self.delegate?.showDropDown(indexPath: indexPath, style: style)
         }
     }
 }
