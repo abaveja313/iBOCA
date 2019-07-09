@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="KGk-i7-Jjw" customClass="VACell" customModule="iBOCA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="580" height="49"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="580" height="48.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7e-ze-wMz" userLabel="TimeLabel">
+                        <rect key="frame" x="415.5" y="0.0" width="163.5" height="48.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYN-i8-2dW" userLabel="InputLabel">
+                        <rect key="frame" x="253" y="0.0" width="163.5" height="48.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recall Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-FW-pfV" userLabel="TestTypeLabel">
+                        <rect key="frame" x="1" y="14" width="251" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="leading" constant="1" id="Bhk-7e-5km"/>
+                    <constraint firstItem="t7e-ze-wMz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HOC-g4-kgH"/>
+                    <constraint firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="trailing" constant="1" id="V93-ae-yag"/>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="leading" secondItem="Pii-FW-pfV" secondAttribute="trailing" constant="1" id="dl0-EB-Zoz"/>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="height" secondItem="t7e-ze-wMz" secondAttribute="height" id="f3H-bD-Puh"/>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="width" secondItem="t7e-ze-wMz" secondAttribute="width" id="l22-k1-0dL"/>
+                    <constraint firstItem="Pii-FW-pfV" firstAttribute="centerY" secondItem="AYN-i8-2dW" secondAttribute="centerY" id="tSv-Hg-xEt"/>
+                    <constraint firstItem="Pii-FW-pfV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="wNs-2I-dzf"/>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="centerY" secondItem="t7e-ze-wMz" secondAttribute="centerY" id="wyu-46-tV3"/>
+                    <constraint firstItem="t7e-ze-wMz" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="xAz-PV-oz6"/>
+                    <constraint firstItem="t7e-ze-wMz" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:3.55" id="zcR-kp-sjc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="resultLabel" destination="AYN-i8-2dW" id="Qpu-QG-bhK"/>
+                <outlet property="testTypeLabel" destination="Pii-FW-pfV" id="tfY-9Q-MKK"/>
+                <outlet property="timeLabel" destination="t7e-ze-wMz" id="0K7-qE-4Ko"/>
+            </connections>
+            <point key="canvasLocation" x="345.60000000000002" y="147.07646176911544"/>
+        </tableViewCell>
+    </objects>
+</document>
