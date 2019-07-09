@@ -43,7 +43,7 @@ class SemanticListGeneration: ViewController, UIPickerViewDelegate {
         Category = CategoryData[CategoryPicker.selectedRow(inComponent: 0)]
 
         StartButton.isHidden = false
-        //BackButton.isHidden = false
+        //backButton.isHidden = false
         IncorrectButton.isHidden = true
         CorrectButton.isHidden = true
         RepeatButton.isHidden = true

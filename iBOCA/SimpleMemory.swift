@@ -115,12 +115,19 @@ class SimpleMemoryTask: ViewController {
     
     var resultsTask: [SMResultModel] = [SMResultModel]()
     
+    @IBOutlet weak var vCounterTimer: UIView!
+    var counterTime: CounterTimeView!
+    var totalTimeCounter = Timer()
+    var startTimeTask = Foundation.Date()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setupViews()
+        
+        StartTimer = Foundation.Date()
         
         result = Results()
         result.name = "Simple Memory"
@@ -195,10 +202,16 @@ class SimpleMemoryTask: ViewController {
         self.present(startAlert, animated: true, completion: nil)
     }
     
-    func startNewTask(){
+    func startNewTask() {
+        
+        startTime = Foundation.Date()
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+        
         result = Results()
         result.name = "Simple Memory"
-        result.startTime = Foundation.Date()
+        result.startTime = startTime
         totalTime = Int(self.maxSeconds)
         ended = true
         self.isStartNew = true
@@ -374,13 +387,11 @@ class SimpleMemoryTask: ViewController {
         
     }
     
-    func findTime()->Double{
-        
+    func findTime() -> Double {
         let currTime = NSDate.timeIntervalSinceReferenceDate
         let time = Double(Int((currTime - startTimeSM)*10))/10.0
         print("time: \(time)")
         return time
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -422,6 +433,7 @@ class SimpleMemoryTask: ViewController {
         ended = true
         timerSM.invalidate()
         afterBreakSM = false
+        self.totalTimeCounter.invalidate()
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
@@ -475,16 +487,17 @@ class SimpleMemoryTask: ViewController {
             //delayResult + outputResult + exactEsults + timeComplete
             
             // Save Results
+            self.totalTimeCounter.invalidate()
             result.endTime = Foundation.Date()
+            let completeTime = result.totalElapsedSeconds()
             result.shortDescription = "Recall: \(correct) correct, \(incorrect) incorrect. (Sets correct:\(imageSetSM), incorrect:\(incorrectImageSetSM))"
             result.numErrors = incorrect
-            
             resultList["CorrectImageSet"] = imageSetSM
             resultList["IncorrectImageSet"] = incorrectImageSetSM
             resultList["DelayTime"] = delayTime
             resultList["Recall Correct"] =  correct
             resultList["Recall Incorrect"] =  incorrect
-            resultList["CompleteTime"] = findTime()
+            resultList["CompleteTime"] = completeTime//findTime()
             
             result.json = resultList
             resultsArray.add(result)
@@ -492,7 +505,6 @@ class SimpleMemoryTask: ViewController {
             resultList = [:]
             
             Status[TestSimpleMemory] = TestStatus.Done
-            
             
             // Set attributed into lblDelayLength
             let attrs1 = [NSFontAttributeName : Font.font(name: Font.Montserrat.medium, size: 18.0), NSForegroundColorAttributeName : Color.color(hexString: "#8A9199")]
@@ -503,7 +515,7 @@ class SimpleMemoryTask: ViewController {
             attrDelayTitle.append(attrDelayContent)
             self.lblDelayLength.text = ""
             self.lblDelayLength.attributedText = attrDelayTitle
-            self.lblTimeCompleteTask.text = "Test complete in \(findTime()) seconds"
+            self.lblTimeCompleteTask.text = "Test complete in \(completeTime) seconds"
             self.tableViewResults.reloadData()
             
             self.vResults.isHidden = false
@@ -534,6 +546,9 @@ class SimpleMemoryTask: ViewController {
 // MARK: - Setup UI
 extension SimpleMemoryTask {
     fileprivate func setupViews() {
+        // View Counter Timer
+        self.setupViewCounterTimer()
+        
         // Label Back
         self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.lblBack.textColor = Color.color(hexString: "#013AA5")
@@ -665,6 +680,27 @@ extension SimpleMemoryTask {
         self.tableViewResults.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
         self.tableViewResults.delegate = self
         self.tableViewResults.dataSource = self
+    }
+    
+    
+    fileprivate func setupViewCounterTimer() {
+        // View Couter Timer
+        self.counterTime = CounterTimeView()
+        self.vCounterTimer.backgroundColor = .clear
+        self.vCounterTimer.addSubview(self.counterTime)
+        
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+    }
+    
+    fileprivate func runTimer() {
+        self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.totalTimeCounter.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
 }
 
