@@ -64,6 +64,8 @@ class SimpleMemoryTask: ViewController {
     var images6 = ["anchor", "eyebrow", "flashlight", "glove", "moon", "sword"]
     var images7 = ["lion", "nut", "piano", "ring", "scissors", "whisk"]
     
+    var imagesLevel = ["binoculars", "bottle", "bee", "basket"]
+    
     var imageName = ""
     var image = UIImage()
     var imageView = UIImageView()
@@ -688,7 +690,6 @@ extension SimpleMemoryTask {
         self.counterTime = CounterTimeView()
         self.vCounterTimer.backgroundColor = .clear
         self.vCounterTimer.addSubview(self.counterTime)
-        
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
@@ -712,7 +713,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.collectionViewLevel {
-            return 4
+            return self.imagesLevel.count
         }
         else {
             return 6
@@ -758,7 +759,8 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
         if collectionView == self.collectionViewLevel {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LevelCell.identifier(), for: indexPath) as! LevelCell
             let idx = indexPath.row + 1
-            cell.ivLevel.image = UIImage.init(named: "level_\(idx)")
+            let strImageName = self.imagesLevel[indexPath.row]
+            cell.ivLevel.image = UIImage.init(named: strImageName)
             cell.lblTitle.text = "Level \(idx)"
             return cell
         }
