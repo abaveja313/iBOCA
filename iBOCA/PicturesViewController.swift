@@ -31,6 +31,7 @@ class PicturesViewController: ViewController {
     @IBOutlet weak var lbObjectName: UILabel!
     @IBOutlet weak var tfObjectName: UITextField!
     
+    @IBOutlet var contentView: UIView!
     @IBOutlet weak var innerShadowView: UIView!
     @IBOutlet weak var namingImageView: UIImageView!
     @IBOutlet weak var arrowLeftButton: UIButton!
@@ -38,6 +39,10 @@ class PicturesViewController: ViewController {
     @IBOutlet weak var backTitleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var quitButton: GradientButton!
+    
+    var counterTimeView: CounterTimeView!
+    var totalTimeCounter = Timer()
+    var startTimeTask = Foundation.Date()
     
     var imageView = UIImageView()
     
@@ -56,7 +61,17 @@ class PicturesViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        self.setupCounterTimeView()
         self.startNew()
+    }
+    
+    fileprivate func runTimer() {
+        self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.totalTimeCounter.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
     // MARK: - IBAction
@@ -79,11 +94,16 @@ class PicturesViewController: ViewController {
 //        arrowLeftButton.isEnabled = false
 //        namingImageView.isHidden = false
 //        self.navigationItem.setHidesBackButton(false, animated:true)
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
         self.startNew()
 //        done()
     }
     
     @IBAction func actionQuit(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestNampingPictures] = TestStatus.NotStarted
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
@@ -154,6 +174,8 @@ class PicturesViewController: ViewController {
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestNampingPictures] = TestStatus.NotStarted
     }
@@ -436,10 +458,6 @@ extension PicturesViewController {
         
         self.tfObjectName.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.tfObjectName.backgroundColor = Color.color(hexString: "#F7F7F7")
-        self.tfObjectName.layer.borderWidth = 1
-        self.tfObjectName.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
-        self.tfObjectName.layer.cornerRadius = 8
-        self.tfObjectName.layer.masksToBounds = true
         
         self.arrowLeftButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.arrowLeftButton.layer.cornerRadius = self.arrowLeftButton.frame.size.height / 2.0
@@ -457,6 +475,15 @@ extension PicturesViewController {
         self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
         self.quitButton.render()
         self.quitButton.addTextSpacing(-0.36)
+    }
+    
+    fileprivate func setupCounterTimeView() {
+        counterTimeView = CounterTimeView()
+        contentView.addSubview(counterTimeView!)
+        counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        counterTimeView?.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor).isActive = true
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
     }
 }
 

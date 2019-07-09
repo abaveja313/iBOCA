@@ -95,11 +95,24 @@ class VATask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var firstButton: UIButton!
     @IBOutlet weak var secondButton: UIButton!
     
+    @IBOutlet weak var missingItemLabel: UILabel!
+    @IBOutlet weak var missingItemTextField: UITextField!
+    @IBOutlet weak var imageViewMarginTop: NSLayoutConstraint!
     @IBOutlet weak var startNewButton: GradientButton!
+    
+    @IBOutlet weak var resultTitleLabel: UILabel!
+    @IBOutlet weak var totalTimeLabel: UILabel!
+    @IBOutlet weak var delayLengthLabel: UILabel!
+    @IBOutlet weak var delayTimeLabel: UILabel!
+    
     
     var counterTimeView: CounterTimeView!
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
+    
+    var isRecalledTestMode = false
+    
+    var textInputList: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +121,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.setupView()
         setupCounterTimeView()
         
+        missingItemTextField.delegate = self
         startButton.removeTarget(self, action: nil, for:.allEvents)
         
         if afterBreakVA {
@@ -145,6 +159,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         firstDisplay = true
         
+        textInputList = []
+        
         let newStartAlert = UIAlertController(title: "Display", message: "Name out loud and remember the two items in the photographs.", preferredStyle: .alert)
         newStartAlert.addAction(UIAlertAction(title: "Start", style: .default, handler: { (action) -> Void in
             print("start")
@@ -178,6 +194,12 @@ class VATask: ViewController, UIPickerViewDelegate {
     fileprivate func startNewTask() {
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+        
+        self.isRecalledTestMode = false
+        self.imageViewMarginTop.constant = 64
         self.startNewButton.isHidden = true
         self.isRecommendDelayHidden(true)
         self.isCollectionViewHidden(false)
@@ -198,6 +220,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         orderRecognize = [Int]()
         testCount = 0
         resultLabel.text = ""
+        isResultViewHidden(true)
         firstDisplay = true
     }
     
@@ -284,6 +307,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func resumeTask() {
+        self.isRecalledTestMode = true
         self.isRecommendDelayHidden(true)
         
         delayTime = 300.0 - Double(self.totalTime)
@@ -308,8 +332,9 @@ class VATask: ViewController, UIPickerViewDelegate {
         outputDisplayImage(withImageName: halfImages[testCount])
         
         // Temp
-        isImageViewHidden(true)
-        taskImageView.isHidden = false
+        self.isImageViewHidden(false)
+        self.isMissingItemViewHidden(false)
+        self.imageViewMarginTop.constant = 127
         
         self.noticeLabel.text = "Choose the photograph that you were previously asked to remember"
         self.noticeButton.updateTitle(title: "CONTINUE", spacing: -0.36)
@@ -335,6 +360,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             dk.isHidden = true
             
             isImageViewHidden(true)
+            isMissingItemViewHidden(true)
             isRememberAgainViewHidden(false)
         } else {
             print("next pic!")
@@ -401,6 +427,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func done() {
+        self.isResultViewHidden(false)
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.startNewButton.isHidden = false
@@ -426,21 +453,26 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         result.numErrors = 0
         
+        for i in 0...textInputList.count - 1 {
+            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
+            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
+        }
+        
         for k in 0 ..< mixedImages.count {
-            if (recallErrors[k] == 0) {
-                result.longDescription.add("Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds")
-                recallResult += "Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds\n"
-            }
-            if (recallErrors[k] == 1) {
-                result.longDescription.add("Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds")
-                recallResult += "Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds\n"
-                result.numErrors += 1
-            }
-            if (recallErrors[k] == 2) {
-                result.longDescription.add("Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds")
-                recallResult += "Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds\n"
-                result.numErrors += 1
-            }
+//            if (recallErrors[k] == 0) {
+//                result.longDescription.add("Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds")
+//                recallResult += "Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds\n"
+//            }
+//            if (recallErrors[k] == 1) {
+//                result.longDescription.add("Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds")
+//                recallResult += "Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds\n"
+//                result.numErrors += 1
+//            }
+//            if (recallErrors[k] == 2) {
+//                result.longDescription.add("Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds")
+//                recallResult += "Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds\n"
+//                result.numErrors += 1
+//            }
             if (recognizeErrors[k] == 0) {
                 result.longDescription.add("Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds")
                 recognizeResult += "Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds\n"
@@ -470,16 +502,20 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         var tmpResultList2 : [String:Any] = [:]
         
-        for i in 0...recallErrors.count-1 {
-            var res = "Correct"
-            if recallErrors[i] == 1 {
-                res = "Incorrect"
-            }
-            if recallErrors[i] == 2 {
-                res = "Couldn'tRecall"
-            }
-            tmpResultList2[mixedImages[i]] = ["Condition":res, "Time":recallTimes[i]]
+//        for i in 0...recallErrors.count-1 {
+//            var res = "Correct"
+//            if recallErrors[i] == 1 {
+//                res = "Incorrect"
+//            }
+//            if recallErrors[i] == 2 {
+//                res = "Couldn'tRecall"
+//            }
+//            tmpResultList2[mixedImages[i]] = ["Condition":res, "Time":recallTimes[i]]
+//        }
+        for i in 0...textInputList.count-1 {
+            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
         }
+        
         resultList["Recall"] = tmpResultList2
         
         
@@ -514,16 +550,30 @@ class VATask: ViewController, UIPickerViewDelegate {
         if (testCount == mixedImages.count) {
             print("delay")
             isImageViewHidden(true)
-            if !firstDisplay {
-                beginDelay()
-            } else {
-                firstDisplay = false
+            if isRecalledTestMode {
+                recallTimes.append(findTime())
+                isMissingItemViewHidden(true)
                 isRememberAgainViewHidden(false)
-                self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
-                self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+                textInputList.append(missingItemTextField.text!)
+                missingItemTextField.text = ""
+                missingItemTextField.isEnabled = false
+            } else {
+                if !firstDisplay {
+                    beginDelay()
+                } else {
+                    firstDisplay = false
+                    isRememberAgainViewHidden(false)
+                    self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+                }
             }
         } else {
             print("pic: \(testCount)")
+            if isRecalledTestMode {
+                recallTimes.append(findTime())
+                textInputList.append(missingItemTextField.text!)
+                missingItemTextField.text = ""
+            }
             self.outputDisplayImage(withImageName: mixedImages[testCount])
         }
     }
@@ -604,12 +654,17 @@ extension VATask {
         self.setupViewTask()
         self.setupViewDelay()
         self.setupViewNotice()
+        self.setupViewMissingItem()
+        self.setupViewResult()
         
         isTaskViewHidden(true)
         isImageViewHidden(true)
         isRecommendDelayHidden(true)
         isRememberAgainViewHidden(true)
         isViewRegconizeHidden(true)
+        isMissingItemViewHidden(true)
+        isResultViewHidden(true)
+        
         startNewButton.isHidden = true
         
         correct.isHidden = true
@@ -682,6 +737,13 @@ extension VATask {
         self.noticeButton.render()
     }
     
+    fileprivate func setupViewMissingItem() {
+        self.missingItemLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.missingItemLabel.textColor = Color.color(hexString: "#8A9199")
+        self.missingItemLabel.addTextSpacing(-0.36)
+        self.missingItemLabel.text = "The missing item is"
+    }
+    
     fileprivate func setupCounterTimeView() {
         counterTimeView = CounterTimeView()
         contentView.addSubview(counterTimeView!)
@@ -689,6 +751,25 @@ extension VATask {
         counterTimeView?.centerYAnchor.constraint(equalTo: backTitleLabel.centerYAnchor).isActive = true
         self.totalTimeCounter.invalidate()
         self.runTimer()
+    }
+    
+    fileprivate func setupViewResult() {
+        self.resultTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.resultTitleLabel.textColor = Color.color(hexString: "#013AA5")
+        self.resultTitleLabel.addTextSpacing(-0.56)
+        self.resultTitleLabel.text = "RESULTS"
+        
+        self.totalTimeLabel.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
+        self.totalTimeLabel.textColor = Color.color(hexString: "#000000")
+        self.totalTimeLabel.addTextSpacing(-0.56)
+        
+        self.delayLengthLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.delayLengthLabel.textColor = Color.color(hexString: "#8A9199")
+        self.delayLengthLabel.addTextSpacing(-0.56)
+        
+        self.delayTimeLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.delayTimeLabel.textColor = Color.color(hexString: "#000000")
+        self.delayTimeLabel.addTextSpacing(-0.56)
     }
     
     fileprivate func isCollectionViewHidden(_ isHidden: Bool) {
@@ -705,6 +786,11 @@ extension VATask {
         self.arrowLeftButton.isHidden = isHidden
         self.arrowRightButton.isHidden = isHidden
         self.taskImageView.isHidden = isHidden
+    }
+    
+    fileprivate func isMissingItemViewHidden(_ isHidden: Bool) {
+        self.missingItemLabel.isHidden = isHidden
+        self.missingItemTextField.isHidden = isHidden
     }
     
     fileprivate func isRememberAgainViewHidden(_ isHidden: Bool) {
@@ -725,6 +811,14 @@ extension VATask {
         self.viewRegconize.isHidden = isHidden
         self.firstButton.isHidden = isHidden
         self.secondButton.isHidden = isHidden
+    }
+    
+    fileprivate func isResultViewHidden(_ isHidden: Bool) {
+        self.resultTitleLabel.isHidden = isHidden
+        self.totalTimeLabel.isHidden = isHidden
+        self.totalTimeLabel.isHidden = isHidden
+        self.delayLengthLabel.isHidden = isHidden
+        self.delayTimeLabel.isHidden = isHidden
     }
 }
 
@@ -805,5 +899,11 @@ extension VATask: UICollectionViewDelegate {
             recognizeIncorrectVA = incorrect4
         }
         self.startDisplayAlert()
+    }
+}
+
+extension VATask: UITextFieldDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
