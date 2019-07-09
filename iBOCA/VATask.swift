@@ -63,6 +63,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     var testCount = Int()
     
     // MARK: Outlet
+    @IBOutlet var contentView: UIView!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var correct: UIButton!
     @IBOutlet weak var incorrect: UIButton!
@@ -96,11 +97,17 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var startNewButton: GradientButton!
     
+    var counterTimeView: CounterTimeView!
+    var totalTimeCounter = Timer()
+    var startTimeTask = Foundation.Date()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
+        setupCounterTimeView()
+        
         startButton.removeTarget(self, action: nil, for:.allEvents)
         
         if afterBreakVA {
@@ -118,6 +125,15 @@ class VATask: ViewController, UIPickerViewDelegate {
         }
         
         print(afterBreakVA)
+    }
+    
+    fileprivate func runTimer() {
+        self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.totalTimeCounter.fire()
+    }
+    
+    func updateTime(timer: Timer) {
+        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
     @objc fileprivate func startDisplayAlert() {
@@ -385,6 +401,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func done() {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         self.startNewButton.isHidden = false
         self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
         totalTime = 300
@@ -512,6 +530,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBAction func btnBackTapped(_ sender: Any) {
         timerVA.invalidate()
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         self.totalTime = 300
         afterBreakVA = false
         Status[TestVisualAssociation] = TestStatus.NotStarted
@@ -660,6 +680,15 @@ extension VATask {
         self.noticeButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.noticeButton.addTextSpacing(-0.36)
         self.noticeButton.render()
+    }
+    
+    fileprivate func setupCounterTimeView() {
+        counterTimeView = CounterTimeView()
+        contentView.addSubview(counterTimeView!)
+        counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        counterTimeView?.centerYAnchor.constraint(equalTo: backTitleLabel.centerYAnchor).isActive = true
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
     }
     
     fileprivate func isCollectionViewHidden(_ isHidden: Bool) {
