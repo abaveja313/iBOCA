@@ -129,7 +129,7 @@ class SimpleMemoryTask: ViewController {
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
     
-    let minuteDropDown = DropDown()
+    var minuteDropDown: DropDown!
     let dataMinutesDropDown = [
         "1 minute",
         "2 minutes",
@@ -700,9 +700,14 @@ extension SimpleMemoryTask {
         self.btnChooseDelayTime.tintColor = .clear
         self.btnChooseDelayTime.setTitleColor(UIColor.clear, for: .normal)
         
+        // MARK: - Config Dropdown minute
+        DPDConstant.UI.BorderWidth = 1.0
+        DPDConstant.UI.BorderColor = Color.color(hexString: "#649BFF").cgColor
+        self.minuteDropDown = DropDown()
         self.minuteDropDown.anchorView = self.vSetDelayTime
         self.minuteDropDown.bottomOffset = CGPoint(x: 0, y: self.vSetDelayTime.bounds.height + 4.0)
         self.minuteDropDown.dataSource = self.dataMinutesDropDown
+        
         let appearance = DropDown.appearance()
         appearance.cellHeight = 118.0/3.0
         appearance.textFont = Font.font(name: Font.Montserrat.medium, size: 18.0)
@@ -721,6 +726,7 @@ extension SimpleMemoryTask {
             // You could for example deselect the selected item
            self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
         }
+        // End Config Dropdown minute
         
         self.btnSetDelayTime.addTextSpacing(-0.36)
         self.btnSetDelayTime.layer.cornerRadius = 5.0
