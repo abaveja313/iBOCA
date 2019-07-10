@@ -87,6 +87,13 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var delayView: UIView!
     @IBOutlet weak var delayDescriptionLabel: UILabel!
+    @IBOutlet weak var delayTimePickerView: UIView!
+    @IBOutlet weak var delayTimePickerLabel: UILabel!
+    @IBOutlet weak var delayTimePickerImageView: UIImageView!
+    @IBOutlet weak var delayTimePickerButton: UIButton!
+    @IBOutlet weak var setDelayTimeButton: UIButton!
+    @IBOutlet weak var timePickerContentView: UIView!
+    @IBOutlet weak var timePickerTableView: UITableView!
     @IBOutlet weak var delayLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: GradientButton!
@@ -105,6 +112,16 @@ class VATask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var delayLengthLabel: UILabel!
     @IBOutlet weak var delayTimeLabel: UILabel!
     
+    @IBOutlet weak var quitButton: GradientButton!
+    @IBOutlet weak var resetButton: GradientButton!
+    
+    @IBOutlet weak var resultScrollView: UIScrollView!
+    @IBOutlet weak var resultContentView: UIView!
+    @IBOutlet weak var recalledTableView: UITableView!
+    @IBOutlet weak var regconizedTableView: UITableView!
+    
+    
+    var result: Results!
     
     var counterTimeView: CounterTimeView!
     var totalTimeCounter = Timer()
@@ -120,6 +137,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
         setupCounterTimeView()
+        
+        result = Results()
+        result.name = "Simple Memory"
+        result.startTime = Foundation.Date()
         
         missingItemTextField.delegate = self
         startButton.removeTarget(self, action: nil, for:.allEvents)
@@ -194,6 +215,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     fileprivate func startNewTask() {
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
+        self.result.startTime = Foundation.Date()
+        
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
@@ -205,6 +228,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isCollectionViewHidden(false)
         self.backTitleLabel.text = "VISUAL ASSOCIATION"
         self.isTaskViewHidden(true)
+        
+        result.startTime = Foundation.Date()
         
         imageSetVA = 0
         mixedImages = self.mixed0
@@ -323,9 +348,9 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func recall() {
-        correct.isHidden = false
-        incorrect.isHidden = false
-        dk.isHidden = false
+//        correct.isHidden = false
+//        incorrect.isHidden = false
+//        dk.isHidden = false
         
         testCount = 0
         
@@ -416,6 +441,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         if testCount == mixedImages.count {
             isViewRegconizeHidden(true)
+            setupResultTableView()
             done()
         } else {
             if(orderRecognize[testCount] == 0) {
@@ -430,12 +456,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isResultViewHidden(false)
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        self.startNewButton.isHidden = false
-        self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
+//        self.startNewButton.isHidden = false
+//        self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
+        
         totalTime = 300
-        let result = Results()
-        result.name = "Visual Association"
-        result.startTime = StartTime
+        
         result.endTime = Foundation.Date()
         
         Status[TestVisualAssociation] = TestStatus.Done
@@ -452,6 +477,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         delayResult = "Delay length of \(delayTime) seconds\n"
         
         result.numErrors = 0
+        
+        recalledTableView.reloadData()
+        
+        totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
+        delayTimeLabel.text = "\(delayTime) seconds"
         
         for i in 0...textInputList.count - 1 {
             result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
@@ -485,6 +515,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         }
         
         resultLabel.text = imageSetResult + delayResult + recallResult + recognizeResult
+        resultLabel.isHidden = true
         
         resultList["ImageSet"] = imageSetVA
         resultList["DelayTime"] = delayTime
@@ -523,6 +554,9 @@ class VATask: ViewController, UIPickerViewDelegate {
         resultsArray.add(result)
         
         resultList = [:]
+        
+        recalledTableView.reloadData()
+        regconizedTableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -537,6 +571,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     // MARK: Action
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
         print("Arrow Left Tapped")
+        view.endEditing(true)
         testCount -= 1
         if testCount >= 0 {
             print("pic: \(testCount)")
@@ -546,6 +581,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBAction func btnArrowRightTapped(_ sender: Any) {
         print("Arrow Right Tapped")
+        view.endEditing(true)
         testCount += 1
         if (testCount == mixedImages.count) {
             print("delay")
@@ -556,7 +592,6 @@ class VATask: ViewController, UIPickerViewDelegate {
                 isRememberAgainViewHidden(false)
                 textInputList.append(missingItemTextField.text!)
                 missingItemTextField.text = ""
-                missingItemTextField.isEnabled = false
             } else {
                 if !firstDisplay {
                     beginDelay()
@@ -579,12 +614,14 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
         timerVA.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.totalTime = 300
         afterBreakVA = false
-        Status[TestVisualAssociation] = TestStatus.NotStarted
     }
     
     @IBAction func correctButton(_ sender: Any) {
@@ -625,6 +662,29 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         recognizeNext()
     }
+    
+    @IBAction func actionQuit(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        timerVA.invalidate()
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.totalTime = 300
+        afterBreakVA = false
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
+            vc.mode = .patient
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func actionReset(_ sender: Any) {
+        self.startNewTask()
+    }
+    
+    @IBAction func showDropDownList(_ sender: Any) {
+        
+    }
 }
 
 extension VATask {
@@ -649,6 +709,20 @@ extension VATask {
         self.startNewButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.startNewButton.addTextSpacing(-0.36)
         self.startNewButton.render()
+        
+        // Button Reset
+        self.resetButton.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.resetButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.resetButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.resetButton.render()
+        self.resetButton.addTextSpacing(-0.36)
+        
+        // Button Quit
+        self.quitButton.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.quitButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        self.quitButton.render()
+        self.quitButton.addTextSpacing(-0.36)
         
         self.setupCollectionView()
         self.setupViewTask()
@@ -701,10 +775,22 @@ extension VATask {
     fileprivate func setupViewDelay() {
         self.delayDescriptionLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.delayDescriptionLabel.textColor = Color.color(hexString: "#8A9199")
-        self.delayDescriptionLabel.text = "Ask Patient to name which item is missing from the picture and record their answer"
-        self.delayDescriptionLabel.addLineSpacing(15.0)
+        self.delayDescriptionLabel.text = "Setting delay time"
         self.delayDescriptionLabel.addTextSpacing(-0.36)
         self.delayDescriptionLabel.textAlignment = .center
+        
+        self.delayTimePickerView.layer.borderWidth = 1
+        self.delayTimePickerView.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        self.delayTimePickerView.layer.cornerRadius = 8
+        self.delayTimePickerView.layer.masksToBounds = true
+        
+        self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        
+        self.setDelayTimeButton.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.setDelayTimeButton.titleLabel?.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
+        self.setDelayTimeButton.tintColor = Color.color(hexString: "#013AA5")
+        self.setDelayTimeButton.layer.cornerRadius = 8
+        self.setDelayTimeButton.layer.masksToBounds = true
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
@@ -720,6 +806,9 @@ extension VATask {
         self.startButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.startButton.addTextSpacing(-0.36)
         self.startButton.render()
+        
+//        self.timePickerTableView.dataSource = self
+//        self.timePickerTableView.delegate = self
     }
     
     fileprivate func setupViewNotice() {
@@ -772,6 +861,20 @@ extension VATask {
         self.delayTimeLabel.addTextSpacing(-0.56)
     }
     
+    fileprivate func setupResultTableView() {
+        recalledTableView.delegate = self
+        recalledTableView.dataSource = self
+        recalledTableView.allowsSelection = false
+        recalledTableView.separatorStyle = .none
+        recalledTableView.register(VACell.nib(), forCellReuseIdentifier: VACell.cellId)
+        
+        regconizedTableView.delegate = self
+        regconizedTableView.dataSource = self
+        regconizedTableView.allowsSelection = false
+        regconizedTableView.separatorStyle = .none
+        regconizedTableView.register(VACell.nib(), forCellReuseIdentifier: VACell.cellId)
+    }
+    
     fileprivate func isCollectionViewHidden(_ isHidden: Bool) {
         self.descriptionLabel.isHidden = isHidden
         self.collectionViewLevel.isHidden = isHidden
@@ -805,6 +908,12 @@ extension VATask {
         self.startButton.isHidden = isHidden
         self.delayLabel.isHidden = isHidden
         self.timerLabel.isHidden = isHidden
+        self.delayTimePickerView.isHidden = isHidden
+        self.delayTimePickerLabel.isHidden = isHidden
+        self.delayTimePickerImageView.isHidden = isHidden
+        self.setDelayTimeButton.isHidden = isHidden
+        self.timePickerContentView.isHidden = isHidden
+        self.timePickerTableView.isHidden = isHidden
     }
     
     fileprivate func isViewRegconizeHidden(_ isHidden: Bool) {
@@ -819,6 +928,9 @@ extension VATask {
         self.totalTimeLabel.isHidden = isHidden
         self.delayLengthLabel.isHidden = isHidden
         self.delayTimeLabel.isHidden = isHidden
+        self.recalledTableView.isHidden = isHidden
+        self.regconizedTableView.isHidden = isHidden
+        self.resultScrollView.isHidden = isHidden
     }
 }
 
@@ -900,6 +1012,31 @@ extension VATask: UICollectionViewDelegate {
         }
         self.startDisplayAlert()
     }
+}
+
+extension VATask: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mixedImages.count + 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = VACell()
+        cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
+        if tableView == recalledTableView {
+            cell.configRecallTest(imageNameList: mixedImages, resultList: textInputList, timeList: recallTimes, indexPath: indexPath)
+        } else {
+            cell.configRegconizedTest(imageNameList: mixedImages, recognizeErrors: recognizeErrors, timeList: recognizeTimes, indexPath: indexPath)
+        }
+        return cell
+    }
+}
+
+extension VATask: UITableViewDelegate {
+    
 }
 
 extension VATask: UITextFieldDelegate {

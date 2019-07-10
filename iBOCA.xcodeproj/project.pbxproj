@@ -75,6 +75,8 @@
 		B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD0E922CDE992008A195C /* String+Extensions.swift */; };
 		B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD11822CE212A008A195C /* NumberKeyboardView.swift */; };
 		B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */; };
+		B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D135F522D5D90500E48476 /* VADropDownCell.swift */; };
+		B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D135F622D5D90500E48476 /* VADropDownCell.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -286,6 +288,8 @@
 		B10BD0E922CDE992008A195C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B10BD11822CE212A008A195C /* NumberKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberKeyboardView.swift; sourceTree = "<group>"; };
 		B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberKeyboardView.xib; sourceTree = "<group>"; };
+		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
+		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -640,6 +644,8 @@
 			children = (
 				B104C0F422D47AF600EB24F9 /* VACell.swift */,
 				B104C0F522D47AF600EB24F9 /* VACell.xib */,
+				B1D135F522D5D90500E48476 /* VADropDownCell.swift */,
+				B1D135F622D5D90500E48476 /* VADropDownCell.xib */,
 			);
 			path = VACell;
 			sourceTree = "<group>";
@@ -1005,6 +1011,7 @@
 				4A328A6C22C47B9100034075 /* Montserrat-ExtraBold.ttf in Resources */,
 				E2037F231E47F3E600EE13EB /* iBoca logo.png in Resources */,
 				4A328A6F22C47B9100034075 /* Montserrat-Regular.ttf in Resources */,
+				B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */,
 				1BC2DFF91D4F821F0020D430 /* LaunchScreen.storyboard in Resources */,
 				B104C0F722D47AF600EB24F9 /* VACell.xib in Resources */,
 				E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */,
@@ -1097,6 +1104,7 @@
 				E5F13D1922572CDF002FB4FF /* IQUIViewController+Additions.swift in Sources */,
 				0E1A22E122C475D500C8CFDF /* FontConstants.swift in Sources */,
 				E5F13D1C22572CDF002FB4FF /* IQNSArray+Sort.swift in Sources */,
+				B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */,
 				F2A0F12F1F02682500A92B1F /* MOCAandGDT.swift in Sources */,
 				E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */,
 				4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */,

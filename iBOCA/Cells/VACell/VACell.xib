@@ -20,36 +20,51 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7e-ze-wMz" userLabel="TimeLabel">
-                        <rect key="frame" x="415.5" y="0.0" width="163.5" height="48.5"/>
+                        <rect key="frame" x="415.5" y="0.0" width="163.5" height="47.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYN-i8-2dW" userLabel="InputLabel">
-                        <rect key="frame" x="253" y="0.0" width="163.5" height="48.5"/>
+                        <rect key="frame" x="251" y="0.0" width="163.5" height="47.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recall Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-FW-pfV" userLabel="TestTypeLabel">
-                        <rect key="frame" x="1" y="14" width="251" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6G-ii-w11">
+                        <rect key="frame" x="1" y="0.0" width="249" height="47.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recall Test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-FW-pfV" userLabel="TestTypeLabel">
+                                <rect key="frame" x="19" y="0.0" width="229" height="47.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Pii-FW-pfV" secondAttribute="bottom" id="Hev-5n-dMs"/>
+                            <constraint firstItem="Pii-FW-pfV" firstAttribute="top" secondItem="H6G-ii-w11" secondAttribute="top" id="Ihe-Rh-hv8"/>
+                            <constraint firstAttribute="trailing" secondItem="Pii-FW-pfV" secondAttribute="trailing" constant="1" id="OjX-bk-Rg0"/>
+                            <constraint firstItem="Pii-FW-pfV" firstAttribute="leading" secondItem="H6G-ii-w11" secondAttribute="leading" constant="19" id="U2Z-27-UW1"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="AYN-i8-2dW" firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="leading" constant="1" id="Bhk-7e-5km"/>
-                    <constraint firstItem="t7e-ze-wMz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HOC-g4-kgH"/>
+                    <constraint firstItem="H6G-ii-w11" firstAttribute="height" secondItem="t7e-ze-wMz" secondAttribute="height" id="4gD-E3-zjD"/>
+                    <constraint firstItem="AYN-i8-2dW" firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="leading" constant="-1" id="Bhk-7e-5km"/>
+                    <constraint firstItem="H6G-ii-w11" firstAttribute="trailing" secondItem="AYN-i8-2dW" secondAttribute="leading" constant="-1" id="NB2-sf-BGg"/>
+                    <constraint firstItem="H6G-ii-w11" firstAttribute="centerY" secondItem="AYN-i8-2dW" secondAttribute="centerY" id="Rd4-Px-XQl"/>
                     <constraint firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="trailing" constant="1" id="V93-ae-yag"/>
-                    <constraint firstItem="AYN-i8-2dW" firstAttribute="leading" secondItem="Pii-FW-pfV" secondAttribute="trailing" constant="1" id="dl0-EB-Zoz"/>
+                    <constraint firstItem="t7e-ze-wMz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VUU-sn-av0"/>
                     <constraint firstItem="AYN-i8-2dW" firstAttribute="height" secondItem="t7e-ze-wMz" secondAttribute="height" id="f3H-bD-Puh"/>
                     <constraint firstItem="AYN-i8-2dW" firstAttribute="width" secondItem="t7e-ze-wMz" secondAttribute="width" id="l22-k1-0dL"/>
-                    <constraint firstItem="Pii-FW-pfV" firstAttribute="centerY" secondItem="AYN-i8-2dW" secondAttribute="centerY" id="tSv-Hg-xEt"/>
-                    <constraint firstItem="Pii-FW-pfV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="wNs-2I-dzf"/>
+                    <constraint firstAttribute="bottom" secondItem="t7e-ze-wMz" secondAttribute="bottom" constant="1" id="t32-rO-5Nf"/>
                     <constraint firstItem="AYN-i8-2dW" firstAttribute="centerY" secondItem="t7e-ze-wMz" secondAttribute="centerY" id="wyu-46-tV3"/>
-                    <constraint firstItem="t7e-ze-wMz" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="xAz-PV-oz6"/>
                     <constraint firstItem="t7e-ze-wMz" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:3.55" id="zcR-kp-sjc"/>
+                    <constraint firstItem="H6G-ii-w11" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="zgC-co-YG5"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -57,6 +72,7 @@
                 <outlet property="resultLabel" destination="AYN-i8-2dW" id="Qpu-QG-bhK"/>
                 <outlet property="testTypeLabel" destination="Pii-FW-pfV" id="tfY-9Q-MKK"/>
                 <outlet property="timeLabel" destination="t7e-ze-wMz" id="0K7-qE-4Ko"/>
+                <outlet property="twxtTypeView" destination="H6G-ii-w11" id="YVs-pf-scV"/>
             </connections>
             <point key="canvasLocation" x="345.60000000000002" y="147.07646176911544"/>
         </tableViewCell>

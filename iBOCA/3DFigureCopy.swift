@@ -221,7 +221,8 @@ extension ThreeDFigureCopy {
         self.counterTime = CounterTimeView()
         self.vCounterTimer.backgroundColor = .clear
         self.vCounterTimer.addSubview(self.counterTime)
-        
+        self.counterTime.centerXAnchor.constraint(equalTo: self.vCounterTimer.centerXAnchor).isActive = true
+        self.counterTime.centerYAnchor.constraint(equalTo: self.vCounterTimer.centerYAnchor).isActive = true
         self.timer3DFigureCopy.invalidate()
         self.runTimer()
     }
