@@ -68,7 +68,6 @@ class CounterTimeView: UIView {
             let values = att.attributes(at: 0, longestEffectiveRange: nil, in: .init(location: 0, length: att.string.count))
             let attResult = NSAttributedString.init(string: title, attributes: values)
             mLbCounterTime.attributedText = attResult
-            debugPrint("UPDATE TEXT OK")
         }
         else{
             debugPrint("CANNOT")

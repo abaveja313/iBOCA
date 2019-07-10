@@ -110,6 +110,15 @@ extension GradientButton {
         self.setAttributedTitle(attributedString, for: .normal)
     }
     
+    func updateTitle(title:String){
+        if let att = self.attributedTitle(for: .normal){
+            let values = att.attributes(at: 0, longestEffectiveRange: nil, in: .init(location: 0, length: att.string.count))
+            let attResult = NSAttributedString.init(string: title, attributes: values)
+            self.setAttributedTitle(attResult, for: .normal)
+        }
+    }
+    
+    
     /// setup shadow for this Button
     ///
     /// - Parameters:
