@@ -144,6 +144,16 @@ class Settings {
         Settings.PUID = nil
         Settings.isGotoTest = false
     }
+    
+    // MARK: - Comments User
+    public class var SMDelayTime: Int? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "SMDelayTime")
+        }
+        get {
+            return UserDefaults.obj(forKey: "SMDelayTime") as? Int
+        }
+    }
 }
 
 public extension UserDefaults {
