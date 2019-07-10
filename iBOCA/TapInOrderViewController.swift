@@ -514,9 +514,9 @@ class TapInOrderViewController: ViewController {
                 //change color to indicate tap
                 sender.backgroundColor = UIColor.black
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                    sender.backgroundColor = Color.color(hexString: "649BFF")
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+//                    sender.backgroundColor = Color.color(hexString: "649BFF")
+//                }
                 
                 //get out of loop if it's the wrong button; will eventually lead to repeat()
                 if i != currpressed {
