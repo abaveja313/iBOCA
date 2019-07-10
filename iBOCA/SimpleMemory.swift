@@ -102,8 +102,15 @@ class SimpleMemoryTask: ViewController {
     @IBOutlet weak var vTask: UIView!
     @IBOutlet weak var ivTask: UIImageView!
     
+    
+    @IBOutlet weak var lblSetDelayTime: UILabel!
+    @IBOutlet weak var vSetDelayTime: UIView!
+    
+    @IBOutlet weak var lblChooseDelayTime: UILabel!
+    @IBOutlet weak var btnChooseDelayTime: UIButton!
+    @IBOutlet weak var btnSetDelayTime: UIButton!
+    
     @IBOutlet weak var vDelay: UIView!
-    @IBOutlet weak var lblDescDelay: UILabel!
     
     @IBOutlet weak var collectionViewObjectName: UICollectionView!
     
@@ -122,10 +129,23 @@ class SimpleMemoryTask: ViewController {
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
     
+    let minuteDropDown = DropDown()
+    let dataMinutesDropDown = [
+        "1 minute",
+        "2 minutes",
+        "3 minutes",
+        "4 minutes",
+        "5 minutes"
+    ]
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if Settings.SMDelayTime == nil {
+            Settings.SMDelayTime = 1
+        }
         
         self.setupViews()
         
@@ -163,6 +183,9 @@ class SimpleMemoryTask: ViewController {
             self.vShadowTask.isHidden = true
             self.vTask.isHidden = true
             self.vDelay.isHidden = true
+            self.lblSetDelayTime.isHidden = true
+            self.vSetDelayTime.isHidden = true
+            self.btnSetDelayTime.isHidden = true
             self.next1.isHidden = true
             
             
@@ -299,12 +322,18 @@ class SimpleMemoryTask: ViewController {
         self.btnArrowRight.isHidden = true
         self.ivTask.isHidden = true
         self.vDelay.isHidden = false
+        self.lblSetDelayTime.isHidden = false
+        self.vSetDelayTime.isHidden = false
+        self.btnSetDelayTime.isHidden = false
         imageView.removeFromSuperview()
         print("in delay!")
         
+        self.lblSetDelayTime.isHidden = false
+        self.vSetDelayTime.isHidden = false
+        self.btnSetDelayTime.isHidden = false
         self.timerLabel.isHidden = false
         self.delayLabel.isHidden = false
-        self.lblDescDelay.isHidden = false
+        
         self.delayLabel.text = "Recommended delay: 1 minute"
         
         afterBreakSM = true
@@ -368,9 +397,11 @@ class SimpleMemoryTask: ViewController {
         
         timerSM.invalidate()
         
+        self.lblSetDelayTime.isHidden = true
+        self.vSetDelayTime.isHidden = true
+        self.btnSetDelayTime.isHidden = true
         self.timerLabel.isHidden = true
         self.delayLabel.isHidden = true
-        self.lblDescDelay.isHidden = true
         
         delayTime = self.maxSeconds - Double(self.totalTime)//findTime()
         
@@ -430,6 +461,18 @@ class SimpleMemoryTask: ViewController {
             self.outputImage(withImageName: imagesSM[testCount])
         }
     }
+    
+    @IBAction func btnChooseDelayTimeTapped(_ sender: Any) {
+        self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.minuteDropDown.show()
+    }
+    
+    @IBAction func btnSetDelayTimeTapped(_ sender: Any) {
+        if let idx = self.minuteDropDown.indexForSelectedRow {
+            Settings.SMDelayTime = idx + 1
+        }
+    }
+    
     
     @IBAction func btnBackTapped(_ sender: Any) {
         ended = true
@@ -583,6 +626,9 @@ extension SimpleMemoryTask {
         self.vShadowTask.isHidden = true
         self.vTask.isHidden = true
         self.vDelay.isHidden = true
+        self.lblSetDelayTime.isHidden = true
+        self.vSetDelayTime.isHidden = true
+        self.btnSetDelayTime.isHidden = true
         self.vResults.isHidden = true
         self.btnStartNew.isHidden = true
     }
@@ -615,12 +661,8 @@ extension SimpleMemoryTask {
     }
     
     fileprivate func setupViewDelay() {
-        self.lblDescDelay.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        self.lblDescDelay.textColor = Color.color(hexString: "#8A9199")
-        self.lblDescDelay.text = "Ask Patient to name the items that were displayed  earlier. Record their answers"
-        self.lblDescDelay.addTextSpacing(-0.36)
-        self.lblDescDelay.addLineSpacing(10.0)
-        self.lblDescDelay.textAlignment = .center
+        
+        self.setupViewSetDelayTime()
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
@@ -636,6 +678,65 @@ extension SimpleMemoryTask {
         self.start.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.start.render()
         self.start.addTextSpacing(-0.44)
+    }
+    
+    fileprivate func setupViewSetDelayTime() {
+        self.lblSetDelayTime.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblSetDelayTime.textColor = Color.color(hexString: "#8A9199")
+        self.lblSetDelayTime.text = "Setting delay time"
+        self.lblSetDelayTime.addTextSpacing(-0.36)
+        
+        self.vSetDelayTime.clipsToBounds = true
+        self.vSetDelayTime.backgroundColor = Color.color(hexString: "#F7F7F7")
+        self.vSetDelayTime.layer.cornerRadius = 5.0
+        self.vSetDelayTime.layer.borderWidth = 1.0
+        self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        
+        self.lblChooseDelayTime.addTextSpacing(-0.36)
+        self.lblChooseDelayTime.text = self.minuteOfString()
+        self.lblChooseDelayTime.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblChooseDelayTime.textColor = .black
+        
+        self.btnChooseDelayTime.tintColor = .clear
+        self.btnChooseDelayTime.setTitleColor(UIColor.clear, for: .normal)
+        
+        self.minuteDropDown.anchorView = self.vSetDelayTime
+        self.minuteDropDown.bottomOffset = CGPoint(x: 0, y: self.vSetDelayTime.bounds.height + 4.0)
+        self.minuteDropDown.dataSource = self.dataMinutesDropDown
+        let appearance = DropDown.appearance()
+        appearance.cellHeight = 118.0/3.0
+        appearance.textFont = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        appearance.backgroundColor = UIColor.white
+        appearance.selectionBackgroundColor = Color.color(hexString: "#EAEAEA")
+        appearance.textColor = .black
+        appearance.shadowOpacity = 0
+        
+        // Action triggered on selection
+        self.minuteDropDown.selectionAction = { [weak self] (index, item) in
+            self?.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+            self?.lblChooseDelayTime.text = item
+        }
+        
+        self.minuteDropDown.cancelAction = { [unowned self] in
+            // You could for example deselect the selected item
+           self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        }
+        
+        self.btnSetDelayTime.addTextSpacing(-0.36)
+        self.btnSetDelayTime.layer.cornerRadius = 5.0
+        self.btnSetDelayTime.setTitle("SET", for: .normal)
+        self.btnSetDelayTime.setTitleColor(Color.color(hexString: "#013AA5"), for: .normal)
+        self.btnSetDelayTime.titleLabel?.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
+        self.btnSetDelayTime.backgroundColor = Color.color(hexString: "#EEF3F9")
+    }
+    
+    fileprivate func minuteOfString() -> String {
+        if let delayTime = Settings.SMDelayTime, delayTime > 1 {
+            return "\(delayTime) minutes"
+        }
+        else {
+            return "1 minute"
+        }
     }
     
     fileprivate func setupViewObjectName() {
