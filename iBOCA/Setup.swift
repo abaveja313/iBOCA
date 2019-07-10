@@ -127,11 +127,21 @@ class Setup: ViewController, UIPickerViewDelegate  {
                 }
             }
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
-                vc.mode = .patient
-                self.present(vc, animated: true, completion: nil)
+            if provideDataSwitch.isOn == true {
+                // Consent to provide data
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
+                    self.present(vc, animated:true, completion:nil)
+                }
             }
+            else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+                    vc.mode = .patient
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+            
         }
     }
     

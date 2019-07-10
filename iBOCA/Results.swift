@@ -23,6 +23,10 @@ class Results: NSObject {
     
     var collapsed : Bool = true // for use by the View Controller
     
+    var rounds: Int?
+    var numCorrects: Int = -1
+    var originalImages: [String]?
+    
     // Constructor
     func Results(_ nm:String, startTime:Foundation.Date, endTime:Foundation.Date) {
         name = nm
