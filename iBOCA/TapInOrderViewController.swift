@@ -55,6 +55,9 @@ class TapInOrderViewController: ViewController {
     /// true when user tap reset and become false when start test
     var isReseting : Bool = false
     
+    var mCounterView : CounterTimeView?
+    var mTimerCounting : Timer?
+    
     //randomize 1st order; light up 1st button
     override func viewDidLoad() {
         
@@ -318,6 +321,7 @@ class TapInOrderViewController: ViewController {
             self.numplaces = 0
             self.numRepeats = 0
             self.numErrors = 0
+            self.stopCounter()
         }
     }
     
@@ -578,7 +582,11 @@ class TapInOrderViewController: ViewController {
         mViewContent.layer.shadowRadius = 10 / 2.0
         mViewContent.layer.shadowPath = nil
         mViewContent.layer.masksToBounds = false
-        
+        //
+        mCounterView = CounterTimeView()
+        mViewMain.addSubview(mCounterView!)
+        mCounterView?.centerXAnchor.constraint(equalTo: mViewMain.centerXAnchor).isActive = true
+        mCounterView?.topAnchor.constraint(equalTo: mViewMain.topAnchor, constant:  60).isActive = true
     }
     
     func startTest(){
@@ -593,7 +601,9 @@ class TapInOrderViewController: ViewController {
         numErrors = 0
         
         randomizeOrder()
-       
+        self.startTime2 = Foundation.Date()
+        self.currpressed = 0
+        self.startCounter()
         statusLabel.text = "Observe the pattern"
         let alert = UIAlertController.init(title: "", message: "Observe the pattern" , preferredStyle: .alert)
         alert.addAction(.init(title: "Ok", style: .default, handler: { (iaction) in
@@ -602,8 +612,7 @@ class TapInOrderViewController: ViewController {
             } else {
                 self.drawSequenceRecursively(num: self.numplaces)
             }
-            self.startTime2 = Foundation.Date()
-            self.currpressed = 0
+          
         }))
         if let oldAlert =  self.presentedViewController{
             oldAlert.dismiss(animated: false) {
@@ -640,6 +649,17 @@ class TapInOrderViewController: ViewController {
             }
             iself.startTest()
         }
+    }
+    
+    func startCounter(){
+        mTimerCounting?.invalidate()
+        mTimerCounting = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (itimer) in
+            self.mCounterView?.setTimeWith(startTime: self.startTime2, currentTime: Date())
+        })
+    }
+    
+    func stopCounter(){
+        mTimerCounting?.invalidate()
     }
     
     @IBAction func tapBtnBack(_ sender: Any) {
