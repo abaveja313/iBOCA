@@ -211,6 +211,12 @@ class SimpleMemoryTask: ViewController {
         self.totalTimeCounter.invalidate()
         self.runTimer()
         
+        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
+            self.delayLabel.text = "Recommended Delay : \((timeDelay as! Int) / 60) minute"
+        } else {
+            self.delayLabel.text = "Recommended Delay : 5 minute"
+        }
+        
         result = Results()
         result.name = "Simple Memory"
         result.startTime = startTime

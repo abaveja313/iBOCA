@@ -9,10 +9,12 @@
 import UIKit
 
 class VADropDownCell: UITableViewCell {
-
+    static let cellId = "VADropDownCell"
+    
+    @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setupView()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -21,4 +23,7 @@ class VADropDownCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    private func setupView() {
+        timeLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+    }
 }

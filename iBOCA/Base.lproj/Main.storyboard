@@ -1826,6 +1826,29 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lye-qf-3JC">
+                                                <rect key="frame" x="0.0" y="108" width="940" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cK-bZ-Yee">
+                                                <rect key="frame" x="0.0" y="148" width="940" height="90"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYa-6c-l75" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
+                                                <rect key="frame" x="280" y="278" width="380" height="72"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="72" id="Xhz-Jc-v4a"/>
+                                                    <constraint firstAttribute="width" constant="380" id="qYC-Hw-HvH"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <connections>
+                                                    <action selector="startButton:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="CXB-fB-rfS"/>
+                                                </connections>
+                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSn-mI-qiv">
                                                 <rect key="frame" x="371" y="31.5" width="243" height="40"/>
                                                 <subviews>
@@ -1833,7 +1856,7 @@
                                                         <rect key="frame" x="10" y="9" width="88" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="22" id="bVZ-Sm-NgI"/>
-                                                            <constraint firstAttribute="width" constant="88" id="zFo-Lo-8Fm"/>
+                                                            <constraint firstAttribute="width" constant="100" id="zFo-Lo-8Fm"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
@@ -1847,7 +1870,10 @@
                                                         </constraints>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3C-LK-F3k">
-                                                        <rect key="frame" x="98" y="4.5" width="46" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="243" height="40"/>
+                                                        <connections>
+                                                            <action selector="showDropDownList:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="HLr-3I-m7R"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
@@ -1865,10 +1891,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1o-A2-3As">
-                                                <rect key="frame" x="350" y="232" width="240" height="128"/>
+                                                <rect key="frame" x="371" y="81.5" width="243" height="200"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZV-L5-Kie">
-                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="243" height="200"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableView>
                                                 </subviews>
@@ -1882,37 +1908,14 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBA-9N-B5J">
-                                                <rect key="frame" x="447" y="281" width="46" height="30"/>
+                                                <rect key="frame" x="634" y="31.5" width="117" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="117" id="AtZ-ly-hLw"/>
                                                     <constraint firstAttribute="height" constant="40" id="gz2-Ot-OzX"/>
                                                 </constraints>
                                                 <state key="normal" title="SET"/>
                                                 <connections>
-                                                    <action selector="showDropDownList:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="RwD-x4-5PL"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lye-qf-3JC">
-                                                <rect key="frame" x="0.0" y="108.5" width="940" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cK-bZ-Yee">
-                                                <rect key="frame" x="0.0" y="148.5" width="940" height="90"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="75"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYa-6c-l75" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
-                                                <rect key="frame" x="280" y="278.5" width="380" height="72"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="72" id="Xhz-Jc-v4a"/>
-                                                    <constraint firstAttribute="width" constant="380" id="qYC-Hw-HvH"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <connections>
-                                                    <action selector="startButton:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="CXB-fB-rfS"/>
+                                                    <action selector="setDelayTimePicker:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="z9k-1J-VVe"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -5782,8 +5785,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jXy-KL-eph"/>
-        <segue reference="Ahl-wP-pho"/>
+        <segue reference="eep-iX-tUz"/>
         <segue reference="vHL-fv-LLl"/>
-        <segue reference="Bhp-ON-e9m"/>
+        <segue reference="dL7-Sq-hiA"/>
     </inferredMetricsTieBreakers>
 </document>

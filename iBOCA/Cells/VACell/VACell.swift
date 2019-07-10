@@ -9,7 +9,7 @@
 import UIKit
 
 class VACell: UITableViewCell {
-    static var cellId = "VACell"
+    static let cellId = "VACell"
 
     @IBOutlet weak var testTypeLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!

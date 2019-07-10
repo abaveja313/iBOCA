@@ -34,7 +34,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     var delayTime = Double()
     
-    var totalTime = 300
+    var totalTime: Int!
     
     var mixed0 = ["Backpack-Soccer", "Chair-Dog", "Dogbowl-Rope", "Mixer-Tennis", "Pot-Shoe"]
     var half0 = ["Backpack", "Chair", "Dogbowl", "Mixer", "Pot"]
@@ -131,15 +131,24 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     var textInputList: [String]!
     
+    var isDropDownShowing = false
+    var delayReccommendedTime: Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+        } else {
+            totalTime = 300
+        }
+        
         self.setupView()
         setupCounterTimeView()
         
         result = Results()
-        result.name = "Simple Memory"
+        result.name = "Visual Association"
         result.startTime = Foundation.Date()
         
         missingItemTextField.delegate = self
@@ -215,6 +224,14 @@ class VATask: ViewController, UIPickerViewDelegate {
     fileprivate func startNewTask() {
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+            self.delayLabel.text = "Recommended Delay : \((delayTime as! Int) / 60) minute"
+        } else {
+            totalTime = 300
+            self.delayLabel.text = "Recommended Delay : 5 minute"
+        }
+        
         self.result.startTime = Foundation.Date()
         
         self.startTimeTask = Foundation.Date()
@@ -237,7 +254,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         recognizeIncorrectVA = self.incorrect0
         
         timerVA.invalidate()
-        totalTime = 300
+        
         recallErrors = [Int]()
         recallTimes = [Double]()
         recognizeErrors = [Int]()
@@ -320,7 +337,11 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     fileprivate func endTimer() {
         timerVA.invalidate()
-        self.totalTime = 300
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+        } else {
+            totalTime = 300
+        }
         self.resumeTask()
     }
     
@@ -335,7 +356,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isRecalledTestMode = true
         self.isRecommendDelayHidden(true)
         
-        delayTime = 300.0 - Double(self.totalTime)
+        if let delayTimes = UserDefaults.standard.object(forKey: "DropDownTime") {
+            delayTime = (delayTimes as! Double) - Double(self.totalTime)
+        } else {
+            delayTime = 300.0 - Double(self.totalTime)
+        }
         
         timerVA.invalidate()
         
@@ -459,7 +484,11 @@ class VATask: ViewController, UIPickerViewDelegate {
 //        self.startNewButton.isHidden = false
 //        self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
         
-        totalTime = 300
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+        } else {
+            totalTime = 300
+        }
         
         result.endTime = Foundation.Date()
         
@@ -580,36 +609,44 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnArrowRightTapped(_ sender: Any) {
-        print("Arrow Right Tapped")
-        view.endEditing(true)
-        testCount += 1
-        if (testCount == mixedImages.count) {
-            print("delay")
-            isImageViewHidden(true)
-            if isRecalledTestMode {
-                recallTimes.append(findTime())
-                isMissingItemViewHidden(true)
-                isRememberAgainViewHidden(false)
-                textInputList.append(missingItemTextField.text!)
-                missingItemTextField.text = ""
-            } else {
-                if !firstDisplay {
-                    beginDelay()
-                } else {
-                    firstDisplay = false
-                    isRememberAgainViewHidden(false)
-                    self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
-                    self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
-                }
-            }
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
         } else {
-            print("pic: \(testCount)")
-            if isRecalledTestMode {
-                recallTimes.append(findTime())
-                textInputList.append(missingItemTextField.text!)
-                missingItemTextField.text = ""
+            print("Arrow Right Tapped")
+            view.endEditing(true)
+            testCount += 1
+            if (testCount == mixedImages.count) {
+                print("delay")
+                isImageViewHidden(true)
+                if isRecalledTestMode {
+                    recallTimes.append(findTime())
+                    isMissingItemViewHidden(true)
+                    isRememberAgainViewHidden(false)
+                    textInputList.append(missingItemTextField.text!)
+                    missingItemTextField.text = ""
+                } else {
+                    if !firstDisplay {
+                        beginDelay()
+                    } else {
+                        firstDisplay = false
+                        isRememberAgainViewHidden(false)
+                        self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
+                        self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+                    }
+                }
+            } else {
+                print("pic: \(testCount)")
+                if isRecalledTestMode {
+                    recallTimes.append(findTime())
+                    textInputList.append(missingItemTextField.text!)
+                    missingItemTextField.text = ""
+                }
+                self.outputDisplayImage(withImageName: mixedImages[testCount])
             }
-            self.outputDisplayImage(withImageName: mixedImages[testCount])
         }
     }
     
@@ -620,7 +657,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         timerVA.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        self.totalTime = 300
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+        } else {
+            totalTime = 300
+        }
         afterBreakVA = false
     }
     
@@ -670,7 +711,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         timerVA.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        self.totalTime = 300
+        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+            totalTime = delayTime as? Int
+        } else {
+            totalTime = 300
+        }
         afterBreakVA = false
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
@@ -683,7 +728,17 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func showDropDownList(_ sender: Any) {
-        
+        if isDropDownShowing {
+            isDropDownViewHidden(true)
+            isDropDownShowing = false
+        } else {
+            isDropDownViewHidden(false)
+            isDropDownShowing = true
+        }
+    }
+    
+    @IBAction func setDelayTimePicker(_ sender: Any) {
+        UserDefaults.standard.set(delayReccommendedTime, forKey: "DropDownTime")
     }
 }
 
@@ -738,6 +793,7 @@ extension VATask {
         isViewRegconizeHidden(true)
         isMissingItemViewHidden(true)
         isResultViewHidden(true)
+        isDropDownViewHidden(true)
         
         startNewButton.isHidden = true
         
@@ -785,6 +841,11 @@ extension VATask {
         self.delayTimePickerView.layer.masksToBounds = true
         
         self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
+            self.delayTimePickerLabel.text = "\((timeDelay as! Int) / 60) minutes"
+        } else {
+            self.delayTimePickerLabel.text = "5 minutes"
+        }
         
         self.setDelayTimeButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.setDelayTimeButton.titleLabel?.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
@@ -794,7 +855,11 @@ extension VATask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        self.delayLabel.text = "Recommended Delay : 5 minute"
+        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
+            self.delayLabel.text = "Recommended Delay : \((timeDelay as! Int) / 60) minute"
+        } else {
+            self.delayLabel.text = "Recommended Delay : 5 minute"
+        }
         self.delayLabel.addTextSpacing(-0.56)
         
         self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
@@ -807,8 +872,14 @@ extension VATask {
         self.startButton.addTextSpacing(-0.36)
         self.startButton.render()
         
-//        self.timePickerTableView.dataSource = self
-//        self.timePickerTableView.delegate = self
+        self.timePickerContentView.layer.borderWidth = 1
+        self.timePickerContentView.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.timePickerContentView.layer.cornerRadius = 8
+        self.timePickerContentView.layer.masksToBounds = true
+        
+        self.timePickerTableView.dataSource = self
+        self.timePickerTableView.delegate = self
+        self.timePickerTableView.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.cellId)
     }
     
     fileprivate func setupViewNotice() {
@@ -912,8 +983,6 @@ extension VATask {
         self.delayTimePickerLabel.isHidden = isHidden
         self.delayTimePickerImageView.isHidden = isHidden
         self.setDelayTimeButton.isHidden = isHidden
-        self.timePickerContentView.isHidden = isHidden
-        self.timePickerTableView.isHidden = isHidden
     }
     
     fileprivate func isViewRegconizeHidden(_ isHidden: Bool) {
@@ -931,6 +1000,11 @@ extension VATask {
         self.recalledTableView.isHidden = isHidden
         self.regconizedTableView.isHidden = isHidden
         self.resultScrollView.isHidden = isHidden
+    }
+    
+    fileprivate func isDropDownViewHidden(_ isHidden: Bool) {
+        self.timePickerTableView.isHidden = isHidden
+        self.timePickerContentView.isHidden = isHidden
     }
 }
 
@@ -1016,7 +1090,7 @@ extension VATask: UICollectionViewDelegate {
 
 extension VATask: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mixedImages.count + 1
+        return tableView == timePickerTableView ? 5 : mixedImages.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1024,19 +1098,32 @@ extension VATask: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = VACell()
-        cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
-        if tableView == recalledTableView {
-            cell.configRecallTest(imageNameList: mixedImages, resultList: textInputList, timeList: recallTimes, indexPath: indexPath)
+        if tableView == timePickerTableView {
+            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            dropDownCell.timeLabel.text = "\(indexPath.row + 1) minutes"
+            return dropDownCell
         } else {
-            cell.configRegconizedTest(imageNameList: mixedImages, recognizeErrors: recognizeErrors, timeList: recognizeTimes, indexPath: indexPath)
+            var cell = VACell()
+            cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
+            if tableView == recalledTableView {
+                cell.configRecallTest(imageNameList: mixedImages, resultList: textInputList, timeList: recallTimes, indexPath: indexPath)
+            } else {
+                cell.configRegconizedTest(imageNameList: mixedImages, recognizeErrors: recognizeErrors, timeList: recognizeTimes, indexPath: indexPath)
+            }
+            return cell
         }
-        return cell
     }
 }
 
 extension VATask: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == timePickerTableView {
+            delayTimePickerLabel.text = "\(indexPath.row + 1) minutes"
+            delayReccommendedTime = (indexPath.row + 1) * 60
+            isDropDownViewHidden(true)
+            isDropDownShowing = false
+        }
+    }
 }
 
 extension VATask: UITextFieldDelegate {
