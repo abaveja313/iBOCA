@@ -148,7 +148,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqG-5c-qqP">
                             <rect key="frame" x="24" y="0.0" width="96" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.9137254901960784" green="0.27058823529411763" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -167,7 +167,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Corrects" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Rj-PS-yD6">
                             <rect key="frame" x="24" y="0.0" width="96" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.0039215686274509803" green="0.22745098039215686" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>

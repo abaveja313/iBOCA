@@ -39,6 +39,25 @@ class Results: NSObject {
         return "\(numErrors) Errors"
     }
 
+    var numOfCorrects: String {
+        guard numCorrects != -1 else { return "" }
+        if numCorrects <= 1 {
+            return "\(numCorrects) Correct"
+        }
+        
+        return "\(numCorrects) Corrects"
+    }
+    
+    var numOfRounds: String {
+        guard let rounds = rounds else {return ""}
+        
+        if rounds <= 1 {
+            return "\(rounds) round"
+        }
+        
+        return "\(round) rounds"
+    }
+    
     var rounds: Int?
     var numCorrects: Int = -1
     var originalImages: [String]?

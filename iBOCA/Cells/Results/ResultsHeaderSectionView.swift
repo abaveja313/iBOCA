@@ -40,9 +40,9 @@ class ResultsHeaderSectionView: UITableViewHeaderFooterView {
             isCollapse      = results.collapsed
             lbTestName.text = results.name ?? ""
             lbTime.text     = results.elapsedTime
-            lbRound.text    = "1 round"
+            lbRound.text    = results.numOfRounds
             lbNumOfErrors.text      = results.numOfErrors
-            lbNumOfCorrects.text    = "4 Corrects"
+            lbNumOfCorrects.text    = results.numOfCorrects
         }
     }
     

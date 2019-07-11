@@ -36,8 +36,12 @@ class ResultsViewController: ViewController {
 
    
     private func configureUI() {
+        
+        
+        tableView.estimatedRowHeight = 40
         tableView.register(UINib.init(nibName: "ResultsHeaderSectionView", bundle: nil), forHeaderFooterViewReuseIdentifier: "ResultsHeaderSectionView")
         tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
+        tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         
@@ -53,7 +57,15 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         let result = resultsArray.get(section)
-        return result.collapsed ? 0 : result.screenshot.count
+        if result.screenshot.count > 0 {
+            return result.collapsed ? 0 : result.screenshot.count
+        }
+        
+        if result.longDescription.count > 0 {
+            return result.collapsed ? 0 : result.longDescription.count
+        }
+        
+        return result.collapsed ? 0 : 1
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -61,8 +73,12 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let result = resultsArray.get(indexPath.section)
+        if result.screenshot.count > 0 {
+            return 190
+        }
         
-        return 190
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -74,8 +90,16 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
-        cell.bindData(result: resultsArray.get(indexPath.section), row: indexPath.row)
+        let result = resultsArray.get(indexPath.section)
+        if result.screenshot.count > 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        }
+        
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+        cell.bindData(result: result, row: indexPath.row)
         
         return cell
     }
@@ -83,7 +107,10 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     
     func resultsHeaderSectionView(didExpand expand: Bool, at section: Int, sender: ResultsHeaderSectionView) {
         resultsArray.get(section).collapsed = !expand
+        
+//        tableView.beginUpdates()
         tableView.reloadSections([section], with: .fade)
+//        tableView.endUpdates()
     }
     
 }
