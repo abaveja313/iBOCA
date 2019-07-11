@@ -520,7 +520,8 @@ extension OrientationTask {
         self.counterTime = CounterTimeView()
         self.vCounterTimer.backgroundColor = .clear
         self.vCounterTimer.addSubview(self.counterTime)
-        
+        self.counterTime.centerXAnchor.constraint(equalTo: self.vCounterTimer.centerXAnchor).isActive = true
+        self.counterTime.centerYAnchor.constraint(equalTo: self.vCounterTimer.centerYAnchor).isActive = true
         self.startTimeTask = Foundation.Date()
         self.timerOrientationTask.invalidate()
         self.runTimer()
