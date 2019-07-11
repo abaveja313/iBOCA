@@ -95,6 +95,14 @@
 		E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9F7FF1DD144A70035FE0B /* VATask.swift */; };
 		E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */; };
 		E5A6AFF0226D717100493187 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6AFEF226D717100493187 /* LocationManager.swift */; };
+		E5B4A7BD22D3201C00CB6218 /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4A7BB22D3201C00CB6218 /* ResultsCell.swift */; };
+		E5B4A7BE22D3201C00CB6218 /* ResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B4A7BC22D3201C00CB6218 /* ResultsCell.xib */; };
+		E5B4A7C022D320D000CB6218 /* ResultsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4A7BF22D320D000CB6218 /* ResultsHeaderView.swift */; };
+		E5B4A7C222D320DA00CB6218 /* ResultsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B4A7C122D320DA00CB6218 /* ResultsHeaderView.xib */; };
+		E5B4A7C422D3382200CB6218 /* ResultsHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4A7C322D3382200CB6218 /* ResultsHeaderSectionView.swift */; };
+		E5B4A7C622D3383E00CB6218 /* ResultsHeaderSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B4A7C522D3383E00CB6218 /* ResultsHeaderSectionView.xib */; };
+		E5B9B93A22D6E49F0091BB0E /* ResultDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9B93822D6E49F0091BB0E /* ResultDetailCell.swift */; };
+		E5B9B93B22D6E49F0091BB0E /* ResultDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B9B93922D6E49F0091BB0E /* ResultDetailCell.xib */; };
 		E5F13D0C22572CDF002FB4FF /* IQTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF622572CDE002FB4FF /* IQTextView.swift */; };
 		E5F13D0D22572CDF002FB4FF /* IQPreviousNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF822572CDE002FB4FF /* IQPreviousNextView.swift */; };
 		E5F13D0E22572CDF002FB4FF /* IQTitleBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F13CF922572CDE002FB4FF /* IQTitleBarButtonItem.swift */; };
@@ -316,6 +324,14 @@
 		E2B9F7FF1DD144A70035FE0B /* VATask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VATask.swift; sourceTree = "<group>"; };
 		E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialSevens.swift; sourceTree = "<group>"; };
 		E5A6AFEF226D717100493187 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		E5B4A7BB22D3201C00CB6218 /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
+		E5B4A7BC22D3201C00CB6218 /* ResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsCell.xib; sourceTree = "<group>"; };
+		E5B4A7BF22D320D000CB6218 /* ResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsHeaderView.swift; sourceTree = "<group>"; };
+		E5B4A7C122D320DA00CB6218 /* ResultsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsHeaderView.xib; sourceTree = "<group>"; };
+		E5B4A7C322D3382200CB6218 /* ResultsHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsHeaderSectionView.swift; sourceTree = "<group>"; };
+		E5B4A7C522D3383E00CB6218 /* ResultsHeaderSectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsHeaderSectionView.xib; sourceTree = "<group>"; };
+		E5B9B93822D6E49F0091BB0E /* ResultDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailCell.swift; sourceTree = "<group>"; };
+		E5B9B93922D6E49F0091BB0E /* ResultDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultDetailCell.xib; sourceTree = "<group>"; };
 		E5F13CF622572CDE002FB4FF /* IQTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQTextView.swift; sourceTree = "<group>"; };
 		E5F13CF822572CDE002FB4FF /* IQPreviousNextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQPreviousNextView.swift; sourceTree = "<group>"; };
 		E5F13CF922572CDE002FB4FF /* IQTitleBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQTitleBarButtonItem.swift; sourceTree = "<group>"; };
@@ -651,6 +667,7 @@
 		4A64C08F22C4BCE5005A6F94 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E5B4A7B522D31FE700CB6218 /* Results */,
 				B104C0EE22D47AC300EB24F9 /* VACell */,
 				0E77854722CF3B550082794B /* Demographics */,
 				0EB10B4922C99BCF001997BB /* SimpleMemoryTask */,
@@ -731,6 +748,21 @@
 				E5A6AFEF226D717100493187 /* LocationManager.swift */,
 			);
 			name = Manager;
+			sourceTree = "<group>";
+		};
+		E5B4A7B522D31FE700CB6218 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				E5B4A7BB22D3201C00CB6218 /* ResultsCell.swift */,
+				E5B4A7BC22D3201C00CB6218 /* ResultsCell.xib */,
+				E5B4A7BF22D320D000CB6218 /* ResultsHeaderView.swift */,
+				E5B4A7C122D320DA00CB6218 /* ResultsHeaderView.xib */,
+				E5B4A7C322D3382200CB6218 /* ResultsHeaderSectionView.swift */,
+				E5B4A7C522D3383E00CB6218 /* ResultsHeaderSectionView.xib */,
+				E5B9B93822D6E49F0091BB0E /* ResultDetailCell.swift */,
+				E5B9B93922D6E49F0091BB0E /* ResultDetailCell.xib */,
+			);
+			path = Results;
 			sourceTree = "<group>";
 		};
 		E5F13CF322572CA0002FB4FF /* ExternalLib */ = {
@@ -1079,16 +1111,20 @@
 				4A328A6A22C47B9100034075 /* Montserrat-Italic.ttf in Resources */,
 				0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */,
 				4A328A7822C47B9100034075 /* Montserrat-Light.ttf in Resources */,
+				E5B4A7BE22D3201C00CB6218 /* ResultsCell.xib in Resources */,
+				E5B4A7C222D320DA00CB6218 /* ResultsHeaderView.xib in Resources */,
 				4A328A7122C47B9100034075 /* Montserrat-ThinItalic.ttf in Resources */,
 				1BC2DFF41D4F821F0020D430 /* Main.storyboard in Resources */,
 				4A328A6D22C47B9100034075 /* Montserrat-BlackItalic.ttf in Resources */,
 				4A328A6E22C47B9100034075 /* Montserrat-Medium.ttf in Resources */,
+				E5B4A7C622D3383E00CB6218 /* ResultsHeaderSectionView.xib in Resources */,
 				E5F13D1522572CDF002FB4FF /* IQKeyboardManager.bundle in Resources */,
 				4A328A7322C47B9100034075 /* Montserrat-ExtraLightItalic.ttf in Resources */,
 				E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */,
 				4A328A7022C47B9100034075 /* Montserrat-SemiBold.ttf in Resources */,
 				4A328A7722C47B9100034075 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				0E77854B22CF3B8B0082794B /* DemographicsCell.xib in Resources */,
+				E5B9B93B22D6E49F0091BB0E /* ResultDetailCell.xib in Resources */,
 				4A328A6922C47B9100034075 /* Montserrat-Black.ttf in Resources */,
 				B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */,
 				4A328A7522C47B9100034075 /* Montserrat-Bold.ttf in Resources */,
@@ -1127,6 +1163,7 @@
 				B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */,
 				4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */,
 				E27BA37F1D523B8400619C07 /* BackwardDigitSpan.swift in Sources */,
+				E5B4A7C422D3382200CB6218 /* ResultsHeaderSectionView.swift in Sources */,
 				E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */,
 				1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */,
 				E5F13D1B22572CDF002FB4FF /* IQUIView+Hierarchy.swift in Sources */,
@@ -1156,7 +1193,9 @@
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
 				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
+				E5B9B93A22D6E49F0091BB0E /* ResultDetailCell.swift in Sources */,
 				F24E6E6E1E1BC2C300E29995 /* AllResults.swift in Sources */,
+				E5B4A7C022D320D000CB6218 /* ResultsHeaderView.swift in Sources */,
 				0E3E1DBE22C5C983008E69EC /* LevelCell.swift in Sources */,
 				F261D4E81E3E33D00039A545 /* DrawingViewTrails.swift in Sources */,
 				0E1A22DA22C4678A00C8CFDF /* UIButtonExtensions.swift in Sources */,
@@ -1187,6 +1226,7 @@
 				0ECA221B22D5CE04004FF23F /* DropDownCell.swift in Sources */,
 				E5F13D0F22572CDF002FB4FF /* IQBarButtonItem.swift in Sources */,
 				F27728A61E33C91A004F8A6E /* MainViewController.swift in Sources */,
+				E5B4A7BD22D3201C00CB6218 /* ResultsCell.swift in Sources */,
 				0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */,
 				F239513B1EFFE6A1004B09E5 /* PatiantID.swift in Sources */,
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,

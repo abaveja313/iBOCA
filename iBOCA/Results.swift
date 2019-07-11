@@ -23,9 +23,45 @@ class Results: NSObject {
     
     var collapsed : Bool = true // for use by the View Controller
     
+
+    var elapsedTime: String {
+        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
+        let duration = Int(elapsedTime)
+        let secondString = duration <= 1 ? "sec" : "secs"
+        return "\(duration) \(secondString)"
+    }
+    
+    var numOfErrors: String {
+        if numErrors == 0 || numErrors == 1 {
+            return "\(numErrors) Error"
+        }
+        
+        return "\(numErrors) Errors"
+    }
+
+    var numOfCorrects: String {
+        guard numCorrects != -1 else { return "" }
+        if numCorrects <= 1 {
+            return "\(numCorrects) Correct"
+        }
+        
+        return "\(numCorrects) Corrects"
+    }
+    
+    var numOfRounds: String {
+        guard let rounds = rounds else {return ""}
+        
+        if rounds <= 1 {
+            return "\(rounds) round"
+        }
+        
+        return "\(round) rounds"
+    }
+    
     var rounds: Int?
     var numCorrects: Int = -1
     var originalImages: [String]?
+
     
     // Constructor
     func Results(_ nm:String, startTime:Foundation.Date, endTime:Foundation.Date) {
