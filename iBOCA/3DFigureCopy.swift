@@ -167,7 +167,25 @@ class ThreeDFigureCopy: ViewController {
         if self.curr != 0 {
             self.saveResult()
         }
-        self.dismiss(animated: true, completion: nil)
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func actionBack(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     fileprivate func saveResult() {

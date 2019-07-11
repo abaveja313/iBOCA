@@ -168,11 +168,26 @@ class DigitBase: ViewController {
 //        base!.DoStart()
     }
     
-    @IBAction func EndPressed(_ sender: UIButton) {
+    @IBAction func actionBack(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func actionQuit(_ sender: UIButton) {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
-        base!.DoEnd()
+        
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
             self.present(vc, animated: true, completion: nil)

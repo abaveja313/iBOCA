@@ -137,13 +137,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
-        } else {
-            totalTime = 300
-        }
-        
         self.setupView()
         setupCounterTimeView()
         
@@ -225,10 +218,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
         if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
             self.delayLabel.text = "Recommended Delay : \((delayTime as! Int) / 60) minute"
         } else {
-            totalTime = 300
             self.delayLabel.text = "Recommended Delay : 5 minute"
         }
         
@@ -296,12 +287,20 @@ class VATask: ViewController, UIPickerViewDelegate {
         print("in delay...")
         afterBreakVA = true
         
-        startButton.removeTarget(self, action: nil, for:.allEvents)
-        startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+        if let delayTimes = UserDefaults.standard.object(forKey: "DropDownTime") {
+            delayTime = (delayTimes as? Double)!
+            totalTime = delayTimes as? Int
+        } else {
+            delayTime = 300
+            totalTime = 300
+        }
         
         timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerVA.fire()
         startTimeVA = NSDate.timeIntervalSinceReferenceDate
+        
+        startButton.removeTarget(self, action: nil, for:.allEvents)
+        startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
     }
     
     fileprivate func updateInDelay(_ timer: Timer) {
@@ -328,6 +327,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @objc fileprivate func updateTimeDecreases(timer:Timer) {
         timerLabel.text = "\(timeFormatted(totalTime))"
+        
         if totalTime != 0 {
             totalTime -= 1
         } else {
@@ -337,11 +337,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     fileprivate func endTimer() {
         timerVA.invalidate()
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
-        } else {
-            totalTime = 300
-        }
         self.resumeTask()
     }
     
@@ -356,11 +351,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isRecalledTestMode = true
         self.isRecommendDelayHidden(true)
         
-        if let delayTimes = UserDefaults.standard.object(forKey: "DropDownTime") {
-            delayTime = (delayTimes as! Double) - Double(self.totalTime)
-        } else {
-            delayTime = 300.0 - Double(self.totalTime)
-        }
+        delayTime = delayTime - Double(self.totalTime)
         
         timerVA.invalidate()
         
@@ -373,9 +364,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func recall() {
-//        correct.isHidden = false
-//        incorrect.isHidden = false
-//        dk.isHidden = false
         
         testCount = 0
         
@@ -481,14 +469,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isResultViewHidden(false)
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-//        self.startNewButton.isHidden = false
-//        self.startNewButton.addTarget(self, action: #selector(startAlert), for: .touchUpInside)
-        
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
-        } else {
-            totalTime = 300
-        }
         
         result.endTime = Foundation.Date()
         
@@ -657,12 +637,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         timerVA.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
-        } else {
-            totalTime = 300
-        }
         afterBreakVA = false
+        
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func correctButton(_ sender: Any) {
@@ -711,11 +690,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         timerVA.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
-            totalTime = delayTime as? Int
-        } else {
-            totalTime = 300
-        }
         afterBreakVA = false
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
@@ -724,6 +698,14 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func actionReset(_ sender: Any) {
+        isTaskViewHidden(true)
+        isImageViewHidden(true)
+        isRecommendDelayHidden(true)
+        isRememberAgainViewHidden(true)
+        isViewRegconizeHidden(true)
+        isMissingItemViewHidden(true)
+        isResultViewHidden(true)
+        isDropDownViewHidden(true)
         self.startNewTask()
     }
     
