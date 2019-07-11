@@ -24,6 +24,7 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         videoName = "sample-test-intro"
         self.setupView()
+        self.testId = UserDefaults.standard.string(forKey: "testId")
     }
     
     private func stopVideo() {
@@ -54,6 +55,7 @@ class IntroViewController: UIViewController {
         switch testId {
         case "ForwardDigitSpan", "BackwardDigitSpan", "SerialSeven":
             testName = testId
+            UserDefaults.standard.set(testId, forKey: "testId")
             self.testId = "digit-base"
         case "ForwardSpatialSpan", "BackwardSpatialSpan":
             testName = testId
@@ -88,6 +90,8 @@ extension IntroViewController {
         
         self.startButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
         self.startButton.setTitle("START YOUR TEST", for: .normal)
+        self.startButton.layer.cornerRadius = 8
+        self.startButton.layer.masksToBounds = true
     }
 }
 

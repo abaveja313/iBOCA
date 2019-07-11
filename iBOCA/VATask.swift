@@ -638,6 +638,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
+        
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func correctButton(_ sender: Any) {

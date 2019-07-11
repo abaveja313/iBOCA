@@ -174,10 +174,15 @@ class PicturesViewController: ViewController {
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
+        self.view.endEditing(true)
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        self.view.endEditing(true)
-        Status[TestNampingPictures] = TestStatus.NotStarted
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     

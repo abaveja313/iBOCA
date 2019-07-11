@@ -413,7 +413,8 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
             performSegue(withIdentifier: item.segueID, sender: nil)
         } else {
             if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-                vc.testId = item.segueID
+                
+                UserDefaults.standard.set(item.segueID, forKey: "testId")
                 self.present(vc, animated: true, completion: nil)
             }
         }
