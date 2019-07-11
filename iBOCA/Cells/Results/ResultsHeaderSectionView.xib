@@ -49,8 +49,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39q-Ti-GpY">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3D Figure Copy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ID0-gX-1BP">
-                            <rect key="frame" x="24" y="0.0" width="216" height="40"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3D Figure Copy" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ID0-gX-1BP">
+                            <rect key="frame" x="24" y="8" width="216" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -73,8 +73,8 @@
                         <constraint firstAttribute="trailing" secondItem="g2k-sv-ORX" secondAttribute="trailing" id="Z1x-Po-UXz"/>
                         <constraint firstAttribute="bottom" secondItem="g2k-sv-ORX" secondAttribute="bottom" id="k01-md-T06"/>
                         <constraint firstAttribute="width" constant="240" id="wuE-G6-JdU"/>
-                        <constraint firstAttribute="bottom" secondItem="ID0-gX-1BP" secondAttribute="bottom" id="wvZ-yP-2T6"/>
-                        <constraint firstItem="ID0-gX-1BP" firstAttribute="top" secondItem="39q-Ti-GpY" secondAttribute="top" id="xWJ-Jf-tWO"/>
+                        <constraint firstAttribute="bottom" secondItem="ID0-gX-1BP" secondAttribute="bottom" constant="8" id="wvZ-yP-2T6"/>
+                        <constraint firstItem="ID0-gX-1BP" firstAttribute="top" secondItem="39q-Ti-GpY" secondAttribute="top" constant="8" id="xWJ-Jf-tWO"/>
                         <constraint firstItem="ID0-gX-1BP" firstAttribute="leading" secondItem="39q-Ti-GpY" secondAttribute="leading" constant="24" id="zYE-Kw-xGq"/>
                     </constraints>
                 </view>

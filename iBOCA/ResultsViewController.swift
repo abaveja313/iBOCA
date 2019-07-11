@@ -11,6 +11,12 @@ import UIKit
 class ResultsViewController: ViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var container: UIView!
+    @IBOutlet weak var lbBack: UILabel!
+    @IBOutlet weak var lbResult: UILabel!
+    @IBOutlet weak var shadowContainer: UIView!
+    
+    
     
     private var headerView: UIView?
     
@@ -36,15 +42,25 @@ class ResultsViewController: ViewController {
 
    
     private func configureUI() {
+        lbBack.textColor    = Color.color(hexString: "013AA5")
+        lbBack.font         = Font.font(name: Font.Montserrat.semiBold, size: 28)
+        lbResult.textColor  = Color.color(hexString: "013AA5")
+        lbResult.font       = Font.font(name: Font.Montserrat.semiBold, size: 28)
+        container.layer.cornerRadius = 8
         
+        shadowContainer.layer.cornerRadius = 8.0
+        shadowContainer.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        shadowContainer.layer.shadowOpacity = 1.0
+        shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 2)
+        shadowContainer.layer.shadowRadius = 10 / 2.0
+        shadowContainer.layer.shadowPath = nil
+        shadowContainer.layer.masksToBounds = false
         
+        tableView.estimatedSectionHeaderHeight = 40
         tableView.estimatedRowHeight = 40
-        tableView.register(UINib.init(nibName: "ResultsHeaderSectionView", bundle: nil), forHeaderFooterViewReuseIdentifier: "ResultsHeaderSectionView")
+        tableView.register(UINib.init(nibName: ResultsHeaderSectionView.identifier(), bundle: nil), forHeaderFooterViewReuseIdentifier: ResultsHeaderSectionView.identifier())
         tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        
     }
 
 }
@@ -69,7 +85,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
@@ -108,9 +124,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     func resultsHeaderSectionView(didExpand expand: Bool, at section: Int, sender: ResultsHeaderSectionView) {
         resultsArray.get(section).collapsed = !expand
         
-//        tableView.beginUpdates()
         tableView.reloadSections([section], with: .fade)
-//        tableView.endUpdates()
     }
     
 }
@@ -140,10 +154,6 @@ extension UITableView {
         headerView.frame = frame
         
         self.tableHeaderView = headerView
-        
-//        headerView.removeConstraints(temporaryWidthConstraints)
-//        headerView.translatesAutoresizingMaskIntoConstraints = true
-        
     }
 }
 
