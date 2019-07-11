@@ -8,14 +8,13 @@
 
 import Foundation
 import UIKit
-
+let PracticeTests: (String, [(String, Int, Int)]) = ("Practice",[("1", 810, 280),
+                                                                ("a", 710, 245),
+                                                                ("2", 420, 250),
+                                                                ("b", 300, 130),
+                                                                ("3", 375, 380)])
 let TrailsTests : [(String, [(String, Int, Int)])] =
-    [("Practice",[("1", 810, 280),
-                  ("a", 710, 245),
-                  ("2", 420, 250),
-                  ("b", 300, 130),
-                  ("3", 375, 380)]),
-     ("Trails B0", [("1", 710, 380),
+    [("Trails B0", [("1", 710, 380),
                    ("a", 900, 380),
                    ("2", 970, 565),
                    ("b", 500, 580),

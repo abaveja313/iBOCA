@@ -20,6 +20,37 @@ var numBubbles = 0
 
 class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
+    @IBOutlet weak var vBack: UIView!
+    @IBOutlet weak var lblBack: UILabel!
+    @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var vTaskShadow: UIView!
+    @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var lblDesc: UILabel!
+    
+    @IBOutlet weak var vGroupChosseTheTest: UIView!
+    @IBOutlet weak var lblTitleChooseTheTest: UILabel!
+    @IBOutlet weak var vChooseTheTest: UIView!
+    @IBOutlet weak var lblChooseTheTest: UILabel!
+    @IBOutlet weak var btnChooseTheTest: UIButton!
+    
+    @IBOutlet weak var vGroupChooseNumberOfPoints: UIView!
+    @IBOutlet weak var lblTitleChooseNumberOfPoints: UILabel!
+    @IBOutlet weak var vChooseNumberOfPoints: UIView!
+    @IBOutlet weak var lblChooseNumberOfPoints: UILabel!
+    @IBOutlet weak var btnChooseNumberOfPoints: UIButton!
+    
+    @IBOutlet weak var btnStartTask: GradientButton!
+    
+    var dropdownChooseTheTest: DropDown!
+    var dropdownChooseNumberOfPoints: DropDown!
+    
+    var maxNumberOfPoints: Int = 0
+    
+    var arrNumberOfPoints: [String] = [String]()
+    
+    //============
+    
     var drawingView: DrawingViewTrails!
     var imageView: UIImageView!
     
@@ -40,9 +71,6 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var resultsLabel: UILabel!
     
-    
-    
-    
     @IBAction func StartButton(sender: AnyObject) {
         testPicker.isHidden = true
         
@@ -58,6 +86,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         for test in TrailsTests {
             TestTypes.append(test.0)
         }
+        
         testPicker.delegate = self
         testPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
         selectedTest = testPicker.selectedRow(inComponent: 0)
@@ -77,6 +106,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         
         self.title = TestTypes[selectedTest]
+        
+        self.setupView()
     }
     
     
@@ -200,6 +231,28 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func btnBackTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func btnChooseTheTestTapped(_ sender: UIButton) {
+        self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.dropdownChooseTheTest.show()
+        // Update state selected first
+        if let item = self.lblChooseTheTest.text, let idx = self.TestTypes.index(of: item) {
+            self.dropdownChooseTheTest.selectRow(idx)
+        }
+    }
+    
+    @IBAction func btnChooseNumberOfPointsTapped(_ sender: UIButton) {
+        self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.dropdownChooseNumberOfPoints.show()
+    }
+    
+    @IBAction func btnStartTaskTapped(_ sender: GradientButton) {
+        
+    }
+    
     func update(timer: Timer) {
         if stopTrailsA == false {
             let currTime = NSDate.timeIntervalSinceReferenceDate
@@ -282,7 +335,6 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         bubbleColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
     }
     
-    
     func drawCustomImage(size: CGSize) -> UIImage {
         // Setup our context
         //let bounds = CGRect(origin: CGPoint.zero, size: size)
@@ -303,4 +355,171 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         return image!
     }
     
+}
+// MARK: - Setup Views
+extension TrailsAViewController {
+    fileprivate func setupView() {
+        // View Back
+        self.lblBack.addTextSpacing(-0.56)
+        self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        self.btnBack.tintColor = .clear
+        
+        // View Task Shadow
+        self.vTaskShadow.layer.cornerRadius = 8.0
+        self.vTaskShadow.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.vTaskShadow.layer.shadowOpacity = 1.0
+        self.vTaskShadow.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vTaskShadow.layer.shadowRadius = 10 / 2.0
+        self.vTaskShadow.layer.shadowPath = nil
+        self.vTaskShadow.layer.masksToBounds = false
+        
+        // View Task
+        self.vTask.clipsToBounds = true
+        self.vTask.backgroundColor = UIColor.white
+        self.vTask.layer.cornerRadius = 8.0
+        
+        // View Begin Task
+        self.setupViewBegin()
+    }
+    
+    fileprivate func setupViewBegin() {
+        self.lblDesc.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt (describtion how to play the test)"
+        self.lblDesc.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblDesc.addTextSpacing(-0.36)
+        self.lblDesc.addLineSpacing(10.0)
+        self.lblDesc.textAlignment = .center
+        
+        self.setupViewGroupChooseTheTest()
+        
+        self.setupViewGroupChooseNumberOfPoints()
+        
+        self.btnStartTask.setTitle(title: "START", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
+        self.btnStartTask.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.btnStartTask.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.btnStartTask.render()
+        self.btnStartTask.addTextSpacing(-0.44)
+    }
+    
+    fileprivate func setupViewGroupChooseTheTest() {
+        selectedTest = 0
+        
+        self.lblTitleChooseTheTest.text = "Choose the test"
+        self.lblTitleChooseTheTest.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.lblTitleChooseTheTest.addTextSpacing(-0.32)
+        self.lblTitleChooseTheTest.textColor = Color.color(hexString: "#8A9199")
+        self.lblTitleChooseTheTest.textAlignment = .left
+        
+        self.vChooseTheTest.clipsToBounds = true
+        self.vChooseTheTest.backgroundColor = Color.color(hexString: "#F7F7F7")
+        self.vChooseTheTest.layer.cornerRadius = 5.0
+        self.vChooseTheTest.layer.borderWidth = 1.0
+        self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        
+        self.lblChooseTheTest.addTextSpacing(-0.36)
+        self.lblChooseTheTest.text = self.TestTypes[selectedTest]
+        self.lblChooseTheTest.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblChooseTheTest.textColor = .black
+        self.lblChooseTheTest.textAlignment = .left
+        self.btnChooseTheTest.tintColor = .clear
+        self.btnChooseTheTest.setTitleColor(UIColor.clear, for: .normal)
+        
+        // MARK: - Config Choose The Test
+        DPDConstant.UI.BorderWidth = 1.0
+        DPDConstant.UI.BorderColor = Color.color(hexString: "#649BFF").cgColor
+        self.dropdownChooseTheTest = DropDown()
+        self.dropdownChooseTheTest.anchorView = self.vGroupChosseTheTest
+        self.dropdownChooseTheTest.bottomOffset = CGPoint(x: 0, y: self.vGroupChosseTheTest.bounds.height + 4.0)
+        self.dropdownChooseTheTest.dataSource = self.TestTypes
+        self.dropdownChooseTheTest.dropDownHeight = 118.0
+        
+        let appearance = DropDown.appearance()
+        appearance.cellHeight = 118.0/3.0
+        appearance.textFont = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        appearance.backgroundColor = UIColor.white
+        appearance.selectionBackgroundColor = Color.color(hexString: "#EAEAEA")
+        appearance.textColor = .black
+        appearance.shadowOpacity = 0
+        
+        // Action triggered on selection
+        self.dropdownChooseTheTest.selectionAction = { [weak self] (index, item) in
+            self?.vChooseTheTest.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+            self?.lblChooseTheTest.text = item
+            
+            // Update dataSource dropdown number of points
+            selectedTest = index
+            self?.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
+            self?.arrNumberOfPoints.removeAll()
+            for i in 0..<self!.maxNumberOfPoints {
+                self?.arrNumberOfPoints.append("\(i+2)")
+            }
+            
+            let idxNumber = TrailsTests[selectedTest].1.count - 3
+            self?.lblChooseNumberOfPoints.text = self?.arrNumberOfPoints[idxNumber]
+            self?.dropdownChooseNumberOfPoints.dataSource = (self?.arrNumberOfPoints)!
+            self?.dropdownChooseNumberOfPoints.selectRow(idxNumber)
+            self?.dropdownChooseNumberOfPoints.reloadAllComponents()
+            print("ChooseTheTest: \(item)")
+            print("NumberOfPoints: \(idxNumber + 2)")
+        }
+        
+        self.dropdownChooseTheTest.cancelAction = { [unowned self] in
+            // You could for example deselect the selected item
+            self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        }
+        // End Config Choose The Test
+        
+        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
+        self.arrNumberOfPoints.removeAll()
+        for i in 0..<self.maxNumberOfPoints {
+            self.arrNumberOfPoints.append("\(i+2)")
+        }
+    }
+    
+    fileprivate func setupViewGroupChooseNumberOfPoints() {
+        self.lblTitleChooseNumberOfPoints.text = "Choose number of points"
+        self.lblTitleChooseNumberOfPoints.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.lblTitleChooseNumberOfPoints.addTextSpacing(-0.32)
+        self.lblTitleChooseNumberOfPoints.textColor = Color.color(hexString: "#8A9199")
+        self.lblTitleChooseNumberOfPoints.textAlignment = .left
+        
+        self.vChooseNumberOfPoints.clipsToBounds = true
+        self.vChooseNumberOfPoints.backgroundColor = Color.color(hexString: "#F7F7F7")
+        self.vChooseNumberOfPoints.layer.cornerRadius = 5.0
+        self.vChooseNumberOfPoints.layer.borderWidth = 1.0
+        self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        
+        let idxNumber = TrailsTests[selectedTest].1.count - 3
+        self.lblChooseNumberOfPoints.addTextSpacing(-0.36)
+        self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
+        self.lblChooseNumberOfPoints.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblChooseNumberOfPoints.textColor = .black
+        self.lblChooseNumberOfPoints.textAlignment = .left
+        self.btnChooseNumberOfPoints.tintColor = .clear
+        self.btnChooseNumberOfPoints.setTitleColor(UIColor.clear, for: .normal)
+        
+        // MARK: - Config Choose Number Of Points
+        self.dropdownChooseNumberOfPoints = DropDown()
+        self.dropdownChooseNumberOfPoints.anchorView = self.vGroupChooseNumberOfPoints
+        self.dropdownChooseNumberOfPoints.bottomOffset = CGPoint(x: 0, y: self.vGroupChooseNumberOfPoints.bounds.height + 4.0)
+        self.dropdownChooseNumberOfPoints.direction = .bottom
+        self.dropdownChooseNumberOfPoints.dataSource = self.arrNumberOfPoints
+        self.dropdownChooseNumberOfPoints.dropDownHeight = 118.0
+        self.dropdownChooseNumberOfPoints.selectRow(idxNumber)
+        self.dropdownChooseNumberOfPoints.setNeedsUpdateConstraints()
+        
+        // Action triggered on selection
+        self.dropdownChooseNumberOfPoints.selectionAction = { [weak self] (index, item) in
+            self?.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+            self?.lblChooseNumberOfPoints.text = item
+            numBubbles = index + 2
+            print("numBubbles: \(numBubbles)")
+        }
+        
+        self.dropdownChooseNumberOfPoints.cancelAction = { [unowned self] in
+            // You could for example deselect the selected item
+            self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        }
+        // End Config Choose Number Of Points
+    }
 }

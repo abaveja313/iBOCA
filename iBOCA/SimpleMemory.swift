@@ -471,6 +471,10 @@ class SimpleMemoryTask: ViewController {
     @IBAction func btnChooseDelayTimeTapped(_ sender: Any) {
         self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.minuteDropDown.show()
+        // Update state selected first
+        if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
+            self.minuteDropDown.selectRow(idx)
+        }
     }
     
     @IBAction func btnSetDelayTimeTapped(_ sender: Any) {
@@ -712,6 +716,7 @@ extension SimpleMemoryTask {
         self.minuteDropDown = DropDown()
         self.minuteDropDown.anchorView = self.vSetDelayTime
         self.minuteDropDown.bottomOffset = CGPoint(x: 0, y: self.vSetDelayTime.bounds.height + 4.0)
+        self.minuteDropDown.dropDownHeight = 118.0
         self.minuteDropDown.dataSource = self.dataMinutesDropDown
         
         let appearance = DropDown.appearance()
