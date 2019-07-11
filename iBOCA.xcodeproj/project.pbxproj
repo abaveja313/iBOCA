@@ -82,6 +82,10 @@
 		B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD0E922CDE992008A195C /* String+Extensions.swift */; };
 		B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10BD11822CE212A008A195C /* NumberKeyboardView.swift */; };
 		B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */; };
+		B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114027522D6D7BA00151AB8 /* IntroViewController.swift */; };
+		B114027822D6DA5E00151AB8 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114027722D6DA5E00151AB8 /* VideoView.swift */; };
+		B114027A22D6E5D800151AB8 /* sample-test-intro.mov in Resources */ = {isa = PBXBuildFile; fileRef = B114027922D6E5D700151AB8 /* sample-test-intro.mov */; };
+		B114027C22D70D7600151AB8 /* TestId.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114027B22D70D7600151AB8 /* TestId.swift */; };
 		B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D135F522D5D90500E48476 /* VADropDownCell.swift */; };
 		B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D135F622D5D90500E48476 /* VADropDownCell.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
@@ -303,6 +307,10 @@
 		B10BD0E922CDE992008A195C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B10BD11822CE212A008A195C /* NumberKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberKeyboardView.swift; sourceTree = "<group>"; };
 		B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberKeyboardView.xib; sourceTree = "<group>"; };
+		B114027522D6D7BA00151AB8 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		B114027722D6DA5E00151AB8 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		B114027922D6E5D700151AB8 /* sample-test-intro.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = "sample-test-intro.mov"; path = "iBOCA/Assets.xcassets/Intro/sample-test-intro.dataset/sample-test-intro.mov"; sourceTree = "<group>"; };
+		B114027B22D70D7600151AB8 /* TestId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestId.swift; sourceTree = "<group>"; };
 		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
 		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
@@ -437,6 +445,7 @@
 				0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */,
 				0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */,
 				4AF58E4922CA08B90021E17C /* ErrorMessage.swift */,
+				B114027B22D70D7600151AB8 /* TestId.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -523,6 +532,7 @@
 		1BC2DFE21D4F821F0020D430 = {
 			isa = PBXGroup;
 			children = (
+				B114027922D6E5D700151AB8 /* sample-test-intro.mov */,
 				F21C1FF21F01B95D00523D85 /* CryptoSwift.xcodeproj */,
 				1BC2DFED1D4F821F0020D430 /* iBOCA */,
 				1BC2E0021D4F821F0020D430 /* iBOCATests */,
@@ -559,6 +569,7 @@
 				E5A6AFE9226D715400493187 /* Manager */,
 				E5F13CF322572CA0002FB4FF /* ExternalLib */,
 				E5F13D26225736C3002FB4FF /* Picker */,
+				B114026F22D6D79100151AB8 /* Intro */,
 				1BC2DFFA1D4F821F0020D430 /* Info.plist */,
 				1BC2DFF21D4F821F0020D430 /* Main.storyboard */,
 				1BC2DFF71D4F821F0020D430 /* LaunchScreen.storyboard */,
@@ -711,6 +722,15 @@
 				B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */,
 			);
 			name = NumberKeyboardView;
+			sourceTree = "<group>";
+		};
+		B114026F22D6D79100151AB8 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				B114027522D6D7BA00151AB8 /* IntroViewController.swift */,
+				B114027722D6DA5E00151AB8 /* VideoView.swift */,
+			);
+			name = Intro;
 			sourceTree = "<group>";
 		};
 		E2037F1B1E47E7F000EE13EB /* Pictures */ = {
@@ -1057,6 +1077,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B114027A22D6E5D800151AB8 /* sample-test-intro.mov in Resources */,
 				B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */,
 				0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */,
 				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
@@ -1133,6 +1154,7 @@
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
 				B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */,
 				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
+				B114027C22D70D7600151AB8 /* TestId.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
 				B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */,
 				43343D461E3E66BC001779AC /* TapInOrderBackwardsViewController.swift in Sources */,
@@ -1169,6 +1191,7 @@
 				4A70EDD022CEE8B000E8E533 /* CounterTimeView.swift in Sources */,
 				4A6963C122C615CD0084E5E1 /* CustomAlertView.swift in Sources */,
 				0E1A22D722C4659300C8CFDF /* BaseButton.swift in Sources */,
+				B114027822D6DA5E00151AB8 /* VideoView.swift in Sources */,
 				E5F13D1222572CDF002FB4FF /* IQInvocation.swift in Sources */,
 				67E389232283D32600A8277C /* SMCell.swift in Sources */,
 				E5F13D1622572CDF002FB4FF /* IQKeyboardReturnKeyHandler.swift in Sources */,
@@ -1196,6 +1219,7 @@
 				0ECA221C22D5CE04004FF23F /* DropDown+Appearance.swift in Sources */,
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
+				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
 				F24E6E701E1BC2C300E29995 /* ScaleView.swift in Sources */,
 				0ECA221722D5CE04004FF23F /* DPDKeyboardListener.swift in Sources */,
