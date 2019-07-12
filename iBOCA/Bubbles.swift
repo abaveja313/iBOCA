@@ -8,11 +8,11 @@
 
 import Foundation
 import UIKit
-let PracticeTests: (String, [(String, Int, Int)]) = ("Practice",[("1", 810, 280),
-                                                                ("a", 710, 245),
-                                                                ("2", 420, 250),
-                                                                ("b", 300, 130),
-                                                                ("3", 375, 380)])
+let PracticeTests: (String, [(String, Int, Int)]) = ("Practice",[("1", 810, 230),
+                                                                ("a", 710, 195),
+                                                                ("2", 420, 200),
+                                                                ("b", 300, 80),
+                                                                ("3", 375, 330)])
 let TrailsTests : [(String, [(String, Int, Int)])] =
     [("Trails B0", [("1", 710, 380),
                    ("a", 900, 380),
@@ -206,12 +206,12 @@ class BubblesA {
         
         // Check Division by zero
         if (xmax - xmin) != 0 {
-            x = (x - xmin)*(950-40-2*bcount)/(xmax - xmin) + 40 + bcount
+            x = (x - xmin)*(950-60-2*bcount)/(xmax - xmin) + 60 + bcount
         }
         
         // Check Division by zero
         if (ymax - ymin) != 0 {
-            y = (y - ymin)*(580-40-2*bcount)/(ymax - ymin) + 40 + bcount
+            y = (y - ymin)*(580-60-2*bcount)/(ymax - ymin) + 60 + bcount
         }
         
         if xt  {
@@ -220,7 +220,7 @@ class BubblesA {
         if yt {
             y = 625 - y
         }
-        return (coord.0, x, y)
+        return (coord.0, x - 30, y - 50)
     }
     
     
@@ -228,6 +228,26 @@ class BubblesA {
         for i in 0...numBubbles-1 {
             bubblelist.append(TrailsTests[selectedTest].1[i])
         }
+        getrange()
+        bubblelist = bubblelist.map(transform)
+        startTime = Foundation.Date()
+        jsontimes.removeAll()
+        segmenttimes.removeAll()
+        seqCount = 0
+    }
+    
+    init(withPracticeTest isPracticeTest: Bool) {
+        if isPracticeTest == true {
+            for i in 0...3 {
+                bubblelist.append(PracticeTests.1[i])
+            }
+        }
+        else {
+            for i in 0...numBubbles-1 {
+                bubblelist.append(TrailsTests[selectedTest].1[i])
+            }
+        }
+        
         getrange()
         bubblelist = bubblelist.map(transform)
         startTime = Foundation.Date()

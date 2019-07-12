@@ -24,8 +24,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var lblBack: UILabel!
     @IBOutlet weak var btnBack: UIButton!
     
+    @IBOutlet weak var vCounterTimer: UIView!
+    
     @IBOutlet weak var vTaskShadow: UIView!
     @IBOutlet weak var vTask: UIView!
+    @IBOutlet weak var lblTitlePracticeTest: UILabel!
     @IBOutlet weak var lblDesc: UILabel!
     
     @IBOutlet weak var vGroupChosseTheTest: UIView!
@@ -42,6 +45,10 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var btnStartTask: GradientButton!
     
+    @IBOutlet weak var btnReset: GradientButton!
+    
+    @IBOutlet weak var btnQuit: GradientButton!
+    
     var dropdownChooseTheTest: DropDown!
     var dropdownChooseNumberOfPoints: DropDown!
     
@@ -49,7 +56,9 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     var arrNumberOfPoints: [String] = [String]()
     
-    //============
+    var endedPracticeTest = false
+    
+    var counterTime: CounterTimeView!
     
     var drawingView: DrawingViewTrails!
     var imageView: UIImageView!
@@ -59,26 +68,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     var startTime = TimeInterval()
     var startTime2 = Foundation.Date()
     
-    @IBOutlet weak var timerLabel: UILabel!
-    
-    @IBOutlet weak var startButton: UIButton!
-
-    
-    @IBOutlet weak var testPicker: UIPickerView!
     var TestTypes : [String] = []
-    
-    @IBOutlet weak var numBubblesPicker: UIPickerView!
-    
-    @IBOutlet weak var resultsLabel: UILabel!
-    
-    @IBAction func StartButton(sender: AnyObject) {
-        testPicker.isHidden = true
-        
-        self.title = TrailsTests[selectedTest].0
-        
-        startTest()
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,37 +77,14 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
             TestTypes.append(test.0)
         }
         
-        testPicker.delegate = self
-        testPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
-        selectedTest = testPicker.selectedRow(inComponent: 0)
-        testPicker.isHidden = false
-        
-        numBubblesPicker.delegate = self
-        numBubblesPicker.transform = CGAffineTransform(scaleX: 0.8, y: 1.0)
-        numBubblesPicker.selectRow(TrailsTests[selectedTest].1.count - 3, inComponent: 0, animated:true)
-        numBubbles = numBubblesPicker.selectedRow(inComponent: 0) + 2
-        numBubblesPicker.isHidden = false
-        
-        
-        startButton.isHidden = false
-
-        timerLabel.text = ""
-        resultsLabel.text = ""
-        
-        
-        self.title = TestTypes[selectedTest]
-        
         self.setupView()
     }
     
     
     func startTest() {
-        startButton.isEnabled = false
-        testPicker.isHidden = true
-        numBubblesPicker.isHidden = true
         ended = false
-
-        self.navigationItem.setHidesBackButton(true, animated:true)
+        
+        self.vCounterTimer.isHidden = false
         
         if drawingView !== nil {
             drawingView.removeFromSuperview()
@@ -132,18 +99,19 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         timedConnectionsA = [Double]()
         
-        let drawViewFrame = CGRect(x: 0.0, y: 135.0, width: view.bounds.width, height: view.bounds.height-135)
-        drawingView = DrawingViewTrails(frame: drawViewFrame)
+        let y = self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
+        let width = self.vTask.frame.size.width
+        let height = self.vTask.frame.size.height - self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
+        let drawViewFrame = CGRect(x: 0.0, y: y, width: width, height: height) //CGRect(x: 0.0, y: 135.0, width: view.bounds.width, height: view.bounds.height-135)
+        drawingView = DrawingViewTrails.init(frame: drawViewFrame, isPracticeTests: false)
         
         print("\(view.bounds.width) \(view.bounds.height)")
         
-        view.addSubview(drawingView)
+        self.vTask.addSubview(drawingView)
         
         drawingView.reset()
         
         startTime2 = Foundation.Date()
-        
-        
         
         startTime = NSDate.timeIntervalSinceReferenceDate
         timedConnectionsA = [Double]()
@@ -179,47 +147,6 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
      done()
      } */
     
-    
-    
-    func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-        if pickerView == testPicker {
-            return TestTypes.count
-        } else  if pickerView == numBubblesPicker {
-            return TrailsTests[selectedTest].1.count - 2
-        } else {
-            return 1
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == testPicker {
-            selectedTest = row
-            numBubblesPicker.reloadAllComponents()
-            return TestTypes[row]
-        } else  if pickerView == numBubblesPicker {
-            numBubbles = row + 2
-            return String(row + 2)
-        } else {
-            return ""
-        }
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == testPicker {
-            selectedTest = row
-            numBubblesPicker.reloadAllComponents()
-            numBubblesPicker.selectRow(TrailsTests[selectedTest].1.count - 3, inComponent: 0, animated:true)
-        } else  if pickerView == numBubblesPicker {
-            numBubbles = row + 2
-        } else  {
-        }
-    }
-    
-    
-    
     /* Not sure how to conver to swift 3 -Saman
      override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
      return UIInterfaceOrientationMask.Landscape
@@ -232,6 +159,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
+        ended = false
+        endedPracticeTest = false
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -247,35 +176,50 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     @IBAction func btnChooseNumberOfPointsTapped(_ sender: UIButton) {
         self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.dropdownChooseNumberOfPoints.show()
+        // Update state selected first
+        if let item = self.lblChooseNumberOfPoints.text, let idx = self.arrNumberOfPoints.index(of: item) {
+            self.dropdownChooseNumberOfPoints.selectRow(idx)
+        }
     }
     
     @IBAction func btnStartTaskTapped(_ sender: GradientButton) {
-        
+        self.lblTitlePracticeTest.isHidden = true
+        // Hidden View Begin Trails
+        self.lblDesc.isHidden = true
+        self.vGroupChosseTheTest.isHidden = true
+        self.vGroupChooseNumberOfPoints.isHidden = true
+        self.btnStartTask.isHidden = true
+        self.startTest()
     }
     
     func update(timer: Timer) {
         if stopTrailsA == false {
-            let currTime = NSDate.timeIntervalSinceReferenceDate
-            var diff: TimeInterval = currTime - startTime
-            
-            timePassedTrailsA = diff
-            
-            let minutes = UInt8(diff / 60.0)
-            
-            diff -= (TimeInterval(minutes)*60.0)
-            
-            let seconds = UInt8(diff)
-            
-            diff = TimeInterval(seconds)
-            
-            let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
-            let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
-            
-            timerLabel.text = "\(strMinutes) : \(strSeconds)"
+            self.counterTime.setTimeWith(startTime: startTime2, currentTime: Foundation.Date())
         }
         else {
             timer.invalidate()
-            done()
+            if self.endedPracticeTest == false {
+                self.lblTitlePracticeTest.isHidden = true
+                self.drawingView.isHidden = true
+                self.drawingView.canDraw = false
+                
+                let confirmAlert = UIAlertController(title: "Confirm", message: "You complete the practice test, continue the trails test.", preferredStyle: .alert)
+                
+                let continueAction = UIAlertAction.init(title: "Continue", style: .default) { (action) in
+                    
+                    self.endedPracticeTest = true
+                    // Show view Trails Task
+                    self.lblDesc.isHidden = false
+                    self.vGroupChosseTheTest.isHidden = false
+                    self.vGroupChooseNumberOfPoints.isHidden = false
+                    self.btnStartTask.isHidden = false
+                }
+                confirmAlert.addAction(continueAction)
+                self.present(confirmAlert, animated: true, completion: nil)
+            }
+            else {
+                done()
+            }
         }
         
     }
@@ -322,15 +266,14 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
             resultsArray.add(result)
             
             Status[TestTrails] = TestStatus.Done
-            testPicker.isHidden = false
-            numBubblesPicker.isHidden = false
+            
+            let completeAlert = UIAlertController(title: "Complete", message: "You complete the trails test.", preferredStyle: .alert)
+            let okAction = UIAlertAction.init(title: "Ok", style: .cancel, handler: nil)
+            completeAlert.addAction(okAction)
+            self.present(completeAlert, animated: true, completion: nil)
         }
         
         displayImgTrailsA = false
-        
-        startButton.isEnabled = true
-        testPicker.isHidden = false
-        numBubblesPicker.isHidden = false
         
         bubbleColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
     }
@@ -345,8 +288,6 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         // Setup complete, do drawing here
         drawingView.drawResultBackground()  //background bubbles
-        
-        
         
         // Drawing complete, retrieve the finished image and cleanup
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -379,11 +320,92 @@ extension TrailsAViewController {
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
         
+        // Practice Test
+        self.practiceTest()
+        
         // View Begin Task
-        self.setupViewBegin()
+        self.setupViewBeginTrails()
+        
+        // View Counter Timer
+        self.setupViewCounterTimer()
+        
+        // Button Reset, Quit
+        self.setupButtonGradient()
     }
     
-    fileprivate func setupViewBegin() {
+    fileprivate func setupButtonGradient() {
+        self.btnQuit.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.btnQuit.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.btnQuit.setupGradient(arrColor: [Color.color(hexString: "#FFAFA6"), Color.color(hexString: "#FE786A")], direction: .topToBottom)
+        self.btnQuit.render()
+        self.btnQuit.addTextSpacing(-0.36)
+        
+        self.btnQuit.isHidden = true
+        
+        self.btnReset.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
+        self.btnReset.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.btnReset.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"), Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.btnReset.render()
+        self.btnReset.addTextSpacing(-0.36)
+        
+        self.btnReset.isHidden = true
+    }
+    
+    fileprivate func practiceTest() {
+        // Hidden View Begin Trails
+        self.lblDesc.isHidden = true
+        self.vGroupChosseTheTest.isHidden = true
+        self.vGroupChooseNumberOfPoints.isHidden = true
+        self.btnStartTask.isHidden = true
+        
+        // Setup Practice Test
+        self.lblTitlePracticeTest.text = "PRACTICE TEST"
+        self.lblTitlePracticeTest.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.lblTitlePracticeTest.textColor = Color.color(hexString: "#013AA5")
+        self.lblTitlePracticeTest.addTextSpacing(-0.44)
+        
+        self.startPracticeTest()
+    }
+    
+    fileprivate func startPracticeTest() {
+        endedPracticeTest = false
+        self.navigationItem.setHidesBackButton(true, animated:true)
+        
+        if drawingView !== nil {
+            drawingView.removeFromSuperview()
+        }
+        
+        if imageView !== nil {
+            imageView.removeFromSuperview()
+            imageView.image = nil
+        }
+        
+        timedConnectionsA = [Double]()
+        
+        let y = self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
+        let width = self.vTask.frame.size.width
+        let height = self.vTask.frame.size.height - self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
+        let drawViewFrame = CGRect(x: 0.0, y: y, width: width, height: height)
+        self.drawingView = DrawingViewTrails.init(frame: drawViewFrame, isPracticeTests: true)
+        self.vTask.addSubview(drawingView)
+        
+        self.drawingView.reset()
+        startTime2 = Foundation.Date()
+        startTime = NSDate.timeIntervalSinceReferenceDate
+        
+        timedConnectionsA = [Double]()
+        stopTrailsA = false
+        displayImgTrailsA = false
+        self.drawingView.canDraw = true
+        bubbleColor = UIColor.red
+        
+        print("Bottom: \(self.vTask.right)")
+        print("Bottom: \(self.vTask.bottom)")
+        
+        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    fileprivate func setupViewBeginTrails() {
         self.lblDesc.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt (describtion how to play the test)"
         self.lblDesc.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.lblDesc.addTextSpacing(-0.36)
@@ -456,9 +478,10 @@ extension TrailsAViewController {
             
             let idxNumber = TrailsTests[selectedTest].1.count - 3
             self?.lblChooseNumberOfPoints.text = self?.arrNumberOfPoints[idxNumber]
+            numBubbles = Int((self?.arrNumberOfPoints[idxNumber])!)!
             self?.dropdownChooseNumberOfPoints.dataSource = (self?.arrNumberOfPoints)!
-            self?.dropdownChooseNumberOfPoints.selectRow(idxNumber)
             self?.dropdownChooseNumberOfPoints.reloadAllComponents()
+            self?.dropdownChooseNumberOfPoints.selectRow(idxNumber)
             print("ChooseTheTest: \(item)")
             print("NumberOfPoints: \(idxNumber + 2)")
         }
@@ -508,6 +531,8 @@ extension TrailsAViewController {
         self.dropdownChooseNumberOfPoints.selectRow(idxNumber)
         self.dropdownChooseNumberOfPoints.setNeedsUpdateConstraints()
         
+        numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
+        
         // Action triggered on selection
         self.dropdownChooseNumberOfPoints.selectionAction = { [weak self] (index, item) in
             self?.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
@@ -521,5 +546,17 @@ extension TrailsAViewController {
             self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
         }
         // End Config Choose Number Of Points
+    }
+    
+    
+    fileprivate func setupViewCounterTimer() {
+        // View Couter Timer
+        self.counterTime = CounterTimeView()
+        self.vCounterTimer.backgroundColor = .clear
+        self.vCounterTimer.addSubview(self.counterTime)
+        self.counterTime.centerXAnchor.constraint(equalTo: self.vCounterTimer.centerXAnchor).isActive = true
+        self.counterTime.centerYAnchor.constraint(equalTo: self.vCounterTimer.centerYAnchor).isActive = true
+        
+        self.vCounterTimer.isHidden = true
     }
 }

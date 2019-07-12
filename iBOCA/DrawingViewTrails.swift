@@ -17,7 +17,9 @@ class DrawingViewTrails: UIView {
     var startTime = Foundation.Date()
     var resultpath: [String:Any] = [:]
     
-    var bubbles = BubblesA()
+    var bubbles: BubblesA!
+    
+    var isPracticeTests: Bool = true
     
     var nextBubb = 0
     
@@ -42,6 +44,13 @@ class DrawingViewTrails: UIView {
         print("Initializing")
     }
     
+    init(frame: CGRect, isPracticeTests: Bool) {
+        super.init(frame: frame)
+        self.bubbles = BubblesA.init(withPracticeTest: isPracticeTests)
+        self.isPracticeTests = isPracticeTests
+        setupView()
+        print("Initializing")
+    }
     
     required init?(coder aDecoder: NSCoder) {
         //fatalError("init(coder:) has not been implemented")
@@ -131,63 +140,85 @@ class DrawingViewTrails: UIView {
         
         let context = UIGraphicsGetCurrentContext();
         
+        // Set background color fill
+        context!.saveGState()
+        context!.setFillColor(Color.color(hexString: "#F5FAFD").cgColor)
+        context!.setStrokeColor(bubbleColor!.cgColor)
+        context!.addArc(center:CGPoint(x:CGFloat(x), y:CGFloat(y)), radius:CGFloat(30.0), startAngle:CGFloat(0), endAngle:CGFloat(Double.pi * 2.0), clockwise:true)
+        context!.fillPath()
+        context!.restoreGState()
+        
+        context!.saveGState()
         // Set the circle outerline-width
         context!.setLineWidth(3.0);
-        
+
         // Set the circle outerline-colour
-        bubbleColor!.set()
-        
+        bubbleColor!.setStroke()
+
         // Create Circle
-        context?.addArc(center:CGPoint(x:CGFloat(x), y:CGFloat(y)), radius:CGFloat(20.0), startAngle:CGFloat(0), endAngle:CGFloat(Double.pi * 2.0), clockwise:true)
-        
+        context?.addArc(center:CGPoint(x:CGFloat(x), y:CGFloat(y)), radius:CGFloat(30.0), startAngle:CGFloat(0), endAngle:CGFloat(Double.pi * 2.0), clockwise:true)
+
         // Draw
-       context!.strokePath()
+        context!.strokePath()
+        context!.restoreGState()
         
         // Now for the text
         
+        
+
         // Flip the context coordinates, in iOS only.
         //CGContextTranslateCTM(context, 0, self.bounds.size.height);
         //CGContextScaleCTM(context, 1.0, -1.0);
-        
-        let aFont = UIFont(name: "Menlo-Bold", size: 24)
+
+        let aFont = Font.font(name: Font.Montserrat.semiBold, size: 22.0)//UIFont(name: "Menlo-Bold", size: 24)
         // create a dictionary of attributes to be applied to the string
-        let attr = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.black]
+        let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
         // create the attributed string
         let text = CFAttributedStringCreate(nil, name as CFString!, attr as CFDictionary!)
         // create the line of text
         let line = CTLineCreateWithAttributedString(text!)
-        
+
        context?.textMatrix = CGAffineTransform(rotationAngle: CGFloat.pi).scaledBy(x: -1, y: 1)
-  
+
         let num = name.characters.count
-        
+
         if num == 1 {
-            context?.textPosition = CGPoint(x:CGFloat(x-7), y:CGFloat(y+8))
+            context?.textPosition = CGPoint(x:CGFloat(x-6), y:CGFloat(y+8))
         }
-            
         else {
-            context?.textPosition = CGPoint(x:CGFloat(x-14), y:CGFloat(y+8))
+            context?.textPosition = CGPoint(x:CGFloat(x-15), y:CGFloat(y+8))
         }
-        
+
         CTLineDraw(line, context!)
-        
+
         if (name == "1") {
-            let aFont = UIFont(name: "Menlo", size: 19)
-            let attr = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.black]
-            let text = CFAttributedStringCreate(nil, "START" as CFString!, attr as CFDictionary!)
+            let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
+            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "Start" as CFString!, attr as CFDictionary!)
             let line = CTLineCreateWithAttributedString(text!)
-           
-            context?.textPosition = CGPoint(x:CGFloat(x-28), y:CGFloat(y+41))
+
+            context?.textPosition = CGPoint(x:CGFloat(x-16), y:CGFloat(y+59))
             CTLineDraw(line, context!)
         }
-        
-        if (TrailsTests[selectedTest].1[numBubbles-1].0 == name) {
-            let aFont = UIFont(name: "Menlo", size: 19)
-            let attr = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.black]
-            let text = CFAttributedStringCreate(nil, "END" as CFString!, attr as CFDictionary!)
-            let line = CTLineCreateWithAttributedString(text!)           
-            
-            context?.textPosition = CGPoint(x:CGFloat(x-16), y:CGFloat(y+41))
+
+        // Practice Tests
+        if self.isPracticeTests == true && name == "b" {
+            let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
+            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "End" as CFString!, attr as CFDictionary!)
+            let line = CTLineCreateWithAttributedString(text!)
+
+            context?.textPosition = CGPoint(x:CGFloat(x-16), y:CGFloat(y+59))
+            CTLineDraw(line, context!)
+        }
+
+        if self.isPracticeTests == false && (TrailsTests[selectedTest].1[numBubbles-1].0 == name) {
+            let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
+            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "End" as CFString!, attr as CFDictionary!)
+            let line = CTLineCreateWithAttributedString(text!)
+
+            context?.textPosition = CGPoint(x:CGFloat(x-16), y:CGFloat(y+59))
             CTLineDraw(line, context!)
         }
     }
