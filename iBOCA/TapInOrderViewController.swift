@@ -261,6 +261,7 @@ class TapInOrderViewController: ViewController {
         //backButton.isEnabled = true
         donetest()
         
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -676,8 +677,13 @@ class TapInOrderViewController: ViewController {
         endButton.isEnabled = false
         resetButton.isEnabled = true
         //backButton.isEnabled = true
-        donetest()
-        self.dismiss(animated: true, completion: nil)
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
+            vc.mode = .patient
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func tapBtnReset(_ sender: Any) {

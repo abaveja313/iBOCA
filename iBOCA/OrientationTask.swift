@@ -275,6 +275,16 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         return true
     }
     
+    @IBAction func actionBack(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.timerOrientationTask.invalidate()
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func DoneButton(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Confirm", message: "Do you really want to complete this test?", preferredStyle: .alert)
         
@@ -283,7 +293,9 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             self.timerOrientationTask.invalidate()
             self.completeTest()
             // Show MainViewController
-            self.dismiss(animated: true, completion: nil)
+            if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+                self.present(vc, animated: true, completion: nil)
+            }
         }
         alert.addAction(noAction)
         alert.addAction(yesAction)

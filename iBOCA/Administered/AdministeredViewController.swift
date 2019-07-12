@@ -97,14 +97,22 @@ class AdministeredViewController: ViewController {
     
     
     private func showAlertTurnOnConsent(){
-        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\nprovide test data", andItems:
-        [.cre(title: "Cancel", itag: 0, istyle: .cancel),                                                                                                                      .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view) {[weak self](alert, title, itag) in
-            if itag == 0 || itag == -1{
-                //-1 is this when user tap close button
-                self?.mSwitch.isOn = false
-            }
-            alert.dismiss()
-        }
+//        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\nprovide test data", andItems:
+//        [.cre(title: "Cancel", itag: 0, istyle: .cancel),                                                                                                                      .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view) {[weak self](alert, title, itag) in
+//            if itag == 0 || itag == -1{
+//                //-1 is this when user tap close button
+//                self?.mSwitch.isOn = false
+//            }
+//            alert.dismiss()
+//        }
+        let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
+        alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
+            self.mSwitch.isOn = false
+        }))
+        alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     fileprivate func goToDemoGraphics() {

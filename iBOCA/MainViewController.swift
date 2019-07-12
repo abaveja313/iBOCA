@@ -409,9 +409,14 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
         let item = arrData[indexPath.row]
         if item.segueID == "speech-to-text"{
             showAlertCommingSoon()
-        }
-        else{
+        } else if item.segueID == "moca" || item.segueID == "trails" {
             performSegue(withIdentifier: item.segueID, sender: nil)
+        } else {
+            if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+                
+                UserDefaults.standard.set(item.segueID, forKey: "testId")
+                self.present(vc, animated: true, completion: nil)
+            }
         }
         
     }
