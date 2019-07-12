@@ -873,6 +873,7 @@ extension VATask {
         self.timePickerTableView.dataSource = self
         self.timePickerTableView.delegate = self
         self.timePickerTableView.isScrollEnabled = false
+        self.timePickerTableView.separatorStyle = .none
         self.timePickerTableView.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.cellId)
     }
     
