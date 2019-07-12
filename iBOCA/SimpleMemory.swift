@@ -346,9 +346,6 @@ class SimpleMemoryTask: ViewController {
             totalTime = 60
         }
         
-        
-       
-        
         timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerSM.fire()
         startTimeSM = NSDate.timeIntervalSinceReferenceDate

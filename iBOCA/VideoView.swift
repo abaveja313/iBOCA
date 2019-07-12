@@ -63,7 +63,7 @@ class VideoView: UIView {
         return player?.timeControlStatus == AVPlayerTimeControlStatus.playing
     }
     
-    func playerDidFinishPlaying(note: NSNotification) {
+    func playerDidFinishPlaying() {
         print("Video Finished")
         if let playerLayer = self.playerLayer {
             playerLayer.removeFromSuperlayer()

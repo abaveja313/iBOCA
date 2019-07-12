@@ -222,7 +222,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     fileprivate func startNewTask() {
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
-        if let delayTime = UserDefaults.standard.object(forKey: "DropDownTime") {
+        if let delayTime = Settings.VADelayTime {
             self.delayLabel.text = "Recommended Delay : \((delayTime as! Int) / 60) minute"
         } else {
             self.delayLabel.text = "Recommended Delay : 5 minute"
@@ -291,9 +291,9 @@ class VATask: ViewController, UIPickerViewDelegate {
         print("in delay...")
         afterBreakVA = true
         
-        if let delayTimes = UserDefaults.standard.object(forKey: "DropDownTime") {
-            delayTime = (delayTimes as? Double)!
-            totalTime = delayTimes as? Int
+        if let delayTimes = Settings.VADelayTime {
+            delayTime = Double(delayTimes)
+            totalTime = delayTimes
         } else {
             delayTime = 300
             totalTime = 300
@@ -730,7 +730,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func setDelayTimePicker(_ sender: Any) {
-        UserDefaults.standard.set(delayReccommendedTime, forKey: "DropDownTime")
+        Settings.VADelayTime = delayReccommendedTime
         dismissDropDownList()
     }
 }
@@ -834,8 +834,8 @@ extension VATask {
         self.delayTimePickerView.layer.masksToBounds = true
         
         self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
-            self.delayTimePickerLabel.text = "\((timeDelay as! Int) / 60) minutes"
+        if let timeDelay = Settings.VADelayTime {
+            self.delayTimePickerLabel.text = "\(timeDelay / 60) minutes"
         } else {
             self.delayTimePickerLabel.text = "5 minutes"
         }
@@ -848,8 +848,8 @@ extension VATask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
-            self.delayLabel.text = "Recommended Delay : \((timeDelay as! Int) / 60) minute"
+        if let timeDelay = Settings.VADelayTime {
+            self.delayLabel.text = "Recommended Delay : \(timeDelay / 60) minute"
         } else {
             self.delayLabel.text = "Recommended Delay : 5 minute"
         }

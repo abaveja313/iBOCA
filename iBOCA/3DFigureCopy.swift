@@ -172,7 +172,7 @@ class ThreeDFigureCopy: ViewController {
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "main") as? IntroViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }

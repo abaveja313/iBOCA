@@ -614,13 +614,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test complete in 22.0 seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7Y-QT-X4R">
-                                        <rect key="frame" x="344" y="524" width="252" height="22"/>
+                                        <rect key="frame" x="344" y="60" width="252" height="22"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CY0-SG-evJ">
-                                        <rect key="frame" x="43" y="107" width="854" height="392"/>
+                                        <rect key="frame" x="43" y="109" width="854" height="280"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="280" id="1ky-nY-UNO"/>
@@ -641,7 +641,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCK-4i-97i">
-                                <rect key="frame" x="800" y="57" width="85" height="60"/>
+                                <rect key="frame" x="407" y="546" width="210" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="210" id="3WF-8y-KmQ"/>
                                     <constraint firstAttribute="height" constant="72" id="KT3-Gw-yNP"/>
@@ -667,7 +667,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIH-tv-a3h" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
-                                <rect key="frame" x="893" y="31" width="46" height="30"/>
+                                <rect key="frame" x="852" y="45" width="130" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="9Zm-QL-NvU"/>
                                     <constraint firstAttribute="width" constant="130" id="mVu-50-uxZ"/>
@@ -3126,15 +3126,31 @@
                                             <action selector="actionStart:" destination="3ro-ip-0cL" eventType="touchUpInside" id="vBX-GX-PkD"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HK-3s-GYg">
+                                        <rect key="frame" x="153" y="478.5" width="318" height="72"/>
+                                        <color key="backgroundColor" red="0.93333333330000001" green="0.95294117649999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="72" id="cZT-AQ-Z3X"/>
+                                            <constraint firstAttribute="width" constant="318" id="yg2-mu-r3K"/>
+                                        </constraints>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" red="0.0039215686269999999" green="0.2274509804" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionStart:" destination="3ro-ip-0cL" eventType="touchUpInside" id="PLP-6Q-aK7"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="xe0-Ys-AeJ" firstAttribute="top" secondItem="xSy-oD-Exo" secondAttribute="bottom" constant="49" id="0QP-3j-VuE"/>
                                     <constraint firstItem="xSy-oD-Exo" firstAttribute="centerX" secondItem="cpz-mP-ZVO" secondAttribute="centerX" id="6Zv-aH-EQS"/>
+                                    <constraint firstItem="8HK-3s-GYg" firstAttribute="leading" secondItem="dX1-uD-rsJ" secondAttribute="leading" constant="153" id="Gqo-Ss-RuA"/>
                                     <constraint firstItem="xSy-oD-Exo" firstAttribute="top" secondItem="cpz-mP-ZVO" secondAttribute="bottom" constant="16.559999999999999" id="IAM-4d-LKn"/>
+                                    <constraint firstAttribute="trailing" secondItem="xe0-Ys-AeJ" secondAttribute="trailing" constant="311" id="X4G-g8-Yci"/>
+                                    <constraint firstItem="8HK-3s-GYg" firstAttribute="centerY" secondItem="xe0-Ys-AeJ" secondAttribute="centerY" id="cpp-i5-qQF"/>
                                     <constraint firstItem="cpz-mP-ZVO" firstAttribute="centerX" secondItem="dX1-uD-rsJ" secondAttribute="centerX" id="jm0-wu-fQ8"/>
                                     <constraint firstItem="xSy-oD-Exo" firstAttribute="width" secondItem="cpz-mP-ZVO" secondAttribute="width" id="qLF-EK-JY5"/>
-                                    <constraint firstItem="xe0-Ys-AeJ" firstAttribute="centerX" secondItem="dX1-uD-rsJ" secondAttribute="centerX" id="uAr-js-9Hd"/>
                                     <constraint firstItem="cpz-mP-ZVO" firstAttribute="top" secondItem="dX1-uD-rsJ" secondAttribute="top" constant="36" id="uxD-Td-jIu"/>
                                 </constraints>
                             </view>
@@ -3159,6 +3175,8 @@
                         <outlet property="introDescriptionLabel" destination="xSy-oD-Exo" id="0BC-Ec-Uik"/>
                         <outlet property="playVideoButton" destination="MPe-P7-WMA" id="vlE-ps-nGs"/>
                         <outlet property="startButton" destination="xe0-Ys-AeJ" id="wCc-g2-VxU"/>
+                        <outlet property="startButtonTrailing" destination="X4G-g8-Yci" id="OxB-U2-nHL"/>
+                        <outlet property="startPracticeButton" destination="8HK-3s-GYg" id="wTy-Q7-9KG"/>
                         <outlet property="videoView" destination="cpz-mP-ZVO" id="BO4-ca-5Bd"/>
                         <segue destination="X0q-rm-Xxt" kind="show" identifier="visual-association" id="1Tb-cO-YWM"/>
                         <segue destination="Soq-Lw-miz" kind="show" identifier="simple-memory" id="aSG-6D-7nm"/>

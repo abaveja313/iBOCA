@@ -16,15 +16,19 @@ class IntroViewController: UIViewController {
     @IBOutlet weak var playVideoButton: UIButton!
     @IBOutlet weak var introDescriptionLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var startPracticeButton: UIButton!
+    @IBOutlet weak var startButtonTrailing: NSLayoutConstraint!
     
     var testId: String!
     var videoName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        videoName = "sample-test-intro"
+        self.videoName = "sample-test-intro"
         self.setupView()
-        self.testId = UserDefaults.standard.string(forKey: "testId")
+        
+        self.isPracticeButtonHidden(!Settings.SegueId!)
+        self.testId = Settings.TestId
     }
     
     private func stopVideo() {
@@ -92,11 +96,21 @@ extension IntroViewController {
         self.startButton.setTitle("START YOUR TEST", for: .normal)
         self.startButton.layer.cornerRadius = 8
         self.startButton.layer.masksToBounds = true
+        
+        self.startPracticeButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.startPracticeButton.setTitle("PRACTICE THIS TEST", for: .normal)
+        self.startPracticeButton.layer.cornerRadius = 8
+        self.startPracticeButton.layer.masksToBounds = true
+    }
+    
+    fileprivate func isPracticeButtonHidden(_ isHidden: Bool) {
+        self.startPracticeButton.isHidden = isHidden
+        self.startButtonTrailing.constant = isHidden ? 311 : 114
     }
 }
 
 extension IntroViewController: VideoViewDelegate {
     func videoDidFinishPlaying() {
-        playVideoButton.isHidden = false
+        self.playVideoButton.isHidden = false
     }
 }
