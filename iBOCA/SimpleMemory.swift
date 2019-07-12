@@ -46,7 +46,7 @@ class SimpleMemoryTask: ViewController {
     
     var isStartNew = false
     
-    @IBOutlet weak var next1: GradientButton!
+    @IBOutlet weak var next1: UIButton!
     @IBOutlet weak var start: GradientButton!
     @IBOutlet weak var back: UIButton!
     
@@ -117,6 +117,7 @@ class SimpleMemoryTask: ViewController {
     @IBOutlet weak var vResults: UIView!
     @IBOutlet weak var lblDelayLength: UILabel!
     @IBOutlet weak var btnStartNew: GradientButton!
+    @IBOutlet weak var quitButton: GradientButton!
     
     @IBOutlet weak var lblTimeCompleteTask: UILabel!
     
@@ -142,10 +143,6 @@ class SimpleMemoryTask: ViewController {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        if Settings.SMDelayTime == nil {
-            Settings.SMDelayTime = 1
-        }
         
         self.setupViews()
         
@@ -180,24 +177,7 @@ class SimpleMemoryTask: ViewController {
             imageSetSM = 0
             incorrectImageSetSM = 0
             
-            self.vShadowTask.isHidden = true
-            self.vTask.isHidden = true
-            self.vDelay.isHidden = true
-            self.lblSetDelayTime.isHidden = true
-            self.vSetDelayTime.isHidden = true
-            self.btnSetDelayTime.isHidden = true
-            self.next1.isHidden = true
             
-            
-            self.lblBack.text = "SIMPLE MEMORY"
-            self.lblDescTask.isHidden = false
-            self.collectionViewLevel.isHidden = false
-            
-            self.start.isHidden = false
-            self.vResults.isHidden = true
-            self.btnStartNew.isHidden = true
-            
-            self.collectionViewLevel.reloadData()
             self.startNewTask()
             
             //action
@@ -229,21 +209,36 @@ class SimpleMemoryTask: ViewController {
     
     func startNewTask() {
         
+        self.lblChooseDelayTime.text = self.minuteOfString()
+        
+        self.vShadowTask.isHidden = true
+        self.vTask.isHidden = true
+        self.vDelay.isHidden = true
+        self.lblSetDelayTime.isHidden = true
+        self.vSetDelayTime.isHidden = true
+        self.btnSetDelayTime.isHidden = true
+        self.next1.isHidden = true
+        self.collectionViewObjectName.isHidden = true
+        
+        self.lblDescTask.isHidden = false
+        self.collectionViewLevel.isHidden = false
+        
+        self.start.isHidden = false
+        self.vResults.isHidden = true
+        
+        self.collectionViewLevel.reloadData()
+        
+        self.delayLabel.text = "Recommended Delay : \(self.minuteOfString())"
+        
         startTime = Foundation.Date()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
         
-        if let timeDelay = UserDefaults.standard.object(forKey: "DropDownTime") {
-            self.delayLabel.text = "Recommended Delay : \((timeDelay as! Int) / 60) minute"
-        } else {
-            self.delayLabel.text = "Recommended Delay : 5 minute"
-        }
-        
         result = Results()
         result.name = "Simple Memory"
         result.startTime = startTime
-        totalTime = Int(self.maxSeconds)
+//        totalTime = Int(self.maxSeconds)
         ended = true
         self.isStartNew = true
         self.collectionViewObjectName.reloadData()
@@ -263,7 +258,6 @@ class SimpleMemoryTask: ViewController {
     func startDisplayAlert() {
         // TODO: -
         self.collectionViewLevel.isHidden = true
-        self.lblBack.text = "BACK"
         self.lblDescTask.isHidden = true
         
         self.vShadowTask.isHidden = false
@@ -340,11 +334,17 @@ class SimpleMemoryTask: ViewController {
         self.timerLabel.isHidden = false
         self.delayLabel.isHidden = false
         
-        self.delayLabel.text = "Recommended delay: 1 minute"
-        
         afterBreakSM = true
         
         self.start.isHidden = false
+        
+        if let delayTimes = Settings.SMDelayTime {
+            delayTime = Double(delayTimes) * 60
+            totalTime = delayTimes * 60
+        } else {
+            delayTime = 60
+            totalTime = 60
+        }
         
         timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerSM.fire()
@@ -382,18 +382,18 @@ class SimpleMemoryTask: ViewController {
     }
     
     func timeFormatted(_ totalSeconds: Int) -> String {
-        let seconds: Int = totalSeconds % Int(self.maxSeconds)
-        let minutes: Int = (totalSeconds / Int(self.maxSeconds)) % Int(self.maxSeconds)
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
         //     let hours: Int = totalSeconds / 3600
         return String(format: "%02d : %02d", minutes, seconds)
     }
     
     func endTimer() {
         timerSM.invalidate()
-        self.totalTime = Int(self.maxSeconds)
-        for b in self.testSelectButtons {
-            b.isHidden = true
-        }
+//        self.totalTime = Int(self.maxSeconds)
+//        for b in self.testSelectButtons {
+//            b.isHidden = true
+//        }
         
         self.start.isHidden = true
         self.resumeTask()
@@ -409,7 +409,7 @@ class SimpleMemoryTask: ViewController {
         self.timerLabel.isHidden = true
         self.delayLabel.isHidden = true
         
-        delayTime = self.maxSeconds - Double(self.totalTime)//findTime()
+        delayTime = delayTime - Double(self.totalTime)
         
         let recallAlert = UIAlertController(title: "Recall", message: "Ask patients to name the items that were displayed earlier. Record their answers.", preferredStyle: .alert)
         recallAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
@@ -483,6 +483,16 @@ class SimpleMemoryTask: ViewController {
         }
     }
     
+    @IBAction func actionQuit(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.view.endEditing(true)
+        Status[TestSimpleMemory] = TestStatus.NotStarted
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
+            vc.mode = .patient
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
     
     @IBAction func btnBackTapped(_ sender: Any) {
         ended = true
@@ -508,7 +518,7 @@ class SimpleMemoryTask: ViewController {
         }
         else {
             ended = true
-            totalTime = Int(self.maxSeconds)
+//            totalTime = Int(self.maxSeconds)
             self.collectionViewObjectName.isHidden = true
             afterBreakSM = false
             self.next1.isHidden = true
@@ -577,8 +587,6 @@ class SimpleMemoryTask: ViewController {
             self.tableViewResults.reloadData()
             
             self.vResults.isHidden = false
-            self.btnStartNew.isHidden = false
-            self.btnStartNew.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         }
     }
     
@@ -611,7 +619,7 @@ extension SimpleMemoryTask {
         self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.lblBack.textColor = Color.color(hexString: "#013AA5")
         self.lblBack.addTextSpacing(-0.56)
-        self.lblBack.text = "SIMPLE MEMORY"
+        self.lblBack.text = "BACK"
         
         // Label Description Task
         self.lblDescTask.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
@@ -620,6 +628,12 @@ extension SimpleMemoryTask {
         self.lblDescTask.text = "Ask Patient to name and remember these images"
         self.lblDescTask.addTextSpacing(-0.36)
         self.lblDescTask.addLineSpacing(10.0)
+        
+        self.quitButton.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.quitButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        self.quitButton.render()
+        self.quitButton.addTextSpacing(-0.36)
         
         // Collection View Level
         self.setupCollectionView()
@@ -643,7 +657,6 @@ extension SimpleMemoryTask {
         self.vSetDelayTime.isHidden = true
         self.btnSetDelayTime.isHidden = true
         self.vResults.isHidden = true
-        self.btnStartNew.isHidden = true
     }
     
     fileprivate func setupCollectionView() {
@@ -679,7 +692,7 @@ extension SimpleMemoryTask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        self.delayLabel.text = "Recommended Delay : 1 minute"
+        self.delayLabel.text = "Recommended Delay : \(self.minuteOfString())"
         self.delayLabel.addTextSpacing(-0.56)
         
         self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
@@ -767,11 +780,12 @@ extension SimpleMemoryTask {
         self.collectionViewObjectName.isHidden = true
         
         // Button complete
-        self.next1.setTitle(title: "COMPLETE", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-        self.next1.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.next1.setupGradient(arrColor: [Color.color(hexString: "#69C394"), Color.color(hexString: "#40B578")], direction: .topToBottom)
-        self.next1.render()
-        self.next1.addTextSpacing(-0.36)
+        self.next1.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.next1.backgroundColor = Color.color(hexString: "#EEF3F9")
+        self.next1.tintColor = Color.color(hexString: "#013AA5")
+        self.next1.setTitle("FINISH", for: .normal)
+        self.next1.layer.cornerRadius = 8
+        self.next1.layer.masksToBounds = true
     }
     
     fileprivate func setupViewResults() {
@@ -793,11 +807,12 @@ extension SimpleMemoryTask {
         self.lblTimeCompleteTask.textAlignment = .center
         
         // Button Start New
-        self.btnStartNew.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
-        self.btnStartNew.setupShadow(withColor: Color.color(hexString: "#FDECBF"), sketchBlur: 9.0, opacity: 1.0)
-        self.btnStartNew.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"), Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.btnStartNew.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.btnStartNew.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.btnStartNew.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.btnStartNew.render()
         self.btnStartNew.addTextSpacing(-0.36)
+        self.btnStartNew.addTarget(self, action: #selector(startNewTask), for:.touchUpInside)
         
         // TableView Results
         self.tableViewResults.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())

@@ -154,6 +154,34 @@ class Settings {
             return UserDefaults.obj(forKey: "SMDelayTime") as? Int
         }
     }
+    
+    public class var VADelayTime: Int? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "VADelayTime")
+        }
+        get {
+            return UserDefaults.obj(forKey: "VADelayTime") as? Int
+        }
+    }
+    
+    public class var TestId: String? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "TestId")
+        }
+        get {
+            return UserDefaults.obj(forKey: "TestId") as? String
+        }
+    }
+    
+    public class var SegueId: Bool? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "SegueId")
+        }
+        get {
+            return UserDefaults.obj(forKey: "SegueId") as? Bool
+        }
+    }
+    
 }
 
 public extension UserDefaults {
