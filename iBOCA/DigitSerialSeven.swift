@@ -32,13 +32,13 @@ class DigitSerialSeven:DigitBaseClass {
     var randomNumber: Int = 50
     
     override func DoInitialize() {
-        testName =  "Serial Sevens Test"
-        testStatus = TestSerialSevens
+//        testName =  "Serial Sevens Test"
+//        testStatus = TestSerialSevens
 //        base.InfoLabel.text = "Press start to begin \(testName)"
-        base.hideKeypad()
+//        base.hideKeypad()
 //        base.numKeyboard.isHidden = true
 //        base.isNumKeyboardHidden(isHidden: true)
-        level = -1
+//        level = -1
         
 //        for (i, val) in [50, 60, 70, 80, 90, 100].enumerated() {
 //            let button  = UIButton(frame: CGRect(x: 150+125*i, y: 150, width: 100, height: 50))
@@ -204,7 +204,7 @@ class DigitSerialSeven:DigitBaseClass {
             base.startTimeTask = Foundation.Date()
             base.totalTimeCounter.invalidate()
             base.numKeyboard.isEnabled(false)
-//            DoEnd()
+            DoEnd()
             return
         }
     

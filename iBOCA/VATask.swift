@@ -178,7 +178,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         isCollectionViewHidden(true)
         isTaskViewHidden(false)
-        self.backTitleLabel.text = "BACK"
         
         firstDisplay = true
         
@@ -193,6 +192,12 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @objc fileprivate func startAlert() {
+        if isDropDownShowing {
+            isDropDownViewHidden(true)
+            isDropDownShowing = false
+            self.delayTimePickerView.layer.borderColor =  Color.color(hexString: "#EAEAEA").cgColor
+        }
+        
         let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
         
         startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
@@ -234,7 +239,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startNewButton.isHidden = true
         self.isRecommendDelayHidden(true)
         self.isCollectionViewHidden(false)
-        self.backTitleLabel.text = "VISUAL ASSOCIATION"
         self.isTaskViewHidden(true)
         
         result.startTime = Foundation.Date()
@@ -568,6 +572,12 @@ class VATask: ViewController, UIPickerViewDelegate {
         regconizedTableView.reloadData()
     }
     
+    fileprivate func dismissDropDownList() {
+        isDropDownViewHidden(true)
+        isDropDownShowing = false
+        self.delayTimePickerView.layer.borderColor =  Color.color(hexString: "#EAEAEA").cgColor
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -711,16 +721,17 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBAction func showDropDownList(_ sender: Any) {
         if isDropDownShowing {
-            isDropDownViewHidden(true)
-            isDropDownShowing = false
+            dismissDropDownList()
         } else {
             isDropDownViewHidden(false)
             isDropDownShowing = true
+            self.delayTimePickerView.layer.borderColor =  Color.color(hexString: "#649BFF").cgColor
         }
     }
     
     @IBAction func setDelayTimePicker(_ sender: Any) {
         UserDefaults.standard.set(delayReccommendedTime, forKey: "DropDownTime")
+        dismissDropDownList()
     }
 }
 
@@ -730,7 +741,7 @@ extension VATask {
         self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
         self.backTitleLabel.addTextSpacing(-0.56)
-        self.backTitleLabel.text = "VISUAL ASSOCIATION"
+        self.backTitleLabel.text = "BACK"
         
         // Label Description Task
         self.descriptionLabel.font = Font.font(name: Font.Montserrat.mediumItalic, size: 18.0)
@@ -861,6 +872,7 @@ extension VATask {
         
         self.timePickerTableView.dataSource = self
         self.timePickerTableView.delegate = self
+        self.timePickerTableView.isScrollEnabled = false
         self.timePickerTableView.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.cellId)
     }
     
@@ -1082,7 +1094,7 @@ extension VATask: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == timePickerTableView {
             let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.timeLabel.text = "\(indexPath.row + 1) minutes"
+            dropDownCell.timeLabel.text = indexPath.row == 0 ? "1 minute" : "\(indexPath.row + 1) minutes"
             return dropDownCell
         } else {
             var cell = VACell()
@@ -1100,10 +1112,9 @@ extension VATask: UITableViewDataSource {
 extension VATask: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == timePickerTableView {
-            delayTimePickerLabel.text = "\(indexPath.row + 1) minutes"
+            delayTimePickerLabel.text = indexPath.row == 0 ? "1 minute" : "\(indexPath.row + 1) minutes"
             delayReccommendedTime = (indexPath.row + 1) * 60
-            isDropDownViewHidden(true)
-            isDropDownShowing = false
+            dismissDropDownList()
         }
     }
 }
@@ -1111,5 +1122,8 @@ extension VATask: UITableViewDelegate {
 extension VATask: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        if touches.first?.view != timePickerTableView {
+            dismissDropDownList()
+        }
     }
 }

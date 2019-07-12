@@ -87,18 +87,10 @@ class PicturesViewController: ViewController {
     
     @IBAction func reset(_ sender: Any) {
         self.view.endEditing(true)
-//        resetButton.isEnabled = false
-//        self.resultsLabel.isHidden = true
-//        arrowLeftButton.isHidden = false
-//        arrowRightButton.isHidden = false
-//        arrowLeftButton.isEnabled = false
-//        namingImageView.isHidden = false
-//        self.navigationItem.setHidesBackButton(false, animated:true)
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
         self.startNew()
-//        done()
     }
     
     @IBAction func actionQuit(_ sender: Any) {
@@ -113,57 +105,17 @@ class PicturesViewController: ViewController {
     }
     
     @IBAction func undoTapped(_ sender: Any) {
-        
-//        homeButton.isEnabled = false
-//        correctButton.isEnabled = true
-//        incorrectButton.isEnabled = true
-//        resetButton.isEnabled = true
-//        undoButton.isEnabled = true
-//
-//        count -= 1
-//        back += 1
-//        self.tfObjectName.text = self.resultObjectName[count]
-//        if count == 0 {
-//            resetButton.isEnabled = false
-//            undoButton.isEnabled = false
-//            self.navigationItem.setHidesBackButton(false, animated:true)
-//        }
-//        if order.count > 0 {
-//            if order[order.count-1] == true {
-//                corr -= 1
-//            }
-//            else {
-//                wrongList.remove(at: wrongList.count-1)
-//            }
-//
-//            order.remove(at: order.count-1)
-//        }
-//
-//        imageName = getImageName()
-//
-//        let image3 = UIImage(named: imageName)
-//        fixDimensions(image: image3!)
-//        imageView.image = image3
-//
-//        placeLabel.text = "\(count+1)/\(namingImages.count)"
-        
-        
-//        backButton.isEnabled = false
-//        resetButton.isEnabled = true
-        arrowLeftButton.isEnabled = true
+        arrowLeftButton.isHidden = false
         isUndo = true
         count -= 1
         back = count
         self.tfObjectName.text = self.resultObjectName[count]
         if count == 0 {
-//            resetButton.isEnabled = false
-            arrowLeftButton.isEnabled = false
+            arrowLeftButton.isHidden = true
             self.navigationItem.setHidesBackButton(false, animated:true)
         }
         imageName = getImageName()
         let image3 = UIImage(named: imageName)
-//        fixDimensions(image: image3!)
-//        imageView.image = image3
         
         namingImageView.image = image3
         
@@ -188,66 +140,15 @@ class PicturesViewController: ViewController {
     
     func done() {
         
-//        print("getting here")
-//        undoButton.isEnabled = false
-//        correctButton.isEnabled = false
-//        incorrectButton.isEnabled = false
-//        resetButton.isEnabled = false
-//        homeButton.isEnabled = true
-//
-//        self.lbObjectName.isHidden = true
-//        self.tfObjectName.isHidden = true
-//        self.isStartNew = true
-//        self.btnNext.setTitle("Start New", for: .normal)
-//        self.btnNext.setTitle("Start New", for: .selected)
-//
-//        imageView.removeFromSuperview()
-//        placeLabel.text = ""
-//
-//        let result = Results()
-//        result.name = self.title
-//        result.startTime = startTime2 as Date
-//        result.endTime = NSDate() as Date
-//        result.longDescription.add("\(corr) correct out of \(count)")
-//        if wrongList.count > 0  {
-//            result.longDescription.add("The incorrect pictures were the \(wrongList)")
-//        }
-//        result.numErrors = wrongList.count
-//
-//        var js : [String:Any] = [:]
-//        for (index, element) in resultStatus.enumerated() {
-//            let val = ["image":resultImage[index], "status":element, "time (msec)":Int(1000*resultTime[index].timeIntervalSince(startTime))] as [String : Any]
-//            js[String(index)] = val
-//        }
-//        result.json["Results"] = js
-//        result.json["Answered"] = count
-//        result.json["Correct"] = corr
-//        result.json["Gone Back"] = back
-//
-//        result.shortDescription = "\(corr) correct with \(count) answered"
-//
-//        resultsArray.add(result)
-//        Status[TestNampingPictures] = TestStatus.Done
-//
-//        var str:String = "\(corr) correct out of \(count)"
-//        if wrongList.count > 0 {
-//            str += "\nThe incorrect pictures were the \(wrongList)"
-//        }
-//        self.resultsLabel.text = str
-        
         arrowLeftButton.isHidden = true
         arrowRightButton.isHidden = true
-//        resetButton.isEnabled = false
         backButton.isEnabled = true
         
         self.namingImageView.isHidden = true
         self.lbObjectName.isHidden = true
         self.tfObjectName.isHidden = true
         self.isStartNew = true
-//        self.arrowRightButton.setTitle("Start New", for: .normal)
-//        self.arrowRightButton.setTitle("Start New", for: .selected)
-
-//        imageView.removeFromSuperview()
+        
         placeLabel.text = ""
         self.wrongList.removeAll()
         corr = 0
@@ -375,9 +276,8 @@ class PicturesViewController: ViewController {
         
 //        self.view.addSubview(imageView)
         
-        arrowLeftButton.isHidden = false
+        arrowLeftButton.isHidden = true
         arrowRightButton.isHidden = false
-        arrowLeftButton.isEnabled = false
 //        resetButton.isEnabled = false
         backButton.isEnabled = true
         self.namingImageView.isHidden = false
@@ -402,7 +302,7 @@ class PicturesViewController: ViewController {
         
         backButton.isEnabled = true
 //        resetButton.isEnabled = true
-        arrowLeftButton.isEnabled = true
+        arrowLeftButton.isHidden = false
         
         if isUndo == true, self.resultObjectName.count != count {
             self.resultObjectName[count] = strObjName

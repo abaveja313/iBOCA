@@ -169,9 +169,9 @@ class DigitBase: ViewController {
     }
     
     @IBAction func actionBack(_ sender: Any) {
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
+//        if Status[base!.testStatus] != TestStatus.Done {
+//            Status[base!.testStatus] = TestStatus.NotStarted
+//        }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
@@ -184,9 +184,9 @@ class DigitBase: ViewController {
         self.totalTimeCounter.invalidate()
         speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
         
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
+//        if Status[base!.testStatus] != TestStatus.Done {
+//            Status[base!.testStatus] = TestStatus.NotStarted
+//        }
         
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
