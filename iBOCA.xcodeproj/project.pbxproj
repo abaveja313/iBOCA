@@ -318,7 +318,7 @@
 		B10BD11A22CE2144008A195C /* NumberKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberKeyboardView.xib; sourceTree = "<group>"; };
 		B114027522D6D7BA00151AB8 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B114027722D6DA5E00151AB8 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
-		B114027922D6E5D700151AB8 /* sample-test-intro.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = "sample-test-intro.mov"; path = "iBOCA/Assets.xcassets/Intro/sample-test-intro.dataset/sample-test-intro.mov"; sourceTree = "<group>"; };
+		B114027922D6E5D700151AB8 /* sample-test-intro.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "sample-test-intro.mov"; sourceTree = "<group>"; };
 		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
 		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
@@ -548,7 +548,6 @@
 		1BC2DFE21D4F821F0020D430 = {
 			isa = PBXGroup;
 			children = (
-				B114027922D6E5D700151AB8 /* sample-test-intro.mov */,
 				F21C1FF21F01B95D00523D85 /* CryptoSwift.xcodeproj */,
 				1BC2DFED1D4F821F0020D430 /* iBOCA */,
 				1BC2E0021D4F821F0020D430 /* iBOCATests */,
@@ -645,6 +644,7 @@
 		4A328A5522C47B6A00034075 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B1908B1522DC7DEA0039C1C5 /* Videos */,
 				4A328A5622C47B7E00034075 /* Fonts */,
 			);
 			path = Resource;
@@ -748,6 +748,14 @@
 				B114027722D6DA5E00151AB8 /* VideoView.swift */,
 			);
 			name = Intro;
+			sourceTree = "<group>";
+		};
+		B1908B1522DC7DEA0039C1C5 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				B114027922D6E5D700151AB8 /* sample-test-intro.mov */,
+			);
+			path = Videos;
 			sourceTree = "<group>";
 		};
 		E2037F1B1E47E7F000EE13EB /* Pictures */ = {
