@@ -16,13 +16,14 @@ class ResultsViewController: ViewController {
     @IBOutlet weak var lbResult: UILabel!
     @IBOutlet weak var shadowContainer: UIView!
     
-    
-    
     private var headerView: UIView?
+    
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToMainView: (() -> ())?
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         
         if headerView == nil {
             if let hView = UINib.init(nibName: ResultsHeaderView.identifier(), bundle: nil).instantiate(withOwner: self, options: nil).first as? ResultsHeaderView {
@@ -63,6 +64,16 @@ class ResultsViewController: ViewController {
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
 
+    
+    @IBAction func ibaBack(_ sender: Any) {
+        if quickStartModeOn {
+            didBackToMainView?()
+        }
+        else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
 }
 
 extension ResultsViewController: ResultsHeaderSectionViewDelegate {

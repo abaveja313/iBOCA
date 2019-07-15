@@ -92,6 +92,9 @@ class AdministeredViewController: ViewController {
         }
         else {
             savePID()
+            
+            let manager = QuickStartManager.init(controller: self)
+            manager.start()
         }
     }
     

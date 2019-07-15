@@ -40,7 +40,10 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var resultsLabel: UILabel!
     
-    
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
     
     
     @IBAction func StartButton(sender: AnyObject) {

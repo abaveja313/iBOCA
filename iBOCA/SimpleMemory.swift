@@ -138,6 +138,11 @@ class SimpleMemoryTask: ViewController {
         "5 minutes"
     ]
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -156,6 +161,12 @@ class SimpleMemoryTask: ViewController {
         result.startTime = StartTimer
         next1.isHidden = true
         start.isHidden = false
+        
+        
+        // QuickStart Mode
+        if quickStartModeOn {
+            lblBack.text = "RESULT"
+        }
         
         // Hide arrow
         self.btnArrowLeft.isHidden = true
@@ -488,13 +499,22 @@ class SimpleMemoryTask: ViewController {
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            self.didBackToResult?()
+            return
         }
+        
+        dismiss(animated: true, completion: nil)
+//        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
     
     @objc private func doneSM() {
         self.view.endEditing(true)
+        
         if checkValid() == false {
             let warningAlert = UIAlertController(title: "Warning", message: "Please enter all fields.", preferredStyle: .alert)
             warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
@@ -574,9 +594,28 @@ class SimpleMemoryTask: ViewController {
             
             self.vResults.isHidden = false
             self.btnStartNew.isHidden = false
+            
+            // Check if is on quickStart mode
+            guard !quickStartModeOn else {
+                self.btnStartNew.updateTitle(title: "Continue")
+                self.btnStartNew.addTarget(self, action: #selector(continueToNextTest), for: .touchUpInside)
+                
+                return
+            }
+            
             self.btnStartNew.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         }
     }
+    
+    // Use for quickStart mode
+    @objc private func continueToNextTest() {
+        QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+            self.didBackToResult?()
+        }) {
+            self.didCompleted?()
+        }
+    }
+    
     
     private func checkValid() -> Bool {
         var countEmpty = 0

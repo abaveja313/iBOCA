@@ -336,7 +336,7 @@
         <!--Simple Memory Task-->
         <scene sceneID="T5m-TA-tDV">
             <objects>
-                <viewController id="Soq-Lw-miz" customClass="SimpleMemoryTask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SimpleMemoryTask" id="Soq-Lw-miz" customClass="SimpleMemoryTask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KZy-Si-ySZ"/>
                         <viewControllerLayoutGuide type="bottom" id="QDC-WX-DA2"/>
@@ -368,7 +368,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <connections>
                                             <action selector="btnBackTapped:" destination="Soq-Lw-miz" eventType="touchUpInside" id="6FU-gk-pzO"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="ZXe-jH-G6o"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1691,7 +1690,7 @@
         <!--Task-->
         <scene sceneID="0bF-iO-2uk">
             <objects>
-                <viewController id="X0q-rm-Xxt" customClass="VATask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VATask" id="X0q-rm-Xxt" customClass="VATask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Duy-pN-u0O"/>
                         <viewControllerLayoutGuide type="bottom" id="N1c-hs-UuP"/>
@@ -3320,7 +3319,7 @@
         <!--Results-->
         <scene sceneID="Yc3-nS-dR8">
             <objects>
-                <viewController title="Results" id="mFE-dR-SxI" customClass="ResultsViewController" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResultsViewController" title="Results" id="mFE-dR-SxI" customClass="ResultsViewController" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tIi-Em-59u"/>
                         <viewControllerLayoutGuide type="bottom" id="nn3-JQ-JKQ"/>
@@ -3351,7 +3350,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="jbF-Mb-uqf"/>
+                                            <action selector="ibaBack:" destination="mFE-dR-SxI" eventType="touchUpInside" id="luX-Td-q6c"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -4506,7 +4505,7 @@
         <!--OrientationTask-->
         <scene sceneID="yx5-Hj-mlZ">
             <objects>
-                <viewController title="OrientationTask" id="5Cz-GR-ydt" customClass="OrientationTask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrientationTask" title="OrientationTask" id="5Cz-GR-ydt" customClass="OrientationTask" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fom-GM-ejq"/>
                         <viewControllerLayoutGuide type="bottom" id="NSp-Y3-m3S"/>
@@ -6039,5 +6038,8 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="myU-tK-s4h"/>
+        <segue reference="o9k-wN-m3X"/>
+        <segue reference="wuj-UQ-84Y"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -120,6 +120,10 @@ class VATask: ViewController, UIPickerViewDelegate {
     @IBOutlet weak var recalledTableView: UITableView!
     @IBOutlet weak var regconizedTableView: UITableView!
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
     
     var result: Results!
     
@@ -639,6 +643,12 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
         
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
             self.present(vc, animated: true, completion: nil)
         }
@@ -691,6 +701,17 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
             vc.mode = .patient
             self.present(vc, animated: true, completion: nil)

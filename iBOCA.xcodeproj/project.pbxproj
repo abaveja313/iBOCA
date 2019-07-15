@@ -97,6 +97,7 @@
 		E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */; };
 		E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9F7FF1DD144A70035FE0B /* VATask.swift */; };
 		E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */; };
+		E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520BC3922D832DD0037EBA3 /* QuickStartManager.swift */; };
 		E5A6AFF0226D717100493187 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6AFEF226D717100493187 /* LocationManager.swift */; };
 		E5B4A7BD22D3201C00CB6218 /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B4A7BB22D3201C00CB6218 /* ResultsCell.swift */; };
 		E5B4A7BE22D3201C00CB6218 /* ResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B4A7BC22D3201C00CB6218 /* ResultsCell.xib */; };
@@ -329,6 +330,7 @@
 		E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardDigitSpan.swift; sourceTree = "<group>"; };
 		E2B9F7FF1DD144A70035FE0B /* VATask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VATask.swift; sourceTree = "<group>"; };
 		E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialSevens.swift; sourceTree = "<group>"; };
+		E520BC3922D832DD0037EBA3 /* QuickStartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickStartManager.swift; path = QuickStart/QuickStartManager.swift; sourceTree = "<group>"; };
 		E5A6AFEF226D717100493187 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E5B4A7BB22D3201C00CB6218 /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
 		E5B4A7BC22D3201C00CB6218 /* ResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsCell.xib; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 		1BC2DFED1D4F821F0020D430 /* iBOCA */ = {
 			isa = PBXGroup;
 			children = (
+				E520BC3322D8307A0037EBA3 /* QuickStart */,
 				4A70EDC922CEE88600E8E533 /* CustomView */,
 				B10BD11722CE2104008A195C /* NumberKeyboardView */,
 				4AA3050622CB3E7C0033E5DC /* Proctored */,
@@ -757,6 +760,14 @@
 			);
 			name = Pictures;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		E520BC3322D8307A0037EBA3 /* QuickStart */ = {
+			isa = PBXGroup;
+			children = (
+				E520BC3922D832DD0037EBA3 /* QuickStartManager.swift */,
+			);
+			name = QuickStart;
 			sourceTree = "<group>";
 		};
 		E5A6AFE9226D715400493187 /* Manager */ = {
@@ -1007,7 +1018,7 @@
 				TargetAttributes = {
 					1BC2DFEA1D4F821F0020D430 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 66YNRJ6GN4;
+						DevelopmentTeam = H8983P39UZ;
 						LastSwiftMigration = 0820;
 					};
 					1BC2DFFE1D4F821F0020D430 = {
@@ -1256,6 +1267,7 @@
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
 				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
+				E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
 				F24E6E701E1BC2C300E29995 /* ScaleView.swift in Sources */,
 				0ECA221722D5CE04004FF23F /* DPDKeyboardListener.swift in Sources */,
@@ -1421,11 +1433,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66YNRJ6GN4;
+				DEVELOPMENT_TEAM = H8983P39UZ;
 				INFOPLIST_FILE = iBOCA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1436,11 +1448,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 66YNRJ6GN4;
+				DEVELOPMENT_TEAM = H8983P39UZ;
 				INFOPLIST_FILE = iBOCA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

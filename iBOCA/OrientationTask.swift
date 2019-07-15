@@ -16,6 +16,12 @@ var startTime = Foundation.Date()
 
 class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate,UIPickerViewDelegate  {
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
+    
     let defaultBlueColor: UIColor = UIColor.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
     var Week : String?
     var State : String?
@@ -194,6 +200,11 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
         dkMonth = false
         dkYear = false
         
+        // QuickStart Mode
+        if quickStartModeOn {
+           lblBack.text = "RESULT"
+        }
+        
         // Get the random State
         let indexState = Int(arc4random_uniform(UInt32(stateData.count)))
         State = stateData[indexState]
@@ -280,12 +291,35 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
         self.timerOrientationTask.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
     
     @IBAction func DoneButton(_ sender: AnyObject) {
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.timerOrientationTask.invalidate()
+                self.completeTest()
+                
+                self.didBackToResult?()
+            }) {
+                self.timerOrientationTask.invalidate()
+                self.completeTest()
+                
+                self.didCompleted?()
+            }
+            return
+        }
+        
         let alert = UIAlertController(title: "Confirm", message: "Do you really want to complete this test?", preferredStyle: .alert)
         
         let noAction = UIAlertAction.init(title: "No", style: .cancel, handler: nil)
