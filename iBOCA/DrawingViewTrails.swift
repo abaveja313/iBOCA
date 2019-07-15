@@ -46,7 +46,13 @@ class DrawingViewTrails: UIView {
     
     init(frame: CGRect, isPracticeTests: Bool) {
         super.init(frame: frame)
+        print("View Trails")
+        print("Left: \(frame.origin.x)")
+        print("Top: \(frame.origin.y)")
+        print("Right: \(frame.origin.x + frame.size.width)")
+        print("Bottom: \(frame.origin.y + frame.size.height)")
         self.bubbles = BubblesA.init(withPracticeTest: isPracticeTests)
+        self.bubbles.parentFrame = frame
         self.isPracticeTests = isPracticeTests
         setupView()
         print("Initializing")

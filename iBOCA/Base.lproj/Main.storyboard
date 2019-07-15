@@ -549,6 +549,7 @@
                                             <constraint firstItem="ORv-Rw-hsI" firstAttribute="centerX" secondItem="ff7-AP-4gM" secondAttribute="centerX" id="c1I-zm-Vef"/>
                                             <constraint firstItem="ORv-Rw-hsI" firstAttribute="top" secondItem="ZSG-Q9-ZmP" secondAttribute="bottom" constant="40" id="f5A-is-DSF"/>
                                             <constraint firstAttribute="trailing" secondItem="ZSG-Q9-ZmP" secondAttribute="trailing" id="lwu-tG-cJe"/>
+                                            <constraint firstItem="zfb-RO-aaj" firstAttribute="top" secondItem="ff7-AP-4gM" secondAttribute="top" constant="90" id="vl5-LO-edn"/>
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lXX-L8-IFw">

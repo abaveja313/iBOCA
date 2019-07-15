@@ -177,13 +177,24 @@ class BubblesA {
     
     var startTime = Foundation.Date()
     
-    
     // Frame the bubbles within the bounding box
     // first get the bounding box
     var xmin = 982//1000
     var xmax = 42//9
     var ymin = 721//1000
     var ymax = 133//0
+    
+    var parentFrame: CGRect? {
+        didSet {
+            if let frame = parentFrame {
+                self.xmin = Int(frame.origin.x + frame.size.width)
+                self.xmax = Int(frame.origin.x)
+                self.ymin = Int(frame.origin.y + frame.size.height)
+                self.ymax = Int(frame.origin.y)
+            }
+        }
+    }
+    
     func getrange() {
         for (_, x, y) in bubblelist {
             xmin = min(x, xmin)
@@ -211,15 +222,20 @@ class BubblesA {
         
         // Check Division by zero
         if (ymax - ymin) != 0 {
-            y = ((y - ymin)*(580-60-2*bcount)/(ymax - ymin)) + bcount + 40
+            var paddingItem = 40
+            if ScreenSize.SCREEN_MAX_LENGTH == 1194.0 {
+                // ipad pro 11 inch
+                paddingItem = 0
+            }
+            y = ((y - ymin)*(580-60-2*bcount)/(ymax - ymin)) + bcount + paddingItem
         }
         
         if xt  {
-            x  = 982 - x//1010 - x
+            x  = xmax - x//1010 - x
         }
         
         if yt {
-            y = 721 - y//625 - y
+            y = ymin - y//625 - y
         }
         
         return (coord.0, x, y)
@@ -249,11 +265,15 @@ class BubblesA {
                 bubblelist.append(TrailsTests[selectedTest].1[i])
             }
         }
-        print("bubblelist:")
-        print(bubblelist)
+        print("x - min: \(xmin) - max: \(xmax)")
+        print("y - min: \(ymin) - max: \(ymax)")
         getrange()
         bubblelist = bubblelist.map(transform)
         startTime = Foundation.Date()
+        print("after")
+        print("x - min: \(xmin) - max: \(xmax)")
+        print("y - min: \(ymin) - max: \(ymax)")
+        print("Device: \(ScreenSize.SCREEN_MAX_LENGTH)")
         jsontimes.removeAll()
         segmenttimes.removeAll()
         seqCount = 0
