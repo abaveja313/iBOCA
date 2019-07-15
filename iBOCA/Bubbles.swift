@@ -265,15 +265,9 @@ class BubblesA {
                 bubblelist.append(TrailsTests[selectedTest].1[i])
             }
         }
-        print("x - min: \(xmin) - max: \(xmax)")
-        print("y - min: \(ymin) - max: \(ymax)")
         getrange()
         bubblelist = bubblelist.map(transform)
         startTime = Foundation.Date()
-        print("after")
-        print("x - min: \(xmin) - max: \(xmax)")
-        print("y - min: \(ymin) - max: \(ymax)")
-        print("Device: \(ScreenSize.SCREEN_MAX_LENGTH)")
         jsontimes.removeAll()
         segmenttimes.removeAll()
         seqCount = 0
@@ -306,7 +300,6 @@ class BubblesA {
             return false
         }
         print("Found new bubble \(curr)")
-        
         
         lastBubble = currentBubble
         currentBubble = curr
