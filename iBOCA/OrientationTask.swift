@@ -293,7 +293,8 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             self.timerOrientationTask.invalidate()
             self.completeTest()
             // Show MainViewController
-            if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+            if let vc = self.storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
+                vc.mode = .patient
                 self.present(vc, animated: true, completion: nil)
             }
         }

@@ -263,9 +263,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @objc fileprivate func display() {
         testCount = 0
-        self.taskImageView.isHidden = false
-        self.arrowRightButton.isHidden = false
-        self.arrowLeftButton.isHidden = true
         isRememberAgainViewHidden(true)
         outputDisplayImage(withImageName: mixedImages[testCount])
     }
@@ -280,6 +277,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             self.arrowRightButton.isHidden = false
         }
         
+        self.taskImageView.isHidden = false
         self.taskImageView.image = UIImage(named: name)!
     }
     
@@ -373,8 +371,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         outputDisplayImage(withImageName: halfImages[testCount])
         
-        // Temp
-        self.isImageViewHidden(false)
         self.isMissingItemViewHidden(false)
         self.imageViewMarginTop.constant = 127
         
@@ -407,10 +403,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         } else {
             print("next pic!")
             outputDisplayImage(withImageName: halfImages[testCount])
-            
-            // Temp
-            isImageViewHidden(true)
-            taskImageView.isHidden = false
         }
     }
     
