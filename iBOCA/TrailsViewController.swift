@@ -56,11 +56,14 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     var arrNumberOfPoints: [String] = [String]()
     
+    var isPracticeTest: Bool = false
+    
     var endedPracticeTest = false
     
     var counterTime: CounterTimeView!
     
     var drawingView: DrawingViewTrails!
+    
     var imageView: UIImageView!
     
     var ended = false
@@ -99,12 +102,10 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         timedConnectionsA = [Double]()
         
-        let y = self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
         let width = self.vTask.frame.size.width
-        let height = self.vTask.frame.size.height - self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
-        let drawViewFrame = CGRect(x: 0.0, y: y, width: width, height: height) //CGRect(x: 0.0, y: 135.0, width: view.bounds.width, height: view.bounds.height-135)
+        let height = self.vTask.frame.size.height
+        let drawViewFrame = CGRect(x: 0.0, y: 0.0, width: width, height: height) //CGRect(x: 0.0, y: 135.0, width: view.bounds.width, height: view.bounds.height-135)
         drawingView = DrawingViewTrails.init(frame: drawViewFrame, isPracticeTests: false)
-        
         print("\(view.bounds.width) \(view.bounds.height)")
         
         self.vTask.addSubview(drawingView)
@@ -122,6 +123,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         bubbleColor = UIColor.red
         
+        print("Left: \(self.vTask.origin.x)")
+        print("Top: \(self.vTask.origin.y)")
+        print("Right: \(self.vTask.origin.x + self.vTask.size.width)")
+        print("Bottom: \(self.vTask.origin.y + self.vTask.size.height)")
+       
         _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
     }
     
@@ -194,27 +200,21 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     func update(timer: Timer) {
         if stopTrailsA == false {
-            self.counterTime.setTimeWith(startTime: startTime2, currentTime: Foundation.Date())
+            if self.isPracticeTest == false {
+                self.counterTime.setTimeWith(startTime: startTime2, currentTime: Foundation.Date())
+            }
         }
         else {
             timer.invalidate()
             if self.endedPracticeTest == false {
-                self.lblTitlePracticeTest.isHidden = true
-                self.drawingView.isHidden = true
                 self.drawingView.canDraw = false
                 
-                let confirmAlert = UIAlertController(title: "Confirm", message: "You complete the practice test, continue the trails test.", preferredStyle: .alert)
+                let confirmAlert = UIAlertController(title: "Complete", message: "You complete the practice test.", preferredStyle: .alert)
                 
-                let continueAction = UIAlertAction.init(title: "Continue", style: .default) { (action) in
-                    
+                let okAction = UIAlertAction.init(title: "Ok", style: .default) { (action) in
                     self.endedPracticeTest = true
-                    // Show view Trails Task
-                    self.lblDesc.isHidden = false
-                    self.vGroupChosseTheTest.isHidden = false
-                    self.vGroupChooseNumberOfPoints.isHidden = false
-                    self.btnStartTask.isHidden = false
                 }
-                confirmAlert.addAction(continueAction)
+                confirmAlert.addAction(okAction)
                 self.present(confirmAlert, animated: true, completion: nil)
             }
             else {
@@ -320,17 +320,27 @@ extension TrailsAViewController {
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
         
-        // Practice Test
-        self.practiceTest()
-        
-        // View Begin Task
-        self.setupViewBeginTrails()
-        
-        // View Counter Timer
-        self.setupViewCounterTimer()
-        
-        // Button Reset, Quit
-        self.setupButtonGradient()
+        if isPracticeTest == true {
+            // Hidden View
+            self.vCounterTimer.isHidden = true
+            self.btnReset.isHidden = true
+            self.btnQuit.isHidden = true
+            
+            // Practice Test
+            self.practiceTest()
+        }
+        else {
+            // Trails Test
+            self.lblTitlePracticeTest.isHidden = true
+            // View Begin Task
+            self.setupViewBeginTrails()
+            
+            // View Counter Timer
+            self.setupViewCounterTimer()
+            
+            // Button Reset, Quit
+            self.setupButtonGradient()
+        }
     }
     
     fileprivate func setupButtonGradient() {
@@ -340,15 +350,11 @@ extension TrailsAViewController {
         self.btnQuit.render()
         self.btnQuit.addTextSpacing(-0.36)
         
-        self.btnQuit.isHidden = true
-        
         self.btnReset.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.btnReset.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.btnReset.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"), Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.btnReset.render()
         self.btnReset.addTextSpacing(-0.36)
-        
-        self.btnReset.isHidden = true
     }
     
     fileprivate func practiceTest() {
@@ -384,8 +390,8 @@ extension TrailsAViewController {
         
         let y = self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
         let width = self.vTask.frame.size.width
-        let height = self.vTask.frame.size.height - self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
-        let drawViewFrame = CGRect(x: 0.0, y: y, width: width, height: height)
+        let height = self.vTask.frame.size.height
+        let drawViewFrame = CGRect(x: 0.0, y: 0, width: width, height: height)
         self.drawingView = DrawingViewTrails.init(frame: drawViewFrame, isPracticeTests: true)
         self.vTask.addSubview(drawingView)
         
@@ -398,9 +404,6 @@ extension TrailsAViewController {
         displayImgTrailsA = false
         self.drawingView.canDraw = true
         bubbleColor = UIColor.red
-        
-        print("Bottom: \(self.vTask.right)")
-        print("Bottom: \(self.vTask.bottom)")
         
         _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
     }

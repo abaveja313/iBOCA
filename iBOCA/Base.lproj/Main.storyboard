@@ -614,7 +614,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test complete in 22.0 seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7Y-QT-X4R">
-                                        <rect key="frame" x="344" y="524" width="252" height="22"/>
                                         <rect key="frame" x="344" y="60" width="252" height="22"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                         <nil key="textColor"/>
@@ -3138,7 +3137,7 @@
                                             <color key="titleColor" red="0.0039215686269999999" green="0.2274509804" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="actionStart:" destination="3ro-ip-0cL" eventType="touchUpInside" id="PLP-6Q-aK7"/>
+                                            <action selector="actionPracticeTest:" destination="3ro-ip-0cL" eventType="touchUpInside" id="cna-rC-S4Z"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -4468,7 +4467,7 @@
         <!--TrailsA View Controller-->
         <scene sceneID="SCM-XG-oKr">
             <objects>
-                <viewController id="1Yj-YM-GH3" customClass="TrailsAViewController" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrailsAViewController" id="1Yj-YM-GH3" customClass="TrailsAViewController" customModule="iBOCA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m29-n8-Gbe"/>
                         <viewControllerLayoutGuide type="bottom" id="0xb-46-aQl"/>
@@ -4520,11 +4519,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiS-Ag-zdY" userLabel="View Task Shadow">
-                                <rect key="frame" x="42" y="133" width="940" height="538"/>
+                                <rect key="frame" x="42" y="133" width="940" height="588"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s18-Rc-uWd" userLabel="View Task">
-                                <rect key="frame" x="42" y="133" width="940" height="538"/>
+                                <rect key="frame" x="42" y="133" width="940" height="588"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRACTICE TEST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBc-1U-BuJ" userLabel="Label title practice test">
                                         <rect key="frame" x="387" y="36" width="166.5" height="26.5"/>
@@ -4667,7 +4666,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSa-JG-21x" userLabel="Button Start Task" customClass="GradientButton" customModule="iBOCA" customModuleProvider="target">
-                                        <rect key="frame" x="365" y="364" width="210" height="72"/>
+                                        <rect key="frame" x="365" y="414" width="210" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="72" id="q5C-6Q-KfO"/>
                                             <constraint firstAttribute="width" constant="210" id="qCE-nf-4mb"/>
@@ -6316,9 +6315,6 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e6U-ZI-T3Y"/>
-        <segue reference="kTw-7t-VZN"/>
-        <segue reference="Vpw-Oe-aOx"/>
         <segue reference="myU-tK-s4h"/>
         <segue reference="kTw-7t-VZN"/>
         <segue reference="ZXe-jH-G6o"/>

@@ -70,6 +70,15 @@ class IntroViewController: UIViewController {
         
         performSegue(withIdentifier: self.testId, sender: nil)
     }
+    
+    @IBAction func actionPracticeTest(_ sender: Any) {
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController {
+            vc.isPracticeTest = true
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    
 }
 
 extension IntroViewController {

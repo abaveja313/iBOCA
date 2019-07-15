@@ -14,25 +14,25 @@ let PracticeTests: (String, [(String, Int, Int)]) = ("Practice",[("1", 810, 230)
                                                                 ("b", 300, 80),
                                                                 ("3", 375, 330)])
 let TrailsTests : [(String, [(String, Int, Int)])] =
-    [("Trails B0", [("1", 710, 380),
-                   ("a", 900, 380),
-                   ("2", 970, 565),
-                   ("b", 500, 580),
-                   ("3", 580, 525),
-                   ("c", 110, 540),
-                   ("4", 290, 450),
-                   ("d", 70, 450),
-                   ("5", 280, 325),
-                   ("e", 190, 180),
-                   ("6", 170, 300),
-                   ("f", 40, 245),
-                   ("7", 170, 50),
-                   ("g", 850, 40),
-                   ("8", 560, 140),
-                   ("h", 970, 105),
-                   ("9", 590, 255),
-                   ("i", 770, 320),
-                   ("10",420, 345),
+    [("Trails B0", [("1", 785, 350),
+                   ("a", 900, 280),
+                   ("2", 920, 365),
+                   ("b", 550, 385),
+                   ("3", 550, 320),
+                   ("c", 150, 385),
+                   ("4", 350, 350),
+                   ("d", 70, 275),
+                   ("5", 425, 225),
+                   ("e", 225, 180),
+                   ("6", 250, 295),
+                   ("f", 60, 140),
+                   ("7", 170, 90),
+                   ("g", 700, 100),
+                   ("8", 550, 80),
+                   ("h", 850, 105),
+                   ("9", 600, 200),
+                   ("i", 770, 220),
+                   ("10", 380, 90),
                    ("j", 450, 420)]),
      ("Trails B1", [("1", 170, 300),
                     ("a", 40, 245),
@@ -180,10 +180,10 @@ class BubblesA {
     
     // Frame the bubbles within the bounding box
     // first get the bounding box
-    var xmin = 1000
-    var xmax = 9
-    var ymin = 1000
-    var ymax = 0
+    var xmin = 982//1000
+    var xmax = 42//9
+    var ymin = 721//1000
+    var ymax = 133//0
     func getrange() {
         for (_, x, y) in bubblelist {
             xmin = min(x, xmin)
@@ -206,21 +206,21 @@ class BubblesA {
         
         // Check Division by zero
         if (xmax - xmin) != 0 {
-            x = (x - xmin)*(950-60-2*bcount)/(xmax - xmin) + 60 + bcount
+            x = ((x - xmin)*(950-60-2*bcount)/(xmax - xmin)) + bcount + 40
         }
         
         // Check Division by zero
         if (ymax - ymin) != 0 {
-            y = (y - ymin)*(580-60-2*bcount)/(ymax - ymin) + 60 + bcount
+            y = ((y - ymin)*(580-60-2*bcount)/(ymax - ymin)) + bcount + 40
         }
         
         if xt  {
-            x  = 1010 - x
+            x  = 982 - x//1010 - x
         }
         if yt {
-            y = 625 - y
+            y = 721 - y//625 - y
         }
-        return (coord.0, x - 30, y - 50)
+        return (coord.0, x, y)
     }
     
     
