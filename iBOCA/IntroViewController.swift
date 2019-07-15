@@ -15,9 +15,10 @@ class IntroViewController: UIViewController {
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var playVideoButton: UIButton!
     @IBOutlet weak var introDescriptionLabel: UILabel!
+    @IBOutlet weak var trailContentButtonView: UIView!
+    @IBOutlet weak var trailStartButton: UIButton!
+    @IBOutlet weak var trailStartPracticeButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var startPracticeButton: UIButton!
-    @IBOutlet weak var startButtonTrailing: NSLayoutConstraint!
     
     var testId: String!
     var videoName: String!
@@ -101,20 +102,27 @@ extension IntroViewController {
         self.introDescriptionLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.introDescriptionLabel.addTextSpacing(-0.36)
         
+        self.trailStartButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.trailStartButton.setTitle("START YOUR TEST", for: .normal)
+        self.trailStartButton.layer.cornerRadius = 8
+        self.trailStartButton.layer.masksToBounds = true
+        
+        self.trailStartPracticeButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.trailStartPracticeButton.setTitle("PRACTICE THIS TEST", for: .normal)
+        self.trailStartPracticeButton.layer.cornerRadius = 8
+        self.trailStartPracticeButton.layer.masksToBounds = true
+        
         self.startButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
         self.startButton.setTitle("START YOUR TEST", for: .normal)
         self.startButton.layer.cornerRadius = 8
         self.startButton.layer.masksToBounds = true
-        
-        self.startPracticeButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
-        self.startPracticeButton.setTitle("PRACTICE THIS TEST", for: .normal)
-        self.startPracticeButton.layer.cornerRadius = 8
-        self.startPracticeButton.layer.masksToBounds = true
     }
     
     fileprivate func isPracticeButtonHidden(_ isHidden: Bool) {
-        self.startPracticeButton.isHidden = isHidden
-        self.startButtonTrailing.constant = isHidden ? 311 : 114
+        self.trailStartButton.isHidden = isHidden
+        self.trailStartPracticeButton.isHidden = isHidden
+        self.trailContentButtonView.isHidden = isHidden
+        self.startButton.isHidden = !isHidden
     }
 }
 
