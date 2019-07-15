@@ -14,11 +14,11 @@ let PracticeTests: (String, [(String, Int, Int)]) = ("Practice",[("1", 810, 230)
                                                                 ("b", 300, 80),
                                                                 ("3", 375, 330)])
 let TrailsTests : [(String, [(String, Int, Int)])] =
-    [("Trails B0", [("1", 785, 350),
-                   ("a", 900, 280),
-                   ("2", 920, 365),
+    [("Trails B0", [("1", 695, 315),
+                   ("a", 820, 280),
+                   ("2", 840, 365),
                    ("b", 550, 385),
-                   ("3", 550, 320),
+                   ("3", 550, 285),
                    ("c", 150, 385),
                    ("4", 350, 350),
                    ("d", 70, 275),
@@ -29,10 +29,10 @@ let TrailsTests : [(String, [(String, Int, Int)])] =
                    ("7", 170, 90),
                    ("g", 700, 100),
                    ("8", 550, 80),
-                   ("h", 850, 105),
-                   ("9", 600, 200),
-                   ("i", 770, 220),
-                   ("10", 380, 90),
+                   ("h", 820, 125),
+                   ("9", 600, 180),
+                   ("i", 720, 220),
+                   ("10", 380, 110),
                    ("j", 450, 420)]),
      ("Trails B1", [("1", 170, 300),
                     ("a", 40, 245),
@@ -202,7 +202,7 @@ class BubblesA {
         var y = coord.2
         
         // frame the bubbles within the bounding box
-        let bcount = (24 - bubblelist.count) * 5 // more bubbles, larger area
+        let bcount = (29 - bubblelist.count) * 5//(24 - bubblelist.count) * 5 // more bubbles, larger area
         
         // Check Division by zero
         if (xmax - xmin) != 0 {
@@ -217,9 +217,11 @@ class BubblesA {
         if xt  {
             x  = 982 - x//1010 - x
         }
+        
         if yt {
             y = 721 - y//625 - y
         }
+        
         return (coord.0, x, y)
     }
     
@@ -247,7 +249,8 @@ class BubblesA {
                 bubblelist.append(TrailsTests[selectedTest].1[i])
             }
         }
-        
+        print("bubblelist:")
+        print(bubblelist)
         getrange()
         bubblelist = bubblelist.map(transform)
         startTime = Foundation.Date()
