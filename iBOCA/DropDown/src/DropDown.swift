@@ -180,6 +180,10 @@ public final class DropDown: UIView {
 		willSet { tableView.rowHeight = newValue }
 		didSet { reloadAllComponents() }
 	}
+    
+    public var dropDownHeight: CGFloat = 0.0 {
+        didSet { setNeedsUpdateConstraints() }
+    }
 
 	@objc fileprivate dynamic var tableViewBackgroundColor = DPDConstant.UI.BackgroundColor {
 		willSet {
@@ -561,9 +565,14 @@ extension DropDown {
 		xConstraint.constant = layout.x
 		yConstraint.constant = layout.y
 		widthConstraint.constant = layout.width
-		heightConstraint.constant = layout.visibleHeight
-
-		tableView.isScrollEnabled = layout.offscreenHeight > 0
+        // Change height of dropdown
+        if dropDownHeight > 0 && dropDownHeight <= layout.visibleHeight {
+            heightConstraint.constant = dropDownHeight
+            tableView.isScrollEnabled = true
+        } else {
+            heightConstraint.constant = layout.visibleHeight
+            tableView.isScrollEnabled = layout.offscreenHeight > 0
+        }
 
 		DispatchQueue.main.async { [weak self] in
 			self?.tableView.flashScrollIndicators()

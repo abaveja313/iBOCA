@@ -28,6 +28,7 @@
 		0EB10B7322C9E512001997BB /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */; };
 		0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B7422C9F229001997BB /* SMResultCell.swift */; };
 		0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B7522C9F229001997BB /* SMResultCell.xib */; };
+		0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */; };
 		0ECA221622D5CE04004FF23F /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0ECA220D22D5CE04004FF23F /* DropDownCell.xib */; };
 		0ECA221722D5CE04004FF23F /* DPDKeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECA220F22D5CE04004FF23F /* DPDKeyboardListener.swift */; };
 		0ECA221822D5CE04004FF23F /* DPDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECA221022D5CE04004FF23F /* DPDConstants.swift */; };
@@ -254,6 +255,7 @@
 		0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensions.swift; sourceTree = "<group>"; };
 		0EB10B7422C9F229001997BB /* SMResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMResultCell.swift; sourceTree = "<group>"; };
 		0EB10B7522C9F229001997BB /* SMResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMResultCell.xib; sourceTree = "<group>"; };
+		0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
 		0ECA220B22D5CE04004FF23F /* DropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDown.h; sourceTree = "<group>"; };
 		0ECA220D22D5CE04004FF23F /* DropDownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
 		0ECA220F22D5CE04004FF23F /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 		0E1A22D822C4677D00C8CFDF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */,
 				0EB10B6D22C9E512001997BB /* NSAttributedStringExtensions.swift */,
 				0E3E1D9322C4A015008E69EC /* CGFloatExtensions.swift */,
 				0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */,
@@ -1260,6 +1263,7 @@
 				0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */,
 				F239513B1EFFE6A1004B09E5 /* PatiantID.swift in Sources */,
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,
+				0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */,
 				4A64C09822C4BD2D005A6F94 /* GoToTestCollectionCell.swift in Sources */,
 				F27AEA941EEC6E7B00AFB3D1 /* DigitBase.swift in Sources */,
 				0EB10B7322C9E512001997BB /* NSAttributedStringExtensions.swift in Sources */,
@@ -1435,7 +1439,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H8983P39UZ;
 				INFOPLIST_FILE = iBOCA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1450,7 +1454,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H8983P39UZ;
 				INFOPLIST_FILE = iBOCA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -15,6 +15,9 @@ class IntroViewController: UIViewController {
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var playVideoButton: UIButton!
     @IBOutlet weak var introDescriptionLabel: UILabel!
+    @IBOutlet weak var trailContentButtonView: UIView!
+    @IBOutlet weak var trailStartButton: UIButton!
+    @IBOutlet weak var trailStartPracticeButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     
     var testId: String!
@@ -22,9 +25,11 @@ class IntroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        videoName = "sample-test-intro"
+        self.videoName = "sample-test-intro"
         self.setupView()
-        self.testId = UserDefaults.standard.string(forKey: "testId")
+        
+        self.isPracticeButtonHidden(!Settings.SegueId!)
+        self.testId = Settings.TestId
     }
     
     private func stopVideo() {
@@ -66,6 +71,15 @@ class IntroViewController: UIViewController {
         
         performSegue(withIdentifier: self.testId, sender: nil)
     }
+    
+    @IBAction func actionPracticeTest(_ sender: Any) {
+        if let vc = storyboard!.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController {
+            vc.isPracticeTest = true
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    
 }
 
 extension IntroViewController {
@@ -88,15 +102,32 @@ extension IntroViewController {
         self.introDescriptionLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.introDescriptionLabel.addTextSpacing(-0.36)
         
+        self.trailStartButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.trailStartButton.setTitle("START YOUR TEST", for: .normal)
+        self.trailStartButton.layer.cornerRadius = 8
+        self.trailStartButton.layer.masksToBounds = true
+        
+        self.trailStartPracticeButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        self.trailStartPracticeButton.setTitle("PRACTICE THIS TEST", for: .normal)
+        self.trailStartPracticeButton.layer.cornerRadius = 8
+        self.trailStartPracticeButton.layer.masksToBounds = true
+        
         self.startButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
         self.startButton.setTitle("START YOUR TEST", for: .normal)
         self.startButton.layer.cornerRadius = 8
         self.startButton.layer.masksToBounds = true
     }
+    
+    fileprivate func isPracticeButtonHidden(_ isHidden: Bool) {
+        self.trailStartButton.isHidden = isHidden
+        self.trailStartPracticeButton.isHidden = isHidden
+        self.trailContentButtonView.isHidden = isHidden
+        self.startButton.isHidden = !isHidden
+    }
 }
 
 extension IntroViewController: VideoViewDelegate {
     func videoDidFinishPlaying() {
-        playVideoButton.isHidden = false
+        self.playVideoButton.isHidden = false
     }
 }
