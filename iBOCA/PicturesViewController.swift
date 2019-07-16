@@ -352,12 +352,13 @@ extension PicturesViewController {
         self.innerShadowView.layer.shadowPath = nil
         self.innerShadowView.layer.masksToBounds = false
         
-        self.lbObjectName.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lbObjectName.font = Font.font(name: Font.Montserrat.medium, size: 27.0)
         self.lbObjectName.textColor = Color.color(hexString: "#8A9199")
-        self.lbObjectName.addTextSpacing(-0.36)
         self.lbObjectName.text = "Object Name"
+        self.lbObjectName.addTextSpacing(-0.36)
         
-        self.tfObjectName.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        
+        self.tfObjectName.font = Font.font(name: Font.Montserrat.medium, size: 28.0)
         self.tfObjectName.backgroundColor = Color.color(hexString: "#F7F7F7")
         
         self.arrowLeftButton.backgroundColor = Color.color(hexString: "#EEF3F9")
