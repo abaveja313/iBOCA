@@ -94,6 +94,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         self.vCounterTimer.isHidden = false
         
+        self.title = self.lblChooseTheTest.text
+        
         if drawingView !== nil {
             drawingView.removeFromSuperview()
         }
@@ -128,11 +130,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         bubbleColor = UIColor.red
         
-        print("Left: \(self.vTask.origin.x)")
-        print("Top: \(self.vTask.origin.y)")
-        print("Right: \(self.vTask.origin.x + self.vTask.size.width)")
-        print("Bottom: \(self.vTask.origin.y + self.vTask.size.height)")
-       
+        // Action Reset
+        self.btnReset.addTarget(self, action: #selector(self.resetTapped(_:)), for: .touchUpInside)
+        // Action Quit
+        self.btnQuit.addTarget(self, action: #selector(self.quitTapped(_:)), for: .touchUpInside)
+        
         _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
     }
     
@@ -170,9 +172,25 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
-        ended = false
-        endedPracticeTest = false
-        self.dismiss(animated: true, completion: nil)
+        if let nav = self.navigationController {
+            ended = false
+            endedPracticeTest = false
+            nav.popViewController(animated: true)
+        }
+    }
+    
+    @objc func resetTapped(_ sender: GradientButton) {
+        self.startTest()
+    }
+    
+    @objc func quitTapped(_ sender: GradientButton) {
+        if let nav = self.navigationController {
+            nav.dismiss(animated: true) {
+                self.done()
+                self.ended = false
+                self.endedPracticeTest = false
+            }
+        }
     }
     
     @IBAction func btnChooseTheTestTapped(_ sender: UIButton) {
@@ -211,7 +229,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         }
         else {
             timer.invalidate()
-            if self.endedPracticeTest == false {
+            if self.isPracticeTest == true {
                 self.drawingView.canDraw = false
                 
                 let confirmAlert = UIAlertController(title: "Complete", message: "You complete the practice test.", preferredStyle: .alert)
@@ -325,12 +343,18 @@ extension TrailsAViewController {
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
         
-        if isPracticeTest == true {
+        if self.isPracticeTest == true {
             // Hidden View
             self.vCounterTimer.isHidden = true
             self.btnReset.isHidden = true
             self.btnQuit.isHidden = true
             
+            // Setup Practice Test
+            self.lblTitlePracticeTest.isHidden = false
+            self.lblTitlePracticeTest.text = "PRACTICE TEST"
+            self.lblTitlePracticeTest.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+            self.lblTitlePracticeTest.textColor = Color.color(hexString: "#013AA5")
+            self.lblTitlePracticeTest.addTextSpacing(-0.44)
             // Practice Test
             self.practiceTest()
         }
@@ -369,12 +393,6 @@ extension TrailsAViewController {
         self.vGroupChooseNumberOfPoints.isHidden = true
         self.btnStartTask.isHidden = true
         
-        // Setup Practice Test
-        self.lblTitlePracticeTest.text = "PRACTICE TEST"
-        self.lblTitlePracticeTest.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
-        self.lblTitlePracticeTest.textColor = Color.color(hexString: "#013AA5")
-        self.lblTitlePracticeTest.addTextSpacing(-0.44)
-        
         self.startPracticeTest()
     }
     
@@ -396,7 +414,7 @@ extension TrailsAViewController {
         let y = self.lblTitlePracticeTest.origin.y + self.lblTitlePracticeTest.frame.size.height
         let width = self.vTask.frame.size.width
         let height = self.vTask.frame.size.height
-        let drawViewFrame = CGRect(x: 0.0, y: 0, width: width, height: height)
+        let drawViewFrame = CGRect(x: 0.0, y: y, width: width, height: height)
         self.drawingView = DrawingViewTrails.init(frame: drawViewFrame, isPracticeTests: true)
         self.vTask.addSubview(drawingView)
         

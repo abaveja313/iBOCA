@@ -651,9 +651,8 @@ class VATask: ViewController, UIPickerViewDelegate {
             return
         }
         
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
+
     }
     
     @IBAction func correctButton(_ sender: Any) {
@@ -703,6 +702,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
+<<<<<<< HEAD
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -718,6 +718,9 @@ class VATask: ViewController, UIPickerViewDelegate {
             vc.mode = .patient
             self.present(vc, animated: true, completion: nil)
         }
+=======
+        navigationController?.dismiss(animated: true, completion: nil)
+>>>>>>> new-ui-version
     }
     
     @IBAction func actionReset(_ sender: Any) {

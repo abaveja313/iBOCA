@@ -31,7 +31,6 @@ class DigitBothDirection:DigitBaseClass {
         base.InfoLabel.text = "Press start to begin \(testName) and tell the patiant the first set of numbers"
         level  = LevelStart() - 1
         redo = 0
-        base.disableKeypad()
     }
     
     override func DoStart() {
@@ -67,8 +66,6 @@ class DigitBothDirection:DigitBaseClass {
     }
     
     override func DoEnterDone() {
-        base.disableKeypad()
-        
         genStrings.append(genval)
         gotStrings.append(base.KeypadLabel.text!)
         gotLevels.append(level+1)

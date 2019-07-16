@@ -291,16 +291,15 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
         self.timerOrientationTask.invalidate()
+
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
             didBackToResult?()
             return
         }
-        
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+                
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func DoneButton(_ sender: AnyObject) {
@@ -327,10 +326,7 @@ class OrientationTask:  ViewController, MFMailComposeViewControllerDelegate, UIT
             self.timerOrientationTask.invalidate()
             self.completeTest()
             // Show MainViewController
-            if let vc = self.storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-                vc.mode = .patient
-                self.present(vc, animated: true, completion: nil)
-            }
+            self.navigationController?.dismiss(animated: true, completion: nil)
         }
         alert.addAction(noAction)
         alert.addAction(yesAction)

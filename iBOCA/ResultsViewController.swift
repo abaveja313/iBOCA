@@ -65,7 +65,7 @@ class ResultsViewController: ViewController {
     }
 
     
-    @IBAction func ibaBack(_ sender: Any) {
+    @IBAction func actionBack(_ sender: Any) {
         if quickStartModeOn {
             didBackToMainView?()
         }
@@ -73,7 +73,7 @@ class ResultsViewController: ViewController {
             dismiss(animated: true, completion: nil)
         }
     }
-    
+
 }
 
 extension ResultsViewController: ResultsHeaderSectionViewDelegate {

@@ -165,6 +165,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
                     UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
                 }
             }
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

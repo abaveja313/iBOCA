@@ -84,6 +84,9 @@ class AdministeredViewController: ViewController {
             self.goToSelectTest()
         }
     }
+    @IBAction func actionBack(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func tapQuickStart(_ sender: Any) {
         if mSwitch.isOn == true {

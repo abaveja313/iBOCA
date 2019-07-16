@@ -136,21 +136,21 @@ let TrailsTests : [(String, [(String, Int, Int)])] =
                        ("j", 250, 150)]),
         ("Trails B6", [("1", 520, 330),
                        ("a", 720, 440),
-                       ("2", 700, 240),
-                       ("b", 190, 270),
-                       ("3", 320, 340),
-                       ("c", 560, 450),
-                       ("4", 190, 380),
+                       ("2", 650, 240),
+                       ("b", 190, 80),
+                       ("3", 320, 380),
+                       ("c", 560, 500),
+                       ("4", 100, 380),
                        ("d", 200, 520),
-                       ("5", 490, 510),
-                       ("e", 880, 510),
+                       ("5", 380, 510),
+                       ("e", 920, 440),
                        ("6", 820, 320),
-                       ("f", 920, 120),
+                       ("f", 900, 150),
                        ("7", 440, 200),
-                       ("g", 650, 120),
-                       ("8", 510,  80),
-                       ("h", 130, 100),
-                       ("9", 130, 310),
+                       ("g", 520, 80),
+                       ("8", 320, 80),
+                       ("h", 80, 50),
+                       ("9", 200, 280),
                        ("i",  50, 200),
                        ("10", 60, 560),
                        ("j", 720, 580),
@@ -265,15 +265,9 @@ class BubblesA {
                 bubblelist.append(TrailsTests[selectedTest].1[i])
             }
         }
-        print("x - min: \(xmin) - max: \(xmax)")
-        print("y - min: \(ymin) - max: \(ymax)")
         getrange()
         bubblelist = bubblelist.map(transform)
         startTime = Foundation.Date()
-        print("after")
-        print("x - min: \(xmin) - max: \(xmax)")
-        print("y - min: \(ymin) - max: \(ymax)")
-        print("Device: \(ScreenSize.SCREEN_MAX_LENGTH)")
         jsontimes.removeAll()
         segmenttimes.removeAll()
         seqCount = 0
@@ -306,7 +300,6 @@ class BubblesA {
             return false
         }
         print("Found new bubble \(curr)")
-        
         
         lastBubble = currentBubble
         currentBubble = curr

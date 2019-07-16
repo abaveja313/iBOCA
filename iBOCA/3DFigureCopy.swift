@@ -172,9 +172,7 @@ class ThreeDFigureCopy: ViewController {
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "main") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionBack(_ sender: Any) {
@@ -183,9 +181,7 @@ class ThreeDFigureCopy: ViewController {
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     fileprivate func saveResult() {
