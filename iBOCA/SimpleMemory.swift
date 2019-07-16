@@ -130,7 +130,6 @@ class SimpleMemoryTask: ViewController {
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
     
-    var minuteDropDown: DropDown!
     let dataMinutesDropDown = [
         "1 minute",
         "2 minutes",
@@ -138,6 +137,8 @@ class SimpleMemoryTask: ViewController {
         "4 minutes",
         "5 minutes"
     ]
+    var isDropDownShowing = false
+    var dropDownMinute: UITableView!
     
     override func viewDidLoad() {
         
@@ -469,16 +470,23 @@ class SimpleMemoryTask: ViewController {
     }
     
     @IBAction func btnChooseDelayTimeTapped(_ sender: Any) {
-        self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
-        self.minuteDropDown.show()
-        // Update state selected first
-        if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
-            self.minuteDropDown.selectRow(idx)
+        if isDropDownShowing {
+            self.dismissDropdown()
+        }
+        else {
+            self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+            // Update state selected first
+            if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
+                self.dropDownMinute.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
+            }
+            self.dropDownMinute.isHidden = false
+            self.isDropDownShowing = true
         }
     }
     
     @IBAction func btnSetDelayTimeTapped(_ sender: Any) {
-        if let idx = self.minuteDropDown.indexForSelectedRow {
+        if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
+            self.dismissDropdown()
             Settings.SMDelayTime = idx + 1
         }
     }
@@ -722,33 +730,18 @@ extension SimpleMemoryTask {
         self.btnChooseDelayTime.setTitleColor(UIColor.clear, for: .normal)
         
         // MARK: - Config Dropdown minute
-        DPDConstant.UI.BorderWidth = 1.0
-        DPDConstant.UI.BorderColor = Color.color(hexString: "#649BFF").cgColor
-        self.minuteDropDown = DropDown()
-        self.minuteDropDown.anchorView = self.vSetDelayTime
-        self.minuteDropDown.bottomOffset = CGPoint(x: 0, y: self.vSetDelayTime.bounds.height + 4.0)
-        self.minuteDropDown.dropDownHeight = 118.0
-        self.minuteDropDown.dataSource = self.dataMinutesDropDown
-        
-        let appearance = DropDown.appearance()
-        appearance.cellHeight = 118.0/3.0
-        appearance.textFont = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        appearance.backgroundColor = UIColor.white
-        appearance.selectionBackgroundColor = Color.color(hexString: "#EAEAEA")
-        appearance.textColor = .black
-        appearance.shadowOpacity = 0
-        
-        // Action triggered on selection
-        self.minuteDropDown.selectionAction = { [weak self] (index, item) in
-            self?.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
-            self?.lblChooseDelayTime.text = item
-        }
-        
-        self.minuteDropDown.cancelAction = { [unowned self] in
-            // You could for example deselect the selected item
-           self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
-        }
-        // End Config Dropdown minute
+        self.dropDownMinute = UITableView()
+        let x = self.vSetDelayTime.origin.x
+        let y = self.vSetDelayTime.origin.y + self.vSetDelayTime.bounds.height + 4.0
+        self.dropDownMinute.frame = CGRect.init(x: x, y: y, width: self.vSetDelayTime.size.width, height: 118.0)
+        self.dropDownMinute.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.identifier())
+        self.vTask.addSubview(self.dropDownMinute)
+        self.dropDownMinute.delegate = self
+        self.dropDownMinute.dataSource = self
+        self.dropDownMinute.separatorStyle = .none
+        self.dropDownMinute.layer.borderWidth = 1.0
+        self.dropDownMinute.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.dropDownMinute.isHidden = true
         
         self.btnSetDelayTime.addTextSpacing(-0.36)
         self.btnSetDelayTime.layer.cornerRadius = 5.0
@@ -952,15 +945,40 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        if tableView == self.dropDownMinute {
+            return self.dataMinutesDropDown.count
+        }
+        else {
+            return 7
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40.0
+        if tableView == self.dropDownMinute {
+            return 118.0/3
+        }
+        else {
+           return 40.0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as? SMResultCell {
+        if tableView == self.dropDownMinute {
+            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            let minute = self.dataMinutesDropDown[indexPath.row]
+            dropDownCell.timeLabel.text = minute
+            if self.lblChooseDelayTime.text == minute {
+                dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
+            }
+            else {
+                dropDownCell.contentView.backgroundColor = UIColor.white
+            }
+            
+            return dropDownCell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
+            
             if indexPath.row == 0 {
                 cell.isHeader = true
             }
@@ -977,9 +995,29 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
                     cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
                 }
             }
-            
             return cell
         }
-        return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == self.dropDownMinute {
+            let minute = self.dataMinutesDropDown[indexPath.row]
+            self.lblChooseDelayTime.text = minute
+            self.dismissDropdown()
+        }
+    }
+    
+    fileprivate func dismissDropdown() {
+        self.dropDownMinute.isHidden = true
+        self.isDropDownShowing = false
+        self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        if touches.first?.view != self.dropDownMinute {
+            self.dismissDropdown()
+        }
+    }
+    
 }
