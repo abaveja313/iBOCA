@@ -39,11 +39,8 @@ class IntroViewController: UIViewController {
     }
 
     @IBAction func actionBack(_ sender: Any) {
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
         self.stopVideo()
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionPlayVideo(_ sender: Any) {
@@ -57,19 +54,33 @@ class IntroViewController: UIViewController {
     @IBAction func actionStart(_ sender: Any) {
         self.stopVideo()
         
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        var viewController = UIViewController()
+        
         switch testId {
+        case "orientation":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "OrientationTask") as? OrientationTask)!
+        case "simple-memory":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "SimpleMemoryTask") as? SimpleMemoryTask)!
+        case "visual-association":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "VATask") as? VATask)!
+        case "trails":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController)!
         case "ForwardDigitSpan", "BackwardDigitSpan", "SerialSeven":
             testName = testId
-            UserDefaults.standard.set(testId, forKey: "testId")
-            self.testId = "digit-base"
+            viewController = (storyboard.instantiateViewController(withIdentifier: "DigitBase") as? DigitBase)!
+        case "3d-figure":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "ThreeDFigureCopy") as? ThreeDFigureCopy)!
+        case "naming-picture":
+            viewController = (storyboard.instantiateViewController(withIdentifier: "PicturesViewController") as? PicturesViewController)!
         case "ForwardSpatialSpan", "BackwardSpatialSpan":
             testName = testId
-            self.testId = "baseSpatial"
+            viewController = (storyboard.instantiateViewController(withIdentifier: "TapInOrderViewController") as? TapInOrderViewController)!
         default:
             break
         }
         
-        performSegue(withIdentifier: self.testId, sender: nil)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func actionPracticeTest(_ sender: Any) {
@@ -78,8 +89,6 @@ class IntroViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
-    
-    
 }
 
 extension IntroViewController {
