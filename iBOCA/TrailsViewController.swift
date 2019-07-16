@@ -167,9 +167,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
-        ended = false
-        endedPracticeTest = false
-        navigationController?.popViewController(animated: true)
+        if let nav = self.navigationController {
+            ended = false
+            endedPracticeTest = false
+            nav.popViewController(animated: true)
+        }
     }
     
     @objc func resetTapped(_ sender: GradientButton) {
@@ -177,10 +179,12 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @objc func quitTapped(_ sender: GradientButton) {
-        self.dismiss(animated: true) {
-            self.done()
-            self.ended = false
-            self.endedPracticeTest = false
+        if let nav = self.navigationController {
+            nav.dismiss(animated: true) {
+                self.done()
+                self.ended = false
+                self.endedPracticeTest = false
+            }
         }
     }
     

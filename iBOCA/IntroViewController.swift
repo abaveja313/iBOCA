@@ -84,9 +84,10 @@ class IntroViewController: UIViewController {
     }
     
     @IBAction func actionPracticeTest(_ sender: Any) {
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        if let vc = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController) {
             vc.isPracticeTest = true
-            self.present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
