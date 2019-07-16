@@ -57,6 +57,13 @@ class PicturesViewController: ViewController {
     var isStartNew: Bool = false
     var isUndo: Bool = false
     
+    
+    @IBOutlet weak var mViewResult: UIView!
+    @IBOutlet weak var mTableResult: UITableView!
+    @IBOutlet weak var mLbResult: UILabel!
+    @IBOutlet weak var mLbTimeComplete: UILabel!
+    var arrDataResult : [SMResultModel] = [SMResultModel]()
+    
     static var identifier = "PicturesViewController"
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -167,6 +174,8 @@ class PicturesViewController: ViewController {
         Status[TestNampingPictures] = TestStatus.Done
         
         // Save Results
+        totalTimeCounter.invalidate()
+        //
         let result = Results()
         result.name = self.title
         result.startTime = startTime2 as Date
@@ -187,6 +196,16 @@ class PicturesViewController: ViewController {
             str += "\nThe incorrect picture\(wrongList.count > 1 ? "s were" : " was")  the \(wrongList)"
         }
         self.resultsLabel.text = str
+        //summary time
+        let completeTime = result.totalElapsedSeconds()
+        self.mLbTimeComplete.text = "Test complete in \(completeTime) seconds"
+        //generate result
+        generateArrayDataResult()
+        //load data
+        mTableResult.reloadData()
+        mViewResult.isHidden = false
+        
+        
         
         // Reset Data
         self.tfObjectName.text = ""
@@ -245,6 +264,7 @@ class PicturesViewController: ViewController {
     }
     
     private func startNew() {
+        mViewResult.isHidden = true
         placeLabel.isHidden = true
         placeLabel.text = "\(count+1)/\(namingImages.count)"
         print(selectedTest, terminator: "")
@@ -335,6 +355,17 @@ class PicturesViewController: ViewController {
         print(self.resultObjectName)
     }
     
+    func generateArrayDataResult(){
+        arrDataResult.removeAll()
+        for i in 0..<count{
+            let input = resultObjectName[i]
+            let exactly = namingImages[i]
+            let result = input == exactly ? true : false
+            let model = SMResultModel.init(objectName: "Object \(i)", input: input, exactResult: exactly, result: result)
+            arrDataResult.append(model)
+        }
+    }
+    
 }
 
 extension PicturesViewController {
@@ -377,6 +408,12 @@ extension PicturesViewController {
         self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
         self.quitButton.render()
         self.quitButton.addTextSpacing(-0.36)
+        
+        // TableView Results
+        self.mTableResult.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
+        self.mTableResult.delegate = self
+        self.mTableResult.dataSource = self
+        mViewResult.isHidden = true
     }
     
     fileprivate func setupCounterTimeView() {
@@ -389,3 +426,41 @@ extension PicturesViewController {
     }
 }
 
+
+// MARK: - UITableView Delegate, DataSource
+extension PicturesViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (count + 1)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40.0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as? SMResultCell {
+            if indexPath.row == 0 {
+                cell.isHeader = true
+            }
+            else {
+                cell.isHeader = false
+            }
+            if indexPath.row != 0{
+                let index = indexPath.row - 1
+                cell.model = arrDataResult[index]
+                if index < count - 1 {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
+                }
+                else {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
+                }
+            }
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
