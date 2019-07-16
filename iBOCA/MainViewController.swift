@@ -74,6 +74,8 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     @IBOutlet weak var mViewMain: UIView!
     @IBOutlet weak var mBtnResult: GradientButton!
     @IBOutlet weak var mBtnDWP: GradientButton!
+    @IBOutlet weak var lblPatientID: UILabel!
+    
     
     var mCollection : UICollectionView?
     var arrData : [GoToTestCellModel] = [GoToTestCellModel]()
@@ -197,6 +199,7 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
         
         //NEW UI
+        self.setupLabelPatientID()
         setupButton()
         setupCollectionView()
         setupData()
@@ -312,6 +315,23 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
 
 //MARK: - New UI
 extension MainViewController {
+    
+    func setupLabelPatientID() {
+        if let patiantID = Settings.patiantID {
+            self.lblPatientID.text = patiantID
+        }
+        self.lblPatientID.textColor = Color.color(hexString: "#0039A7")
+        self.lblPatientID.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
+        self.lblPatientID.addTextSpacing(-0.36)
+        
+        switch mode {
+        case .admin:
+            self.lblPatientID.isHidden = true
+        case .patient:
+            self.lblPatientID.isHidden = false
+        }
+    }
+    
     func setupButton(){
         mBtnResult.setTitle(title: "RESULT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
         mBtnResult.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
@@ -346,11 +366,11 @@ extension MainViewController {
         mCollection?.register(UINib.init(nibName: "GoToTestCollectionCell", bundle: nil), forCellWithReuseIdentifier: "GoToTestCollectionCell")
         mCollection?.delegate = self
         mCollection?.dataSource = self
-        mCollection?.clipsToBounds = false
+        mCollection?.showsVerticalScrollIndicator = false
     }
     
     func setupData(){
-        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","MOCA"]
+        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","MOCA\n"]
         let arrIcon = ["orientation","simple-memory","visual-association","trails","speech-to-text","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","moca"]
         let arrSegueID = ["orientation","simple-memory","visual-association","trails","speech-to-text","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","moca"]
         let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestSpeechToText,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestMOCAResults]
