@@ -702,7 +702,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
-<<<<<<< HEAD
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -714,13 +713,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             return
         }
         
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
-=======
         navigationController?.dismiss(animated: true, completion: nil)
->>>>>>> new-ui-version
     }
     
     @IBAction func actionReset(_ sender: Any) {
