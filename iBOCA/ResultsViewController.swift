@@ -63,6 +63,9 @@ class ResultsViewController: ViewController {
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
 
+    @IBAction func actionBack(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension ResultsViewController: ResultsHeaderSectionViewDelegate {
