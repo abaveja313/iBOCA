@@ -177,7 +177,7 @@ class SimpleMemoryTask: ViewController {
             imagesSM = self.images0
             imageSetSM = 0
             incorrectImageSetSM = 0
-            
+            self.dismissDropdown()
             
             self.startNewTask()
             
@@ -193,6 +193,7 @@ class SimpleMemoryTask: ViewController {
                 }
                 
                 self.start.isHidden = true
+                self.dismissDropdown()
                 
                 self.resumeTask()
                 //action
@@ -378,6 +379,7 @@ class SimpleMemoryTask: ViewController {
         if totalTime != 0 {
             totalTime -= 1
         } else {
+            self.dismissDropdown()
             endTimer()
         }
     }
@@ -478,6 +480,7 @@ class SimpleMemoryTask: ViewController {
             // Update state selected first
             if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
                 self.dropDownMinute.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
+                self.dropDownMinute.reloadData()
             }
             self.dropDownMinute.isHidden = false
             self.isDropDownShowing = true
@@ -965,6 +968,7 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.dropDownMinute {
             let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            dropDownCell.selectionStyle = .none
             let minute = self.dataMinutesDropDown[indexPath.row]
             dropDownCell.timeLabel.text = minute
             if self.lblChooseDelayTime.text == minute {
@@ -1001,9 +1005,18 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.dropDownMinute {
+            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
             let minute = self.dataMinutesDropDown[indexPath.row]
             self.lblChooseDelayTime.text = minute
+            dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
             self.dismissDropdown()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView == self.dropDownMinute {
+            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            dropDownCell.contentView.backgroundColor = UIColor.white
         }
     }
     
