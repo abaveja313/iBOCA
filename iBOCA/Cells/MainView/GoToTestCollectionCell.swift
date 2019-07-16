@@ -10,9 +10,12 @@ import UIKit
 
 class GoToTestCollectionCell: UICollectionViewCell {
     
-    @IBOutlet weak var mSTMain: UIStackView!
     @IBOutlet weak var mImg: UIImageView!
     @IBOutlet weak var mTitle: UILabel!
+    
+    @IBOutlet weak var topConstraintMImg: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomConstraintMImg: NSLayoutConstraint!
     
     private var shadowLayer : CAShapeLayer?
     
@@ -21,6 +24,22 @@ class GoToTestCollectionCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Update Constraint ImageView
+        if let strTitle = mTitle.text {
+            if strTitle == "Foward Digit Span" || strTitle == "Backward Digit Span" || strTitle == "Foward\nSpatial Span" || strTitle == "Backward\nSpatial Span" || strTitle == "3D Figure Copy" || strTitle == "Orientation" {
+                self.topConstraintMImg.constant = 13.0
+                self.bottomConstraintMImg.constant = 14.0
+            }
+            else {
+                self.topConstraintMImg.constant = 24.0
+                self.bottomConstraintMImg.constant = 21.0
+            }
+        }
+        mImg.contentMode = .scaleAspectFit
     }
     
     private func setupUI(){
@@ -50,6 +69,7 @@ class GoToTestCollectionCell: UICollectionViewCell {
     func setupInfo(model:GoToTestCellModel){
         mTitle.text = model.title
         mImg.image =  UIImage.init(named: model.icon)
+        mImg.contentMode = .scaleAspectFit
         if model.isComplete == false{
             self.shadowLayer?.fillColor = UIColor.white.cgColor
             self.shadowLayer?.shadowColor = Color.color(hexString: "649BFF").withAlphaComponent(0.32).cgColor
@@ -63,6 +83,4 @@ class GoToTestCollectionCell: UICollectionViewCell {
             mImg.alpha = 0.2
         }
     }
-    
-
 }
