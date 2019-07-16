@@ -2102,10 +2102,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Reset"/>
-                                <connections>
-                                    <action selector="actionReset:" destination="oxe-aZ-ydg" eventType="touchUpInside" id="Dxu-yR-IBw"/>
-                                    <action selector="actionReset:" destination="X0q-rm-Xxt" eventType="touchUpInside" id="GU6-2t-i1h"/>
-                                </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y2R-zG-X16">
                                 <rect key="frame" x="85" y="246" width="854" height="426"/>

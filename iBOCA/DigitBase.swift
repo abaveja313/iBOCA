@@ -39,6 +39,11 @@ class DigitBase: ViewController {
     @IBOutlet weak var quitButton: GradientButton!
     @IBOutlet weak var resetButton: GradientButton!
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
     var counterTimeView: CounterTimeView!
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()

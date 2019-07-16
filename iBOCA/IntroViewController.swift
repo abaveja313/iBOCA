@@ -20,6 +20,11 @@ class IntroViewController: UIViewController {
     @IBOutlet weak var trailStartPracticeButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didMoveToTestScreen: (() -> ())?
+    
     var testId: String!
     var videoName: String!
     
@@ -53,6 +58,11 @@ class IntroViewController: UIViewController {
     
     @IBAction func actionStart(_ sender: Any) {
         self.stopVideo()
+        
+        guard !quickStartModeOn else {
+            didMoveToTestScreen?()
+            return
+        }
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         var viewController = UIViewController()

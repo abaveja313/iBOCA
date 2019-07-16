@@ -607,6 +607,7 @@ class SimpleMemoryTask: ViewController {
             // Check if is on quickStart mode
             guard !quickStartModeOn else {
                 self.btnStartNew.updateTitle(title: "Continue")
+                self.btnStartNew.removeTarget(self, action: #selector(startNewTask), for: .touchUpInside)
                 self.btnStartNew.addTarget(self, action: #selector(continueToNextTest), for: .touchUpInside)
                 
                 return

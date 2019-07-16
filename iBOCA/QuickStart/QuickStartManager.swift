@@ -10,6 +10,21 @@ import UIKit
 
 class QuickStartManager: NSObject {
 
+    enum TestType {
+        case orientation
+        case simpleMemory
+        case visualAssociation
+        case trails
+        case speechToText
+        case forwardDigitSpan
+        case backwardDigitSpan
+        case figureCopy
+        case serialSevens
+        case namingPicture
+        case forwardSpatialSpan
+        case backwardSpatialSpan
+    }
+    
     let viewController: UIViewController
     var navigationController: UINavigationController?
     
@@ -29,12 +44,72 @@ class QuickStartManager: NSObject {
         }
         self.backToResult = backToResult
         
-        // Start first test
-        firstTest()
+        // Launch Intro
+        launchIntroScreen(fromScreen: .orientation)
+    }
+    
+    private func launchIntroScreen(fromScreen type: TestType) {
+        Settings.SegueId = type == .trails
+        
+        let introVC = UIStoryboard(name: "Main", bundle:Bundle.main).instantiateViewController(withIdentifier: "IntroViewController") as! IntroViewController
+        introVC.quickStartModeOn = true
+        introVC.didMoveToTestScreen = {
+            switch type {
+            case .orientation:
+                self.orientationTest()
+                break
+            case .simpleMemory:
+                self.simpleMemoryTest()
+                break
+            case .visualAssociation:
+                self.VATest()
+                break
+            case .trails:
+                self.trailsTest()
+                break
+            case .speechToText:
+                
+                break
+            case .forwardDigitSpan:
+                self.forwardDigitSpanTest()
+                break
+            case .backwardDigitSpan:
+                self.backwardDigitSpanTest()
+                break
+            case .figureCopy:
+                
+                break
+            case .serialSevens:
+                
+                break
+            case .namingPicture:
+                
+                break
+            case .forwardSpatialSpan:
+                
+                break
+            case .backwardSpatialSpan:
+                
+                break
+            }
+        }
+        
+        if let _ = navigationController {
+            navigationController?.pushViewController(introVC, animated: true)
+            for i in 0...(navigationController!.viewControllers.count - 2) {
+                navigationController?.viewControllers.remove(at: i)
+            }
+        }
+        else {
+            navigationController = UINavigationController.init(rootViewController: introVC)
+            navigationController?.isNavigationBarHidden = true
+            
+            viewController.present(navigationController!, animated: true, completion: nil)
+        }
     }
     
     
-    private func firstTest() {
+    private func orientationTest() { // First test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrientationTask") as? OrientationTask else {
             debugPrint("Unable to launch test")
             return
@@ -43,16 +118,13 @@ class QuickStartManager: NSObject {
         vc.didBackToResult = backToResult
         vc.didCompleted = {
             // Move to next test
-            self.secondTest()
+            self.launchIntroScreen(fromScreen: .simpleMemory)
         }
         
-        navigationController = UINavigationController.init(rootViewController: vc)
-        navigationController?.isNavigationBarHidden = true
-        
-        viewController.present(navigationController!, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func secondTest() {
+    private func simpleMemoryTest() { // Second test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SimpleMemoryTask") as? SimpleMemoryTask else {
             debugPrint("Unable to launch test")
             return
@@ -60,13 +132,13 @@ class QuickStartManager: NSObject {
         vc.quickStartModeOn = true
         vc.didBackToResult = backToResult
         vc.didCompleted = {
-            self.thirdTest()
+            self.launchIntroScreen(fromScreen: .visualAssociation)
         }
         
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func thirdTest() {
+    private func VATest() { // Third test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VATask") as? VATask else {
             debugPrint("Unable to launch test")
             return
@@ -75,26 +147,55 @@ class QuickStartManager: NSObject {
         vc.didBackToResult = backToResult
         vc.didCompleted = {
             // Move to next test
-            self.fourthTest()
+            self.launchIntroScreen(fromScreen: .trails)
         }
-        
+
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func fourthTest() {
-        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VATask") as? VATask else {
+    private func trailsTest() { // Fourth test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController else {
             debugPrint("Unable to launch test")
             return
         }
         vc.quickStartModeOn = true
         vc.didBackToResult = backToResult
         vc.didCompleted = {
-            
+            self.launchIntroScreen(fromScreen: .forwardDigitSpan)
         }
         
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    private func forwardDigitSpanTest() { // Fifth test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DigitBase") as? DigitBase else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        testName  = "ForwardDigitSpan"
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .backwardDigitSpan)
+        }
+
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func backwardDigitSpanTest() { // Sixth test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DigitBase") as? DigitBase else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        testName  = "BackwardDigitSpan"
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .figureCopy)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     class func showAlertCompletion(viewController: UIViewController, cancel: (() -> ())?, ok: (() -> ())?) {
         let alertController = UIAlertController(title: "Completed", message: "Do you want to move to the next test?", preferredStyle: .alert)
