@@ -57,6 +57,7 @@ class PicturesViewController: ViewController {
     var isStartNew: Bool = false
     var isUndo: Bool = false
     
+    static var identifier = "PicturesViewController"
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,10 +99,7 @@ class PicturesViewController: ViewController {
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestNampingPictures] = TestStatus.NotStarted
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func undoTapped(_ sender: Any) {
@@ -132,9 +130,7 @@ class PicturesViewController: ViewController {
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     

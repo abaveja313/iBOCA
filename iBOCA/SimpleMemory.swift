@@ -488,10 +488,7 @@ class SimpleMemoryTask: ViewController {
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestSimpleMemory] = TestStatus.NotStarted
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func btnBackTapped(_ sender: Any) {
@@ -502,9 +499,7 @@ class SimpleMemoryTask: ViewController {
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func doneSM() {

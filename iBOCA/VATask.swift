@@ -640,10 +640,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
-        
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func correctButton(_ sender: Any) {
@@ -693,10 +690,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionReset(_ sender: Any) {

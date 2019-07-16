@@ -668,7 +668,7 @@ class TapInOrderViewController: ViewController {
         if !ended {
             donetest()
         }
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func tapBtnQuit(_ sender: Any) {
@@ -680,10 +680,7 @@ class TapInOrderViewController: ViewController {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapBtnReset(_ sender: Any) {

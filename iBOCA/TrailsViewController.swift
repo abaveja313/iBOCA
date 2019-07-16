@@ -167,7 +167,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     @IBAction func btnBackTapped(_ sender: UIButton) {
         ended = false
         endedPracticeTest = false
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnChooseTheTestTapped(_ sender: UIButton) {

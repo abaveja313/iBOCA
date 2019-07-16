@@ -16,22 +16,6 @@ class DigitBase: ViewController {
 
     @IBOutlet weak var StartButton: UIButton!
     
-    @IBOutlet weak var Button_1: UIButton!
-    @IBOutlet weak var Button_2: UIButton!
-    @IBOutlet weak var Button_3: UIButton!
-    @IBOutlet weak var Button_4: UIButton!
-    @IBOutlet weak var Button_5: UIButton!
-    @IBOutlet weak var Button_6: UIButton!
-    @IBOutlet weak var Button_7: UIButton!
-    @IBOutlet weak var Button_8: UIButton!
-    @IBOutlet weak var Button_9: UIButton!
-    @IBOutlet weak var Button_0: UIButton!
-    @IBOutlet weak var Button_done: UIButton!
-    @IBOutlet weak var Button_delete: UIButton!
-    
-    var NumKeys:[UIButton] = []
-    
-    
     var value: String = ""
     
     var ended = false
@@ -64,7 +48,6 @@ class DigitBase: ViewController {
         setupView()
         numKeyboard.delegate = self
         
-        hideKeypad()
         // Dispatch according to incoming
         if testName == "ForwardDigitSpan" {
             base = DigitSpanForward()
@@ -80,19 +63,6 @@ class DigitBase: ViewController {
         base!.DoStart()
         
         setupCounterTimeView()
-        
-        NumKeys.append(Button_1)
-        NumKeys.append(Button_2)
-        NumKeys.append(Button_3)
-        NumKeys.append(Button_4)
-        NumKeys.append(Button_5)
-        NumKeys.append(Button_6)
-        NumKeys.append(Button_7)
-        NumKeys.append(Button_8)
-        NumKeys.append(Button_9)
-        NumKeys.append(Button_0)
-        NumKeys.append(Button_done)
-        NumKeys.append(Button_delete)
         
         value = ""
         NumberLabel.text = ""
@@ -111,53 +81,6 @@ class DigitBase: ViewController {
     func updateTime(timer: Timer) {
         self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
-
-    func enableKeypad() {
-        for key in NumKeys {
-            key.isHidden = false
-            key.isEnabled = true
-        }
-    }
-    
-    func disableKeypad() {
-        for key in NumKeys {
-            key.isEnabled = false
-        }
-    }
-    
-    func hideKeypad() {
-        for key in NumKeys {
-            key.isEnabled = false
-            key.isHidden = true
-        }
-    }
-    
-    @IBAction func KeyPadKeyPressed(_ sender: UIButton) {
-//        guard Int(value + sender.currentTitle!) != nil else {return}
-//
-//        // Hide answer label
-//        lbCorrectAnswer.isHidden = true
-//
-//        value = value + sender.currentTitle!
-//        KeypadLabel.text = value
-//        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-//        base!.gotKeys[(String)(elapsedTime)] = sender.currentTitle!
-    }
-    
-    @IBAction func DoneKeyPressed(_ sender: UIButton) {
-//        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-//        base!.gotKeys[(String)(elapsedTime)] = "done"
-
-//        base!.DoEnterDone()
-    }
-    
-    @IBAction func DeleteKeyPressed(_ sender: UIButton) {
-//        value = String(value.characters.dropLast())
-//        KeypadLabel.text = value
-//        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-//        base!.gotKeys[(String)(elapsedTime)] = "del"
-    }
-    
     
     @IBAction func StartPressed(_ sender: UIButton) {
 //        ended = false
@@ -169,29 +92,22 @@ class DigitBase: ViewController {
     }
     
     @IBAction func actionBack(_ sender: Any) {
-//        if Status[base!.testStatus] != TestStatus.Done {
-//            Status[base!.testStatus] = TestStatus.NotStarted
-//        }
+        if Status[base!.testStatus] != TestStatus.Done {
+            Status[base!.testStatus] = TestStatus.NotStarted
+        }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        if let vc = self.storyboard!.instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func actionQuit(_ sender: UIButton) {
+        if Status[base!.testStatus] != TestStatus.Done {
+            Status[base!.testStatus] = TestStatus.NotStarted
+        }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
-        
-//        if Status[base!.testStatus] != TestStatus.Done {
-//            Status[base!.testStatus] = TestStatus.NotStarted
-//        }
-        
-        if let vc = storyboard!.instantiateViewController(withIdentifier: "main") as? MainViewController {
-            vc.mode = .patient
-            self.present(vc, animated: true, completion: nil)
-        }
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionReset(_ sender: Any) {
