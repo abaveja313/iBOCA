@@ -65,9 +65,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     // MARK: Outlet
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var resultLabel: UILabel!
-    @IBOutlet weak var correct: UIButton!
-    @IBOutlet weak var incorrect: UIButton!
-    @IBOutlet weak var dk: UIButton!
     
     @IBOutlet weak var back: UIButton!
     @IBOutlet weak var backTitleLabel: UILabel!
@@ -104,8 +101,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var missingItemLabel: UILabel!
     @IBOutlet weak var missingItemTextField: UITextField!
-    @IBOutlet weak var imageViewMarginTop: NSLayoutConstraint!
-    @IBOutlet weak var startNewButton: GradientButton!
+    @IBOutlet weak var remainingPhotoLabel: UILabel!
     
     @IBOutlet weak var resultTitleLabel: UILabel!
     @IBOutlet weak var totalTimeLabel: UILabel!
@@ -240,8 +236,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.runTimer()
         
         self.isRecalledTestMode = false
-        self.imageViewMarginTop.constant = 64
-        self.startNewButton.isHidden = true
         self.isRecommendDelayHidden(true)
         self.isCollectionViewHidden(false)
         self.isTaskViewHidden(true)
@@ -377,7 +371,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         outputDisplayImage(withImageName: halfImages[testCount])
         
         self.isMissingItemViewHidden(false)
-        self.imageViewMarginTop.constant = 127
         
         self.noticeLabel.text = "Choose the photograph that you were previously asked to remember"
         self.noticeButton.updateTitle(title: "CONTINUE", spacing: -0.36)
@@ -398,10 +391,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         recallTimes.append(findTime())
         self.testCount += 1
         if testCount == halfImages.count {
-            correct.isHidden = true
-            incorrect.isHidden = true
-            dk.isHidden = true
-            
             isImageViewHidden(true)
             isMissingItemViewHidden(true)
             isRememberAgainViewHidden(false)
@@ -499,20 +488,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         }
         
         for k in 0 ..< mixedImages.count {
-//            if (recallErrors[k] == 0) {
-//                result.longDescription.add("Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds")
-//                recallResult += "Recalled \(mixedImages[k]) - Correct in \(recallTimes[k]) seconds\n"
-//            }
-//            if (recallErrors[k] == 1) {
-//                result.longDescription.add("Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds")
-//                recallResult += "Recalled \(mixedImages[k]) - Incorrect in \(recallTimes[k]) seconds\n"
-//                result.numErrors += 1
-//            }
-//            if (recallErrors[k] == 2) {
-//                result.longDescription.add("Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds")
-//                recallResult += "Couldn't recall \(mixedImages[k]) in \(recallTimes[k]) seconds\n"
-//                result.numErrors += 1
-//            }
             if (recognizeErrors[k] == 0) {
                 result.longDescription.add("Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds")
                 recognizeResult += "Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds\n"
@@ -543,22 +518,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         var tmpResultList2 : [String:Any] = [:]
         
-//        for i in 0...recallErrors.count-1 {
-//            var res = "Correct"
-//            if recallErrors[i] == 1 {
-//                res = "Incorrect"
-//            }
-//            if recallErrors[i] == 2 {
-//                res = "Couldn'tRecall"
-//            }
-//            tmpResultList2[mixedImages[i]] = ["Condition":res, "Time":recallTimes[i]]
-//        }
         for i in 0...textInputList.count-1 {
             tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
         }
         
         resultList["Recall"] = tmpResultList2
-        
         
         result.json = resultList
         resultsArray.add(result)
@@ -611,6 +575,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         if testCount >= 0 {
             print("pic: \(testCount)")
             self.outputDisplayImage(withImageName: mixedImages[testCount])
+            missingItemTextField.text = textInputList[testCount]
+            remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
         }
     }
     
@@ -634,6 +600,7 @@ class VATask: ViewController, UIPickerViewDelegate {
                     isRememberAgainViewHidden(false)
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
+                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
                 } else {
                     if !firstDisplay {
                         beginDelay()
@@ -650,6 +617,7 @@ class VATask: ViewController, UIPickerViewDelegate {
                     recallTimes.append(findTime())
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
+                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
                 }
                 self.outputDisplayImage(withImageName: mixedImages[testCount])
             }
@@ -781,13 +749,6 @@ extension VATask {
         self.descriptionLabel.addLineSpacing(10.0)
         self.descriptionLabel.addTextSpacing(-0.36)
         
-        // Button Start New
-        self.startNewButton.setTitle(title: "START NEW", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
-        self.startNewButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
-        self.startNewButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
-        self.startNewButton.addTextSpacing(-0.36)
-        self.startNewButton.render()
-        
         // Button Reset
         self.resetButton.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
         self.resetButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
@@ -817,12 +778,6 @@ extension VATask {
         isMissingItemViewHidden(true)
         isResultViewHidden(true)
         isDropDownViewHidden(true)
-        
-        startNewButton.isHidden = true
-        
-        correct.isHidden = true
-        incorrect.isHidden = true
-        dk.isHidden = true
     }
     
     fileprivate func setupCollectionView() {
@@ -863,11 +818,14 @@ extension VATask {
         self.delayTimePickerView.layer.cornerRadius = 8
         self.delayTimePickerView.layer.masksToBounds = true
         
+        var row: Int!
         self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         if let timeDelay = Settings.VADelayTime {
             self.delayTimePickerLabel.text = timeDelay / 60 == 1 ? "1 minute" : "\(timeDelay / 60) minutes"
+            row = timeDelay / 60 - 1
         } else {
             self.delayTimePickerLabel.text = "5 minutes"
+            row = 4
         }
         
         self.setDelayTimeButton.backgroundColor = Color.color(hexString: "#EEF3F9")
@@ -897,7 +855,6 @@ extension VATask {
         
         self.timePickerContentView.layer.borderWidth = 1
         self.timePickerContentView.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
-        self.timePickerContentView.layer.cornerRadius = 8
         self.timePickerContentView.layer.masksToBounds = true
         
         self.timePickerTableView.dataSource = self
@@ -905,6 +862,7 @@ extension VATask {
         self.timePickerTableView.isScrollEnabled = false
         self.timePickerTableView.separatorStyle = .none
         self.timePickerTableView.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.cellId)
+        self.timePickerTableView.selectRow(at: IndexPath.init(row: row, section: 0), animated: false, scrollPosition: .none)
     }
     
     fileprivate func setupViewNotice() {
@@ -923,10 +881,17 @@ extension VATask {
     }
     
     fileprivate func setupViewMissingItem() {
-        self.missingItemLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.missingItemLabel.font = Font.font(name: Font.Montserrat.medium, size: 28.0)
         self.missingItemLabel.textColor = Color.color(hexString: "#8A9199")
         self.missingItemLabel.addTextSpacing(-0.36)
         self.missingItemLabel.text = "The missing item is"
+        
+        self.missingItemTextField.font = Font.font(name: Font.Montserrat.medium, size: 28.0)
+        
+        self.remainingPhotoLabel.font = Font.font(name: Font.Montserrat.medium, size: 28.0)
+        self.remainingPhotoLabel.textColor = Color.color(hexString: "#8A9199")
+        self.remainingPhotoLabel.addTextSpacing(-0.36)
+        self.remainingPhotoLabel.text = "1/5"
     }
     
     fileprivate func setupCounterTimeView() {
@@ -990,6 +955,7 @@ extension VATask {
     fileprivate func isMissingItemViewHidden(_ isHidden: Bool) {
         self.missingItemLabel.isHidden = isHidden
         self.missingItemTextField.isHidden = isHidden
+        self.remainingPhotoLabel.isHidden = isHidden
     }
     
     fileprivate func isRememberAgainViewHidden(_ isHidden: Bool) {
@@ -1050,7 +1016,7 @@ extension VATask: UICollectionViewDataSource {
         case 0:
             imageName = mixed0[0]
         case 1:
-            imageName = mixed1[1]
+            imageName = mixed1[0]
         case 2:
             imageName = mixed2[0]
         case 3:
@@ -1126,6 +1092,11 @@ extension VATask: UITableViewDataSource {
         if tableView == timePickerTableView {
             let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
             dropDownCell.timeLabel.text = indexPath.row == 0 ? "1 minute" : "\(indexPath.row + 1) minutes"
+            
+            let cellSelectedColor = UIView()
+            cellSelectedColor.backgroundColor = Color.color(hexString: "#EAEAEA")
+            dropDownCell.selectedBackgroundView = cellSelectedColor
+            
             return dropDownCell
         } else {
             var cell = VACell()
