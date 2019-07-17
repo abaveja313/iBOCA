@@ -127,12 +127,17 @@ class VATask: ViewController, UIPickerViewDelegate {
     var totalTimeCounter = Timer()
     var startTimeTask = Foundation.Date()
     
+    var inputTimer = Timer()
+    var timeInput = Double()
+    
     var isRecalledTestMode = false
     
     var textInputList: [String]!
     
     var isDropDownShowing = false
     var delayReccommendedTime: Int!
+    
+    var isMissingItemTextFieldChanged = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,7 +226,11 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func startNewTask() {
+        inputTimer.invalidate()
+        
         Status[TestVisualAssociation] = TestStatus.NotStarted
+        
+        self.remainingPhotoLabel.text = "1/5"
         
         if let delayTime = Settings.VADelayTime {
             self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
@@ -365,6 +374,8 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     fileprivate func recall() {
+        inputTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimeInput), userInfo: nil, repeats: true)
+        inputTimer.fire()
         
         testCount = 0
         
@@ -385,6 +396,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         let currTime = NSDate.timeIntervalSinceReferenceDate
         let time = Double(Int((currTime - startTimeVA)*10))/10.0
         return time
+    }
+    
+    @objc fileprivate func updateTimeInput(timer: Timer) -> Double {
+        self.timeInput += 0.1
+        return self.timeInput
     }
     
     fileprivate func loadHalfImages() {
@@ -572,8 +588,9 @@ class VATask: ViewController, UIPickerViewDelegate {
         print("Arrow Left Tapped")
         view.endEditing(true)
         testCount -= 1
+        timeInput = 0
         if testCount >= 0 {
-            print("pic: \(testCount)")
+            print("testCount: \(testCount)")
             self.outputDisplayImage(withImageName: mixedImages[testCount])
             missingItemTextField.text = textInputList[testCount]
             remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
@@ -595,11 +612,16 @@ class VATask: ViewController, UIPickerViewDelegate {
                 print("delay")
                 isImageViewHidden(true)
                 if isRecalledTestMode {
-                    recallTimes.append(findTime())
                     isMissingItemViewHidden(true)
                     isRememberAgainViewHidden(false)
+                
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
+                    recallTimes.append((timeInput * 10).rounded() / 10)
+                    
+                    timeInput = 0
+                    inputTimer.invalidate()
+                    isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
                 } else {
                     if !firstDisplay {
@@ -612,11 +634,30 @@ class VATask: ViewController, UIPickerViewDelegate {
                     }
                 }
             } else {
-                print("pic: \(testCount)")
+                print("testCount: \(testCount)")
                 if isRecalledTestMode {
-                    recallTimes.append(findTime())
-                    textInputList.append(missingItemTextField.text!)
-                    missingItemTextField.text = ""
+                    
+                    if testCount - 1 == textInputList.count {
+                        textInputList.append(missingItemTextField.text!)
+                        missingItemTextField.text = ""
+                        recallTimes.append((timeInput * 10).rounded() / 10)
+                    } else if testCount == textInputList.count {
+                        textInputList[testCount - 1] = missingItemTextField.text!
+                        missingItemTextField.text = ""
+                        if isMissingItemTextFieldChanged {
+                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                        }
+                    } else {
+                        textInputList[testCount - 1] = missingItemTextField.text!
+                        if isMissingItemTextFieldChanged {
+                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                        }
+                        missingItemTextField.text = textInputList[testCount]
+                    }
+                    
+                    timeInput = 0
+                    
+                    isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
                 }
                 self.outputDisplayImage(withImageName: mixedImages[testCount])
@@ -629,6 +670,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
         timerVA.invalidate()
+        inputTimer.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
@@ -687,6 +729,7 @@ class VATask: ViewController, UIPickerViewDelegate {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
         timerVA.invalidate()
+        inputTimer.invalidate()
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
@@ -1118,6 +1161,11 @@ extension VATask: UITableViewDelegate {
             delayReccommendedTime = (indexPath.row + 1) * 60
             dismissDropDownList()
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        isMissingItemTextFieldChanged = true
+        return true
     }
 }
 

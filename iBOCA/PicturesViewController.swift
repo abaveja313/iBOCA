@@ -109,6 +109,51 @@ class PicturesViewController: ViewController {
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
+    private func resumeTest() {
+        guard let strObjName = self.tfObjectName.text, !strObjName.isEmpty else {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Object Name fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+            return
+        }
+        
+        backButton.isEnabled = true
+        //        resetButton.isEnabled = true
+        arrowLeftButton.isHidden = false
+        
+        if isUndo == true, self.resultObjectName.count != count {
+            self.resultObjectName[count] = strObjName
+            self.tfObjectName.text = self.resultObjectName[count]
+        }
+        else {
+            self.resultObjectName.append(strObjName)
+            self.tfObjectName.text = ""
+        }
+        count += 1
+        
+        let currTime = Foundation.Date()
+        resultTime.append(currTime)
+        
+        if(count==totalCount){
+            done()
+        }
+        else {
+            imageName = getImageName()
+            let image1 = UIImage(named: imageName)
+            //            fixDimensions(image: image1!)
+            //            imageView.image = image1
+            
+            namingImageView.image = image1
+            
+            if count != namingImages.count {
+                placeLabel.text = "\(count+1)/\(namingImages.count)"
+            }
+        }
+        print(self.resultObjectName)
+    }
+    
     @IBAction func undoTapped(_ sender: Any) {
         arrowLeftButton.isHidden = false
         isUndo = true
@@ -306,54 +351,7 @@ class PicturesViewController: ViewController {
 //        self.arrowRightButton.setTitle("Next", for: .selected)
     }
     
-    private func resumeTest() {
-        guard let strObjName = self.tfObjectName.text, !strObjName.isEmpty else {
-            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Object Name fields.", preferredStyle: .alert)
-            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
-                warningAlert.dismiss(animated: true, completion: nil)
-            }))
-            self.present(warningAlert, animated: true, completion: nil)
-            return
-        }
-        
-        backButton.isEnabled = true
-//        resetButton.isEnabled = true
-        arrowLeftButton.isHidden = false
-        
-        if isUndo == true, self.resultObjectName.count != count {
-            self.resultObjectName[count] = strObjName
-        }
-        else {
-            self.resultObjectName.append(strObjName)
-        }
-        count += 1
-        if isUndo == true, self.resultObjectName.count != count {
-           self.tfObjectName.text = self.resultObjectName[count]
-        }
-        else {
-            self.tfObjectName.text = ""
-        }
-        
-        let currTime = Foundation.Date()
-        resultTime.append(currTime)
-        
-        if(count==totalCount){
-            done()
-        }
-        else {
-            imageName = getImageName()
-            let image1 = UIImage(named: imageName)
-//            fixDimensions(image: image1!)
-//            imageView.image = image1
-            
-            namingImageView.image = image1
-            
-            if count != namingImages.count {
-                placeLabel.text = "\(count+1)/\(namingImages.count)"
-            }
-        }
-        print(self.resultObjectName)
-    }
+    
     
     func generateArrayDataResult(){
         arrDataResult.removeAll()
