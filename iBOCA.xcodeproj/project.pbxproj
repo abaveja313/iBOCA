@@ -575,7 +575,6 @@
 				E520BC3322D8307A0037EBA3 /* QuickStart */,
 				4A70EDC922CEE88600E8E533 /* CustomView */,
 				B10BD11722CE2104008A195C /* NumberKeyboardView */,
-				4AA3050622CB3E7C0033E5DC /* Proctored */,
 				4A6963B822C5F6A60084E5E1 /* Administered */,
 				4A64C08F22C4BCE5005A6F94 /* Cells */,
 				4A328A5522C47B6A00034075 /* Resource */,
@@ -715,13 +714,6 @@
 				4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */,
 			);
 			path = CustomView;
-			sourceTree = "<group>";
-		};
-		4AA3050622CB3E7C0033E5DC /* Proctored */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Proctored;
 			sourceTree = "<group>";
 		};
 		B104C0EE22D47AC300EB24F9 /* VACell */ = {
