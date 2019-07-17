@@ -57,6 +57,11 @@ class PicturesViewController: ViewController {
     var isStartNew: Bool = false
     var isUndo: Bool = false
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
     static var identifier = "PicturesViewController"
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -99,6 +104,17 @@ class PicturesViewController: ViewController {
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestNampingPictures] = TestStatus.NotStarted
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -130,6 +146,13 @@ class PicturesViewController: ViewController {
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     

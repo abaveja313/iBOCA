@@ -507,6 +507,18 @@ class SimpleMemoryTask: ViewController {
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
         Status[TestSimpleMemory] = TestStatus.NotStarted
+        
+        // Check if is on quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            
+            return
+        }
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -611,29 +623,9 @@ class SimpleMemoryTask: ViewController {
             
             self.vResults.isHidden = false
             self.btnStartNew.isHidden = false
-            
-            // Check if is on quickStart mode
-            guard !quickStartModeOn else {
-                self.btnStartNew.updateTitle(title: "Continue")
-                self.btnStartNew.removeTarget(self, action: #selector(startNewTask), for: .touchUpInside)
-                self.btnStartNew.addTarget(self, action: #selector(continueToNextTest), for: .touchUpInside)
-                
-                return
-            }
-            
             self.btnStartNew.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         }
     }
-    
-    // Use for quickStart mode
-    @objc private func continueToNextTest() {
-        QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-            self.didBackToResult?()
-        }) {
-            self.didCompleted?()
-        }
-    }
-    
     
     private func checkValid() -> Bool {
         var countEmpty = 0

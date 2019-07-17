@@ -567,25 +567,6 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         recalledTableView.reloadData()
         regconizedTableView.reloadData()
-        
-        
-        // Check if is on quickStart mode
-        guard !quickStartModeOn else {
-            self.resetButton.updateTitle(title: "Continue")
-            self.resetButton.removeTarget(self, action: #selector(actionReset(_:)), for: .touchUpInside)
-            self.resetButton.addTarget(self, action: #selector(continueToNextTest), for: .touchUpInside)
-            
-            return
-        }
-    }
-    
-    // Use for quickStart mode
-    @objc private func continueToNextTest() {
-        QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-            self.didBackToResult?()
-        }) {
-            self.didCompleted?()
-        }
     }
     
     fileprivate func dismissDropDownList() {

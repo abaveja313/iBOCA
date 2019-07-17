@@ -172,6 +172,12 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         if let nav = self.navigationController {
             ended = false
             endedPracticeTest = false
@@ -184,6 +190,16 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     }
     
     @objc func quitTapped(_ sender: GradientButton) {
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         if let nav = self.navigationController {
             nav.dismiss(animated: true) {
                 self.done()
@@ -251,6 +267,9 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         ended = true
         if drawingView != nil {
             drawingView.canDraw = false
+            if screenSize == nil {
+                screenSize = UIScreen.main.bounds
+            }
             let imageSize = CGSize(width: screenSize!.maxX, height: screenSize!.maxY - 135)
             imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 135), size: imageSize))
             /*           if resultsDisplayOn == true {

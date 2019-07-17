@@ -102,6 +102,13 @@ class DigitBase: ViewController {
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -112,6 +119,17 @@ class DigitBase: ViewController {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     

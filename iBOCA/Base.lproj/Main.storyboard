@@ -12,7 +12,7 @@
         <!--Serial Sevens-->
         <scene sceneID="9VL-fI-MXG">
             <objects>
-                <viewController id="ldB-3t-wMh" customClass="SerialSevens" customModule="iBOCA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SerialSevens" id="ldB-3t-wMh" customClass="SerialSevens" customModule="iBOCA" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UKv-qj-MeL"/>
                         <viewControllerLayoutGuide type="bottom" id="xQO-kk-IpB"/>
