@@ -98,11 +98,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         self.title = self.lblChooseTheTest.text
         
-        if drawingView !== nil {
+        if drawingView != nil {
             drawingView.removeFromSuperview()
         }
         
-        if imageView !== nil {
+        if imageView != nil {
             imageView.removeFromSuperview()
             imageView.image = nil
         }
@@ -135,7 +135,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         // Action Quit
         self.btnQuit.addTarget(self, action: #selector(self.quitTapped(_:)), for: .touchUpInside)
         
-        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        let runtimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        runtimer.fire()
     }
     
     /*   @IBAction func HelpButton(sender: AnyObject) {
@@ -179,11 +180,12 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
     @objc func quitTapped(_ sender: GradientButton) {
         if let nav = self.navigationController {
-            nav.dismiss(animated: true) {
-                self.done(showAlertComplete: true)
-                self.ended = false
-                self.endedPracticeTest = false
+            if self.ended == false {
+                self.done(showAlertComplete: false)
             }
+            self.ended = false
+            self.endedPracticeTest = false
+            nav.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -196,8 +198,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
             self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
             // Update state selected first
             if let item = self.lblChooseTheTest.text, let idx = self.TestTypes.index(of: item) {
-                self.ddChooseTheTest.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
                 self.ddChooseTheTest.reloadData()
+                self.ddChooseTheTest.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
             }
             self.ddChooseTheTest.isHidden = false
             self.isDropDownChooseTheTestShowing = true
@@ -213,8 +215,8 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
             self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
             // Update state selected first
             if let item = self.lblChooseNumberOfPoints.text, let idx = self.arrNumberOfPoints.index(of: item) {
-                self.ddChooseNumberOfPoints.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
                 self.ddChooseNumberOfPoints.reloadData()
+                self.ddChooseNumberOfPoints.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
             }
             self.ddChooseNumberOfPoints.isHidden = false
             self.isDropDownChooseNumberOfPointsShowing = true
@@ -491,8 +493,8 @@ extension TrailsAViewController {
         // MARK: - Config Choose The Test
         self.ddChooseTheTest = UITableView()
         let x = self.vGroupChosseTheTest.origin.x
-        let y = self.vGroupChosseTheTest.origin.y + self.vGroupChosseTheTest.bounds.height + 4.0
-        self.ddChooseTheTest.frame = CGRect.init(x: x, y: y, width: self.vGroupChosseTheTest.size.width, height: 118.0)
+        let y = self.vGroupChosseTheTest.origin.y + self.vGroupChosseTheTest.frame.size.height + 14.0
+        self.ddChooseTheTest.frame = CGRect.init(x: x, y: y, width: self.vGroupChosseTheTest.frame.size.width, height: 118.0)
         self.ddChooseTheTest.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.identifier())
         self.vTask.addSubview(self.ddChooseTheTest)
         self.ddChooseTheTest.delegate = self
@@ -536,8 +538,8 @@ extension TrailsAViewController {
         // MARK: - Config Choose Number Of Points
         self.ddChooseNumberOfPoints = UITableView()
         let x = self.vGroupChooseNumberOfPoints.origin.x
-        let y = self.vGroupChooseNumberOfPoints.origin.y + self.vGroupChooseNumberOfPoints.bounds.height + 4.0
-        self.ddChooseNumberOfPoints.frame = CGRect.init(x: x, y: y, width: self.vGroupChooseNumberOfPoints.size.width, height: 118.0)
+        let y = self.vGroupChooseNumberOfPoints.origin.y + self.vGroupChooseNumberOfPoints.frame.size.height + 14.0
+        self.ddChooseNumberOfPoints.frame = CGRect.init(x: x, y: y, width: self.vGroupChooseNumberOfPoints.frame.size.width, height: 118.0)
         self.ddChooseNumberOfPoints.register(VADropDownCell.nib(), forCellReuseIdentifier: VADropDownCell.identifier())
         self.vTask.addSubview(self.ddChooseNumberOfPoints)
         self.ddChooseNumberOfPoints.delegate = self
@@ -579,40 +581,37 @@ extension TrailsAViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.separatorStyle = .none
         if tableView == self.ddChooseTheTest { // Dropdown Choose The Test
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.selectionStyle = .none
+            let chooseTheTestCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            chooseTheTestCell.selectionStyle = .none
             let chooseTheTest = self.TestTypes[indexPath.row]
-            dropDownCell.timeLabel.text = chooseTheTest
-            if self.lblChooseTheTest.text == chooseTheTest {
-                dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
-            }
-            else {
-                dropDownCell.contentView.backgroundColor = UIColor.white
-            }
-            return dropDownCell
+            chooseTheTestCell.timeLabel.text = chooseTheTest
+            
+            let cellSelectedColor = UIView()
+            cellSelectedColor.backgroundColor = Color.color(hexString: "#EAEAEA")
+            chooseTheTestCell.selectedBackgroundView = cellSelectedColor
+            
+            return chooseTheTestCell
         }
         else { // Dropdown Choose Number Of Points
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.selectionStyle = .none
+            let numberOfPointsCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
+            numberOfPointsCell.selectionStyle = .none
             let numberOfPoints = self.arrNumberOfPoints[indexPath.row]
-            dropDownCell.timeLabel.text = numberOfPoints
-            if self.lblChooseNumberOfPoints.text == numberOfPoints {
-                dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
-            }
-            else {
-                dropDownCell.contentView.backgroundColor = UIColor.white
-            }
-            return dropDownCell
+            numberOfPointsCell.timeLabel.text = numberOfPoints
+            
+            let cellSelectedColor = UIView()
+            cellSelectedColor.backgroundColor = Color.color(hexString: "#EAEAEA")
+            numberOfPointsCell.selectedBackgroundView = cellSelectedColor
+            
+            return numberOfPointsCell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.ddChooseTheTest {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            let minute = self.TestTypes[indexPath.row]
-            self.lblChooseTheTest.text = minute
-            
+            let chooseTheTest = self.TestTypes[indexPath.row]
+            self.lblChooseTheTest.text = chooseTheTest
             // Update dataSource dropdown number of points
             selectedTest = indexPath.row
             self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
@@ -625,30 +624,13 @@ extension TrailsAViewController: UITableViewDelegate, UITableViewDataSource {
             let idxNumber = TrailsTests[selectedTest].1.count - 3
             self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
             numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
-            self.ddChooseNumberOfPoints.reloadData()
-            self.ddChooseNumberOfPoints.selectRow(at: IndexPath.init(row: idxNumber, section: 0), animated: false, scrollPosition: .middle)
-            
-            dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
             self.dismissDropdownChooseTheTest()
         }
         else {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            let minute = self.arrNumberOfPoints[indexPath.row]
-            self.lblChooseNumberOfPoints.text = minute
+            let numberOfPoints = self.arrNumberOfPoints[indexPath.row]
+            self.lblChooseNumberOfPoints.text = numberOfPoints
             numBubbles = indexPath.row + 2
-            dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
             self.dismissDropdownChooseNumberOfPoints()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if tableView == self.ddChooseTheTest {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.contentView.backgroundColor = UIColor.white
-        }
-        else {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.contentView.backgroundColor = UIColor.white
         }
     }
 }
@@ -669,9 +651,11 @@ extension TrailsAViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-        if touches.first?.view != self.ddChooseTheTest || touches.first?.view != self.ddChooseNumberOfPoints {
-            self.dismissDropdownChooseTheTest()
-            self.dismissDropdownChooseNumberOfPoints()
+        if self.isPracticeTest == false {
+            if touches.first?.view != self.ddChooseTheTest || touches.first?.view != self.ddChooseNumberOfPoints {
+                self.dismissDropdownChooseTheTest()
+                self.dismissDropdownChooseNumberOfPoints()
+            }
         }
     }
 }
