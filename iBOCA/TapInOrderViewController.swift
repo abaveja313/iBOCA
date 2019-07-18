@@ -51,6 +51,11 @@ class TapInOrderViewController: ViewController {
     @IBOutlet weak var mBtnReset: GradientButton!
     @IBOutlet weak var mViewContent: UIView!
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
     
     /// true when user tap reset and become false when start test
     var isReseting : Bool = false
@@ -668,6 +673,13 @@ class TapInOrderViewController: ViewController {
         if !ended {
             donetest()
         }
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -680,6 +692,23 @@ class TapInOrderViewController: ViewController {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            if forwardNotBackward {
+                QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                    self.didBackToResult?()
+                }) {
+                    self.didCompleted?()
+                }
+            }
+            else {
+                self.didCompleted?()
+            }
+            
+            return
+        }
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     

@@ -77,19 +77,19 @@ class QuickStartManager: NSObject {
                 self.backwardDigitSpanTest()
                 break
             case .figureCopy:
-                
+                self.figureCopyTest()
                 break
             case .serialSevens:
-                
+                self.serialSevensTest()
                 break
             case .namingPicture:
-                
+                self.namingPictureTest()
                 break
             case .forwardSpatialSpan:
-                
+                self.forwardSpatialSpanTest()
                 break
             case .backwardSpatialSpan:
-                
+                self.backwardSpatialSpanTest()
                 break
             }
         }
@@ -109,7 +109,7 @@ class QuickStartManager: NSObject {
     }
     
     
-    private func orientationTest() { // First test
+    private func orientationTest() { // 1st test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrientationTask") as? OrientationTask else {
             debugPrint("Unable to launch test")
             return
@@ -124,7 +124,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func simpleMemoryTest() { // Second test
+    private func simpleMemoryTest() { // 2nd test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SimpleMemoryTask") as? SimpleMemoryTask else {
             debugPrint("Unable to launch test")
             return
@@ -138,7 +138,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func VATest() { // Third test
+    private func VATest() { // 3rd test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VATask") as? VATask else {
             debugPrint("Unable to launch test")
             return
@@ -153,7 +153,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func trailsTest() { // Fourth test
+    private func trailsTest() { // 4th test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController else {
             debugPrint("Unable to launch test")
             return
@@ -167,7 +167,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func forwardDigitSpanTest() { // Fifth test
+    private func forwardDigitSpanTest() { // 5th test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DigitBase") as? DigitBase else {
             debugPrint("Unable to launch test")
             return
@@ -182,7 +182,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func backwardDigitSpanTest() { // Sixth test
+    private func backwardDigitSpanTest() { // 6th test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DigitBase") as? DigitBase else {
             debugPrint("Unable to launch test")
             return
@@ -193,6 +193,77 @@ class QuickStartManager: NSObject {
         vc.didCompleted = {
             self.launchIntroScreen(fromScreen: .figureCopy)
         }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func figureCopyTest() { // 7th test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ThreeDFigureCopy") as? ThreeDFigureCopy else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .serialSevens)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func serialSevensTest() { // 8th test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DigitBase") as? DigitBase else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        testName  = "SerialSeven"
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .namingPicture)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func namingPictureTest() { // 9th test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PicturesViewController") as? PicturesViewController else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .forwardSpatialSpan)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func forwardSpatialSpanTest() { // 10th test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TapInOrderViewController") as? TapInOrderViewController else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        testName  = "ForwardSpatialSpan"
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = {
+            self.launchIntroScreen(fromScreen: .backwardSpatialSpan)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func backwardSpatialSpanTest() { // 11th test
+        guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TapInOrderViewController") as? TapInOrderViewController else {
+            debugPrint("Unable to launch test")
+            return
+        }
+        testName  = "BackwardSpatialSpan"
+        vc.quickStartModeOn = true
+        vc.didBackToResult = backToResult
+        vc.didCompleted = backToResult
         
         navigationController?.pushViewController(vc, animated: true)
     }

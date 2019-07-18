@@ -36,6 +36,11 @@ class ThreeDFigureCopy: ViewController {
     
     @IBOutlet weak var vDraw: ThreeDFigureDraw!
     
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
     var result = Results()
     var imagelist = ["Circle2", "rhombus", "SquareTriangle", "rectprism"]
     var curr = 0
@@ -172,6 +177,17 @@ class ThreeDFigureCopy: ViewController {
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -181,6 +197,13 @@ class ThreeDFigureCopy: ViewController {
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
