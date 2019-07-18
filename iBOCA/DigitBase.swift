@@ -26,7 +26,6 @@ class DigitBase: ViewController {
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var lbCorrectAnswer: UILabel!
     
-    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var numKeyboard: NumberKeyboardView!
     @IBOutlet weak var innerShadowView: UIView!
@@ -102,6 +101,7 @@ class DigitBase: ViewController {
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        speechSynthesizer.stopSpeaking(at: .immediate)
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -118,7 +118,7 @@ class DigitBase: ViewController {
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
+        speechSynthesizer.stopSpeaking(at: .immediate)
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -136,6 +136,7 @@ class DigitBase: ViewController {
     @IBAction func actionReset(_ sender: Any) {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        speechSynthesizer.stopSpeaking(at: .immediate)
         self.runTimer()
         
         base!.DoStart()
@@ -148,15 +149,6 @@ class DigitBase: ViewController {
         NumberLabel.text = ""
         KeypadLabel.text = ""
         lbCorrectAnswer.text = ""
-
-//        disableKeypad()
-        
-//        isNumKeyboardHidden(isHidden: true)
-        
-//        StartButton.isHidden = false
-//        EndButton.isHidden = true
-//        backButton.isHidden = false
-//        lbCorrectAnswer.isHidden = true
     }
     
     func showCorrectAnswer(value: Int) {
@@ -174,7 +166,6 @@ class DigitBase: ViewController {
                     self.value = ""
                     self.KeypadLabel.text = ""
                     self.base!.levelStartTime = Foundation.Date()
-//                    self.base!.gotKeys = [:]
                     self.setButtonEnabled(true)
                 } else {
                     let c = String(val.characters.first!)
@@ -284,7 +275,6 @@ class DigitBaseClass {
     var levelStartTime = Foundation.Date()
     
     var gotKeys : [String:String] = [:]
-
     
     func DoInitialize() {  }
     

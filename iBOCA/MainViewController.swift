@@ -61,21 +61,16 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     @IBOutlet weak var ButtonGDT: UIButton!
     @IBOutlet weak var ButtonGoldStandard: UIButton!
     
-    @IBOutlet weak var LabelSM: UILabel!
-    @IBOutlet weak var LabelVA: UILabel!
-    
     @IBOutlet weak var PatiantID: UILabel!
     
     @IBOutlet weak var ButtonResults: UIButton!
     @IBOutlet weak var ButtonDWP: UIButton!
     
     //MARK: - New UI
-    
     @IBOutlet weak var mViewMain: UIView!
     @IBOutlet weak var mBtnResult: GradientButton!
     @IBOutlet weak var mBtnDWP: GradientButton!
     @IBOutlet weak var lblPatientID: UILabel!
-    
     
     var mCollection : UICollectionView?
     var arrData : [GoToTestCellModel] = [GoToTestCellModel]()
@@ -83,11 +78,61 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     
     var mCounterTimeView : CounterTimeView?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        screenSize = UIScreen.main.bounds
+        
+        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
+        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
+            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
+        }
+        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
+        
+        PatiantID.text = PID.getID()
+        
+        updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])
+        updateButton(id: 1, ectid:0, button: ButtonSimpleMemory, status: Status[TestSimpleMemory])
+        updateButton(id: 2, ectid:0, button: ButtonVisualAssociation, status: Status[TestVisualAssociation])
+        updateButton(id: 3, ectid:4, button: ButtonTrails, status: Status[TestTrails])
+        updateButton(id: 4, ectid:2, button: ButtonForwardDigitSpan, status: Status[TestForwardDigitSpan])
+        updateButton(id: 5, ectid:3, button: ButtonBackwardDigitSpan, status: Status[TestBackwardsDigitSpan])
+        updateButton(id: 6, ectid:1, button: ButtonCatsAndDogs, status: Status[TestCatsAndDogs])
+        updateButton(id: 7, ectid:0, button: Button3DFigureCopy, status: Status[Test3DFigureCopy])
+        updateButton(id: 8, ectid:5, button: ButtonSerialSevens, status: Status[TestSerialSevens])
+        updateButton(id: 9, ectid:6, button: ButtonForwardSpatialSpan, status: Status[TestForwardSpatialSpan])
+        updateButton(id:10, ectid:7, button: ButtonBackwardSpatialSpan, status: Status[TestBackwardSpatialSpan])
+        updateButton(id:11, ectid:0, button: ButtonNamingPictures, status: Status[TestNampingPictures])
+        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
+        updateButton(id:13, ectid:0, button: ButtonMOCA, status: Status[TestMOCAResults])
+        updateButton(id:14, ectid:0, button: ButtonGDT, status: Status[TestGDTResults])
+        updateButton(id:15, ectid:0, button: ButtonGoldStandard, status: Status[TestGoldStandard])
+        
+        if ModeECT == false {
+            ButtonMOCA.isHidden = false
+            ButtonGoldStandard.isHidden = false
+        }
+        
+        // Do GDT only at BIDMC
+        if atBIDMCOn == false {
+            ButtonGDT.isHidden = true
+            ButtonGoldStandard.isHidden = true
+        }
+        
+        segueToLanding = false
+        iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        
+        //NEW UI
+        self.setupLabelPatientID()
+        setupButton()
+        setupCollectionView()
+        setupData()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
         testName = segue.identifier
-        
     }
     
     var doSecondEmail = false
@@ -149,62 +194,6 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         
         present(picker, animated: true)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        screenSize = UIScreen.main.bounds
-        
-        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
-            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
-        }
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
-        
-        LabelSM.isHidden = true
-        LabelVA.isHidden = true
-        
-        PatiantID.text = PID.getID()
-        
-        updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])
-        updateButton(id: 1, ectid:0, button: ButtonSimpleMemory, status: Status[TestSimpleMemory])
-        updateButton(id: 2, ectid:0, button: ButtonVisualAssociation, status: Status[TestVisualAssociation])
-        updateButton(id: 3, ectid:4, button: ButtonTrails, status: Status[TestTrails])
-        updateButton(id: 4, ectid:2, button: ButtonForwardDigitSpan, status: Status[TestForwardDigitSpan])
-        updateButton(id: 5, ectid:3, button: ButtonBackwardDigitSpan, status: Status[TestBackwardsDigitSpan])
-        updateButton(id: 6, ectid:1, button: ButtonCatsAndDogs, status: Status[TestCatsAndDogs])
-        updateButton(id: 7, ectid:0, button: Button3DFigureCopy, status: Status[Test3DFigureCopy])
-        updateButton(id: 8, ectid:5, button: ButtonSerialSevens, status: Status[TestSerialSevens])
-        updateButton(id: 9, ectid:6, button: ButtonForwardSpatialSpan, status: Status[TestForwardSpatialSpan])
-        updateButton(id:10, ectid:7, button: ButtonBackwardSpatialSpan, status: Status[TestBackwardSpatialSpan])
-        updateButton(id:11, ectid:0, button: ButtonNamingPictures, status: Status[TestNampingPictures])
-        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
-        updateButton(id:13, ectid:0, button: ButtonMOCA, status: Status[TestMOCAResults])
-        updateButton(id:14, ectid:0, button: ButtonGDT, status: Status[TestGDTResults])
-        updateButton(id:15, ectid:0, button: ButtonGoldStandard, status: Status[TestGoldStandard])
-
-        if ModeECT == false {
-            ButtonMOCA.isHidden = false
-            ButtonGoldStandard.isHidden = false
-        }
-        
-        // Do GDT only at BIDMC
-        if atBIDMCOn == false {
-            ButtonGDT.isHidden = true
-            ButtonGoldStandard.isHidden = true
-        }
-        
-        segueToLanding = false
-        iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
-        
-        //NEW UI
-        self.setupLabelPatientID()
-        setupButton()
-        setupCollectionView()
-        setupData()
-        
-    }
 
     func updateButton(id: UInt, ectid: UInt, button: UIButton, status : TestStatus) {
         switch(status) {
@@ -262,22 +251,6 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
             iTimer?.invalidate()
             self.performSegue(withIdentifier: "BackToLanding", sender: self)
         }
-        
-        if Status[TestSimpleMemory] == TestStatus.Running {
-            LabelSM.isHidden = true
-//            LabelSM.text = getTimeDelay(startTime: startTimeSM)
-        } else {
-            LabelSM.isHidden = true
-        }
-        
-        
-        if Status[TestVisualAssociation] == TestStatus.Running {
-            LabelVA.isHidden = true
-//            LabelVA.text = getTimeDelay(startTime: startTimeVA)
-            
-        } else {
-            LabelVA.isHidden = true
-        }
     }
     
     
@@ -302,15 +275,12 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
         
        return "(\(strMinutes) : \(strSeconds))"
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
 //MARK: - New UI
@@ -349,7 +319,6 @@ extension MainViewController {
         mBtnDWP.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
         mBtnDWP.render()
         mBtnDWP.addTextSpacing(-0.36)
-
     }
     
     func setupCollectionView(){
@@ -391,8 +360,6 @@ extension MainViewController {
             return false
         }
     }
-    
-    
 }
 
 //MARK: - UICollectionViewDelegate
