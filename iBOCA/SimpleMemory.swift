@@ -490,8 +490,8 @@ class SimpleMemoryTask: ViewController {
             self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
             // Update state selected first
             if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
-                self.dropDownMinute.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
                 self.dropDownMinute.reloadData()
+                self.dropDownMinute.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
             }
             self.dropDownMinute.isHidden = false
             self.isDropDownShowing = true
@@ -1003,14 +1003,13 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
         if tableView == self.dropDownMinute {
             let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
             dropDownCell.selectionStyle = .none
+            
             let minute = self.dataMinutesDropDown[indexPath.row]
             dropDownCell.timeLabel.text = minute
-            if self.lblChooseDelayTime.text == minute {
-                dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
-            }
-            else {
-                dropDownCell.contentView.backgroundColor = UIColor.white
-            }
+            
+            let cellSelectedColor = UIView()
+            cellSelectedColor.backgroundColor = Color.color(hexString: "#EAEAEA")
+            dropDownCell.selectedBackgroundView = cellSelectedColor
             
             return dropDownCell
         }
@@ -1039,18 +1038,9 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.dropDownMinute {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
             let minute = self.dataMinutesDropDown[indexPath.row]
             self.lblChooseDelayTime.text = minute
-            dropDownCell.contentView.backgroundColor = Color.color(hexString: "#EAEAEA")
             self.dismissDropdown()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if tableView == self.dropDownMinute {
-            let dropDownCell = tableView.dequeueReusableCell(withIdentifier: VADropDownCell.cellId, for: indexPath) as! VADropDownCell
-            dropDownCell.contentView.backgroundColor = UIColor.white
         }
     }
     
