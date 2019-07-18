@@ -21,6 +21,7 @@ class IntroViewController: ViewController {
     @IBOutlet weak var startButton: UIButton!
     
     // QuickStart Mode
+    var showResultButton: Bool = false
     var quickStartModeOn: Bool = false
     var didBackToResult: (() -> ())?
     var didMoveToTestScreen: (() -> ())?
@@ -45,6 +46,11 @@ class IntroViewController: ViewController {
 
     @IBAction func actionBack(_ sender: Any) {
         self.stopVideo()
+        
+        guard !showResultButton else {
+            didBackToResult?()
+            return
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -104,10 +110,12 @@ class IntroViewController: ViewController {
 
 extension IntroViewController {
     fileprivate func setupView() {
+        
+        
         self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
         self.backTitleLabel.addTextSpacing(-0.56)
-        self.backTitleLabel.text = "BACK"
+        self.backTitleLabel.text = showResultButton ? "RESULTS" : "BACK"
         
         self.innerShadowView.layer.cornerRadius = 8
         self.innerShadowView.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor

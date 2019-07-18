@@ -40,6 +40,13 @@ class QuickStartManager: NSObject {
             resultVC.didBackToMainView = {
                 self.viewController.dismiss(animated: true, completion: nil)
             }
+            
+            let transition = CATransition()
+            transition.duration = 0.5
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionFade
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            
             self.navigationController?.pushViewController(resultVC, animated: true)
         }
         self.backToResult = backToResult
@@ -52,7 +59,9 @@ class QuickStartManager: NSObject {
         Settings.SegueId = type == .trails
         
         let introVC = UIStoryboard(name: "Main", bundle:Bundle.main).instantiateViewController(withIdentifier: "IntroViewController") as! IntroViewController
+        introVC.showResultButton = type != .orientation
         introVC.quickStartModeOn = true
+        introVC.didBackToResult = backToResult
         introVC.didMoveToTestScreen = {
             switch type {
             case .orientation:
