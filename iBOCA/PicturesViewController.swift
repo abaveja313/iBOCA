@@ -10,13 +10,11 @@ import UIKit
 class PicturesViewController: ViewController {
     
     let namingImages:[String] = ["ring", "chimney", "clover", "ladle", "piano", "eyebrow", "shovel", "lighthouse", "goggles", "horseshoe", "corkscrew", "anvil", "yarn", "llama", "skeleton"]
-
     
     var imageName = "House"
     var count = 0
     var corr = 0
     var back = 0
-    
     
     var order = [Bool]()
     var startTime2 = NSDate()
@@ -86,45 +84,7 @@ class PicturesViewController: ViewController {
         self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
-    // MARK: - IBAction
-    @IBAction func btnNextTapped(_ sender: UIButton) {
-        self.view.endEditing(true)
-        if isStartNew == true {
-            self.startNew()
-        }
-        else {
-            self.resumeTest()
-        }
-    }
-    
-    @IBAction func reset(_ sender: Any) {
-        self.view.endEditing(true)
-        self.startTimeTask = Foundation.Date()
-        self.totalTimeCounter.invalidate()
-        self.runTimer()
-        self.startNew()
-    }
-    
-    @IBAction func actionQuit(_ sender: Any) {
-        self.startTimeTask = Foundation.Date()
-        self.totalTimeCounter.invalidate()
-        self.view.endEditing(true)
-        Status[TestNampingPictures] = TestStatus.NotStarted
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
-            }
-            return
-        }
-        
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
-    private func resumeTest() {
+    fileprivate func resumeTest() {
         guard let strObjName = self.tfObjectName.text, !strObjName.isEmpty else {
             let warningAlert = UIAlertController(title: "Warning", message: "Please enter Object Name fields.", preferredStyle: .alert)
             warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
@@ -140,13 +100,17 @@ class PicturesViewController: ViewController {
         
         if isUndo == true, self.resultObjectName.count != count {
             self.resultObjectName[count] = strObjName
-            self.tfObjectName.text = self.resultObjectName[count]
         }
         else {
             self.resultObjectName.append(strObjName)
-            self.tfObjectName.text = ""
         }
         count += 1
+        if isUndo == true, self.resultObjectName.count != count {
+            self.tfObjectName.text = self.resultObjectName[count]
+        }
+        else {
+            self.tfObjectName.text = ""
+        }
         
         let currTime = Foundation.Date()
         resultTime.append(currTime)
@@ -157,9 +121,6 @@ class PicturesViewController: ViewController {
         else {
             imageName = getImageName()
             let image1 = UIImage(named: imageName)
-            //            fixDimensions(image: image1!)
-            //            imageView.image = image1
-            
             namingImageView.image = image1
             
             if count != namingImages.count {
@@ -168,45 +129,6 @@ class PicturesViewController: ViewController {
         }
         print(self.resultObjectName)
     }
-    
-    @IBAction func undoTapped(_ sender: Any) {
-        arrowLeftButton.isHidden = false
-        isUndo = true
-        count -= 1
-        back = count
-        self.tfObjectName.text = self.resultObjectName[count]
-        if count == 0 {
-            arrowLeftButton.isHidden = true
-            self.navigationItem.setHidesBackButton(false, animated:true)
-        }
-        imageName = getImageName()
-        let image3 = UIImage(named: imageName)
-        
-        namingImageView.image = image3
-        
-        placeLabel.text = "\(count+1)/\(namingImages.count)"
-        print("UNDO")
-        print("count: \(count)")
-        print("back: \(back)")
-    }
-    
-    @IBAction func btnBackTapped(_ sender: Any) {
-        self.view.endEditing(true)
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
-        self.startTimeTask = Foundation.Date()
-        self.totalTimeCounter.invalidate()
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            didBackToResult?()
-            return
-        }
-        
-        navigationController?.popViewController(animated: true)
-    }
-    
     
     func done() {
         
@@ -272,8 +194,6 @@ class PicturesViewController: ViewController {
         mTableResult.reloadData()
         mViewResult.isHidden = false
         
-        
-        
         // Reset Data
         self.tfObjectName.text = ""
         self.resultObjectName.removeAll()
@@ -287,8 +207,6 @@ class PicturesViewController: ViewController {
         resultTime.removeAll()
         resultImage.removeAll()
         let image4 = UIImage(named: imageName)
-//        fixDimensions(image: image4!)
-//        imageView.image = image4
         
         namingImageView.image = image4
         
@@ -330,7 +248,7 @@ class PicturesViewController: ViewController {
         return bottomConstraint
     }
     
-    private func startNew() {
+    fileprivate func startNew() {
         mViewResult.isHidden = true
         placeLabel.isHidden = true
         placeLabel.text = "\(count+1)/\(namingImages.count)"
@@ -349,19 +267,10 @@ class PicturesViewController: ViewController {
         
         let image = UIImage(named: imageName)
         
-//        imageView = UIImageView()
-//
-//        fixDimensions(image: image!)
-//
-//        imageView.image = image
-        
         namingImageView.image = image
-        
-//        self.view.addSubview(imageView)
         
         arrowLeftButton.isHidden = true
         arrowRightButton.isHidden = false
-//        resetButton.isEnabled = false
         backButton.isEnabled = true
         self.namingImageView.isHidden = false
         
@@ -369,11 +278,7 @@ class PicturesViewController: ViewController {
         self.resultObjectName.removeAll()
         self.lbObjectName.isHidden = false
         self.tfObjectName.isHidden = false
-//        self.arrowRightButton.setTitle("Next", for: .normal)
-//        self.arrowRightButton.setTitle("Next", for: .selected)
     }
-    
-    
     
     func generateArrayDataResult(){
         arrDataResult.removeAll()
@@ -385,7 +290,84 @@ class PicturesViewController: ViewController {
             arrDataResult.append(model)
         }
     }
+}
+
+extension PicturesViewController {
+    // MARK: - IBAction
+    @IBAction func btnNextTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
+        if isStartNew == true {
+            self.startNew()
+        }
+        else {
+            self.resumeTest()
+        }
+    }
     
+    @IBAction func reset(_ sender: Any) {
+        self.view.endEditing(true)
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+        self.startNew()
+    }
+    
+    @IBAction func actionQuit(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        self.view.endEditing(true)
+        Status[TestNampingPictures] = TestStatus.NotStarted
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func undoTapped(_ sender: Any) {
+        arrowLeftButton.isHidden = false
+        isUndo = true
+        count -= 1
+        back = count
+        self.tfObjectName.text = self.resultObjectName[count]
+        if count == 0 {
+            arrowLeftButton.isHidden = true
+            self.navigationItem.setHidesBackButton(false, animated:true)
+        }
+        imageName = getImageName()
+        let image3 = UIImage(named: imageName)
+        
+        namingImageView.image = image3
+        
+        placeLabel.text = "\(count+1)/\(namingImages.count)"
+        print("UNDO")
+        print("count: \(count)")
+        print("back: \(back)")
+    }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        self.view.endEditing(true)
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension PicturesViewController {

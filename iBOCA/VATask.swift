@@ -11,17 +11,6 @@ import UIKit
 
 var StartTime = Foundation.Date()
 
-var mixedImages = [String]()
-var halfImages = [String]()
-var recognizeIncorrectVA = [String]()
-
-var afterBreakVA = Bool()
-
-var imageSetVA = Int()
-
-var startTimeVA = TimeInterval()
-var timerVA = Timer()
-
 class VATask: ViewController, UIPickerViewDelegate {
     
     var recallErrors = [Int]()
@@ -35,6 +24,16 @@ class VATask: ViewController, UIPickerViewDelegate {
     var delayTime = Double()
     
     var totalTime: Int!
+    
+    var startTimeVA = TimeInterval()
+    var timerVA = Timer()
+    
+    var afterBreakVA = Bool()
+    var imageSetVA = Int()
+    
+    var mixedImages = [String]()
+    var halfImages = [String]()
+    var recognizeIncorrectVA = [String]()
     
     var mixed0 = ["Backpack-Soccer", "Chair-Dog", "Dogbowl-Rope", "Mixer-Tennis", "Pot-Shoe"]
     var half0 = ["Backpack", "Chair", "Dogbowl", "Mixer", "Pot"]
@@ -353,7 +352,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     fileprivate func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60
-        //     let hours: Int = totalSeconds / 3600
         return String(format: "%02d : %02d", minutes, seconds)
     }
     
@@ -419,7 +417,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     @objc fileprivate func recognize() {
         print("IN RECOGNIZE!!!")
         isRememberAgainViewHidden(true)
-        
+        timeInput = 0
         testCount = 0
         
         randomizeRecognize()
@@ -457,7 +455,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     fileprivate func recognizeNext() {
         testCount += 1
-        
         if testCount == mixedImages.count {
             isViewRegconizeHidden(true)
             setupResultTableView()
@@ -475,6 +472,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.isResultViewHidden(false)
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        self.inputTimer.invalidate()
         
         result.endTime = Foundation.Date()
         
@@ -563,7 +561,9 @@ class VATask: ViewController, UIPickerViewDelegate {
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.landscape
     }
-    
+}
+
+extension VATask {
     // MARK: Action
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
         print("Arrow Left Tapped")
@@ -595,13 +595,11 @@ class VATask: ViewController, UIPickerViewDelegate {
                 if isRecalledTestMode {
                     isMissingItemViewHidden(true)
                     isRememberAgainViewHidden(false)
-                
+                    
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
                     recallTimes.append((timeInput * 10).rounded() / 10)
                     
-                    timeInput = 0
-                    inputTimer.invalidate()
                     isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
                 } else {
@@ -663,7 +661,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         }
         
         navigationController?.popViewController(animated: true)
-
+        
     }
     
     @IBAction func correctButton(_ sender: Any) {
@@ -682,24 +680,24 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @IBAction func recognize1(_ sender: AnyObject) {
+        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(0)
-            recognizeTimes.append(findTime())
         } else {
             recognizeErrors.append(1)
-            recognizeTimes.append(findTime())
         }
         
         recognizeNext()
     }
     
     @IBAction func recognize2(_ sender: AnyObject) {
+        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(1)
-            recognizeTimes.append(findTime())
         } else {
             recognizeErrors.append(0)
-            recognizeTimes.append(findTime())
         }
         
         recognizeNext()
