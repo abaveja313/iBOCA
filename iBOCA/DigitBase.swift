@@ -69,6 +69,11 @@ class DigitBase: ViewController {
         
         setupCounterTimeView()
         
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            backTitleLabel.text = "RESULTS"
+        }
+        
         value = ""
         NumberLabel.text = ""
         KeypadLabel.text = ""

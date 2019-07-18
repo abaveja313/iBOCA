@@ -153,6 +153,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         startButton.removeTarget(self, action: nil, for:.allEvents)
         resetButton.addTarget(self, action: #selector(actionReset(_:)), for: .touchUpInside)
         
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            backTitleLabel.text = "RESULTS"
+        }
+        
         if afterBreakVA {
             timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
             timerVA.fire()

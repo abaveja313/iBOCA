@@ -258,6 +258,11 @@ class ThreeDFigureCopy: ViewController {
 // MARK: - Setup Views
 extension ThreeDFigureCopy {
     fileprivate func setupView() {
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            lblBack.text = "RESULTS"
+        }
+        
         self.setupViewCounterTimer()
         self.setupViewTask()
         self.setupButtonGradient()

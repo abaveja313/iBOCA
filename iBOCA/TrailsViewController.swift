@@ -326,6 +326,16 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
             Status[TestTrails] = TestStatus.Done
             
             if showAlertComplete == true {
+                // Check if is in quickStart mode
+                guard !quickStartModeOn else {
+                    QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                        self.didBackToResult?()
+                    }) {
+                        self.didCompleted?()
+                    }
+                    return
+                }
+                
                 let completeAlert = UIAlertController(title: "Complete", message: "You complete the trails test.", preferredStyle: .alert)
                 let okAction = UIAlertAction.init(title: "Ok", style: .cancel, handler: nil)
                 completeAlert.addAction(okAction)
@@ -379,6 +389,11 @@ extension TrailsAViewController {
         self.vTask.clipsToBounds = true
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
+        
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            lblBack.text = "RESULTS"
+        }
         
         if self.isPracticeTest == true {
             // Hidden View

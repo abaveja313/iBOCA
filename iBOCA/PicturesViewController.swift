@@ -429,6 +429,11 @@ extension PicturesViewController {
         self.quitButton.render()
         self.quitButton.addTextSpacing(-0.36)
         
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            backTitleLabel.text = "RESULTS"
+        }
+        
         // TableView Results
         self.mTableResult.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
         self.mTableResult.delegate = self

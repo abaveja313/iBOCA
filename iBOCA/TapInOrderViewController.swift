@@ -566,6 +566,11 @@ class TapInOrderViewController: ViewController {
     
     //MARK: - NEW UI
     func setupUI(){
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            mLbBack.text = "RESULTS"
+        }
+        
         mLbBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28)
         mLbBack.textColor = Color.color(hexString: "013AA5")
         //
@@ -695,6 +700,9 @@ class TapInOrderViewController: ViewController {
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
+            // End test here
+            donetest()
+            
             if forwardNotBackward {
                 QuickStartManager.showAlertCompletion(viewController: self, cancel: {
                     self.didBackToResult?()
