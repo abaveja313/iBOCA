@@ -576,6 +576,7 @@
                                 <constraints>
                                     <constraint firstItem="xvT-UQ-mje" firstAttribute="centerY" secondItem="ZcR-vd-Pur" secondAttribute="centerY" id="0iw-FP-Eu2"/>
                                     <constraint firstAttribute="trailing" secondItem="lXX-L8-IFw" secondAttribute="trailing" constant="78" id="6fK-aP-NVR"/>
+                                    <constraint firstItem="ff7-AP-4gM" firstAttribute="top" secondItem="Y0H-dr-U2o" secondAttribute="bottom" constant="32.5" id="7Gs-fU-Qza"/>
                                     <constraint firstItem="xvT-UQ-mje" firstAttribute="leading" secondItem="ZcR-vd-Pur" secondAttribute="leading" constant="24" id="9fp-Ri-s4Z"/>
                                     <constraint firstAttribute="trailing" secondItem="qdW-PQ-8fm" secondAttribute="trailing" constant="24" id="D0z-JG-3pE"/>
                                     <constraint firstItem="pGJ-OE-hnV" firstAttribute="top" secondItem="ZcR-vd-Pur" secondAttribute="top" constant="32" id="Fdl-Xq-8qz"/>
@@ -1970,7 +1971,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1o-A2-3As">
-                                                <rect key="frame" x="371" y="81.5" width="243" height="200"/>
+                                                <rect key="frame" x="371" y="77.5" width="243" height="200"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZV-L5-Kie">
                                                         <rect key="frame" x="0.0" y="0.0" width="243" height="200"/>
