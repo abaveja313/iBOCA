@@ -379,6 +379,7 @@ extension SimpleMemoryTask {
         self.tableViewResults.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
         self.tableViewResults.delegate = self
         self.tableViewResults.dataSource = self
+        self.tableViewResults.alwaysBounceVertical = false
     }
     
     fileprivate func setupViewCounterTimer() {
