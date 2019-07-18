@@ -235,6 +235,16 @@ class ThreeDFigureCopy: ViewController {
     }
     
     fileprivate func completeTask() {
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
         let alert = UIAlertController(title: "Quit", message: "You complete the test '3D Figure Copy'", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
