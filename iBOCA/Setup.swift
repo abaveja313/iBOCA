@@ -67,19 +67,8 @@ class Setup: ViewController, UIPickerViewDelegate  {
         atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
         atBIDMCOnOff.isOn = atBIDMCOn
         
-//        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-//        emailTextField.isEnabled = emailOn
-//        emailLabel.isEnabled = emailOn
-//        emailOnOff.isOn = emailOn
-        
         testClass.delegate = self
-        //        if atBIDMCOn == true {
-        //            testClass.isHidden = false
-        //            testClassLabel.isHidden = false
-        //        } else {
-        //            testClass.isHidden = true
-        //            testClassLabel.isHidden = true
-        //        }
+        
         theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
         testClass.selectRow(theTestClass, inComponent: 0, animated: true)
         
@@ -101,18 +90,6 @@ class Setup: ViewController, UIPickerViewDelegate  {
     }
     
     private func showAlertTurnOnConsent(){
-//        CustomAlertView.showAlert(withTitle: "Conset Request", andTextContent: "Please confirm your consent to\nprovide test data", andItems:
-//        [.cre(title: "Cancel", itag: 0, istyle: .cancel),                                                                                                                      .cre(title: "Approve", itag: 1, istyle: .normal)], inView: self.view) {[weak self](alert, title, itag) in
-//            if itag == 0 || itag == -1{
-//                //-1 is this when user tap close button
-//                self?.provideDataSwitch.isOn = false
-//            } else {
-//                UserDefaults.standard.set(self!.provideDataSwitch.isOn, forKey: "Transmit")
-//                UserDefaults.standard.synchronize()
-//            }
-//            alert.dismiss()
-//        }
-        
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.provideDataSwitch.isOn = false

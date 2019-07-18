@@ -21,6 +21,7 @@
 		0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E3E1DBD22C5C983008E69EC /* LevelCell.xib */; };
 		0E77854A22CF3B8B0082794B /* DemographicsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77854822CF3B8B0082794B /* DemographicsCell.swift */; };
 		0E77854B22CF3B8B0082794B /* DemographicsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E77854922CF3B8B0082794B /* DemographicsCell.xib */; };
+		0E81840F22E05DCE001073C1 /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81840E22E05DCD001073C1 /* DropdownView.swift */; };
 		0E9D5087228D40610055B676 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D5086228D40610055B676 /* Settings.swift */; };
 		0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */; };
 		0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */; };
@@ -86,9 +87,7 @@
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
 		E2037F231E47F3E600EE13EB /* iBoca logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E2037F221E47F3E600EE13EB /* iBoca logo.png */; };
 		E272DF021D74957F002F8295 /* Demographics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E272DF011D74957F002F8295 /* Demographics.swift */; };
-		E27BA37F1D523B8400619C07 /* BackwardDigitSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BA37E1D523B8400619C07 /* BackwardDigitSpan.swift */; };
 		E2901DCF1D4F8C3700080F82 /* OrientationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2901DCE1D4F8C3700080F82 /* OrientationTask.swift */; };
-		E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */; };
 		E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9F7FF1DD144A70035FE0B /* VATask.swift */; };
 		E2C906EB1D54DA1B00C0824E /* SerialSevens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */; };
 		E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520BC3922D832DD0037EBA3 /* QuickStartManager.swift */; };
@@ -241,6 +240,7 @@
 		0E3E1DBD22C5C983008E69EC /* LevelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelCell.xib; sourceTree = "<group>"; };
 		0E77854822CF3B8B0082794B /* DemographicsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemographicsCell.swift; sourceTree = "<group>"; };
 		0E77854922CF3B8B0082794B /* DemographicsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemographicsCell.xib; sourceTree = "<group>"; };
+		0E81840E22E05DCD001073C1 /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
 		0E9D5086228D40610055B676 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EB10B5B22C9AA12001997BB /* SimpleMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMemoryCell.swift; sourceTree = "<group>"; };
 		0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleMemoryCell.xib; sourceTree = "<group>"; };
@@ -312,9 +312,7 @@
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
 		E2037F221E47F3E600EE13EB /* iBoca logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iBoca logo.png"; sourceTree = "<group>"; };
 		E272DF011D74957F002F8295 /* Demographics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Demographics.swift; sourceTree = "<group>"; };
-		E27BA37E1D523B8400619C07 /* BackwardDigitSpan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackwardDigitSpan.swift; sourceTree = "<group>"; };
 		E2901DCE1D4F8C3700080F82 /* OrientationTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrientationTask.swift; sourceTree = "<group>"; };
-		E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardDigitSpan.swift; sourceTree = "<group>"; };
 		E2B9F7FF1DD144A70035FE0B /* VATask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VATask.swift; sourceTree = "<group>"; };
 		E2C906EA1D54DA1B00C0824E /* SerialSevens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialSevens.swift; sourceTree = "<group>"; };
 		E520BC3922D832DD0037EBA3 /* QuickStartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickStartManager.swift; path = QuickStart/QuickStartManager.swift; sourceTree = "<group>"; };
@@ -658,6 +656,7 @@
 			isa = PBXGroup;
 			children = (
 				4A70EDCF22CEE8B000E8E533 /* CounterTimeView.swift */,
+				0E81840E22E05DCD001073C1 /* DropdownView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -885,8 +884,6 @@
 		F27AEA921EEC6E4200AFB3D1 /* DigitTests */ = {
 			isa = PBXGroup;
 			children = (
-				E27BA37E1D523B8400619C07 /* BackwardDigitSpan.swift */,
-				E29AF03F1D51134A00C4AF79 /* ForwardDigitSpan.swift */,
 				F27AEA931EEC6E7B00AFB3D1 /* DigitBase.swift */,
 				F23951361EF4B2DE004B09E5 /* DigitSerialSeven.swift */,
 				F27AEAA71EED7A5F00AFB3D1 /* DigitBothDirection.swift */,
@@ -1138,7 +1135,6 @@
 				E5F13D2D225736EA002FB4FF /* PickerViewController.swift in Sources */,
 				B10BD11922CE212A008A195C /* NumberKeyboardView.swift in Sources */,
 				4AF58E4A22CA08B90021E17C /* ErrorMessage.swift in Sources */,
-				E27BA37F1D523B8400619C07 /* BackwardDigitSpan.swift in Sources */,
 				E5B4A7C422D3382200CB6218 /* ResultsHeaderSectionView.swift in Sources */,
 				E2B9F8001DD144A70035FE0B /* VATask.swift in Sources */,
 				1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */,
@@ -1146,6 +1142,7 @@
 				E5F13D1022572CDF002FB4FF /* IQToolbar.swift in Sources */,
 				B104C0F622D47AF600EB24F9 /* VACell.swift in Sources */,
 				0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */,
+				0E81840F22E05DCE001073C1 /* DropdownView.swift in Sources */,
 				F27AEAA81EED7A5F00AFB3D1 /* DigitBothDirection.swift in Sources */,
 				B10A016B22CA21D2005188D7 /* VisualAssociationCell.swift in Sources */,
 				43343D461E3E66BC001779AC /* TapInOrderBackwardsViewController.swift in Sources */,
@@ -1160,7 +1157,6 @@
 				0EB10B6022C9B0A9001997BB /* UITextFieldExtensions.swift in Sources */,
 				0EB10B5D22C9AA12001997BB /* SimpleMemoryCell.swift in Sources */,
 				B10BD0EA22CDE992008A195C /* String+Extensions.swift in Sources */,
-				E29AF0401D51134A00C4AF79 /* ForwardDigitSpan.swift in Sources */,
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
