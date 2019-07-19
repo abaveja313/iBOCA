@@ -400,6 +400,7 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
         } else {
             
             if let introVC = UIStoryboard(name: "Main", bundle:Bundle.main).instantiateViewController(withIdentifier: "IntroViewController") as? IntroViewController {
+                introVC.mode = mode
                 let navigationController = UINavigationController(rootViewController: introVC)
                 navigationController.setNavigationBarHidden(true, animated: false)
                 self.present(navigationController, animated: true, completion: nil)

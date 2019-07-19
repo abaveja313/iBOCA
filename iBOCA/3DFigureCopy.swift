@@ -13,6 +13,7 @@ class ThreeDFigureCopy: ViewController {
     // MARK: - Outlet
     @IBOutlet weak var CorrectButton: UIButton!
     @IBOutlet weak var IncorrectButton: UIButton!
+    @IBOutlet weak var NextButton: UIButton!
     
     @IBOutlet weak var vBack: UIView!
     @IBOutlet weak var lblBack: UILabel!
@@ -32,11 +33,14 @@ class ThreeDFigureCopy: ViewController {
     
     @IBOutlet weak var vDraws: UIView!
     @IBOutlet weak var vDrawImage: UIView!
-    @IBOutlet weak var vDrawLine: UIView!
+    @IBOutlet weak var ivDraw: UIImageView!
     
     @IBOutlet weak var vDraw: ThreeDFigureDraw!
+    @IBOutlet weak var lblDescDraw: UILabel!
     
     // MARK: - Variable
+    var mode : TestMode = TestMode.admin
+    
     // QuickStart Mode
     var quickStartModeOn: Bool = false
     var didBackToResult: (() -> ())?
@@ -50,8 +54,6 @@ class ThreeDFigureCopy: ViewController {
     var resultTime : [Double] = []
     var startTime  = Foundation.Date()
     var startTime2 = Foundation.Date()
-    
-    var drawfrom : UIImageView? = nil
     
     var counterTime: CounterTimeView!
     var timer3DFigureCopy = Timer()
@@ -145,6 +147,34 @@ extension ThreeDFigureCopy {
         self.IncorrectButton.layer.cornerRadius = 8.0
         self.IncorrectButton.layer.borderWidth = 2.0
         self.IncorrectButton.layer.borderColor = Color.color(hexString: "#BBC7D7").cgColor
+        
+        // Button Next
+        self.NextButton.addTextSpacing(-0.36)
+        self.NextButton.titleLabel?.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.NextButton.setTitle("Next", for: .normal)
+        self.NextButton.layer.cornerRadius = 8.0
+        self.NextButton.layer.borderWidth = 2.0
+        self.NextButton.layer.borderColor = Color.color(hexString: "#BBC7D7").cgColor
+        
+        if self.mode == .admin {
+            self.CorrectButton.isHidden = true
+            self.IncorrectButton.isHidden = true
+        }
+        else {
+            self.NextButton.isHidden = true
+        }
+        
+        self.vDrawImage.layer.borderWidth = 2.0
+        self.vDrawImage.layer.borderColor = Color.color(hexString: "#A6B6CB").cgColor
+        
+        self.vDraw.layer.borderWidth = 2.0
+        self.vDraw.layer.borderColor = Color.color(hexString: "#A6B6CB").cgColor
+        self.lblDescDraw.text = "draw the figure in this box"
+        self.lblDescDraw.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.lblDescDraw.textColor = Color.color(hexString: "#8A9199")
+        self.lblDescDraw.addTextSpacing(-0.36)
+        
+        self.vDraw.delegate = self
     }
     
     fileprivate func setupViewErase() {
@@ -210,28 +240,38 @@ extension ThreeDFigureCopy {
         self.drawImage()
     }
     
+    @IBAction func NextAction(_ sender: Any) {
+        self.resultTime.append(Foundation.Date().timeIntervalSince(startTime))
+        self.startTime = Foundation.Date()
+        self.curr = self.curr + 1
+        self.drawImage()
+    }
+    
     fileprivate func startTask() {
         self.result = Results()
         self.result.name = "3D Figure Copy"
         self.curr = 0
-        self.CorrectButton.isEnabled = true
-        self.IncorrectButton.isEnabled = true
+        if self.mode == .admin {
+            self.NextButton.isEnabled = true
+        }
+        else {
+            self.CorrectButton.isEnabled = true
+            self.IncorrectButton.isEnabled = true
+        }
         
-        if self.drawfrom != nil {
-            self.drawfrom!.removeFromSuperview()
-            self.drawfrom!.image = nil
+        if self.ivDraw != nil {
+            self.ivDraw.image = nil
         }
         
         self.startTime = Foundation.Date()
         
-        self.drawfrom = UIImageView(frame:CGRect(x: 0, y: 0, width: self.vDrawImage.size.width, height: self.vDrawImage.size.height))
         let image = UIImage(named: self.imagelist[self.curr])
-        self.drawfrom!.image = image
-        self.drawfrom?.contentMode = .scaleAspectFit
-        self.vDrawImage.addSubview(self.drawfrom!)
+        self.ivDraw.image = image
+        self.ivDraw.contentMode = .scaleAspectFit
     }
     
     @objc func actionErase() {
+        self.lblDescDraw.isHidden = false
         self.vDraw.drawandclearResults()
     }
     
@@ -239,6 +279,7 @@ extension ThreeDFigureCopy {
         self.resultCondition.removeAll()
         self.resultImages.removeAll()
         self.resultTime.removeAll()
+        self.lblDescDraw.isHidden = false
         self.vDraw.drawandclearResults()
         
         // Couter Timer
@@ -325,17 +366,22 @@ extension ThreeDFigureCopy {
         let img = drawCustomImage(self.vDraw.size)
         self.resultImages.append(img)
         
-        if self.drawfrom != nil {
-            self.drawfrom!.image = nil
+        if self.ivDraw != nil {
+            self.ivDraw.image = nil
         }
         
         if self.curr < self.imagelist.count {
             let image = UIImage(named: self.imagelist[self.curr])
-            self.drawfrom!.image = image
+            self.ivDraw.image = image
         }
         else {
-            self.CorrectButton.isEnabled = false
-            self.IncorrectButton.isEnabled = false
+            if self.mode == .admin {
+                self.NextButton.isEnabled = false
+            }
+            else {
+                self.CorrectButton.isEnabled = false
+                self.IncorrectButton.isEnabled = false
+            }
             self.timer3DFigureCopy.invalidate()
             
             self.saveResult()
@@ -360,5 +406,12 @@ extension ThreeDFigureCopy {
         UIGraphicsEndImageContext()
         
         return image!
+    }
+}
+
+// MARK: - 3DFigureDraw View Delgate
+extension ThreeDFigureCopy: ThreeDFigureDrawDelgate {
+    func isTouchDrawing() {
+        self.lblDescDraw.isHidden = true
     }
 }

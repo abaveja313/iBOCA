@@ -28,6 +28,8 @@ class IntroViewController: ViewController {
     var testId: String!
     var videoName: String!
     
+    var mode : TestMode = TestMode.admin
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.videoName = "sample-test-intro"
@@ -81,6 +83,7 @@ class IntroViewController: ViewController {
             viewController = (storyboard.instantiateViewController(withIdentifier: "DigitBase") as? DigitBase)!
         case "3d-figure":
             viewController = (storyboard.instantiateViewController(withIdentifier: "ThreeDFigureCopy") as? ThreeDFigureCopy)!
+            (viewController as! ThreeDFigureCopy).mode = mode
         case "naming-picture":
             viewController = (storyboard.instantiateViewController(withIdentifier: "PicturesViewController") as? PicturesViewController)!
         case "ForwardSpatialSpan", "BackwardSpatialSpan":
