@@ -407,42 +407,51 @@ extension SimpleMemoryTask {
         // Update item Selected Dropdown & hide Dropdown
         self.updateDataDropDown()
         
-        let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
-        
-        startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
-            print("start new")
+        if self.isStartNew == false {
+            let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
+            startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
+                print("start new")
+                recognizeIncorrectSM = self.images0
+                imagesSM = self.images0
+                imageSetSM = 0
+                incorrectImageSetSM = 0
+                
+                self.startNewTask()
+                
+                //action
+            }))
+            
+            if(afterBreakSM == true){
+                startAlert.addAction(UIAlertAction(title: "Resume Task", style: .default, handler: { (action) -> Void in
+                    print("resume old")
+                    
+                    for b in self.testSelectButtons {
+                        b.isHidden = true
+                    }
+                    
+                    self.start.isHidden = true
+                    
+                    self.resumeTask()
+                    //action
+                }))
+            }
+            
+            startAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in
+                print("cancel")
+                //self.back.isEnabled = true
+                //action
+            }))
+            
+            self.present(startAlert, animated: true, completion: nil)
+        }
+        else {
             recognizeIncorrectSM = self.images0
             imagesSM = self.images0
             imageSetSM = 0
             incorrectImageSetSM = 0
             
             self.startNewTask()
-            
-            //action
-        }))
-        
-        if(afterBreakSM == true){
-            startAlert.addAction(UIAlertAction(title: "Resume Task", style: .default, handler: { (action) -> Void in
-                print("resume old")
-                
-                for b in self.testSelectButtons {
-                    b.isHidden = true
-                }
-                
-                self.start.isHidden = true
-                
-                self.resumeTask()
-                //action
-            }))
         }
-        
-        startAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in
-            print("cancel")
-            //self.back.isEnabled = true
-            //action
-        }))
-        
-        self.present(startAlert, animated: true, completion: nil)
     }
     
     func startNewTask() {
@@ -854,6 +863,7 @@ extension SimpleMemoryTask {
         if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
             Settings.SMDelayTime = idx + 1
         }
+        self.updateDataDropDown()
     }
     
     @IBAction func actionQuit(_ sender: Any) {
