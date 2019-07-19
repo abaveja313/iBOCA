@@ -56,11 +56,11 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     @IBOutlet weak var ButtonForwardSpatialSpan: UIButton!
     @IBOutlet weak var ButtonBackwardSpatialSpan: UIButton!
     @IBOutlet weak var ButtonNamingPictures: UIButton!
-    @IBOutlet weak var ButtonSemanticListGeneration: UIButton!
     @IBOutlet weak var ButtonMOCA: UIButton!
+    
+    @IBOutlet weak var ButtonSemanticListGeneration: UIButton!
     @IBOutlet weak var ButtonGDT: UIButton!
     @IBOutlet weak var ButtonGoldStandard: UIButton!
-    
     @IBOutlet weak var PatiantID: UILabel!
     
     @IBOutlet weak var ButtonResults: UIButton!
@@ -80,8 +80,6 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
         screenSize = UIScreen.main.bounds
         
         emailOn = UserDefaults.standard.bool(forKey: "emailOn")
@@ -104,8 +102,9 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         updateButton(id: 9, ectid:6, button: ButtonForwardSpatialSpan, status: Status[TestForwardSpatialSpan])
         updateButton(id:10, ectid:7, button: ButtonBackwardSpatialSpan, status: Status[TestBackwardSpatialSpan])
         updateButton(id:11, ectid:0, button: ButtonNamingPictures, status: Status[TestNampingPictures])
-        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
         updateButton(id:13, ectid:0, button: ButtonMOCA, status: Status[TestMOCAResults])
+        
+        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
         updateButton(id:14, ectid:0, button: ButtonGDT, status: Status[TestGDTResults])
         updateButton(id:15, ectid:0, button: ButtonGoldStandard, status: Status[TestGoldStandard])
         
