@@ -168,6 +168,9 @@ extension TrailsAViewController {
             
             // Button Reset, Quit
             self.setupButtonGradient()
+            
+            // hide button Reset
+            self.btnReset.isHidden = true
         }
     }
     
@@ -302,12 +305,16 @@ extension TrailsAViewController {
         self.btnQuit.setupGradient(arrColor: [Color.color(hexString: "#FFAFA6"), Color.color(hexString: "#FE786A")], direction: .topToBottom)
         self.btnQuit.render()
         self.btnQuit.addTextSpacing(-0.36)
+        // Add action Button Quit
+        self.btnQuit.addTarget(self, action: #selector(self.quitTapped(_:)), for: .touchUpInside)
         
         self.btnReset.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18.0))
         self.btnReset.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
         self.btnReset.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"), Color.color(hexString: "#FFC556")], direction: .topToBottom)
         self.btnReset.render()
         self.btnReset.addTextSpacing(-0.36)
+        // Add action Button Reset
+        self.btnReset.addTarget(self, action: #selector(self.resetTapped(_:)), for: .touchUpInside)
     }
 }
 
@@ -454,6 +461,9 @@ extension TrailsAViewController {
         self.vCounterTimer.isHidden = false
         self.title = self.lblChooseTheTest.text
         
+        // Show button Reset
+        self.btnReset.isHidden = false
+        
         // Clean all previous Draw View and refresh Draw View
         if drawingView != nil {
             drawingView.removeFromSuperview()
@@ -480,11 +490,6 @@ extension TrailsAViewController {
         displayImgTrailsA = false
         self.drawingView.canDraw = true
         bubbleColor = UIColor.red
-        
-        // Add action Button Reset
-        self.btnReset.addTarget(self, action: #selector(self.resetTapped(_:)), for: .touchUpInside)
-        // Add action Button Quit
-        self.btnQuit.addTarget(self, action: #selector(self.quitTapped(_:)), for: .touchUpInside)
         
         let runtimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
         runtimer.fire()

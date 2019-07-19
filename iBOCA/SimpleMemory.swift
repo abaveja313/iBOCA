@@ -303,7 +303,7 @@ extension SimpleMemoryTask {
         
         // MARK: - Config Dropdown minute
         let x = self.vSetDelayTime.origin.x
-        let y = self.vSetDelayTime.origin.y + self.vSetDelayTime.bounds.height + 4.0
+        let y = self.vSetDelayTime.origin.y + self.vSetDelayTime.bounds.height + 6.0
         let frame = CGRect.init(x: x, y: y, width: self.vSetDelayTime.size.width, height: 118.0)
         self.dropDownView = DropdownView.init(frame: frame, style: .plain)
         self.dropDownView.dataArray = self.dataMinutesDropDown
