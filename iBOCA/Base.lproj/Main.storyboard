@@ -1290,7 +1290,7 @@
                                     <segue destination="XYk-wu-CQY" kind="show" identifier="semantic-list-generation" id="ZPX-aV-emr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DB-z8-IDB">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DB-z8-IDB">
                                 <rect key="frame" x="144" y="316" width="235" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -1307,7 +1307,7 @@
                                     <action selector="sendEmail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5hN-Po-gQ4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yk-2H-hs0">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yk-2H-hs0">
                                 <rect key="frame" x="160" y="248" width="202" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -2894,52 +2894,6 @@
                                     <action selector="actionBegin:" destination="uIz-3z-MW0" eventType="touchUpInside" id="Xxp-1R-Bi1"/>
                                 </connections>
                             </button>
-                            <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="00M-sT-NB3">
-                                <rect key="frame" x="552" y="549" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="atBIDMCOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="2Hy-HV-qka"/>
-                                </connections>
-                            </switch>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Testing is done within BIDMC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-PP-DQh">
-                                <rect key="frame" x="630" y="549" width="301.5" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bth-VQ-NFx">
-                                <rect key="frame" x="510" y="683" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="emailOnOff:" destination="uIz-3z-MW0" eventType="valueChanged" id="Fka-bV-NLA"/>
-                                </connections>
-                            </switch>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Initials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKX-0D-676">
-                                <rect key="frame" x="849" y="161" width="109" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.88031684027777779" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email the Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZB-af-wx7">
-                                <rect key="frame" x="585" y="683" width="176.5" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Class" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-Np-KYX">
-                                <rect key="frame" x="552" y="613" width="106" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-an-SEC">
-                                <rect key="frame" x="683" y="591" width="176" height="73"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -2981,21 +2935,16 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="adminInitials" destination="XKX-0D-676" id="VOI-nV-EtV"/>
                         <outlet property="adminNameLabel" destination="Piw-Hj-uba" id="AJZ-AE-Wzz"/>
                         <outlet property="adminNameTextField" destination="t7J-3P-S9X" id="nRg-0C-e7N"/>
-                        <outlet property="atBIDMCOnOff" destination="00M-sT-NB3" id="CdS-7u-tch"/>
                         <outlet property="backTitleLabel" destination="StP-bd-DBa" id="MY1-t0-lwt"/>
                         <outlet property="beginButton" destination="TiA-1Z-LTR" id="ZlU-96-3Ql"/>
                         <outlet property="emailLabel" destination="JHw-5f-zda" id="Yu6-dk-ER6"/>
-                        <outlet property="emailOnOff" destination="Bth-VQ-NFx" id="CGG-qV-HH7"/>
                         <outlet property="emailTextField" destination="HHK-GF-sPt" id="a6w-bT-lQf"/>
                         <outlet property="patiantIDTextField" destination="DyP-wG-qya" id="TE0-5s-1HD"/>
                         <outlet property="patientIdLabel" destination="qaW-D2-2dg" id="Hhl-0j-yVc"/>
                         <outlet property="provideDataLabel" destination="WRY-0z-msi" id="ydL-rp-jql"/>
                         <outlet property="provideDataSwitch" destination="Lpx-sn-b5u" id="WD5-Qs-kg9"/>
-                        <outlet property="testClass" destination="Pws-an-SEC" id="bTO-M4-qGc"/>
-                        <outlet property="testClassLabel" destination="z6c-Np-KYX" id="IGf-is-MkI"/>
                         <outlet property="testingPasscodeLabel" destination="aNE-L0-jDn" id="Um4-I4-Pvl"/>
                         <outlet property="testingPasscodeTextField" destination="CeD-5e-8A3" id="2Rg-Ri-Npi"/>
                     </connections>
@@ -5654,15 +5603,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3x-5B-tt3">
-                                <rect key="frame" x="865" y="355" width="62" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Start"/>
-                                <connections>
-                                    <action selector="StartPressed:" destination="oxe-aZ-ydg" eventType="touchUpInside" id="eZo-JC-ZVV"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -5695,20 +5635,19 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="InfoLabel" destination="juc-yo-rBg" id="XG9-j5-KLc"/>
-                        <outlet property="KeypadLabel" destination="oGY-Px-lQc" id="LSK-H4-prg"/>
-                        <outlet property="NumberLabel" destination="bAb-BA-yfp" id="ech-Lr-0D5"/>
-                        <outlet property="StartButton" destination="b3x-5B-tt3" id="SGC-c7-nTI"/>
                         <outlet property="backButton" destination="ZBp-O1-NC3" id="SpD-CH-NsB"/>
                         <outlet property="backTitleLabel" destination="UNl-pi-F5n" id="N5z-jF-vzc"/>
                         <outlet property="contentView" destination="SBH-Rd-YmK" id="nzF-gw-2ul"/>
+                        <outlet property="correctAnswerLabel" destination="ka5-GA-veB" id="e9A-MV-pgR"/>
+                        <outlet property="infoLabel" destination="juc-yo-rBg" id="XG9-j5-KLc"/>
                         <outlet property="innerShadowView" destination="CVI-ou-Ze1" id="q9T-TS-Bo6"/>
-                        <outlet property="lbCorrectAnswer" destination="ka5-GA-veB" id="e9A-MV-pgR"/>
-                        <outlet property="lbShowRandomNumber" destination="Rgp-1o-flC" id="FTs-o6-MMl"/>
+                        <outlet property="keypadLabel" destination="oGY-Px-lQc" id="LSK-H4-prg"/>
                         <outlet property="numKeyboard" destination="Apf-1g-2FI" id="xIN-3H-zcG"/>
+                        <outlet property="numberLabel" destination="bAb-BA-yfp" id="ech-Lr-0D5"/>
                         <outlet property="quitButton" destination="SuD-jx-hFj" id="cmQ-kc-mOV"/>
                         <outlet property="randomNumberLabel" destination="cdu-C0-6Fk" id="T18-0Y-Zlr"/>
                         <outlet property="resetButton" destination="T6i-nK-moi" id="ZJI-jx-Itd"/>
+                        <outlet property="showRandomNumberLabel" destination="Rgp-1o-flC" id="FTs-o6-MMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lNg-n4-kUE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6092,7 +6031,6 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jDD-Dc-40d"/>
         <segue reference="zYT-Gy-o49"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 import MessageUI
 
-
-
 var transmitOn : Bool = false
 var atBIDMCOn  : Bool = false
 var emailOn    : Bool = false
@@ -21,14 +19,8 @@ var theTestClass : Int = 0
 let testClassName = ["CNU", "COMM", "ECT", "DW", "PHY", "ICU", "B1", "B2", "B3", "TEST"]
 let BIDMCpassKey = "PressOn"
 
-class Setup: ViewController, UIPickerViewDelegate  {
+class Setup: ViewController  {
     var autoID: Int = Int()
-    
-    @IBOutlet weak var atBIDMCOnOff:  UISwitch!
-    @IBOutlet weak var emailOnOff:    UISwitch!
-    @IBOutlet weak var adminInitials: UILabel!
-    @IBOutlet weak var testClass: UIPickerView!
-    @IBOutlet weak var testClassLabel: UILabel!
     
     // MARK: Outlet
     @IBOutlet weak var backTitleLabel: UILabel!
@@ -61,21 +53,10 @@ class Setup: ViewController, UIPickerViewDelegate  {
         patiantIDTextField.text = PID.getID()
         adminNameTextField.text = PID.getName()
         
-        
-        
-        
-        atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
-        atBIDMCOnOff.isOn = atBIDMCOn
-        
-        testClass.delegate = self
-        
-        theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
-        testClass.selectRow(theTestClass, inComponent: 0, animated: true)
-        
         doneSetup = true
     }
     
-    private func validate() -> Bool {
+    fileprivate func validate() -> Bool {
         if !emailTextField.text!.isEmpty {
             if !emailTextField.text!.isValidEmail() {
                 self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
@@ -89,7 +70,7 @@ class Setup: ViewController, UIPickerViewDelegate  {
         return true
     }
     
-    private func showAlertTurnOnConsent(){
+    fileprivate func showAlertTurnOnConsent(){
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.provideDataSwitch.isOn = false
@@ -101,7 +82,14 @@ class Setup: ViewController, UIPickerViewDelegate  {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: Action
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+
+// MARK: Action
+extension Setup {
     @IBAction func actionBegin(_ sender: Any) {
         if validate() {
             guard let _patiantID = self.patiantIDTextField.text else { return }
@@ -168,104 +156,6 @@ class Setup: ViewController, UIPickerViewDelegate  {
         } else {
             patiantIDTextField.text = PID.getID()
         }
-    }
-    
-    // MARK: Unused code
-    @IBAction func atBIDMCOnOff(_ sender: UISwitch) {
-        if(atBIDMCOnOff.isOn) { // Trying to use BIDMC content
-            if(UserDefaults.standard.object(forKey: "BIDMCproceedKey") == nil) { // See if the person has permission
-                // Ask for the key pharse
-                let alertController = UIAlertController(title: "Enter passkey", message: "Enter Pass Key to use BIDMC Features", preferredStyle: .alert)
-                
-                //the confirm action taking the inputs
-                let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
-                    //getting the input values from user
-                    let key = alertController.textFields?[0].text
-                    if (key == BIDMCpassKey) { // Got the right key
-                        UserDefaults.standard.set(key, forKey: "BIDMCproceedKey")
-                        UserDefaults.standard.synchronize()
-                        self.setAtBIDMC()
-                    } else { // bad key
-                        self.atBIDMCOnOff.isOn = false
-                    }
-                }
-                
-                //the cancel action, no key
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-                    self.atBIDMCOnOff.isOn = false
-                }
-                
-                //adding textfields to our dialog box
-                alertController.addTextField { (textField) in
-                    textField.placeholder = "Enter Pass Key"
-                }
-                //adding the action to dialogbox
-                alertController.addAction(confirmAction)
-                alertController.addAction(cancelAction)
-                
-                //finally presenting the dialog box
-                self.present(alertController, animated: true, completion: nil)
-            } else { // key exist in the system, should be OK
-                setAtBIDMC()
-            }
-        } else { // trying to set it off, should be OK
-            setAtBIDMC()
-        }
-    }
-    
-    func setAtBIDMC() {
-        atBIDMCOn = atBIDMCOnOff.isOn
-        UserDefaults.standard.set(atBIDMCOn, forKey: "AtBIDMC")
-        UserDefaults.standard.synchronize()
-        patiantIDTextField.text = PID.getID()
-        if atBIDMCOn == true {
-            testClass.isHidden = false
-            testClassLabel.isHidden = false
-        } else {
-            testClass.isHidden = true
-            testClassLabel.isHidden = true
-        }
-    }
-    
-    @IBAction func emailOnOff(_ sender: Any) {
-        emailOn = emailOnOff.isOn
-//        emailTextField.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        UserDefaults.standard.set(emailOn, forKey: "emailOn")
-        UserDefaults.standard.synchronize()
-    }
-    
-    func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-        if pickerView == testClass {
-            return testClassName.count
-        } else {
-            return 1
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == testClass {
-            return testClassName[row]
-        } else {
-            return ""
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == testClass {
-            theTestClass = row
-            UserDefaults.standard.set(row, forKey:"TheTestClass")
-        } else  {
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
