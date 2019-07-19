@@ -43,6 +43,7 @@ class DigitSerialSeven:DigitBaseClass {
         base.isNumKeyboardHidden(isHidden: false)
         base.numKeyboard.isEnabled(true)
         base.randomNumberLabel.text = "\(randomNumber)"
+        base.keypadLabel.text = ""
         self.startTheTest(startingNumber: self.randomNumber)
         
         startTime = Foundation.Date()
