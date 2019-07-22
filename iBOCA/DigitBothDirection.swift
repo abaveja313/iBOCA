@@ -27,17 +27,17 @@ class DigitBothDirection:DigitBaseClass {
     var resultList : [String:Any] = [:]
     
     override func DoInitialize() {
-        TestInitialize()
-        base.InfoLabel.text = "Press start to begin \(testName) and tell the patiant the first set of numbers"
-        level  = LevelStart() - 1
+        testInitialize()
+        base.infoLabel.text = "Press start to begin \(testName) and tell the patiant the first set of numbers"
+        level  = levelStart() - 1
         redo = 0
     }
     
-    override func DoStart() {
-        TestInitialize()
+    override func doStart() {
+        testInitialize()
         base.setButtonEnabled(false)
-        base.InfoLabel.text = "Tell the patient the numbers, followed by intering his/her response"
-        level = LevelStart() - 1
+        base.infoLabel.text = "Tell the patient the numbers, followed by intering his/her response"
+        level = levelStart() - 1
         redo = 0
         
         startTime = Foundation.Date()
@@ -48,10 +48,10 @@ class DigitBothDirection:DigitBaseClass {
         totErrors = 0
         currRound = 0
         resultList = [:]
-        StartDisplay()
+        startDisplay()
     }
     
-    func StartDisplay() {
+    func startDisplay() {
         genval = ""
         var candidate = [0, 1, 2, 4, 5, 6, 7, 8, 9]
         for _ in 0...level {
@@ -62,9 +62,9 @@ class DigitBothDirection:DigitBaseClass {
         base.DisplayStringShowContinue(val: genval)
     }
     
-    override func DoEnterDone() {
+    override func doEnterDone() {
         genStrings.append(genval)
-        gotStrings.append(base.KeypadLabel.text!)
+        gotStrings.append(base.keypadLabel.text!)
         gotLevels.append(level+1)
         let levelEndTime = Foundation.Date()
         let elapsedTime = (Int)(1000*levelEndTime.timeIntervalSince(levelStartTime))
@@ -72,7 +72,7 @@ class DigitBothDirection:DigitBaseClass {
         
         var tempList:[String:Any] = [:]
         tempList["Generated"] = genval
-        tempList["Entered"] = base.KeypadLabel.text
+        tempList["Entered"] = base.keypadLabel.text
         tempList["ElapsedTime (msec)"] = elapsedTime
         tempList["Keystrokes (msec:key)"] = gotKeys
         
@@ -80,49 +80,47 @@ class DigitBothDirection:DigitBaseClass {
         
         currRound += 1
         
-        
-        let pgenval = ProcesString(val: genval)
-        if base.KeypadLabel.text == pgenval {
-            base.InfoLabel.text = "Correct! Tell the next set of numbers"
+        let pgenval = procesString(val: genval)
+        if base.keypadLabel.text == pgenval {
+            base.infoLabel.text = "Correct! Tell the next set of numbers"
             level += 1
-            if level >= LevelEnd() {
-                base.InfoLabel.text = "Correct!, test done"
+            if level >= levelEnd() {
+                base.infoLabel.text = "Correct!, test done"
                 base.startTimeTask = Foundation.Date()
                 base.totalTimeCounter.invalidate()
                 base.setButtonEnabled(true)
                 base.numKeyboard.isEnabled(false)
-//                EndTest()
             } else {
                 redo = 0
                 base.setButtonEnabled(false)
-                StartDisplay()
+                startDisplay()
             }
         } else {
             redo += 1
             totErrors += 1
             if redo >= MAX_REDO {
-                base.InfoLabel.text = "Too many incorrect answers, test ended"
+                base.infoLabel.text = "Too many incorrect answers, test ended"
                 base.startTimeTask = Foundation.Date()
                 base.totalTimeCounter.invalidate()
                 base.setButtonEnabled(true)
                 base.numKeyboard.isEnabled(false)
             } else {
-                base.InfoLabel.text = "Incorrect, Repeat with new numbers"
+                base.infoLabel.text = "Incorrect, Repeat with new numbers"
                 base.setButtonEnabled(false)
-                StartDisplay()
+                startDisplay()
             }
         }
         
-        base.KeypadLabel.text = ""
+        base.keypadLabel.text = ""
     }
     
-    override func DoEnd() {
-        base.InfoLabel.text = "Test ended"
+    override func doEnd() {
+        base.infoLabel.text = "Test ended"
         Status[testStatus] = TestStatus.Done
-        EndTest()
+        endTest()
     }
     
-    func EndTest() {
+    func endTest() {
         let endTime = Foundation.Date()
         
         let result = Results()
@@ -142,24 +140,24 @@ class DigitBothDirection:DigitBaseClass {
         
         resultsArray.add(result)
         
-        base.EndTest()
+        base.endTest()
         Status[testStatus] = TestStatus.Done
     }
     
     // Mainly redefined in the subclass
-    func TestInitialize() {
+    func testInitialize() {
         
     }
     
-    func ProcesString(val: String) -> String {
+    func procesString(val: String) -> String {
         return val
     }
     
-    func LevelStart() -> Int {
+    func levelStart() -> Int {
         return 0
     }
     
-    func LevelEnd() -> Int {
+    func levelEnd() -> Int {
         return 6
     }
 }

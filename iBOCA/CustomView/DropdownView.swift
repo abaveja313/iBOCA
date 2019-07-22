@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DropdownViewDelegate: class {
+    func returnItemSelected(item: String)
+}
+
 class DropdownView: UITableView {
 
     /*
@@ -19,6 +23,9 @@ class DropdownView: UITableView {
     */
     var dataArray: [String] = [String]()
     var itemSelected: String?
+    var isDropDownShowing = false
+    
+    weak var dropdownDelegate: DropdownViewDelegate?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,16 +52,23 @@ class DropdownView: UITableView {
 // MARK: - Action
 extension DropdownView {
     func showDropDown() {
-        self.isHidden = false
-        if let iSelected = self.itemSelected, self.dataArray.count != 0, let row = self.dataArray.index(of: iSelected) {
-            self.reloadData()
-            let idxPath = IndexPath.init(row: row, section: 0)
-            self.selectRow(at: idxPath, animated: false, scrollPosition: .middle)
+        if isDropDownShowing {
+            self.hideDropDown()
+        }
+        else {
+            self.isHidden = false
+            if let iSelected = self.itemSelected, self.dataArray.count != 0, let row = self.dataArray.index(of: iSelected) {
+                self.reloadData()
+                let idxPath = IndexPath.init(row: row, section: 0)
+                self.selectRow(at: idxPath, animated: false, scrollPosition: .middle)
+            }
+            self.isDropDownShowing = true
         }
     }
     
     func hideDropDown() {
         self.isHidden = true
+        self.isDropDownShowing = false
     }
 }
 
@@ -89,8 +103,11 @@ extension DropdownView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let itemSelected = self.dataArray[indexPath.row]
-        self.itemSelected = itemSelected
-        self.hideDropDown()
+        if self.dataArray.count != 0 {
+            let itemSelected = self.dataArray[indexPath.row]
+            self.itemSelected = itemSelected
+            self.dropdownDelegate?.returnItemSelected(item: itemSelected)
+            self.hideDropDown()
+        }
     }
 }

@@ -9,8 +9,14 @@
 import Foundation
 import UIKit
 
+protocol ThreeDFigureDrawDelgate: class {
+    func isTouchDrawing()
+}
+
 class ThreeDFigureDraw: UIView {
-    fileprivate var currPath = UIBezierPath()
+    var currPath = UIBezierPath()
+    
+    weak var delegate: ThreeDFigureDrawDelgate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,6 +43,7 @@ class ThreeDFigureDraw: UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! as UITouch
+        self.delegate?.isTouchDrawing()
         currPath.move(to: touch.location(in: self))
         setNeedsDisplay()
     }

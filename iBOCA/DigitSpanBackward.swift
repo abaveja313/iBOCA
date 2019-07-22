@@ -12,20 +12,20 @@ import UIKit
 
 class DigitSpanBackward:DigitBothDirection {
     
-    override func ProcesString(val: String) -> String {
-        return String(val.characters.reversed())
+    override func procesString(val: String) -> String {
+        return String(val.reversed())
     }
     
-    override func TestInitialize() {
+    override func testInitialize() {
         testName =  "Backward Digit Span Test"
         testStatus = TestBackwardsDigitSpan
     }
     
-    override func LevelStart() -> Int {
+    override func levelStart() -> Int {
         return 3
     }
     
-    override func LevelEnd() -> Int {
+    override func levelEnd() -> Int {
         return 8
     }
 }

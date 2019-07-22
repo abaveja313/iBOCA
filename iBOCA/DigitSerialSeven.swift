@@ -7,11 +7,8 @@
 //
 
 import Foundation
-
-
 import UIKit
 import AVFoundation
-
 
 class DigitSerialSeven:DigitBaseClass {
     var startNum = 0
@@ -25,13 +22,12 @@ class DigitSerialSeven:DigitBaseClass {
     var gotTime:[Date] = []
     var totErrors = 0
     var keys : [[String:String]] = [[:]]
-    var buttons : [UIButton] = []
     
     var timer: Timer?
     var countdownTime: Int = 6
     var randomNumber: Int = 50
     
-    override func DoStart() {
+    override func doStart() {
         testName =  "Serial Sevens Test"
         testStatus = TestSerialSevens
         level = -1
@@ -43,10 +39,11 @@ class DigitSerialSeven:DigitBaseClass {
         // Reset countdown time every starting
         countdownTime = 6
         randomNumber = randomStartingNumber
-        base.lbShowRandomNumber.isHidden = false
+        base.showRandomNumberLabel.isHidden = false
         base.isNumKeyboardHidden(isHidden: false)
         base.numKeyboard.isEnabled(true)
         base.randomNumberLabel.text = "\(randomNumber)"
+        base.keypadLabel.text = ""
         self.startTheTest(startingNumber: self.randomNumber)
         
         startTime = Foundation.Date()
@@ -57,66 +54,53 @@ class DigitSerialSeven:DigitBaseClass {
         gotTime = []
         totErrors = 0
         keys = []
-        
-        for button in buttons {
-            button.isHidden = false
-        }
-        
     }
     
     private func startTheTest(startingNumber: Int) {
         startNum = startingNumber
         lastNum = startNum
         level = 0
-        for button in buttons {
-            button.isHidden = true
-        }
         base.isNumKeyboardHidden(isHidden: false)
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Enter the start number minus 7"
+        base.infoLabel.text = "Enter the start number minus 7"
     }
     
     @objc fileprivate func StartNumberButtonTapped(button: UIButton){
         startNum = Int(button.title(for: .normal)!)!
         lastNum = startNum
         level = 0
-        for button in buttons {
-            button.isHidden = true
-        }
         
         base.isNumKeyboardHidden(isHidden: false)
-        self.base.lbShowRandomNumber.isHidden = false
+        self.base.showRandomNumberLabel.isHidden = false
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Enter the start number minus 7"
+        base.infoLabel.text = "Enter the start number minus 7"
     }
     
-    
-    override func DoEnterDone() {
-        
+    override func doEnterDone() {
         if level == -1 {
             // Should not get here....
-       } else {
+        } else {
             // Middle of the test
-            guard let num = Int(base.KeypadLabel.text!) else {
-                base.InfoLabel.text = "Error: Enter a number"
+            guard let num = Int(base.keypadLabel.text!) else {
+                base.infoLabel.text = "Error: Enter a number"
                 return
             }
             
             level += 1
-            base.KeypadLabel.text = ""
+            base.keypadLabel.text = ""
             base.value = ""
             
-            if num == lastNum - 7 && num == startNum - 7*level {
-                base.InfoLabel.text = "Correct: Ask patiant for number minus 7, Enter it"
+            if num == lastNum - 7 && num == startNum - 7 * level {
+                base.infoLabel.text = "Correct: Ask patiant for number minus 7, Enter it"
             } else  if num == lastNum - 7 {
-                base.InfoLabel.text = "Correct, but off the sequence: Ask patiant for number minus 7, Enter it"
+                base.infoLabel.text = "Correct, but off the sequence: Ask patiant for number minus 7, Enter it"
             } else {
                 totErrors += 1
-                base.InfoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
+                base.infoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
             }
             
             enteredNumber.append(num)
@@ -130,16 +114,16 @@ class DigitSerialSeven:DigitBaseClass {
    
         if (lastNum - 7 <= 0)  { // || (level >= 5)
             // Done test
-            base.InfoLabel.text = "Test Ended"
+            base.infoLabel.text = "Test Ended"
             base.startTimeTask = Foundation.Date()
             base.totalTimeCounter.invalidate()
             base.numKeyboard.isEnabled(false)
-            DoEnd()
+            doEnd()
             return
         }
     }
     
-    override func DoEnd() {
+    override func doEnd() {
         timer?.invalidate()
         
         let endTime = Foundation.Date()
@@ -174,7 +158,7 @@ class DigitSerialSeven:DigitBaseClass {
         resultsArray.add(result)
         Status[testStatus] = TestStatus.Done
     
-        base.InfoLabel.text = "Test ended"
-        base.EndTest()
+        base.infoLabel.text = "Test ended"
+        base.endTest()
     }
 }

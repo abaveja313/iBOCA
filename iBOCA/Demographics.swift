@@ -284,6 +284,7 @@ extension Demographics {
         Results1.append(Education!)
         Results1.append(age!)
         Results1.append(Race!)
+        Results1.append(PUID)
         print(Results1)
         
         Settings.patiantID = _PID
@@ -337,7 +338,6 @@ extension Demographics {
 // MARK: - UITextField Delegate
 extension Demographics {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.hideKeyboardWhenTouchOutside()
         self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
         textField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.dropDown.isHidden = true
@@ -350,10 +350,8 @@ extension Demographics {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        self.view.removeGestureRecognizer(tapOusideGesture)
-        self.dropDown.isHidden = true
-        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
         textField.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        self.dropDown.isHidden = true
         return true
     }
     
@@ -414,6 +412,7 @@ extension Demographics: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         let obj = self.objectArray[indexPath.item]
         cell.bindData(style: obj.title, value: obj.value)
+        
         if obj.title == DemoGraphicsCellStyle.PaientIDNumber {
             cell.textField.tag = 1
             cell.textField.addTarget(self, action: #selector(self.updatePaientIDNumber(_:)), for: .editingDidEnd)
@@ -453,11 +452,10 @@ extension Demographics: DemoGraphicsCellDelegate {
         if let theAttributes = self.collectionView.layoutAttributesForItem(at: indexPath) {
             let cellFrameInSuperview = self.collectionView.convert(theAttributes.frame, to: collectionView.superview)
             
-            
             self.selectedStyle = style
             // Update frame Dropdown
             self.dropDown.frame = CGRect.init(x: cellFrameInSuperview.origin.x,
-                                              y: cellFrameInSuperview.origin.y + cellFrameInSuperview.size.height + 4.0,
+                                              y: cellFrameInSuperview.origin.y + cellFrameInSuperview.size.height + 6.0,
                                               width: cellFrameInSuperview.size.width,
                                               height: 118.0)
             self.dropDown.isHidden = false
@@ -483,6 +481,10 @@ extension Demographics: DemoGraphicsCellDelegate {
                 self.dropDown.isHidden = true
             }
             
+            if self.dropDown.isHidden == false {
+                self.view.endEditing(true)
+            }
+            
             if let collectionViewCell = self.collectionView.cellForItem(at: indexPath) as? DemographicsCell, let lblSelected = collectionViewCell.lblSelected.text {
                 self.txtSelected = lblSelected
             }
@@ -500,31 +502,11 @@ extension Demographics: DemoGraphicsCellDelegate {
         }
     }
     
-    // MARK: - Keyboard
-    // Hide keyboard when tapping outside.
-    func hideKeyboardWhenTouchOutside() {
-        //hide keyboard when tap anywhere
-        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
-        self.view.addGestureRecognizer(tapOusideGesture)
-    }
-    
-    // Hide keyboard when tapping outside.
-    @objc func dismissKeyboard() {
-        self.dropDown.isHidden = true
-        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+    // MARK: - touchesBegan
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-    
-    func hideDropDownWhenTouchOutside() {
-        //hide Dropdown when tap anywhere
-        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissDropdown))
-        self.view.addGestureRecognizer(tapGestureHideDropDown)
-    }
-    
-    // Hide Dropdown when tapping outside.
-    @objc func dismissDropdown() {
-        self.dropDown.isHidden = true
         self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+        self.dropDown.isHidden = true
     }
 }
 
