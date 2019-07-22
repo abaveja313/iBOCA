@@ -38,6 +38,7 @@ enum DemographicsCategory: String {
 
 class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate {
     
+    // MARK: - Outlet
     @IBOutlet weak var vBack: UIView!
     @IBOutlet weak var lblBack: UILabel!
     @IBOutlet weak var btnBack: UIButton!
@@ -48,6 +49,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnNext: UIButton!
     
+    // MARK: - Variable
     let genderData = ["Male", "Female", "Other", "Prefer Not To Say"]
     
     let educationData = ["0 years", "1 years","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years","11 years","12 years(High School)","13 years","14 years","15 years","16 years(College)","17 years","18 years","19 years", "20 years", "20+ years"]
@@ -78,13 +80,153 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
     var tapOusideGesture = UITapGestureRecognizer()
     var tapGestureHideDropDown = UITapGestureRecognizer()
     
-    // MARK: - DropDown's
     var dropDown: UITableView = UITableView()
     var dropDownData: [String] = [String]()
     var selectedStyle: DemoGraphicsCellStyle?
     var txtSelected: String?
     
     var protocolData = ["A", "B", "C", "D", "E", "F", "G", "H"]
+    
+    // MARK: - Load Views
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Setup First Data
+        self.setupFirstData()
+        
+        // TODO: Check mode ModeECT show/ hide protocol
+        self.setupView()
+    }
+   
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+       
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+}
+
+// MARK: - Setup View
+extension Demographics {
+    fileprivate func setupView() {
+        // View Back
+        self.lblBack.addTextSpacing(-0.56)
+        self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.lblBack.textColor = Color.color(hexString: "#013AA5")
+        
+        // View Task
+        self.setupViewTask()
+    }
+    
+    fileprivate func setupViewTask() {
+        self.vTaskShadow.layer.cornerRadius = 8.0
+        self.vTaskShadow.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.vTaskShadow.layer.shadowOpacity = 1.0
+        self.vTaskShadow.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.vTaskShadow.layer.shadowRadius = 10 / 2.0
+        self.vTaskShadow.layer.shadowPath = nil
+        self.vTaskShadow.layer.masksToBounds = false
+        
+        self.vTask.clipsToBounds = true
+        self.vTask.backgroundColor = UIColor.white
+        self.vTask.layer.cornerRadius = 8.0
+        
+        self.btnCancel.addTextSpacing(-0.44)
+        self.btnCancel.tintColor = Color.color(hexString: "#505259")
+        self.btnCancel.layer.cornerRadius = 8.0
+        self.btnCancel.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        
+        self.btnNext.addTextSpacing(-0.44)
+        self.btnNext.tintColor = Color.color(hexString: "#013AA5")
+        self.btnNext.layer.cornerRadius = 8.0
+        self.btnNext.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
+        
+        self.collectionView.register(DemographicsCell.nib(), forCellWithReuseIdentifier: DemographicsCell.identifier())
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.showsHorizontalScrollIndicator = false
+        
+        // Setup First Data
+        let _PID = PID.getID()
+        self.arrDemoGraphicsStyle.forEach { (style) in
+            if style == .PaientIDNumber {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: _PID))
+            }
+            else if style == .Ethnicity {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ethnicData[0]))
+            }
+            else if style == .Gender {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.genderData[0]))
+            }
+            else if style == .Race {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.raceData[0]))
+            }
+            else if style == .Age {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ageData[40]))
+            }
+            else if style == .PatientUID {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: PUID))
+            }
+            else if style == .Education {
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.educationData[12]))
+            }
+            else {
+                // Protocol
+                self.objectArray.append(Demographics.Objects.init(title: style, value: self.protocolData[0]))
+            }
+        }
+        self.collectionView.reloadData()
+        
+        self.vTask.addSubview(self.dropDown)
+        self.dropDown.isHidden = true
+        self.dropDown.delegate = self
+        self.dropDown.dataSource = self
+        self.dropDown.separatorStyle = .none
+        self.dropDown.layer.borderWidth = 1.0
+        self.dropDown.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+    }
+    
+    fileprivate func setupFirstData() {
+        age = ageData[40]
+        Gender = genderData[0]
+        Ethnicity = ethnicData[0]
+        Education = educationData[12]
+        Race = raceData[0]
+        
+        guard let _PID = Settings.patiantID else { return }
+        testStartTime = Foundation.Date()
+        
+        PUID = ""
+        Settings.PUID = nil
+        if atBIDMCOn == true && theTestClass == 2 {
+            ModeECT = true
+        }
+        else {
+            ModeECT = false
+        }
+        
+        Protocol = protocolData[0]
+    }
+}
+
+// MARK: - Action
+extension Demographics {
+    @IBAction func TestDone(_ sender: AnyObject) {
+        Results1.append(PID.getID())
+        Results1.append(Gender!)
+        Results1.append(Ethnicity!)
+        Results1.append(Education!)
+        Results1.append(age!)
+        Results1.append(Race!)
+        print(Results1)
+    }
+    
+    @IBAction func btnBackTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func NextPressed(_ sender: UIButton) {
         // Save PID, PUID
@@ -128,7 +270,7 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
                 }
             }
         }
-        //TODO: change flow PID
+        // TODO: change flow PID
         age = _ageUser
         Gender = _genderUser
         Education = _educationUser
@@ -164,37 +306,6 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         dismiss(animated: true, completion: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Setup First Data
-        age = ageData[40]
-        Gender = genderData[0]
-        Ethnicity = ethnicData[0]
-        Education = educationData[12]
-        Race = raceData[0]
-        
-        guard let _PID = Settings.patiantID else { return }
-        testStartTime = Foundation.Date()
-        
-        PUID = ""
-        Settings.PUID = nil
-        if atBIDMCOn == true && theTestClass == 2 {
-            ModeECT = true
-        } else {
-            ModeECT = false
-        }
-        
-        Protocol = protocolData[0]
-        
-        // TODO: Check mode ModeECT show/ hide protocol
-        self.setupView()
-    }
-   
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-       
-    }
-    
     func showAddMoreRace(indexPath: IndexPath) {
         let alert = UIAlertController(title: "Add more", message: "Enter add more", preferredStyle: .alert)
         //2. Add the text field. You can configure it however you need.
@@ -221,54 +332,9 @@ class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextF
         // 4. Present the alert.
         self.present(alert, animated: true, completion: nil)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-    @IBAction func TestDone(_ sender: AnyObject) {
-        Results1.append(PID.getID())
-        Results1.append(Gender!)
-        Results1.append(Ethnicity!)
-        Results1.append(Education!)
-        Results1.append(age!)
-        Results1.append(Race!)
-        print(Results1)
-    }
-    
-    @IBAction func btnBackTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: - Keyboard
-    // Hide keyboard when tapping outside.
-    func hideKeyboardWhenTouchOutside() {
-        //hide keyboard when tap anywhere
-        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
-        self.view.addGestureRecognizer(tapOusideGesture)
-    }
-    
-    // Hide keyboard when tapping outside.
-    @objc func dismissKeyboard() {
-        self.dropDown.isHidden = true
-        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
-        self.view.endEditing(true)
-    }
-    
-    func hideDropDownWhenTouchOutside() {
-        //hide Dropdown when tap anywhere
-        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissDropdown))
-        self.view.addGestureRecognizer(tapGestureHideDropDown)
-    }
-    
-    // Hide Dropdown when tapping outside.
-    @objc func dismissDropdown() {
-        self.dropDown.isHidden = true
-        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
-    }
 }
 
+// MARK: - UITextField Delegate
 extension Demographics {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.hideKeyboardWhenTouchOutside()
@@ -316,86 +382,6 @@ extension Demographics {
         if !PID.changeID(proposed: _patiantID) {
             Settings.patiantID = PID.getID()
         }
-    }
-}
-
-// MARK: - Setup View
-extension Demographics {
-    fileprivate func setupView() {
-        // View Back
-        self.lblBack.addTextSpacing(-0.56)
-        self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
-        self.lblBack.textColor = Color.color(hexString: "#013AA5")
-        
-        // View Task
-        self.setupViewTask()
-    }
-    
-    fileprivate func setupViewTask() {
-        self.vTaskShadow.layer.cornerRadius = 8.0
-        self.vTaskShadow.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
-        self.vTaskShadow.layer.shadowOpacity = 1.0
-        self.vTaskShadow.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.vTaskShadow.layer.shadowRadius = 10 / 2.0
-        self.vTaskShadow.layer.shadowPath = nil
-        self.vTaskShadow.layer.masksToBounds = false
-    
-        self.vTask.clipsToBounds = true
-        self.vTask.backgroundColor = UIColor.white
-        self.vTask.layer.cornerRadius = 8.0
-        
-        self.btnCancel.addTextSpacing(-0.44)
-        self.btnCancel.tintColor = Color.color(hexString: "#505259")
-        self.btnCancel.layer.cornerRadius = 8.0
-        self.btnCancel.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
-        
-        self.btnNext.addTextSpacing(-0.44)
-        self.btnNext.tintColor = Color.color(hexString: "#013AA5")
-        self.btnNext.layer.cornerRadius = 8.0
-        self.btnNext.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
-        
-        self.collectionView.register(DemographicsCell.nib(), forCellWithReuseIdentifier: DemographicsCell.identifier())
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        // Setup First Data
-       let _PID = PID.getID()
-        self.arrDemoGraphicsStyle.forEach { (style) in
-            if style == .PaientIDNumber {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: _PID))
-            }
-            else if style == .Ethnicity {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ethnicData[0]))
-            }
-            else if style == .Gender {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.genderData[0]))
-            }
-            else if style == .Race {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.raceData[0]))
-            }
-            else if style == .Age {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.ageData[40]))
-            }
-            else if style == .PatientUID {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: PUID))
-            }
-            else if style == .Education {
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.educationData[12]))
-            }
-            else {
-                // Protocol
-                self.objectArray.append(Demographics.Objects.init(title: style, value: self.protocolData[0]))
-            }
-        }
-        self.collectionView.reloadData()
-        
-        self.vTask.addSubview(self.dropDown)
-        self.dropDown.isHidden = true
-        self.dropDown.delegate = self
-        self.dropDown.dataSource = self
-        self.dropDown.separatorStyle = .none
-        self.dropDown.layer.borderWidth = 1.0
-        self.dropDown.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
     }
 }
 
@@ -513,11 +499,37 @@ extension Demographics: DemoGraphicsCellDelegate {
             self.collectionView.isScrollEnabled = false
         }
     }
+    
+    // MARK: - Keyboard
+    // Hide keyboard when tapping outside.
+    func hideKeyboardWhenTouchOutside() {
+        //hide keyboard when tap anywhere
+        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tapOusideGesture)
+    }
+    
+    // Hide keyboard when tapping outside.
+    @objc func dismissKeyboard() {
+        self.dropDown.isHidden = true
+        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+        self.view.endEditing(true)
+    }
+    
+    func hideDropDownWhenTouchOutside() {
+        //hide Dropdown when tap anywhere
+        tapOusideGesture = UITapGestureRecognizer(target: self, action:#selector(dismissDropdown))
+        self.view.addGestureRecognizer(tapGestureHideDropDown)
+    }
+    
+    // Hide Dropdown when tapping outside.
+    @objc func dismissDropdown() {
+        self.dropDown.isHidden = true
+        self.collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+    }
 }
 
-// MARK: - UICollectionView Delegate, DataSource, DelegateFlowLayout
+// MARK: - UITableView Delegate, DataSource
 extension Demographics: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

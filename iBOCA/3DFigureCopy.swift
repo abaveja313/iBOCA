@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 class ThreeDFigureCopy: ViewController {
-
+    // MARK: - Outlet
     @IBOutlet weak var CorrectButton: UIButton!
     @IBOutlet weak var IncorrectButton: UIButton!
     
@@ -36,6 +36,7 @@ class ThreeDFigureCopy: ViewController {
     
     @IBOutlet weak var vDraw: ThreeDFigureDraw!
     
+    // MARK: - Variable
     // QuickStart Mode
     var quickStartModeOn: Bool = false
     var didBackToResult: (() -> ())?
@@ -55,6 +56,7 @@ class ThreeDFigureCopy: ViewController {
     var counterTime: CounterTimeView!
     var timer3DFigureCopy = Timer()
     
+    // MARK: - Load Views
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -71,188 +73,7 @@ class ThreeDFigureCopy: ViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func drawImage() {
-        //BUGBUG: This should not happen after the last result when the results are generated. However, for some reason, then the last drawn image is missing in the results! this will fix it.
-        let img = drawCustomImage(self.vDraw.size)
-        self.resultImages.append(img)
-        
-        if self.drawfrom != nil {
-            self.drawfrom!.image = nil
-        }
 
-        if self.curr < self.imagelist.count {
-            let image = UIImage(named: self.imagelist[self.curr])
-            self.drawfrom!.image = image
-        }
-        else {
-            self.CorrectButton.isEnabled = false
-            self.IncorrectButton.isEnabled = false
-            self.timer3DFigureCopy.invalidate()
-            
-            self.saveResult()
-            self.completeTask()
-        }
-    }
-    
-    @IBAction func CorrectAction(_ sender: UIButton) {
-        self.resultCondition.append(true)
-        self.resultTime.append(Foundation.Date().timeIntervalSince(startTime))
-        self.startTime = Foundation.Date()
-        self.curr = self.curr + 1
-        self.drawImage()
-    }
-    
-    @IBAction func IncorrectAction(_ sender: UIButton) {
-        self.resultCondition.append(false)
-        self.resultTime.append(Foundation.Date().timeIntervalSince(startTime))
-        self.startTime = Foundation.Date()
-        self.curr = self.curr + 1
-        self.drawImage()
-    }
-    
-    func drawCustomImage(_ size: CGSize) -> UIImage {
-        // Setup our context
-        //let bounds = CGRect(origin: CGPoint.zero, size: size)
-        let opaque = false
-        let scale: CGFloat = 0
-        UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
-        //let context = UIGraphicsGetCurrentContext()
-        
-        // Setup complete, do drawing here
-//        drawing.drawandclearResults()  //background bubbles
-        self.vDraw.drawandclearResults()
-        
-        // Drawing complete, retrieve the finished image and cleanup
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image!
-    }
-    
-    fileprivate func startTask() {
-        self.result = Results()
-        self.result.name = "3D Figure Copy"
-        self.curr = 0
-        self.CorrectButton.isEnabled = true
-        self.IncorrectButton.isEnabled = true
-        
-        if self.drawfrom != nil {
-            self.drawfrom!.removeFromSuperview()
-            self.drawfrom!.image = nil
-        }
-        
-        self.startTime = Foundation.Date()
-        
-        self.drawfrom = UIImageView(frame:CGRect(x: 0, y: 0, width: self.vDrawImage.size.width, height: self.vDrawImage.size.height))
-        let image = UIImage(named: self.imagelist[self.curr])
-        self.drawfrom!.image = image
-        self.drawfrom?.contentMode = .scaleAspectFit
-        self.vDrawImage.addSubview(self.drawfrom!)
-    }
-    
-    @objc func actionErase() {
-        self.vDraw.drawandclearResults()
-    }
-    
-    @objc func actionReset() {
-        self.resultCondition.removeAll()
-        self.resultImages.removeAll()
-        self.resultTime.removeAll()
-        self.vDraw.drawandclearResults()
-        
-        // Couter Timer
-        self.startTime2 = Foundation.Date()
-        self.timer3DFigureCopy.invalidate()
-        self.runTimer()
-        
-        self.startTask()
-    }
-    
-    @objc func actionQuit() {
-        if self.curr != 0 {
-            self.saveResult()
-        }
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
-        self.startTime2 = Foundation.Date()
-        self.timer3DFigureCopy.invalidate()
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
-            }
-            return
-        }
-        
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func actionBack(_ sender: Any) {
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
-        self.startTime2 = Foundation.Date()
-        self.timer3DFigureCopy.invalidate()
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            didBackToResult?()
-            return
-        }
-        
-        navigationController?.popViewController(animated: true)
-    }
-    
-    fileprivate func saveResult() {
-        self.result.startTime = self.startTime2
-        self.result.endTime = Foundation.Date()
-        self.result.longDescription.add("Tests: \(imagelist)")
-        self.result.longDescription.add("Test Outcomes: \(resultCondition)")
-        self.result.longDescription.add("Test Times: \(resultTime)")
-        print("resultImages: \(self.resultImages.count)")
-        print("screenshot: \(self.result.screenshot.count)")
-        for shot in self.resultImages {
-            self.result.screenshot.append(shot)
-        }
-        
-        self.result.numErrors = 0
-        for (index, element) in self.resultCondition.enumerated() {
-            self.result.json[imagelist[index]] = ["correct":element, "drawing time (msec)":Int(1000*resultTime[index])]
-            if element == false {
-                self.result.numErrors += 1
-            }
-        }
-        
-        resultsArray.add(self.result)
-        Status[Test3DFigureCopy] = TestStatus.Done
-        self.resultCondition.removeAll()
-        self.resultImages.removeAll()
-        self.resultTime.removeAll()
-    }
-    
-    fileprivate func completeTask() {
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
-            }
-            return
-        }
-        
-        let alert = UIAlertController(title: "Quit", message: "You complete the test '3D Figure Copy'", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
-            self.dismiss(animated: true, completion: nil)
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
 }
 
 // MARK: - Setup Views
@@ -352,5 +173,192 @@ extension ThreeDFigureCopy {
         self.btnReset.render()
         self.btnReset.addTextSpacing(-0.36)
         self.btnReset.addTarget(self, action: #selector(self.actionReset), for: .touchUpInside)
+    }
+}
+
+// MARK: - Action
+extension ThreeDFigureCopy {
+    @IBAction func actionBack(_ sender: Any) {
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func CorrectAction(_ sender: UIButton) {
+        self.resultCondition.append(true)
+        self.resultTime.append(Foundation.Date().timeIntervalSince(startTime))
+        self.startTime = Foundation.Date()
+        self.curr = self.curr + 1
+        self.drawImage()
+    }
+    
+    @IBAction func IncorrectAction(_ sender: UIButton) {
+        self.resultCondition.append(false)
+        self.resultTime.append(Foundation.Date().timeIntervalSince(startTime))
+        self.startTime = Foundation.Date()
+        self.curr = self.curr + 1
+        self.drawImage()
+    }
+    
+    fileprivate func startTask() {
+        self.result = Results()
+        self.result.name = "3D Figure Copy"
+        self.curr = 0
+        self.CorrectButton.isEnabled = true
+        self.IncorrectButton.isEnabled = true
+        
+        if self.drawfrom != nil {
+            self.drawfrom!.removeFromSuperview()
+            self.drawfrom!.image = nil
+        }
+        
+        self.startTime = Foundation.Date()
+        
+        self.drawfrom = UIImageView(frame:CGRect(x: 0, y: 0, width: self.vDrawImage.size.width, height: self.vDrawImage.size.height))
+        let image = UIImage(named: self.imagelist[self.curr])
+        self.drawfrom!.image = image
+        self.drawfrom?.contentMode = .scaleAspectFit
+        self.vDrawImage.addSubview(self.drawfrom!)
+    }
+    
+    @objc func actionErase() {
+        self.vDraw.drawandclearResults()
+    }
+    
+    @objc func actionReset() {
+        self.resultCondition.removeAll()
+        self.resultImages.removeAll()
+        self.resultTime.removeAll()
+        self.vDraw.drawandclearResults()
+        
+        // Couter Timer
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        self.runTimer()
+        
+        self.startTask()
+    }
+    
+    @objc func actionQuit() {
+        
+        if self.curr != 0 {
+            self.saveResult()
+        }
+        if Status[TestVisualAssociation] != TestStatus.Done {
+            Status[TestVisualAssociation] = TestStatus.NotStarted
+        }
+        self.startTime2 = Foundation.Date()
+        self.timer3DFigureCopy.invalidate()
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func saveResult() {
+        self.result.startTime = self.startTime2
+        self.result.endTime = Foundation.Date()
+        self.result.longDescription.add("Tests: \(imagelist)")
+        self.result.longDescription.add("Test Outcomes: \(resultCondition)")
+        self.result.longDescription.add("Test Times: \(resultTime)")
+        print("resultImages: \(self.resultImages.count)")
+        print("screenshot: \(self.result.screenshot.count)")
+        for shot in self.resultImages {
+            self.result.screenshot.append(shot)
+        }
+        
+        self.result.numErrors = 0
+        for (index, element) in self.resultCondition.enumerated() {
+            self.result.json[imagelist[index]] = ["correct":element, "drawing time (msec)":Int(1000*resultTime[index])]
+            if element == false {
+                self.result.numErrors += 1
+            }
+        }
+        
+        resultsArray.add(self.result)
+        Status[Test3DFigureCopy] = TestStatus.Done
+        self.resultCondition.removeAll()
+        self.resultImages.removeAll()
+        self.resultTime.removeAll()
+    }
+    
+    fileprivate func completeTask() {
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
+        let alert = UIAlertController(title: "Quit", message: "You complete the test '3D Figure Copy'", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func drawImage() {
+        //BUGBUG: This should not happen after the last result when the results are generated. However, for some reason, then the last drawn image is missing in the results! this will fix it.
+        let img = drawCustomImage(self.vDraw.size)
+        self.resultImages.append(img)
+        
+        if self.drawfrom != nil {
+            self.drawfrom!.image = nil
+        }
+        
+        if self.curr < self.imagelist.count {
+            let image = UIImage(named: self.imagelist[self.curr])
+            self.drawfrom!.image = image
+        }
+        else {
+            self.CorrectButton.isEnabled = false
+            self.IncorrectButton.isEnabled = false
+            self.timer3DFigureCopy.invalidate()
+            
+            self.saveResult()
+            self.completeTask()
+        }
+    }
+    
+    func drawCustomImage(_ size: CGSize) -> UIImage {
+        // Setup our context
+        //let bounds = CGRect(origin: CGPoint.zero, size: size)
+        let opaque = false
+        let scale: CGFloat = 0
+        UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
+        //let context = UIGraphicsGetCurrentContext()
+        
+        // Setup complete, do drawing here
+        //        drawing.drawandclearResults()  //background bubbles
+        self.vDraw.drawandclearResults()
+        
+        // Drawing complete, retrieve the finished image and cleanup
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
     }
 }
