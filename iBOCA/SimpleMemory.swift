@@ -149,6 +149,7 @@ class SimpleMemoryTask: ViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setupViews()
+        startDisplayAlert()
         
         StartTimer = Foundation.Date()
         
@@ -232,6 +233,7 @@ extension SimpleMemoryTask {
         self.vSetDelayTime.isHidden = true
         self.btnSetDelayTime.isHidden = true
         self.vResults.isHidden = true
+        self.collectionViewLevel.isHidden = true
     }
     
     fileprivate func setupCollectionView() {
@@ -460,8 +462,8 @@ extension SimpleMemoryTask {
         // Update item Selected Dropdown & hide DropDown
         self.updateDataDropDown()
         
-        self.vShadowTask.isHidden = true
-        self.vTask.isHidden = true
+        self.vShadowTask.isHidden = false
+        self.vTask.isHidden = false
         self.vDelay.isHidden = true
         self.lblSetDelayTime.isHidden = true
         self.vSetDelayTime.isHidden = true
@@ -469,8 +471,13 @@ extension SimpleMemoryTask {
         self.next1.isHidden = true
         self.collectionViewObjectName.isHidden = true
         
+        self.ivTask.isHidden = true
+        self.btnArrowLeft.isHidden = true
+        self.btnArrowRight.isHidden = true
+        
         self.lblDescTask.isHidden = false
-        self.collectionViewLevel.isHidden = false
+//        self.collectionViewLevel.isHidden = false
+        startDisplayAlert()
         
         self.start.isHidden = false
         self.vResults.isHidden = true
@@ -506,6 +513,7 @@ extension SimpleMemoryTask {
     
     func startDisplayAlert() {
         // TODO: -
+        randomTest()
         self.collectionViewLevel.isHidden = true
         self.lblDescTask.isHidden = true
         
@@ -673,6 +681,37 @@ extension SimpleMemoryTask {
         let time = Double(Int((currTime - startTimeSM)*10))/10.0
         print("time: \(time)")
         return time
+    }
+    
+    private func randomTest() {
+        let randomNumber = Int.random(in: 0...3)
+        switch randomNumber {
+        case 0:
+            imagesSM = images0
+            imageSetSM = 0
+            recognizeIncorrectSM = images4
+            incorrectImageSetSM = 4
+        case 1:
+            imagesSM = images1
+            imageSetSM = 1
+            recognizeIncorrectSM = images5
+            incorrectImageSetSM = 5
+        case 2:
+            imagesSM = images2
+            imageSetSM = 2
+            recognizeIncorrectSM = images6
+            incorrectImageSetSM = 6
+        case 3:
+            imagesSM = images3
+            imageSetSM = 3
+            recognizeIncorrectSM = images7
+            incorrectImageSetSM = 7
+        default:
+            imagesSM = images0
+            imageSetSM = 0
+            recognizeIncorrectSM = images0
+            incorrectImageSetSM = 0
+        }
     }
 }
 
