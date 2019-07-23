@@ -566,11 +566,6 @@ class TapInOrderViewController: ViewController {
     
     //MARK: - NEW UI
     func setupUI(){
-        // Change back button title if quickStartMode is On
-        if quickStartModeOn {
-            mLbBack.text = "RESULTS"
-        }
-        
         mLbBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28)
         mLbBack.textColor = Color.color(hexString: "013AA5")
         //
@@ -598,6 +593,12 @@ class TapInOrderViewController: ViewController {
         mViewMain.addSubview(mCounterView!)
         mCounterView?.centerXAnchor.constraint(equalTo: mViewMain.centerXAnchor).isActive = true
         mCounterView?.topAnchor.constraint(equalTo: mViewMain.topAnchor, constant:  60).isActive = true
+        
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            mLbBack.text = "RESULTS"
+            mBtnQuit.updateTitle(title: "CONTINUE")
+        }
     }
     
     func startTest(){
@@ -703,14 +704,9 @@ class TapInOrderViewController: ViewController {
             // End test here
             donetest()
             
-            if forwardNotBackward {
-                QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                    self.didBackToResult?()
-                }) {
-                    self.didCompleted?()
-                }
-            }
-            else {
+            QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
+                self.didBackToResult?()
+            }) {
                 self.didCompleted?()
             }
             

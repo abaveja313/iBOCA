@@ -414,6 +414,7 @@ extension PicturesViewController {
         // Change back button title if quickStartMode is On
         if quickStartModeOn {
             backTitleLabel.text = "RESULTS"
+            quitButton.updateTitle(title: "CONTINUE")
         }
         
         // TableView Results

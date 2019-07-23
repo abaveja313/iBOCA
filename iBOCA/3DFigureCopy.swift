@@ -84,6 +84,7 @@ extension ThreeDFigureCopy {
         // Change back button title if quickStartMode is On
         if quickStartModeOn {
             lblBack.text = "RESULTS"
+            btnQuit.updateTitle(title: "CONTINUE")
         }
         
         self.setupViewCounterTimer()

@@ -37,8 +37,9 @@ class QuickStartManager: NSObject {
     public func start() {
         let backToResult: (() -> ()) = {
             let resultVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResultsViewController") as! ResultsViewController
+            resultVC.quickStartModeOn = true
             resultVC.didBackToMainView = {
-                self.viewController.dismiss(animated: true, completion: nil)
+                self.navigationController?.popViewController(animated: true)
             }
             
             let transition = CATransition()
@@ -277,14 +278,20 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    class func showAlertCompletion(viewController: UIViewController, cancel: (() -> ())?, ok: (() -> ())?) {
-        let alertController = UIAlertController(title: "Completed", message: "Do you want to move to the next test?", preferredStyle: .alert)
-        let noAction = UIAlertAction.init(title: "No", style: .cancel, handler: { (_) in
-            cancel?()
+    class func showAlertCompletion(viewController: UIViewController, endAllTest: Bool = false, cancel: (() -> ())?, ok: (() -> ())?) {
+        let alertTitle  : String = endAllTest ? "Completed": "Warning"
+        let alertMessage: String = endAllTest ? "You have completed all the tests. Do you want to check your result?" : "Do you want to move to the next test?"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let noAction = UIAlertAction.init(title: "No", style: .default, handler: { (_) in
+//            cancel?()
         })
         let yesAction = UIAlertAction.init(title: "Yes", style: .default) { (_) in
             ok?()
         }
+        let quitAction = UIAlertAction.init(title: "Quit", style: .cancel) { (_) in
+            viewController.navigationController?.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(quitAction)
         alertController.addAction(noAction)
         alertController.addAction(yesAction)
         viewController.present(alertController, animated: true, completion: nil)

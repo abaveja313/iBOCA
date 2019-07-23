@@ -66,6 +66,7 @@ class DigitBase: ViewController {
         // Change back button title if quickStartMode is On
         if quickStartModeOn {
             backTitleLabel.text = "RESULTS"
+            quitButton.updateTitle(title: "CONTINUE")
         }
         
         value = ""

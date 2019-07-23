@@ -162,6 +162,7 @@ class SimpleMemoryTask: ViewController {
         // QuickStart Mode
         if quickStartModeOn {
             lblBack.text = "RESULT"
+            quitButton.updateTitle(title: "CONTINUE")
         }
         
         // Hide arrow

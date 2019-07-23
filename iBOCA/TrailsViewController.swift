@@ -139,11 +139,6 @@ extension TrailsAViewController {
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
         
-        // Change back button title if quickStartMode is On
-        if quickStartModeOn {
-            lblBack.text = "RESULTS"
-        }
-        
         if self.isPracticeTest == true {
             // Hidden View
             self.vCounterTimer.isHidden = true
@@ -171,6 +166,12 @@ extension TrailsAViewController {
             
             // hide button Reset
             self.btnReset.isHidden = true
+        }
+        
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            lblBack.text = "RESULTS"
+            btnQuit.updateTitle(title: "CONTINUE")
         }
     }
     
