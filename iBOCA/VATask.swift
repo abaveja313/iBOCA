@@ -144,6 +144,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         self.setupView()
         setupCounterTimeView()
         
+        startDisplayAlert()
+        
         result = Results()
         result.name = "Visual Association"
         result.startTime = Foundation.Date()
@@ -175,6 +177,34 @@ class VATask: ViewController, UIPickerViewDelegate {
         print(afterBreakVA)
     }
     
+    private func randomTest() {
+        let randomNumber = Int.random(in: 0...4)
+        imageSetVA = randomNumber
+        
+        switch randomNumber {
+        case 0:
+            mixedImages = mixed0
+            halfImages = half0
+            recognizeIncorrectVA = incorrect0
+        case 1:
+            mixedImages = mixed1
+            halfImages = half1
+            recognizeIncorrectVA = incorrect1
+        case 2:
+            mixedImages = mixed2
+            halfImages = half2
+            recognizeIncorrectVA = incorrect2
+        case 3:
+            mixedImages = mixed3
+            halfImages = half3
+            recognizeIncorrectVA = incorrect3
+        default:
+            mixedImages = mixed4
+            halfImages = half4
+            recognizeIncorrectVA = incorrect4
+        }
+    }
+    
     fileprivate func runTimer() {
         self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         self.totalTimeCounter.fire()
@@ -187,7 +217,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     @objc fileprivate func startDisplayAlert() {
         Status[TestVisualAssociation] = TestStatus.Running
         
-        isCollectionViewHidden(true)
+//        isCollectionViewHidden(true)
         isTaskViewHidden(false)
         
         firstDisplay = true
@@ -232,6 +262,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     fileprivate func startNewTask() {
         inputTimer.invalidate()
+        startDisplayAlert()
         
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
@@ -251,8 +282,8 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         self.isRecalledTestMode = false
         self.isRecommendDelayHidden(true)
-        self.isCollectionViewHidden(false)
-        self.isTaskViewHidden(true)
+//        self.isCollectionViewHidden(false)
+//        self.isTaskViewHidden(true)
         
         result.startTime = Foundation.Date()
         
@@ -275,6 +306,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     }
     
     @objc fileprivate func display() {
+        randomTest()
         testCount = 0
         isRememberAgainViewHidden(true)
         outputDisplayImage(withImageName: mixedImages[testCount])
@@ -734,7 +766,7 @@ extension VATask {
     
     @IBAction func actionReset(_ sender: Any) {
         
-        isTaskViewHidden(true)
+//        isTaskViewHidden(true)
         isImageViewHidden(true)
         isRecommendDelayHidden(true)
         isRememberAgainViewHidden(true)
@@ -806,6 +838,7 @@ extension VATask {
         isMissingItemViewHidden(true)
         isResultViewHidden(true)
         isDropDownViewHidden(true)
+        isCollectionViewHidden(true)
     }
     
     fileprivate func setupCollectionView() {
