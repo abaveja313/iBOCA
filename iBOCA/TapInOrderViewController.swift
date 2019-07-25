@@ -295,9 +295,9 @@ class TapInOrderViewController: ViewController {
             let result = Results()
             
             if self.forwardNotBackward {
-                result.name = "Forward Spatial Span"
+                result.name = TestName.FORWARD_SPATIAL_SPAN
             } else {
-                result.name = "Backward Spatial Span"
+                result.name = TestName.BACKWARD_SPATIAL_SPAN
             }
             
 //some weird result stuff going on here (as date) if there are errors....

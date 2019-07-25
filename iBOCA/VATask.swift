@@ -147,7 +147,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         startDisplayAlert()
         
         result = Results()
-        result.name = "Visual Association"
+        result.name = TestName.VISUAL_ASSOCIATION
         result.startTime = Foundation.Date()
         
         missingItemTextField.delegate = self
@@ -166,10 +166,10 @@ class VATask: ViewController, UIPickerViewDelegate {
             
             startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
         } else {
-            imageSetVA = 0
-            mixedImages = mixed0
-            halfImages = half0
-            recognizeIncorrectVA = incorrect0
+//            imageSetVA = 0
+//            mixedImages = mixed0
+//            halfImages = half0
+//            recognizeIncorrectVA = incorrect0
             
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
@@ -216,6 +216,7 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     @objc fileprivate func startDisplayAlert() {
         Status[TestVisualAssociation] = TestStatus.Running
+        randomTest()
         
 //        isCollectionViewHidden(true)
         isTaskViewHidden(false)
@@ -262,7 +263,6 @@ class VATask: ViewController, UIPickerViewDelegate {
     
     fileprivate func startNewTask() {
         inputTimer.invalidate()
-        startDisplayAlert()
         
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
@@ -287,10 +287,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         result.startTime = Foundation.Date()
         
-        imageSetVA = 0
-        mixedImages = self.mixed0
-        halfImages = self.half0
-        recognizeIncorrectVA = self.incorrect0
+//        imageSetVA = 0
+//        mixedImages = self.mixed0
+//        halfImages = self.half0
+//        recognizeIncorrectVA = self.incorrect0
         
         timerVA.invalidate()
         
@@ -303,10 +303,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         resultLabel.text = ""
         isResultViewHidden(true)
         firstDisplay = true
+        
+        startDisplayAlert()
     }
     
     @objc fileprivate func display() {
-        randomTest()
         testCount = 0
         isRememberAgainViewHidden(true)
         outputDisplayImage(withImageName: mixedImages[testCount])
@@ -528,21 +529,31 @@ class VATask: ViewController, UIPickerViewDelegate {
         delayResult = "Delay length of \(delayTime) seconds\n"
         
         result.numErrors = 0
+        result.numCorrects = 0
         
         recalledTableView.reloadData()
         
         totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
         delayTimeLabel.text = "\(delayTime) seconds"
         
+        result.imageVA = self.mixedImages
+        result.inputVA = self.textInputList
+        
         for i in 0...textInputList.count - 1 {
             result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
             recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
+            if mixedImages[i] == textInputList[i] {
+                result.numCorrects += 1
+            } else {
+                result.numErrors += 1
+            }
         }
         
         for k in 0 ..< mixedImages.count {
             if (recognizeErrors[k] == 0) {
                 result.longDescription.add("Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds")
                 recognizeResult += "Recognized \(mixedImages[k]) - Correct in \(recognizeTimes[k]) seconds\n"
+                result.numCorrects += 1
             }
             if (recognizeErrors[k] == 1) {
                 result.longDescription.add("Recognized \(mixedImages[k]) - Incorrect in \(recognizeTimes[k]) seconds ")

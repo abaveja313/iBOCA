@@ -28,7 +28,6 @@ class DigitSerialSeven:DigitBaseClass {
     var randomNumber: Int = 50
     
     override func doStart() {
-        testName =  "Serial Sevens Test"
         testStatus = TestSerialSevens
         level = -1
         let startingNumbers = [50, 60, 70, 80, 90, 100]
@@ -129,7 +128,7 @@ class DigitSerialSeven:DigitBaseClass {
         let endTime = Foundation.Date()
         
         let result = Results()
-        result.name = testName
+        result.name = TestName.SERIAL_SEVENS
         result.startTime = startTime
         result.endTime = endTime
         

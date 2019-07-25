@@ -154,7 +154,7 @@ class SimpleMemoryTask: ViewController {
         StartTimer = Foundation.Date()
         
         result = Results()
-        result.name = "Simple Memory"
+        result.name = TestName.SIMPLE_MEMORY
         result.startTime = StartTimer
         next1.isHidden = true
         start.isHidden = false
@@ -493,7 +493,7 @@ extension SimpleMemoryTask {
         self.runTimer()
         
         result = Results()
-        result.name = "Simple Memory"
+        result.name = TestName.SIMPLE_MEMORY
         result.startTime = startTime
         //        totalTime = Int(self.maxSeconds)
         ended = true

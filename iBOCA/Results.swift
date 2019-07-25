@@ -21,6 +21,10 @@ class Results: NSObject {
     var screenshot : [UIImage] = []
     var json : [String:Any] = [:]
     
+    // Visual Association
+    var imageVA = [String]()
+    var inputVA = [String]()
+    
     var collapsed : Bool = true // for use by the View Controller
     
 
@@ -60,7 +64,7 @@ class Results: NSObject {
     
     var rounds: Int?
     var numCorrects: Int = -1
-    var originalImages: [String]?
+    var originalImages = [String]()
 
     
     // Constructor
