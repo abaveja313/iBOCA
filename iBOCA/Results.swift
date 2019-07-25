@@ -25,6 +25,9 @@ class Results: NSObject {
     var imageVA = [String]()
     var inputVA = [String]()
     
+    // Simple Memory
+    var arrSMResult: [SMResultModel] = [SMResultModel]()
+    
     var collapsed : Bool = true // for use by the View Controller
     
 

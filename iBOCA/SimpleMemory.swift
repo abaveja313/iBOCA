@@ -1005,7 +1005,12 @@ extension SimpleMemoryTask {
             resultList["Recall Correct"] =  correct
             resultList["Recall Incorrect"] =  incorrect
             resultList["CompleteTime"] = completeTime//findTime()
-            
+            // get list result remove header
+            for i in 0..<self.resultsTask.count {
+                if i != 0 {
+                    result.arrSMResult.append(self.resultsTask[i])
+                }
+            }
             result.json = resultList
             resultsArray.add(result)
             

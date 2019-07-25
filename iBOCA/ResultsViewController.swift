@@ -63,6 +63,7 @@ class ResultsViewController: ViewController {
         tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
         tableView.register(UINib.init(nibName: VACell.cellId, bundle: nil), forCellReuseIdentifier: VACell.cellId)
         tableView.register(ResultTrailsCell.nib(), forCellReuseIdentifier: ResultTrailsCell.identifier())
+        tableView.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
 
@@ -92,6 +93,8 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             return result.collapsed ? 0 : result.screenshot.count
         case TestName.TRAILS:
             return result.collapsed ? 0 : result.screenshot.count
+        case TestName.SIMPLE_MEMORY:
+            return result.collapsed ? 0 : result.arrSMResult.count
         default:
             return result.collapsed ? 0 : result.longDescription.count
         }
@@ -108,6 +111,8 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
             return 190
         case TestName.VISUAL_ASSOCIATION:
+            return 40
+        case TestName.SIMPLE_MEMORY:
             return 40
         default:
             return UITableViewAutomaticDimension
@@ -140,6 +145,21 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         case TestName.TRAILS:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultTrailsCell.identifier(), for: indexPath) as! ResultTrailsCell
             cell.configResult(result: result)
+            
+            return cell
+        case TestName.SIMPLE_MEMORY:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
+            cell.isHeader = false
+            
+            if result.arrSMResult.count > 0 {
+                cell.model = result.arrSMResult[indexPath.row]
+                if indexPath.row < result.arrSMResult.count - 1 {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
+                }
+                else {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
+                }
+            }
             
             return cell
         default:
