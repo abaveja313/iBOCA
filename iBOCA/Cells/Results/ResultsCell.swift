@@ -48,11 +48,12 @@ class ResultsCell: UITableViewCell {
     private var result: Results? {
         didSet {
             guard let result = result, let row = row else {return}
-            status = .noInformation
             imgResultImage.image = result.screenshot[row]
             imgOriginalImage.image = UIImage.init(named: result.originalImages[row])
             if let dic = result.json[result.originalImages[row]] as? [String: Any], let isCorrect = dic[ResultStatus.correct.rawValue] as? Bool {
                 status = isCorrect ? .correct : .error
+            } else {
+                status = .noInformation
             }
         }
     }
