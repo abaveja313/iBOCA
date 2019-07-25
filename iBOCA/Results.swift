@@ -62,7 +62,7 @@ class Results: NSObject {
             return "\(rounds) round"
         }
         
-        return "\(round) rounds"
+        return "\(rounds) rounds"
     }
     
     var rounds: Int?

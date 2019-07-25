@@ -85,7 +85,7 @@ class PicturesViewController: ViewController {
     }
     
     fileprivate func resumeTest() {
-        guard let strObjName = self.tfObjectName.text, !strObjName.isEmpty else {
+        guard let strObjName = self.tfObjectName.text?.trimmingCharacters(in: .whitespaces), !strObjName.isEmpty else {
             let warningAlert = UIAlertController(title: "Warning", message: "Please enter Object Name fields.", preferredStyle: .alert)
             warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
                 warningAlert.dismiss(animated: true, completion: nil)
@@ -169,11 +169,14 @@ class PicturesViewController: ViewController {
         result.name = TestName.SERIAL_SEVENS
         result.startTime = startTime2 as Date
         result.endTime = NSDate() as Date
-        result.longDescription.add("\(corr) correct out of \(count)")
-        if wrongList.count > 0  {
-            result.longDescription.add("The incorrect picture\(wrongList.count > 1 ? "s were" : " was") the \(wrongList)")
-        }
+//        result.longDescription.add("\(corr) correct out of \(count)")
+//        if wrongList.count > 0  {
+//            result.longDescription.add("The incorrect picture\(wrongList.count > 1 ? "s were" : " was") the \(wrongList)")
+//        }
+        result.rounds = namingImages.count
+        result.longDescription.add("The correct pictures were: \(namingImages)")
         result.numErrors = (count - corr)
+        result.numCorrects = corr
         result.json["Answered"] = count
         result.json["Correct"] = corr
         result.shortDescription = "\(corr) correct with \(count) answered"
