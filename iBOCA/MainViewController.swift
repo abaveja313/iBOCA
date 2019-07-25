@@ -33,6 +33,10 @@ class GoToTestCellModel : NSObject{
         model.isComplete = completed
         return model
     }
+    
+    override var description: String {
+        return "title: \(self.title) - isComplete: \(self.isComplete)"
+    }
 }
 
 class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
@@ -127,6 +131,12 @@ class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
         setupButton()
         setupCollectionView()
         setupData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Reload data, check status Done
+        self.setupData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -348,6 +358,7 @@ extension MainViewController {
             let model = GoToTestCellModel.cre(ititle: item, pathIcon: arrIcon[index],iSegueID: arrSegueID[index],completed: checkStatusDone(fromTestStatus: iTestStatus))
             arrData.append(model)
         }
+        print("arrData: \(arrData)")
         mCollection?.reloadData()
     }
     
