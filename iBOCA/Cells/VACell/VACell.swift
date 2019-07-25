@@ -10,6 +10,7 @@ import UIKit
 
 class VACell: UITableViewCell {
     static let cellId = "VACell"
+    @IBOutlet weak var containView: UIView!
     
     @IBOutlet weak var testTypeLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
@@ -24,12 +25,7 @@ class VACell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+        containView.backgroundColor = Color.color(hexString: "#EAEAEA")
     }
 }
 
@@ -55,35 +51,6 @@ extension VACell {
                     resultLabel.text = "Incorrect"
                 }
                 timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
-            }
-        }
-    }
-    
-    func config(testType: TestType!, imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
-        labelGroup = [testTypeLabel, resultLabel, timeLabel]
-        if testType == .recalled {
-            if indexPath.row == 0 {
-                setupHeaderCell()
-                testTypeLabel.text = "Recalled Test"
-                resultLabel.text = "Input"
-                timeLabel.text = "Times"
-            } else {
-                setupContentCell()
-                testTypeLabel.text = "Recalled \(imageNameList[indexPath.row - 1])"
-                resultLabel.text = "\(resultList[indexPath.row - 1])"
-                timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
-            }
-        } else {
-            if indexPath.row == 0 {
-                setupHeaderCell()
-                testTypeLabel.text = "Recognized Test"
-                resultLabel.text = "Results"
-                timeLabel.text = "Times"
-            } else {
-                setupContentCell()
-                testTypeLabel.text = "Recognized \(imageNameList[indexPath.row - 1])"
-                resultLabel.text = "\(resultList[indexPath.row - 1])"
-                timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
             }
         }
     }

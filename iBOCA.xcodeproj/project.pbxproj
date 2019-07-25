@@ -87,6 +87,8 @@
 		B1D1E3A222E8470900323928 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3A122E8470900323928 /* Constant.swift */; };
 		B1D1E3BF22E9884E00323928 /* ResultSerialSevenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */; };
 		B1D1E3C022E9884E00323928 /* ResultSerialSevenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */; };
+		B1D1E3D422E9A5A100323928 /* ResultDigitSpanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3D222E9A5A100323928 /* ResultDigitSpanCell.swift */; };
+		B1D1E3D522E9A5A200323928 /* ResultDigitSpanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D1E3D322E9A5A100323928 /* ResultDigitSpanCell.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -317,6 +319,8 @@
 		B1D1E3A122E8470900323928 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSerialSevenCell.swift; sourceTree = "<group>"; };
 		B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultSerialSevenCell.xib; sourceTree = "<group>"; };
+		B1D1E3D222E9A5A100323928 /* ResultDigitSpanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDigitSpanCell.swift; sourceTree = "<group>"; };
+		B1D1E3D322E9A5A100323928 /* ResultDigitSpanCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultDigitSpanCell.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -760,6 +764,8 @@
 				0E1E349622E96B8D009271C7 /* Trails */,
 				B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */,
 				B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */,
+				B1D1E3D222E9A5A100323928 /* ResultDigitSpanCell.swift */,
+				B1D1E3D322E9A5A100323928 /* ResultDigitSpanCell.xib */,
 			);
 			path = Results;
 			sourceTree = "<group>";
@@ -986,7 +992,6 @@
 				TargetAttributes = {
 					1BC2DFEA1D4F821F0020D430 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = U96HC794JG;
 						LastSwiftMigration = 0820;
 					};
 					1BC2DFFE1D4F821F0020D430 = {
@@ -1103,6 +1108,7 @@
 				4A328A6B22C47B9100034075 /* Montserrat-BoldItalic.ttf in Resources */,
 				0E3E1DBF22C5C983008E69EC /* LevelCell.xib in Resources */,
 				1BC2DFF61D4F821F0020D430 /* Assets.xcassets in Resources */,
+				B1D1E3D522E9A5A200323928 /* ResultDigitSpanCell.xib in Resources */,
 				4A328A7222C47B9100034075 /* Montserrat-LightItalic.ttf in Resources */,
 				4A328A7422C47B9100034075 /* Montserrat-ExtraLight.ttf in Resources */,
 				4A328A6A22C47B9100034075 /* Montserrat-Italic.ttf in Resources */,
@@ -1236,6 +1242,7 @@
 				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
 				E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
+				B1D1E3D422E9A5A100323928 /* ResultDigitSpanCell.swift in Sources */,
 				F24E6E701E1BC2C300E29995 /* ScaleView.swift in Sources */,
 				F2A0F1281F02626D00A92B1F /* LandingPage.swift in Sources */,
 				0E3E1D9022C49E4F008E69EC /* UILableExtensions.swift in Sources */,
@@ -1399,11 +1406,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = U96HC794JG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iBOCA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212w;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1414,11 +1421,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = U96HC794JG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iBOCA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA2212w;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

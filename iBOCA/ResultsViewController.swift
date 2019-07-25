@@ -137,7 +137,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
             cell.bindData(result: result, row: indexPath.row)
-            
+            tableView.separatorStyle = .none
             return cell
         case TestName.VISUAL_ASSOCIATION:
             let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell

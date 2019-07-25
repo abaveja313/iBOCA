@@ -100,29 +100,29 @@ class DigitBase: ViewController {
     }
     
     func DisplayStringShowContinue(val:String) {
-            // digit utterances in the sequence with a short delay in between
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                if val.count == 0 {
-                    self.infoLabel.text = "Start entering the number sequence given by patient, followed by done"
-                    self.value = ""
-                    self.keypadLabel.text = ""
-                    self.base!.levelStartTime = Foundation.Date()
-                    self.setButtonEnabled(true)
-                } else {
-                    let c = String(val.first!)
-                    self.value = self.value + c
-                    let rest = String(Array(repeating: ".", count: self.base!.level - self.value.count + 1))
-    
-                    if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
-                        self.numberLabel.text = self.value + rest
-                    }
-                    
-                    let utterence = AVSpeechUtterance(string: c)
-                    self.speechSynthesizer.speak(utterence)
-                    
-                    self.DisplayStringShowContinue(val: String(val.dropFirst(1)))
+        // digit utterances in the sequence with a short delay in between
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            if val.count == 0 {
+                self.infoLabel.text = "Start entering the number sequence given by patient, followed by done"
+                self.value = ""
+                self.keypadLabel.text = ""
+                self.base!.levelStartTime = Foundation.Date()
+                self.setButtonEnabled(true)
+            } else {
+                let c = String(val.first!)
+                self.value = self.value + c
+                let rest = String(Array(repeating: ".", count: self.base!.level - self.value.count + 1))
+                
+                if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
+                    self.numberLabel.text = self.value + rest
                 }
+                
+                let utterence = AVSpeechUtterance(string: c)
+                self.speechSynthesizer.speak(utterence)
+                
+                self.DisplayStringShowContinue(val: String(val.dropFirst(1)))
             }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -621,9 +621,14 @@ extension VATask {
         timeInput = 0
         if testCount >= 0 {
             print("testCount: \(testCount)")
-            self.outputDisplayImage(withImageName: mixedImages[testCount])
-            missingItemTextField.text = textInputList[testCount]
-            remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+            if isRecalledTestMode {
+                self.outputDisplayImage(withImageName: halfImages[testCount])
+                missingItemTextField.text = textInputList[testCount]
+                remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+            } else {
+                self.outputDisplayImage(withImageName: mixedImages[testCount])
+            }
+            
         }
     }
     
@@ -687,8 +692,10 @@ extension VATask {
                     
                     isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+                    self.outputDisplayImage(withImageName: halfImages[testCount])
+                } else {
+                    self.outputDisplayImage(withImageName: mixedImages[testCount])
                 }
-                self.outputDisplayImage(withImageName: mixedImages[testCount])
             }
         }
     }

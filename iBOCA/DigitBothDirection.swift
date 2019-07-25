@@ -74,7 +74,6 @@ class DigitBothDirection:DigitBaseClass {
         tempList["Generated"] = genval
         tempList["Entered"] = base.keypadLabel.text
         tempList["ElapsedTime (msec)"] = elapsedTime
-        tempList["Keystrokes (msec:key)"] = gotKeys
         
         resultList[String(currRound)] = tempList
         
@@ -90,6 +89,7 @@ class DigitBothDirection:DigitBaseClass {
                 base.totalTimeCounter.invalidate()
                 base.setButtonEnabled(true)
                 base.numKeyboard.isEnabled(false)
+                doEnd()
             } else {
                 redo = 0
                 base.setButtonEnabled(false)
@@ -104,6 +104,7 @@ class DigitBothDirection:DigitBaseClass {
                 base.totalTimeCounter.invalidate()
                 base.setButtonEnabled(true)
                 base.numKeyboard.isEnabled(false)
+                doEnd()
             } else {
                 base.infoLabel.text = "Incorrect, Repeat with new numbers"
                 base.setButtonEnabled(false)
