@@ -552,7 +552,7 @@ extension OrientationTask {
         }
         
         let result = Results()
-        result.name = "Orientation"
+        result.name = TestName.ORIENTATION
         result.startTime = startTime
         result.endTime = Foundation.Date()
         
@@ -611,7 +611,6 @@ extension OrientationTask {
         if TimeOK == false {
             result.shortDescription = result.shortDescription! + " Time: \(Time!)(\(rightTime)) "
         }
-        
         resultsArray.add(result)
         Status[TestOrientation] = TestStatus.Done
     }

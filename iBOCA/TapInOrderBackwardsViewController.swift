@@ -236,7 +236,7 @@ class TapInOrderBackwardsViewController: ViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             
             let result = Results()
-            result.name = "Backward Spatial Span"
+            result.name = TestName.BACKWARD_SPATIAL_SPAN
             result.startTime = self.startTime2 as Date
             result.endTime = NSDate() as Date
             for (index, _) in self.order.enumerated() {

@@ -61,6 +61,7 @@ class ResultsViewController: ViewController {
         tableView.estimatedRowHeight = 40
         tableView.register(UINib.init(nibName: ResultsHeaderSectionView.identifier(), bundle: nil), forHeaderFooterViewReuseIdentifier: ResultsHeaderSectionView.identifier())
         tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
+        tableView.register(UINib.init(nibName: VACell.cellId, bundle: nil), forCellReuseIdentifier: VACell.cellId)
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
 
@@ -84,15 +85,13 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         let result = resultsArray.get(section)
-        if result.screenshot.count > 0 {
-            return result.collapsed ? 0 : result.screenshot.count
-        }
         
-        if result.longDescription.count > 0 {
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
+            return result.collapsed ? 0 : result.screenshot.count
+        default:
             return result.collapsed ? 0 : result.longDescription.count
         }
-        
-        return result.collapsed ? 0 : 1
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -101,11 +100,15 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let result = resultsArray.get(indexPath.section)
-        if result.screenshot.count > 0 {
-            return 190
-        }
         
-        return UITableViewAutomaticDimension
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
+            return 190
+        case TestName.VISUAL_ASSOCIATION:
+            return 40
+        default:
+            return UITableViewAutomaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -118,17 +121,24 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
         let result = resultsArray.get(indexPath.section)
-        if result.screenshot.count > 0 {
+        
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
             cell.bindData(result: result, row: indexPath.row)
             
             return cell
+        case TestName.VISUAL_ASSOCIATION:
+            let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
+            cell.configResult(result: result, row: indexPath.row)
+            
+            return cell
+        default:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
         }
-        
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
-        cell.bindData(result: result, row: indexPath.row)
-        
-        return cell
     }
  
     

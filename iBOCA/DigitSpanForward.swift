@@ -17,7 +17,7 @@ class DigitSpanForward:DigitBothDirection {
     }
     
     override func testInitialize() {
-        testName =  "Forward Digit Span Test"
+        testName = TestName.FORWARD_DIGIT_SPAN
         testStatus = TestForwardDigitSpan
     }
     

@@ -17,7 +17,7 @@ class DigitSpanBackward:DigitBothDirection {
     }
     
     override func testInitialize() {
-        testName =  "Backward Digit Span Test"
+        testName =  TestName.BACKWARD_DIGIT_SPAN
         testStatus = TestBackwardsDigitSpan
     }
     

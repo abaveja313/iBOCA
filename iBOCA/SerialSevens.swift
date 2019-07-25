@@ -61,7 +61,7 @@ class SerialSevens: ViewController {
     
     @IBAction func backButton(_ sender: Any) { //appends to results upon clicking back
         let result = Results()
-        result.name = "Serial Sevens"
+        result.name = TestName.SERIAL_SEVENS
         result.startTime = startTime
         result.endTime = Foundation.Date()
         result.numErrors = numErrors

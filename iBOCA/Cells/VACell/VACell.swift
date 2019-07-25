@@ -10,28 +10,86 @@ import UIKit
 
 class VACell: UITableViewCell {
     static let cellId = "VACell"
-
+    
     @IBOutlet weak var testTypeLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var timeView: UIView!
+    @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var twxtTypeView: UIView!
     
     fileprivate var labelGroup: [UILabel]!
+    
+    //    fileprivate var row: Int?
+    //    fileprivate var result: Results? {
+    //        didSet {
+    //            guard let result = result, let row = row else {return}
+    //            guard let recallList = result.json["Recall"] as? [String: Any], let regconizeList = result.json["Regconize"] as? [String: Any] else {return}
+    //            print(recallList.count)
+    //            print(regconizeList.count)
+    //            print(row)
+    //
+    //
+    //            setupContentCell()
+    //            if row < 5 {
+    //                guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
+    //                testTypeLabel.text = "Recalled \(result.imageVA[row])"
+    //                resultLabel.text = "\(String(describing: item["Condition"] as? String))"
+    //                timeLabel.text = "\(String(describing: item["Time"] as? CGFloat)) seconds"
+    //            } else {
+    //                testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
+    //                guard let item = regconizeList[result.imageVA[row - 5]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
+    //                if isCorrect == "Correct" {
+    //                    resultLabel.textColor = Color.color(hexString: "#E94533")
+    //                    resultLabel.text = "Correct"
+    //                } else {
+    //                    resultLabel.textColor = Color.color(hexString: "#013AA5")
+    //                    resultLabel.text = "Incorrect"
+    //                }
+    //                timeLabel.text = "\(String(describing: item["Time"] as? CGFloat)) seconds"
+    //            }
+    //        }
+    //    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
 }
 
 extension VACell {
+    func configResult(result: Results, row: Int) {
+        if let recallList = result.json["Recall"] as? [String: Any], let regconizeList = result.json["Recognize"] as? [String: Any] {
+            setupContentCell()
+            resultLabel.textAlignment = .left
+            timeLabel.textAlignment = .left
+            if row < 5 {
+                guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
+                testTypeLabel.text = "Recalled \(result.imageVA[row])"
+                resultLabel.text = "\(String(describing: item["Condition"] as! String))"
+                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+            } else {
+                testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
+                guard let item = regconizeList[result.imageVA[row - 5]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
+                if isCorrect == "Correct" {
+                    resultLabel.textColor = Color.color(hexString: "#013AA5")
+                    resultLabel.text = "Correct"
+                } else {
+                    resultLabel.textColor = Color.color(hexString: "#E94533")
+                    resultLabel.text = "Incorrect"
+                }
+                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+            }
+        }
+    }
+    
     func config(testType: TestType!, imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
         if testType == .recalled {
@@ -85,10 +143,10 @@ extension VACell {
             setupContentCell()
             testTypeLabel.text = "Recognized \(imageNameList[indexPath.row - 1])"
             if recognizeErrors[indexPath.row - 1] == 0 {
-                resultLabel.textColor = Color.color(hexString: "#E94533")
+                resultLabel.textColor = Color.color(hexString: "#013AA5")
                 resultLabel.text = "Correct"
             } else {
-                resultLabel.textColor = Color.color(hexString: "#013AA5")
+                resultLabel.textColor = Color.color(hexString: "#E94533")
                 resultLabel.text = "Incorrect"
             }
             timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
@@ -97,10 +155,11 @@ extension VACell {
     
     fileprivate func setupHeaderCell() {
         twxtTypeView.backgroundColor = Color.color(hexString: "#649BFF")
+        timeView.backgroundColor = Color.color(hexString: "#649BFF")
+        resultView.backgroundColor = Color.color(hexString: "#649BFF")
         for label in labelGroup {
             label.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
             label.textColor = Color.color(hexString: "#FFFFFF")
-            label.backgroundColor = Color.color(hexString: "#649BFF")
             label.addTextSpacing(-0.36)
         }
     }
@@ -110,7 +169,6 @@ extension VACell {
         for label in labelGroup {
             label.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
             label.textColor = Color.color(hexString: "#000000")
-            label.backgroundColor = Color.color(hexString: "#FFFFFF")
             label.addTextSpacing(-0.36)
         }
     }

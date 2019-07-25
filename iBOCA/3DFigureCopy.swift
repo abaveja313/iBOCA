@@ -250,7 +250,7 @@ extension ThreeDFigureCopy {
     
     fileprivate func startTask() {
         self.result = Results()
-        self.result.name = "3D Figure Copy"
+        self.result.name = TestName.THREE_DIMENSION_FIGURE_COPY
         self.curr = 0
         if self.mode == .admin {
             self.NextButton.isEnabled = true
@@ -327,11 +327,18 @@ extension ThreeDFigureCopy {
             self.result.screenshot.append(shot)
         }
         
+        for item in self.imagelist {
+            self.result.originalImages.append(item)
+        }
+        
         self.result.numErrors = 0
+        self.result.numCorrects = 0
         for (index, element) in self.resultCondition.enumerated() {
             self.result.json[imagelist[index]] = ["correct":element, "drawing time (msec)":Int(1000*resultTime[index])]
             if element == false {
                 self.result.numErrors += 1
+            } else {
+                 self.result.numCorrects += 1
             }
         }
         

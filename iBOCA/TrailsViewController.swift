@@ -661,7 +661,7 @@ extension TrailsAViewController {
             
             // add to results
             let result = Results()
-            result.name = "Trails B Test"
+            result.name = TestName.TRAILS
             result.startTime = startTime2 as Date
             result.endTime = Foundation.Date()
             result.screenshot.append(image)

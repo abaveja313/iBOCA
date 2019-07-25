@@ -20,6 +20,7 @@ class ResultsCell: UITableViewCell {
     private enum ResultStatus: String {
         case error      = "error"
         case correct    = "correct"
+        case noInformation
     }
     
     private var status: ResultStatus? {
@@ -27,28 +28,32 @@ class ResultsCell: UITableViewCell {
             guard let status = status else {return}
             switch status {
             case .error:
+                lbStatus.font = Font.font(name: Font.Montserrat.medium, size: 15.0)
                 lbStatus.text   = ResultStatus.error.rawValue.capitalized
+                lbStatus.textColor = Color.color(hexString: "#FF5430")
                 statusContainer.backgroundColor = Color.color(hexString: "FFE7E2")
-                break
             case .correct:
+                lbStatus.font = Font.font(name: Font.Montserrat.medium, size: 15.0)
                 lbStatus.text   = ResultStatus.correct.rawValue.capitalized
+                lbStatus.textColor = Color.color(hexString: "#46A573")
                 statusContainer.backgroundColor = Color.color(hexString: "69C394").withAlphaComponent(0.18)
-                break
+            case .noInformation:
+                lbStatus.isHidden = true
+                statusContainer.isHidden = true
             }
         }
     }
+    
     private var row: Int?
     private var result: Results? {
         didSet {
             guard let result = result, let row = row else {return}
+            status = .noInformation
             imgResultImage.image = result.screenshot[row]
-            
-            guard let imageName = result.originalImages?[row] else {return}
-            imgOriginalImage.image = UIImage.init(named: imageName)
-            if let dic = result.json[imageName] as? [String: Any], let isCorrect = dic[ResultStatus.correct.rawValue] as? Bool {
+            imgOriginalImage.image = UIImage.init(named: result.originalImages[row])
+            if let dic = result.json[result.originalImages[row]] as? [String: Any], let isCorrect = dic[ResultStatus.correct.rawValue] as? Bool {
                 status = isCorrect ? .correct : .error
             }
-
         }
     }
     

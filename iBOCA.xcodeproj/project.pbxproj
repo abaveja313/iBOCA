@@ -82,6 +82,7 @@
 		B114027A22D6E5D800151AB8 /* sample-test-intro.mov in Resources */ = {isa = PBXBuildFile; fileRef = B114027922D6E5D700151AB8 /* sample-test-intro.mov */; };
 		B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D135F522D5D90500E48476 /* VADropDownCell.swift */; };
 		B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D135F622D5D90500E48476 /* VADropDownCell.xib */; };
+		B1D1E3A222E8470900323928 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3A122E8470900323928 /* Constant.swift */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -307,6 +308,7 @@
 		B114027922D6E5D700151AB8 /* sample-test-intro.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "sample-test-intro.mov"; sourceTree = "<group>"; };
 		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
 		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
+		B1D1E3A122E8470900323928 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 				0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */,
 				0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */,
 				4AF58E4922CA08B90021E17C /* ErrorMessage.swift */,
+				B1D1E3A122E8470900323928 /* Constant.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -1205,6 +1208,7 @@
 				0EB10B7322C9E512001997BB /* NSAttributedStringExtensions.swift in Sources */,
 				43960F4C1E3C0758006FDC7B /* CatsAndDogsViewController.swift in Sources */,
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
+				B1D1E3A222E8470900323928 /* Constant.swift in Sources */,
 				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
 				E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
