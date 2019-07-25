@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApB-PQ-LlW">
-                        <rect key="frame" x="24" y="12" width="600" height="14.5"/>
+                        <rect key="frame" x="24" y="0.0" width="600" height="38.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -65,9 +65,9 @@
                     <constraint firstItem="EDn-ox-Fhw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="PEL-go-rUk"/>
                     <constraint firstAttribute="trailing" secondItem="HYa-v6-3Um" secondAttribute="trailing" id="QV8-yd-jIY"/>
                     <constraint firstItem="ApB-PQ-LlW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="Qck-v9-cJP"/>
-                    <constraint firstItem="ApB-PQ-LlW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="Xud-fH-lAY"/>
+                    <constraint firstItem="ApB-PQ-LlW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Xud-fH-lAY"/>
                     <constraint firstAttribute="bottom" secondItem="EDn-ox-Fhw" secondAttribute="bottom" id="Z78-7T-B6c"/>
-                    <constraint firstItem="HYa-v6-3Um" firstAttribute="top" secondItem="ApB-PQ-LlW" secondAttribute="bottom" constant="12" id="ca5-IN-Rys"/>
+                    <constraint firstItem="HYa-v6-3Um" firstAttribute="top" secondItem="ApB-PQ-LlW" secondAttribute="bottom" id="ca5-IN-Rys"/>
                     <constraint firstAttribute="bottom" secondItem="HYa-v6-3Um" secondAttribute="bottom" id="hM7-HS-dBX"/>
                     <constraint firstAttribute="trailing" secondItem="ApB-PQ-LlW" secondAttribute="trailing" constant="24" id="vuw-gF-TXM"/>
                 </constraints>

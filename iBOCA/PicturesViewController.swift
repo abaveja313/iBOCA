@@ -166,7 +166,7 @@ class PicturesViewController: ViewController {
         totalTimeCounter.invalidate()
         //
         let result = Results()
-        result.name = TestName.SERIAL_SEVENS
+        result.name = TestName.NAMING_PICTURE
         result.startTime = startTime2 as Date
         result.endTime = NSDate() as Date
 //        result.longDescription.add("\(corr) correct out of \(count)")

@@ -85,6 +85,8 @@
 		B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D135F522D5D90500E48476 /* VADropDownCell.swift */; };
 		B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D135F622D5D90500E48476 /* VADropDownCell.xib */; };
 		B1D1E3A222E8470900323928 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3A122E8470900323928 /* Constant.swift */; };
+		B1D1E3BF22E9884E00323928 /* ResultSerialSevenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */; };
+		B1D1E3C022E9884E00323928 /* ResultSerialSevenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */; };
 		E2037F1D1E47E83D00EE13EB /* izzy1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1C1E47E83D00EE13EB /* izzy1.jpg */; };
 		E2037F1F1E47E85500EE13EB /* seth1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F1E1E47E85500EE13EB /* seth1.jpg */; };
 		E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2037F201E47E86900EE13EB /* ellison1.jpg */; };
@@ -313,6 +315,8 @@
 		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
 		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
 		B1D1E3A122E8470900323928 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSerialSevenCell.swift; sourceTree = "<group>"; };
+		B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultSerialSevenCell.xib; sourceTree = "<group>"; };
 		E2037F1C1E47E83D00EE13EB /* izzy1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = izzy1.jpg; sourceTree = "<group>"; };
 		E2037F1E1E47E85500EE13EB /* seth1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seth1.jpg; sourceTree = "<group>"; };
 		E2037F201E47E86900EE13EB /* ellison1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ellison1.jpg; sourceTree = "<group>"; };
@@ -754,6 +758,8 @@
 				E5B9B93822D6E49F0091BB0E /* ResultDetailCell.swift */,
 				E5B9B93922D6E49F0091BB0E /* ResultDetailCell.xib */,
 				0E1E349622E96B8D009271C7 /* Trails */,
+				B1D1E3BD22E9884E00323928 /* ResultSerialSevenCell.swift */,
+				B1D1E3BE22E9884E00323928 /* ResultSerialSevenCell.xib */,
 			);
 			path = Results;
 			sourceTree = "<group>";
@@ -1086,6 +1092,7 @@
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
 				4A328A7622C47B9100034075 /* Montserrat-MediumItalic.ttf in Resources */,
 				E2037F211E47E86900EE13EB /* ellison1.jpg in Resources */,
+				B1D1E3C022E9884E00323928 /* ResultSerialSevenCell.xib in Resources */,
 				4A328A6C22C47B9100034075 /* Montserrat-ExtraBold.ttf in Resources */,
 				E2037F231E47F3E600EE13EB /* iBoca logo.png in Resources */,
 				4A328A6F22C47B9100034075 /* Montserrat-Regular.ttf in Resources */,
@@ -1202,6 +1209,7 @@
 				E5F13D1622572CDF002FB4FF /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */,
 				E2901DCF1D4F8C3700080F82 /* OrientationTask.swift in Sources */,
+				B1D1E3BF22E9884E00323928 /* ResultSerialSevenCell.swift in Sources */,
 				E5F13D0C22572CDF002FB4FF /* IQTextView.swift in Sources */,
 				F261D4EA1E3E33F00039A545 /* Bubbles.swift in Sources */,
 				F24E6E6D1E1BC2C300E29995 /* Results.swift in Sources */,

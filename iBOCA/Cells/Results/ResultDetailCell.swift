@@ -31,7 +31,9 @@ class ResultDetailCell: UITableViewCell {
     }
 
     private func configureUI() {
-        lbDescription.font = Font.font(name: Font.Montserrat.regular, size: 18)
+        lbDescription.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        lbDescription.textColor = Color.color(hexString: "#000000")
+        lbDescription.addTextSpacing(-0.36)
     }
     
     func bindData(result: Results, row: Int) {

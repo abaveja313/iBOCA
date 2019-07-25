@@ -478,49 +478,80 @@ extension OrientationTask {
     }
     
     @IBAction func DontKnowMonth(_ sender: UIButton) {
-        dkMonth = true
-        
-        self.btnDontKnowMonth.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowMonth.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkMonth {
+            self.btnDontKnowMonth.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowMonth.backgroundColor = Color.color(hexString: "#FE786A")
+            dkMonth = true
+        } else {
+            self.btnDontKnowMonth.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowMonth.backgroundColor = UIColor.white
+            dkMonth = false
+        }
     }
     
     @IBAction func DontKnowDate(_ sender: Any) {
-        dkDate = true
-        
-        self.btnDontKnowDate.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowDate.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkDate {
+            self.btnDontKnowDate.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowDate.backgroundColor = Color.color(hexString: "#FE786A")
+            dkDate = true
+        } else {
+            self.btnDontKnowDate.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowDate.backgroundColor = UIColor.white
+            dkDate = false
+        }
     }
     
     @IBAction func DontKnowYear(_ sender: UIButton) {
-        dkYear = true
-        
-        self.btnDontKnowYear.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowYear.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkYear {
+            self.btnDontKnowYear.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowYear.backgroundColor = Color.color(hexString: "#FE786A")
+            dkYear = true
+        } else {
+            self.btnDontKnowYear.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowYear.backgroundColor = UIColor.white
+            dkYear = false
+        }
     }
     
     @IBAction func DontKnowWeek(_ sender: Any) {
-        Week = "Dont Know"
-        dkWeek = true
-        
-        self.btnDontKnowWeek.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowWeek.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkWeek {
+            self.btnDontKnowWeek.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowWeek.backgroundColor = Color.color(hexString: "#FE786A")
+            Week = "Dont Know"
+            dkWeek = true
+        } else {
+            self.btnDontKnowWeek.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowWeek.backgroundColor = UIColor.white
+            dkWeek = false
+        }
     }
     
     @IBAction func DontKnowState(_ sender: Any) {
-        State = "Dont Know"
-        dkState = true
-        
-        self.btnDontKnowState.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowState.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkState {
+            self.btnDontKnowState.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowState.backgroundColor = Color.color(hexString: "#FE786A")
+            State = "Dont Know"
+            dkState = true
+        } else {
+            self.btnDontKnowState.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowState.backgroundColor = UIColor.white
+            dkState = false
+        }
     }
     
     @IBAction func DontKnowTime(_ sender: Any) {
-        Time = "Dont Know"
-        dkTime = true
-        TimeOK = false
-        
-        self.btnDontKnowTime.setTitleColor(UIColor.black, for: .normal)
-        self.btnDontKnowTime.backgroundColor = Color.color(hexString: "#FE786A")
+        if !dkTime {
+            self.btnDontKnowTime.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowTime.backgroundColor = Color.color(hexString: "#FE786A")
+            Time = "Dont Know"
+            dkTime = true
+            TimeOK = false
+        } else {
+            self.btnDontKnowTime.setTitleColor(UIColor.black, for: .normal)
+            self.btnDontKnowTime.backgroundColor = UIColor.white
+            dkTime = false
+            TimeOK = true
+        }
     }
     
     func TimeDiffOK(date1: Date, date2: Date) -> Bool {
@@ -587,7 +618,6 @@ extension OrientationTask {
         result.json["Dont Know Year"] = dkYear
         result.json["State Correct"] = stateOK
         
-        
         if stateOK == false {
             result.shortDescription = "State: \(State!)(\(currentState)) "
         }
@@ -611,6 +641,8 @@ extension OrientationTask {
         if TimeOK == false {
             result.shortDescription = result.shortDescription! + " Time: \(Time!)(\(rightTime)) "
         }
+        
+        result.longDescription.add(result.shortDescription!)
         resultsArray.add(result)
         Status[TestOrientation] = TestStatus.Done
     }

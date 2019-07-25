@@ -37,11 +37,11 @@ class ResultsViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         configureUI()
     }
-
-   
+    
+    
     private func configureUI() {
         lbBack.textColor    = Color.color(hexString: "013AA5")
         lbBack.font         = Font.font(name: Font.Montserrat.semiBold, size: 28)
@@ -64,9 +64,10 @@ class ResultsViewController: ViewController {
         tableView.register(UINib.init(nibName: VACell.cellId, bundle: nil), forCellReuseIdentifier: VACell.cellId)
         tableView.register(ResultTrailsCell.nib(), forCellReuseIdentifier: ResultTrailsCell.identifier())
         tableView.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
+        tableView.register(UINib.init(nibName: ResultSerialSevenCell.cellId, bundle: nil), forCellReuseIdentifier: ResultSerialSevenCell.cellId)
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
-
+    
     
     @IBAction func actionBack(_ sender: Any) {
         if quickStartModeOn {
@@ -76,7 +77,7 @@ class ResultsViewController: ViewController {
             dismiss(animated: true, completion: nil)
         }
     }
-
+    
 }
 
 extension ResultsViewController: ResultsHeaderSectionViewDelegate {
@@ -95,6 +96,8 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             return result.collapsed ? 0 : result.screenshot.count
         case TestName.SIMPLE_MEMORY:
             return result.collapsed ? 0 : result.arrSMResult.count
+        case TestName.SERIAL_SEVENS:
+            return result.collapsed ? 0 : result.rounds! + 1
         default:
             return result.collapsed ? 0 : result.longDescription.count
         }
@@ -110,7 +113,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         switch result.name {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
             return 190
-        case TestName.VISUAL_ASSOCIATION:
+        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS:
             return 40
         case TestName.SIMPLE_MEMORY:
             return 40
@@ -138,7 +141,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             return cell
         case TestName.VISUAL_ASSOCIATION:
             let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
-            cell.configResult(result: result, row: indexPath.row)
+            cell.bindData(result: result, row: indexPath.row)
             
             return cell
             
@@ -162,6 +165,18 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             }
             
             return cell
+        case TestName.SERIAL_SEVENS:
+            if indexPath.row == 0 {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+                cell.bindData(result: result, row: indexPath.row)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ResultSerialSevenCell.cellId, for: indexPath) as! ResultSerialSevenCell
+                cell.bindData(result: result, row: indexPath.row)
+                
+                return cell
+            }
         default:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
             cell.bindData(result: result, row: indexPath.row)
@@ -169,7 +184,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             return cell
         }
     }
- 
+    
     
     func resultsHeaderSectionView(didExpand expand: Bool, at section: Int, sender: ResultsHeaderSectionView) {
         resultsArray.get(section).collapsed = !expand
@@ -199,7 +214,7 @@ extension UITableView {
         let headerSize = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         let height = headerSize.height
         var frame = headerView.frame
-
+        
         frame.size.height = height
         headerView.frame = frame
         

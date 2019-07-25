@@ -21,6 +21,8 @@ class DigitSerialSeven:DigitBaseClass {
     var sequenceNumber:[Int] = []
     var gotTime:[Date] = []
     var totErrors = 0
+    var totCorrects = 0
+    var round = 0
     var keys : [[String:String]] = [[:]]
     
     var timer: Timer?
@@ -52,6 +54,7 @@ class DigitSerialSeven:DigitBaseClass {
         sequenceNumber = []
         gotTime = []
         totErrors = 0
+        totCorrects = 0
         keys = []
     }
     
@@ -94,14 +97,17 @@ class DigitSerialSeven:DigitBaseClass {
             base.value = ""
             
             if num == lastNum - 7 && num == startNum - 7 * level {
+                totCorrects += 1
                 base.infoLabel.text = "Correct: Ask patiant for number minus 7, Enter it"
             } else  if num == lastNum - 7 {
+                totCorrects += 1
                 base.infoLabel.text = "Correct, but off the sequence: Ask patiant for number minus 7, Enter it"
             } else {
                 totErrors += 1
                 base.infoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
             }
             
+            round += 1
             enteredNumber.append(num)
             expectedNumber.append(lastNum - 7)
             sequenceNumber.append(startNum - 7*level)
@@ -110,7 +116,7 @@ class DigitSerialSeven:DigitBaseClass {
             
             lastNum -= 7
         }
-   
+        
         if (lastNum - 7 <= 0)  { // || (level >= 5)
             // Done test
             base.infoLabel.text = "Test Ended"
@@ -132,22 +138,34 @@ class DigitSerialSeven:DigitBaseClass {
         result.startTime = startTime
         result.endTime = endTime
         
-        result.longDescription.add("Starting with \(startNum)")
         result.json["Starting Number"] = startNum
+        result.numCorrects = totCorrects
+        result.numErrors = totErrors
+        result.rounds = round
         var resultList : [Int:Any] = [:]
         var sttime = levelStartTime
         for (i, l) in enteredNumber.enumerated() {
             var res : [String:Any] = [:]
-            res["Entered"] = l
-            res["Subtract 7"] = expectedNumber[i]
-            res["Sequence 7"] = sequenceNumber[i]
             
             let elapsedTime = (Int)(1000*gotTime[i].timeIntervalSince(sttime))
             sttime = gotTime[i]
             res["time (msec)"] = elapsedTime
+            res["Entered"] = l
+            res["Subtract 7"] = expectedNumber[i]
+            res["Sequence 7"] = sequenceNumber[i]
             resultList[i] = res
-            result.longDescription.add("\(i): \(enteredNumber[i]) --> Subtract 7: \(expectedNumber[i]) (Sequence 7: \(sequenceNumber[i]))  (\(elapsedTime) msec)")
+//            result.longDescription.add("\(i): \(enteredNumber[i]) --> Subtract 7: \(expectedNumber[i]) (Sequence 7: \(sequenceNumber[i]))  (\(elapsedTime) msec)")
         }
+        var numberSequence = "Starting with \(startNum) --> ("
+        for i in 0...expectedNumber.count - 1 {
+            if i == expectedNumber.count - 1 {
+                numberSequence.append("\(expectedNumber[i]))")
+            } else {
+                numberSequence.append("\(expectedNumber[i]), ")
+            }
+        }
+        
+        result.longDescription.add(numberSequence)
         result.json["Results"] = resultList
         result.json["Errors"] = totErrors
         result.json["Rounds"] = level
@@ -156,7 +174,7 @@ class DigitSerialSeven:DigitBaseClass {
         
         resultsArray.add(result)
         Status[testStatus] = TestStatus.Done
-    
+        
         base.infoLabel.text = "Test ended"
         base.endTest()
     }
