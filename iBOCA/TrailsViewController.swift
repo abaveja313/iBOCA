@@ -90,7 +90,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         }
         
         self.setupView()
-        randomTest()
+        
     }
     
     /*   @IBAction func HelpButton(sender: AnyObject) {
@@ -167,6 +167,8 @@ extension TrailsAViewController {
             
             // hide button Reset
             self.btnReset.isHidden = true
+            
+            self.randomTest()
         }
         
         // Change back button title if quickStartMode is On
@@ -333,7 +335,7 @@ extension TrailsAViewController {
         numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
         self.dismissDropdownChooseTheTest()
         
-        let randomBubble = selectedTest == 6 ? Int.random(in: 2...23) : Int.random(in: 2...19)
+        let randomBubble = selectedTest == 6 ? Int.random(in: 0...21) : Int.random(in: 0...17)
         let numberOfPoints = self.arrNumberOfPoints[randomBubble]
         self.lblChooseNumberOfPoints.text = numberOfPoints
         numBubbles = randomBubble + 2
@@ -427,13 +429,19 @@ extension TrailsAViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Dismiss Dropdown
 extension TrailsAViewController {
     fileprivate func dismissDropdownChooseTheTest() {
-        self.ddChooseTheTest.isHidden = true
+        if self.ddChooseTheTest != nil {
+            self.ddChooseTheTest.isHidden = true
+        }
+        
         self.isDropDownChooseTheTestShowing = false
         self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
     }
     
     fileprivate func dismissDropdownChooseNumberOfPoints() {
-        self.ddChooseNumberOfPoints.isHidden = true
+        if self.ddChooseNumberOfPoints != nil {
+            self.ddChooseNumberOfPoints.isHidden = true
+        }
+        
         self.isDropDownChooseNumberOfPointsShowing = false
         self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
     }

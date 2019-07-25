@@ -62,6 +62,7 @@ class ResultsViewController: ViewController {
         tableView.register(UINib.init(nibName: ResultsHeaderSectionView.identifier(), bundle: nil), forHeaderFooterViewReuseIdentifier: ResultsHeaderSectionView.identifier())
         tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
         tableView.register(UINib.init(nibName: VACell.cellId, bundle: nil), forCellReuseIdentifier: VACell.cellId)
+        tableView.register(ResultTrailsCell.nib(), forCellReuseIdentifier: ResultTrailsCell.identifier())
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
 
@@ -88,6 +89,8 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         
         switch result.name {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
+            return result.collapsed ? 0 : result.screenshot.count
+        case TestName.TRAILS:
             return result.collapsed ? 0 : result.screenshot.count
         default:
             return result.collapsed ? 0 : result.longDescription.count
@@ -131,6 +134,12 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         case TestName.VISUAL_ASSOCIATION:
             let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
             cell.configResult(result: result, row: indexPath.row)
+            
+            return cell
+            
+        case TestName.TRAILS:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultTrailsCell.identifier(), for: indexPath) as! ResultTrailsCell
+            cell.configResult(result: result)
             
             return cell
         default:

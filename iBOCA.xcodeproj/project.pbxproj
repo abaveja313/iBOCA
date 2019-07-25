@@ -13,6 +13,8 @@
 		0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */; };
 		0E1A22DF22C468C400C8CFDF /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */; };
 		0E1A22E122C475D500C8CFDF /* FontConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A22E022C475D400C8CFDF /* FontConstants.swift */; };
+		0E1E349E22E96BC7009271C7 /* ResultTrailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E349C22E96BC7009271C7 /* ResultTrailsCell.swift */; };
+		0E1E349F22E96BC7009271C7 /* ResultTrailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E1E349D22E96BC7009271C7 /* ResultTrailsCell.xib */; };
 		0E2B5A4A2292538200EFBDF4 /* CatsAndDogsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */; };
 		0E3E1D9022C49E4F008E69EC /* UILableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */; };
 		0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */; };
@@ -233,6 +235,8 @@
 		0E1A22DC22C4689300C8CFDF /* GradientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientConstants.swift; sourceTree = "<group>"; };
 		0E1A22DE22C468C400C8CFDF /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		0E1A22E022C475D400C8CFDF /* FontConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontConstants.swift; sourceTree = "<group>"; };
+		0E1E349C22E96BC7009271C7 /* ResultTrailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTrailsCell.swift; sourceTree = "<group>"; };
+		0E1E349D22E96BC7009271C7 /* ResultTrailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultTrailsCell.xib; sourceTree = "<group>"; };
 		0E2B5A492292538200EFBDF4 /* CatsAndDogsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsAndDogsVC.swift; sourceTree = "<group>"; };
 		0E3E1D8A22C49E4E008E69EC /* UILableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILableExtensions.swift; sourceTree = "<group>"; };
 		0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -452,6 +456,15 @@
 				B1D1E3A122E8470900323928 /* Constant.swift */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		0E1E349622E96B8D009271C7 /* Trails */ = {
+			isa = PBXGroup;
+			children = (
+				0E1E349C22E96BC7009271C7 /* ResultTrailsCell.swift */,
+				0E1E349D22E96BC7009271C7 /* ResultTrailsCell.xib */,
+			);
+			path = Trails;
 			sourceTree = "<group>";
 		};
 		0E3E1DB622C5C94D008E69EC /* Level Cell */ = {
@@ -740,6 +753,7 @@
 				E5B4A7C522D3383E00CB6218 /* ResultsHeaderSectionView.xib */,
 				E5B9B93822D6E49F0091BB0E /* ResultDetailCell.swift */,
 				E5B9B93922D6E49F0091BB0E /* ResultDetailCell.xib */,
+				0E1E349622E96B8D009271C7 /* Trails */,
 			);
 			path = Results;
 			sourceTree = "<group>";
@@ -1088,6 +1102,7 @@
 				0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */,
 				4A328A7822C47B9100034075 /* Montserrat-Light.ttf in Resources */,
 				E5B4A7BE22D3201C00CB6218 /* ResultsCell.xib in Resources */,
+				0E1E349F22E96BC7009271C7 /* ResultTrailsCell.xib in Resources */,
 				E5B4A7C222D320DA00CB6218 /* ResultsHeaderView.xib in Resources */,
 				4A328A7122C47B9100034075 /* Montserrat-ThinItalic.ttf in Resources */,
 				1BC2DFF41D4F821F0020D430 /* Main.storyboard in Resources */,
@@ -1164,6 +1179,7 @@
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
 				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
+				0E1E349E22E96BC7009271C7 /* ResultTrailsCell.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
 				E5B9B93A22D6E49F0091BB0E /* ResultDetailCell.swift in Sources */,
 				F24E6E6E1E1BC2C300E29995 /* AllResults.swift in Sources */,
