@@ -536,13 +536,18 @@ class VATask: ViewController, UIPickerViewDelegate {
         totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
         delayTimeLabel.text = "\(delayTime) seconds"
         
+        var missingItem = [String]()
+        for item in mixedImages {
+            missingItem.append(item.components(separatedBy: "-")[1])
+        }
+        
         result.imageVA = self.mixedImages
         result.inputVA = self.textInputList
         
         for i in 0...textInputList.count - 1 {
-            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
-            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
-            if mixedImages[i] == textInputList[i] {
+            result.longDescription.add("Recalled \(missingItem[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
+            recallResult += "Recalled \(missingItem[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
+            if missingItem[i] == textInputList[i] {
                 result.numCorrects += 1
             } else {
                 result.numErrors += 1
@@ -582,7 +587,11 @@ class VATask: ViewController, UIPickerViewDelegate {
         var tmpResultList2 : [String:Any] = [:]
         
         for i in 0...textInputList.count-1 {
-            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
+            var res = "Correct"
+            if missingItem[i] != textInputList[i] {
+                res = "Incorrect"
+            }
+            tmpResultList2[mixedImages[i]] = ["Condition":res, "Time":recallTimes[i]]
         }
         
         resultList["Recall"] = tmpResultList2

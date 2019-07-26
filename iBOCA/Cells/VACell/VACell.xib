@@ -39,7 +39,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RXw-PJ-igs">
-                        <rect key="frame" x="253" y="0.0" width="163.5" height="47.5"/>
+                        <rect key="frame" x="251" y="0.0" width="163.5" height="47.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYN-i8-2dW" userLabel="InputLabel">
                                 <rect key="frame" x="14" y="0.0" width="149.5" height="47.5"/>
@@ -58,10 +58,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6G-ii-w11">
-                        <rect key="frame" x="1" y="0.0" width="251" height="47.5"/>
+                        <rect key="frame" x="1" y="0.0" width="249" height="47.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recall Test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-FW-pfV" userLabel="TestTypeLabel">
-                                <rect key="frame" x="19" y="0.0" width="232" height="47.5"/>
+                                <rect key="frame" x="19" y="0.0" width="230" height="47.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -91,7 +91,7 @@
                     <constraint firstItem="H6G-ii-w11" firstAttribute="height" secondItem="RXw-PJ-igs" secondAttribute="height" id="kKF-11-SkN"/>
                     <constraint firstItem="RXw-PJ-igs" firstAttribute="width" secondItem="tUL-ZM-RWG" secondAttribute="width" id="llF-AH-0Sq"/>
                     <constraint firstAttribute="trailing" secondItem="tUL-ZM-RWG" secondAttribute="trailing" constant="1" id="nr4-YR-fEf"/>
-                    <constraint firstItem="RXw-PJ-igs" firstAttribute="trailing" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="1" id="vKe-RC-mPj"/>
+                    <constraint firstItem="RXw-PJ-igs" firstAttribute="trailing" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="-1" id="vKe-RC-mPj"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
