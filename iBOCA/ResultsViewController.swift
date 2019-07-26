@@ -137,13 +137,13 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
             cell.bindData(result: result, row: indexPath.row)
             tableView.separatorStyle = .none
+            
             return cell
         case TestName.VISUAL_ASSOCIATION:
             let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
             cell.bindData(result: result, row: indexPath.row)
             
             return cell
-            
         case TestName.TRAILS:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultTrailsCell.identifier(), for: indexPath) as! ResultTrailsCell
             cell.configResult(result: result)
@@ -176,21 +176,20 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
                 
                 return cell
             }
-<<<<<<< HEAD
         case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultDigitSpanCell.cellId, for: indexPath) as! ResultDigitSpanCell
-=======
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
         case TestName.FORWARD_SPATIAL_SPAN:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
             cell.backgroundColor = Color.color(hexString: "#F9F9F9")
             cell.bindData(result: result, row: indexPath.row)
             
             return cell
-            
         case TestName.BACKWARD_SPATIAL_SPAN:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
             cell.backgroundColor = Color.color(hexString: "#F9F9F9")
->>>>>>> [Result] implement UI/ UX Forward Backward Spatial span
             cell.bindData(result: result, row: indexPath.row)
             
             return cell
