@@ -22,6 +22,7 @@ class TapInOrderViewController: ViewController {
     var currpressed = 0 //order of button that is about to be pressed
     var numRepeats = 0 //how many times user messed up on the same numplaces, calling repeat()
     var numErrors = 0
+    var numCorrects = 0
     var forwardNotBackward = true
     
     var startTime2 = Foundation.Date()
@@ -110,6 +111,7 @@ class TapInOrderViewController: ViewController {
         numplaces = 0
         numRepeats = 0
         numErrors = 0
+        numCorrects = 0
         currpressed = 0
         self.statusLabel.text = ""
         
@@ -221,7 +223,7 @@ class TapInOrderViewController: ViewController {
         numplaces = 0
         numRepeats = 0
         numErrors = 0
-        
+        numCorrects = 0
         
         randomizeOrder()
         
@@ -314,10 +316,12 @@ class TapInOrderViewController: ViewController {
             result.json["Places"] = self.numplaces
             result.json["Levels"] = self.resultList
             result.json["Errors"] = self.numErrors
-            resultsArray.add(result)
-            
+            result.numErrors = self.numErrors
+            result.numCorrects = self.numCorrects
             result.shortDescription = "Spatial span of \(self.numplaces) with \(self.numErrors) errors"
-            
+            print("json: \(result.json)")
+            print("Spatial span of \(self.numplaces) with \(self.numErrors) errors")
+            resultsArray.add(result)
             if self.forwardNotBackward {
                 Status[TestForwardSpatialSpan] = TestStatus.Done
             } else {
@@ -369,6 +373,7 @@ class TapInOrderViewController: ViewController {
                                 } else {
                                     num2 -= 1
                                 }
+                                print("num2: \(num2)")
                                 self?.drawSequenceRecursively(num: num2)
                             }
                         }
@@ -421,6 +426,11 @@ class TapInOrderViewController: ViewController {
                 //account for delay when changing black back to red for most recently pressed button
                 donetest()
             }
+        }
+        
+        // Check tapped correct
+        if status == true {
+            numCorrects += 1
         }
         print("Done in \(n)! \(status)")
     }

@@ -998,6 +998,7 @@ extension SimpleMemoryTask {
             result.endTime = Foundation.Date()
             let completeTime = result.totalElapsedSeconds()
             result.shortDescription = "Recall: \(correct) correct, \(incorrect) incorrect. (Sets correct:\(imageSetSM), incorrect:\(incorrectImageSetSM))"
+            result.numCorrects = correct
             result.numErrors = incorrect
             resultList["CorrectImageSet"] = imageSetSM
             resultList["IncorrectImageSet"] = incorrectImageSetSM

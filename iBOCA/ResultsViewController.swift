@@ -114,9 +114,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         switch result.name {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
             return 190
-        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS, TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
-            return 40
-        case TestName.SIMPLE_MEMORY:
+        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS, TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN, TestName.SIMPLE_MEMORY, TestName.FORWARD_SPATIAL_SPAN, TestName.BACKWARD_SPATIAL_SPAN:
             return 40
         default:
             return UITableViewAutomaticDimension
@@ -178,8 +176,21 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
                 
                 return cell
             }
+<<<<<<< HEAD
         case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
             let cell = tableView.dequeueReusableCell(withIdentifier: ResultDigitSpanCell.cellId, for: indexPath) as! ResultDigitSpanCell
+=======
+        case TestName.FORWARD_SPATIAL_SPAN:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.backgroundColor = Color.color(hexString: "#F9F9F9")
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+            
+        case TestName.BACKWARD_SPATIAL_SPAN:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.backgroundColor = Color.color(hexString: "#F9F9F9")
+>>>>>>> [Result] implement UI/ UX Forward Backward Spatial span
             cell.bindData(result: result, row: indexPath.row)
             
             return cell
