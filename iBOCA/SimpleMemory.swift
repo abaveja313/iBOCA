@@ -910,7 +910,9 @@ extension SimpleMemoryTask {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
-        Status[TestSimpleMemory] = TestStatus.NotStarted
+        if Status[TestSimpleMemory] != TestStatus.Done {
+            Status[TestSimpleMemory] = TestStatus.NotStarted
+        }
         
         // Check if is on quickStart mode
         guard !quickStartModeOn else {
