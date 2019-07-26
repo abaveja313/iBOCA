@@ -23,7 +23,7 @@
                         <rect key="frame" x="415.5" y="0.0" width="163.5" height="47.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7e-ze-wMz" userLabel="TimeLabel">
-                                <rect key="frame" x="43.5" y="0.0" width="120" height="47.5"/>
+                                <rect key="frame" x="14" y="0.0" width="149.5" height="47.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -34,7 +34,7 @@
                         <constraints>
                             <constraint firstItem="t7e-ze-wMz" firstAttribute="top" secondItem="tUL-ZM-RWG" secondAttribute="top" id="1CW-tZ-KHz"/>
                             <constraint firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="trailing" id="Brk-yt-Lyo"/>
-                            <constraint firstItem="t7e-ze-wMz" firstAttribute="leading" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="43.5" id="FEb-7u-mX6"/>
+                            <constraint firstItem="t7e-ze-wMz" firstAttribute="leading" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="14" id="FEb-7u-mX6"/>
                             <constraint firstAttribute="bottom" secondItem="t7e-ze-wMz" secondAttribute="bottom" id="qSh-hz-GlH"/>
                         </constraints>
                     </view>

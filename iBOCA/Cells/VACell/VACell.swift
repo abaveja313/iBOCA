@@ -40,15 +40,9 @@ extension VACell {
             resultLabel.textAlignment = .left
             timeLabel.textAlignment = .left
             if row < 5 {
+                guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
                 testTypeLabel.text = "Recalled \(result.imageVA[row])"
-                guard let item = recallList[result.imageVA[row]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
-                if isCorrect == "Correct" {
-                    resultLabel.textColor = Color.color(hexString: "#013AA5")
-                    resultLabel.text = "Correct"
-                } else {
-                    resultLabel.textColor = Color.color(hexString: "#E94533")
-                    resultLabel.text = "Incorrect"
-                }
+                resultLabel.text = "\(String(describing: item["Condition"] as! String))"
                 timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
             } else {
                 testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
@@ -64,6 +58,8 @@ extension VACell {
             }
         }
     }
+    
+    
     
     func configRecallTest(imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
         if indexPath.row == 0 {
