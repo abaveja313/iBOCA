@@ -63,6 +63,7 @@ class ResultsViewController: ViewController {
         tableView.register(ResultTrailsCell.nib(), forCellReuseIdentifier: ResultTrailsCell.identifier())
         tableView.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
         tableView.register(UINib.init(nibName: ResultSerialSevenCell.cellId, bundle: nil), forCellReuseIdentifier: ResultSerialSevenCell.cellId)
+        tableView.register(UINib.init(nibName: ResultDigitSpanCell.cellId, bundle: nil), forCellReuseIdentifier: ResultDigitSpanCell.cellId)
         tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
     }
     
@@ -96,6 +97,8 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
             return result.collapsed ? 0 : result.arrSMResult.count
         case TestName.SERIAL_SEVENS:
             return result.collapsed ? 0 : result.rounds! + 1
+        case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
+            return result.collapsed ? 0 : result.rounds!
         default:
             return result.collapsed ? 0 : result.longDescription.count
         }
@@ -111,7 +114,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         switch result.name {
         case TestName.THREE_DIMENSION_FIGURE_COPY:
             return 190
-        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS:
+        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS, TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
             return 40
         case TestName.SIMPLE_MEMORY:
             return 40
@@ -175,6 +178,11 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
                 
                 return cell
             }
+        case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultDigitSpanCell.cellId, for: indexPath) as! ResultDigitSpanCell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
         default:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
             cell.bindData(result: result, row: indexPath.row)

@@ -27,6 +27,10 @@ class VACell: UITableViewCell {
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
         containView.backgroundColor = Color.color(hexString: "#EAEAEA")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
 }
 
 extension VACell {
@@ -102,6 +106,8 @@ extension VACell {
     
     fileprivate func setupContentCell() {
         twxtTypeView.backgroundColor = Color.color(hexString: "#FFFFFF")
+        timeView.backgroundColor = Color.color(hexString: "#FFFFFF")
+        resultView.backgroundColor = Color.color(hexString: "#FFFFFF")
         for label in labelGroup {
             label.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
             label.textColor = Color.color(hexString: "#000000")

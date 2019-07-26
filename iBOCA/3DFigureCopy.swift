@@ -321,6 +321,8 @@ extension ThreeDFigureCopy {
         self.result.longDescription.add("Tests: \(imagelist)")
         self.result.longDescription.add("Test Outcomes: \(resultCondition)")
         self.result.longDescription.add("Test Times: \(resultTime)")
+        self.result.rounds = self.curr
+        
         print("resultImages: \(self.resultImages.count)")
         print("screenshot: \(self.result.screenshot.count)")
         for shot in self.resultImages {

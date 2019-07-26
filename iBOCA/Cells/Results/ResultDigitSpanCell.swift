@@ -9,6 +9,8 @@
 import UIKit
 
 class ResultDigitSpanCell: UITableViewCell {
+    static let cellId = "ResultDigitSpanCell"
+    
     @IBOutlet weak var digitLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -25,7 +27,11 @@ class ResultDigitSpanCell: UITableViewCell {
     }
     
     func bindData(result: Results, row: Int) {
-//        if let result = result.json["Details"] as? [String: Any], let item = result[row] as? [Int: Any] {
-//        }
+        if let result = result.json["Details"] as? [String: Any], let item = result["\(row)"] as? [String: Any] {
+            print("hihi")
+            digitLabel.text = "\((item["Generated"] as! String).count) digit"
+            resultLabel.text = "\(item["Generated"] as! String) --> \(item["Entered"] as! String)"
+            timeLabel.text = "\(item["ElapsedTime (msec)"] as! Int) msec"
+        }
     }
 }

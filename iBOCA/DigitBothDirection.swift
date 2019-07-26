@@ -22,6 +22,7 @@ class DigitBothDirection:DigitBaseClass {
     var gotLevels:[Int] = []
     var gotDuration:[Int] = []
     var totErrors = 0
+    var totCorrects = 0
     var currRound = 0
         
     var resultList : [String:Any] = [:]
@@ -46,6 +47,7 @@ class DigitBothDirection:DigitBaseClass {
         gotLevels  = []
         gotDuration = []
         totErrors = 0
+        totCorrects = 0
         currRound = 0
         resultList = [:]
         startDisplay()
@@ -81,6 +83,7 @@ class DigitBothDirection:DigitBaseClass {
         
         let pgenval = procesString(val: genval)
         if base.keypadLabel.text == pgenval {
+            totCorrects += 1
             base.infoLabel.text = "Correct! Tell the next set of numbers"
             level += 1
             if level >= levelEnd() {
@@ -116,7 +119,6 @@ class DigitBothDirection:DigitBaseClass {
     }
     
     override func doEnd() {
-        base.infoLabel.text = "Test ended"
         Status[testStatus] = TestStatus.Done
         endTest()
     }
@@ -138,6 +140,10 @@ class DigitBothDirection:DigitBaseClass {
         result.json["Details"] = resultList
         result.json["Levels"] = level
         result.json["Errors"] = totErrors
+        
+        result.rounds = currRound
+        result.numCorrects = totCorrects
+        result.numErrors = totErrors
         
         resultsArray.add(result)
         
