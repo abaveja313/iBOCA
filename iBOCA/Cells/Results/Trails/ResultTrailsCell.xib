@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="seY-wh-6gZ" userLabel="View Title">
-                        <rect key="frame" x="1" y="0.0" width="258.5" height="72"/>
+                        <rect key="frame" x="1" y="0.0" width="238" height="72"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhI-5H-Oue">
                                 <rect key="frame" x="24" y="9" width="42" height="21"/>
@@ -31,16 +31,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="258.25" id="0iQ-2S-G3s"/>
+                            <constraint firstAttribute="width" constant="238" id="0iQ-2S-G3s"/>
                             <constraint firstItem="HhI-5H-Oue" firstAttribute="top" secondItem="seY-wh-6gZ" secondAttribute="top" constant="9" id="gmd-3p-h34"/>
                             <constraint firstItem="HhI-5H-Oue" firstAttribute="leading" secondItem="seY-wh-6gZ" secondAttribute="leading" constant="24" id="xRa-hL-ChQ"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOA-ff-PZP" userLabel="View Correct">
-                        <rect key="frame" x="260.5" y="0.0" width="579.5" height="34.5"/>
+                        <rect key="frame" x="240" y="0.0" width="600" height="34.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHn-9R-bMG">
-                                <rect key="frame" x="18.5" y="7" width="542.5" height="20.5"/>
+                                <rect key="frame" x="19" y="7" width="562.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -55,10 +55,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0P8-UU-soe" userLabel="View Incorrect">
-                        <rect key="frame" x="260.5" y="35.5" width="579.5" height="36.5"/>
+                        <rect key="frame" x="240" y="35.5" width="600" height="36.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yqf-Df-Gy0">
-                                <rect key="frame" x="18.5" y="8" width="542.5" height="20.5"/>
+                                <rect key="frame" x="19" y="8" width="562.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
