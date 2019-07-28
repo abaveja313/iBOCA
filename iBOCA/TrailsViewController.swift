@@ -17,6 +17,7 @@ var bubbleColor:UIColor?
 var selectedTest = 0
 var numBubbles = 0
 
+var isPracticeTest: Bool = false
 
 class TrailsAViewController: ViewController, UIPickerViewDelegate {
     
@@ -67,7 +68,6 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     var arrNumberOfPoints: [String] = [String]()
     
     // Practice Test
-    var isPracticeTest: Bool = false
     var endedPracticeTest = false
     
     var drawingView: DrawingViewTrails!
@@ -140,7 +140,7 @@ extension TrailsAViewController {
         self.vTask.backgroundColor = UIColor.white
         self.vTask.layer.cornerRadius = 8.0
         
-        if self.isPracticeTest == true {
+        if isPracticeTest == true {
             // Hidden View
             self.vCounterTimer.isHidden = true
             self.btnReset.isHidden = true
@@ -448,7 +448,7 @@ extension TrailsAViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-        if self.isPracticeTest == false {
+        if isPracticeTest == false {
             if touches.first?.view != self.ddChooseTheTest || touches.first?.view != self.ddChooseNumberOfPoints {
                 self.dismissDropdownChooseTheTest()
                 self.dismissDropdownChooseNumberOfPoints()
@@ -543,7 +543,7 @@ extension TrailsAViewController {
         }
         
         if let nav = self.navigationController {
-            if self.isPracticeTest == false &&
+            if isPracticeTest == false &&
                 ended == false && self.vCounterTimer.isHidden == false && self.drawingView.bubbles.segmenttimes.count != 0 {
                 self.done(showAlertComplete: false)
             }
@@ -627,7 +627,7 @@ extension TrailsAViewController {
     
     func update(timer: Timer) {
         if stopTrailsA == false {
-            if self.isPracticeTest == false { // Mode is Trails Test
+            if isPracticeTest == false { // Mode is Trails Test
                 // Update data into Counter Timer View
                 self.counterTime.setTimeWith(startTime: startTime2, currentTime: Foundation.Date())
             }
@@ -635,7 +635,7 @@ extension TrailsAViewController {
         else {
             timer.invalidate()
             // Check mode is Practice Test or Trails Test
-            if self.isPracticeTest == true {
+            if isPracticeTest == true {
                 self.drawingView.canDraw = false
                 let confirmAlert = UIAlertController(title: "Complete", message: "You complete the practice test.", preferredStyle: .alert)
                 let okAction = UIAlertAction.init(title: "Ok", style: .default) { (action) in
