@@ -84,6 +84,7 @@ class IntroViewController: ViewController {
             viewController = (storyboard.instantiateViewController(withIdentifier: "VATask") as? VATask)!
         case "trails":
             viewController = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController)!
+            isPracticeTest = false
         case "ForwardDigitSpan", "BackwardDigitSpan", "SerialSeven":
             testName = testId
             viewController = (storyboard.instantiateViewController(withIdentifier: "DigitBase") as? DigitBase)!
@@ -105,7 +106,7 @@ class IntroViewController: ViewController {
     @IBAction func actionPracticeTest(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         if let vc = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController) {
-            vc.isPracticeTest = true
+            isPracticeTest = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
