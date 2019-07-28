@@ -517,7 +517,7 @@ extension OrientationTask {
         if !dkWeek {
             self.btnDontKnowWeek.setTitleColor(UIColor.black, for: .normal)
             self.btnDontKnowWeek.backgroundColor = Color.color(hexString: "#FE786A")
-            Week = "Dont Know"
+            Week = "Don't know"
             dkWeek = true
         } else {
             self.btnDontKnowWeek.setTitleColor(UIColor.black, for: .normal)
@@ -530,7 +530,7 @@ extension OrientationTask {
         if !dkState {
             self.btnDontKnowState.setTitleColor(UIColor.black, for: .normal)
             self.btnDontKnowState.backgroundColor = Color.color(hexString: "#FE786A")
-            State = "Dont Know"
+            State = "Don't know"
             dkState = true
         } else {
             self.btnDontKnowState.setTitleColor(UIColor.black, for: .normal)
@@ -543,7 +543,7 @@ extension OrientationTask {
         if !dkTime {
             self.btnDontKnowTime.setTitleColor(UIColor.black, for: .normal)
             self.btnDontKnowTime.backgroundColor = Color.color(hexString: "#FE786A")
-            Time = "Dont Know"
+            Time = "Don't know"
             dkTime = true
             TimeOK = false
         } else {
@@ -613,9 +613,9 @@ extension OrientationTask {
         result.json["Time Correct"] = TimeOK
         result.json["Date Correct"] = DateOK
         result.json["Week Correct"] = WeekOK
-        result.json["Dont Know Date"] = dkDate
-        result.json["Dont Know Month"] = dkMonth
-        result.json["Dont Know Year"] = dkYear
+        result.json["Don't know date"] = dkDate
+        result.json["Don't know month"] = dkMonth
+        result.json["Don't know year"] = dkYear
         result.json["State Correct"] = stateOK
         
         if stateOK == false {
