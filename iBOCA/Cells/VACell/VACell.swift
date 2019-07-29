@@ -18,37 +18,30 @@ class VACell: UITableViewCell {
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var twxtTypeView: UIView!
+    @IBOutlet weak var timeLabelLeading: NSLayoutConstraint!
+    @IBOutlet weak var inputLabelLeading: NSLayoutConstraint!
     
     fileprivate var labelGroup: [UILabel]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
         containView.backgroundColor = Color.color(hexString: "#EAEAEA")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
     }
 }
 
 extension VACell {
     func bindData(result: Results, row: Int) {
+        timeLabelLeading.constant = 43.5
+        inputLabelLeading.constant = 14
         if let recallList = result.json["Recall"] as? [String: Any], let regconizeList = result.json["Recognize"] as? [String: Any] {
             setupContentCell()
             resultLabel.textAlignment = .left
             timeLabel.textAlignment = .left
             if row < 5 {
+                guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
                 testTypeLabel.text = "Recalled \(result.imageVA[row])"
-                guard let item = recallList[result.imageVA[row]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
-                if isCorrect == "Correct" {
-                    resultLabel.textColor = Color.color(hexString: "#013AA5")
-                    resultLabel.text = "Correct"
-                } else {
-                    resultLabel.textColor = Color.color(hexString: "#E94533")
-                    resultLabel.text = "Incorrect"
-                }
+                resultLabel.text = "\(String(describing: item["Condition"] as! String))"
                 timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
             } else {
                 testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
@@ -65,7 +58,11 @@ extension VACell {
         }
     }
     
+    
+    
     func configRecallTest(imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
+        timeLabelLeading.constant = 0
+        inputLabelLeading.constant = 0
         if indexPath.row == 0 {
             setupHeaderCell()
             testTypeLabel.text = "Recalled Test"
@@ -80,6 +77,8 @@ extension VACell {
     }
     
     func configRegconizedTest(imageNameList: [String], recognizeErrors: [Int], timeList: [Double], indexPath: IndexPath) {
+        timeLabelLeading.constant = 0
+        inputLabelLeading.constant = 0
         if indexPath.row == 0 {
             setupHeaderCell()
             testTypeLabel.text = "Recognized Test"

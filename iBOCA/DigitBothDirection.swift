@@ -81,6 +81,11 @@ class DigitBothDirection:DigitBaseClass {
         
         currRound += 1
         
+        guard let _ = Int(base.keypadLabel.text!) else {
+            base.infoLabel.text = "Error: Enter a number"
+            return
+        }
+        
         let pgenval = procesString(val: genval)
         if base.keypadLabel.text == pgenval {
             totCorrects += 1

@@ -536,22 +536,12 @@ class VATask: ViewController, UIPickerViewDelegate {
         totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
         delayTimeLabel.text = "\(delayTime) seconds"
         
-        var missingItem = [String]()
-        for item in mixedImages {
-            missingItem.append(item.components(separatedBy: "-")[1])
-        }
-        
         result.imageVA = self.mixedImages
         result.inputVA = self.textInputList
         
         for i in 0...textInputList.count - 1 {
-            result.longDescription.add("Recalled \(missingItem[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
-            recallResult += "Recalled \(missingItem[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
-            if missingItem[i] == textInputList[i] {
-                result.numCorrects += 1
-            } else {
-                result.numErrors += 1
-            }
+            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
+            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
         }
         
         for k in 0 ..< mixedImages.count {
@@ -587,11 +577,7 @@ class VATask: ViewController, UIPickerViewDelegate {
         var tmpResultList2 : [String:Any] = [:]
         
         for i in 0...textInputList.count-1 {
-            var res = "Correct"
-            if missingItem[i] != textInputList[i] {
-                res = "Incorrect"
-            }
-            tmpResultList2[mixedImages[i]] = ["Condition":res, "Time":recallTimes[i]]
+            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
         }
         
         resultList["Recall"] = tmpResultList2
@@ -603,6 +589,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         
         recalledTableView.reloadData()
         regconizedTableView.reloadData()
+    }
+    
+    fileprivate func roundedNumber(number: Double) -> Double {
+        return (number * 10).rounded() / 10
     }
     
     fileprivate func dismissDropDownList() {
@@ -661,7 +651,7 @@ extension VATask {
                     
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
-                    recallTimes.append((timeInput * 10).rounded() / 10)
+                    recallTimes.append(roundedNumber(number: timeInput))
                     
                     isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
@@ -682,17 +672,17 @@ extension VATask {
                     if testCount - 1 == textInputList.count {
                         textInputList.append(missingItemTextField.text!)
                         missingItemTextField.text = ""
-                        recallTimes.append((timeInput * 10).rounded() / 10)
+                        recallTimes.append(roundedNumber(number: timeInput))
                     } else if testCount == textInputList.count {
                         textInputList[testCount - 1] = missingItemTextField.text!
                         missingItemTextField.text = ""
                         if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
                         }
                     } else {
                         textInputList[testCount - 1] = missingItemTextField.text!
                         if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
                         }
                         missingItemTextField.text = textInputList[testCount]
                     }
@@ -745,7 +735,7 @@ extension VATask {
     }
     
     @IBAction func recognize1(_ sender: AnyObject) {
-        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        recognizeTimes.append(roundedNumber(number: timeInput))
         timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(0)
@@ -757,7 +747,7 @@ extension VATask {
     }
     
     @IBAction func recognize2(_ sender: AnyObject) {
-        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        recognizeTimes.append(roundedNumber(number: timeInput))
         timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(1)

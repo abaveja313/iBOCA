@@ -23,7 +23,7 @@
                         <rect key="frame" x="415.5" y="0.0" width="163.5" height="47.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7e-ze-wMz" userLabel="TimeLabel">
-                                <rect key="frame" x="43.5" y="0.0" width="120" height="47.5"/>
+                                <rect key="frame" x="14" y="0.0" width="149.5" height="47.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -34,7 +34,7 @@
                         <constraints>
                             <constraint firstItem="t7e-ze-wMz" firstAttribute="top" secondItem="tUL-ZM-RWG" secondAttribute="top" id="1CW-tZ-KHz"/>
                             <constraint firstAttribute="trailing" secondItem="t7e-ze-wMz" secondAttribute="trailing" id="Brk-yt-Lyo"/>
-                            <constraint firstItem="t7e-ze-wMz" firstAttribute="leading" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="43.5" id="FEb-7u-mX6"/>
+                            <constraint firstItem="t7e-ze-wMz" firstAttribute="leading" secondItem="tUL-ZM-RWG" secondAttribute="leading" constant="14" id="FEb-7u-mX6"/>
                             <constraint firstAttribute="bottom" secondItem="t7e-ze-wMz" secondAttribute="bottom" id="qSh-hz-GlH"/>
                         </constraints>
                     </view>
@@ -97,10 +97,12 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="containView" destination="H2p-sc-9uM" id="9K7-e3-JXe"/>
+                <outlet property="inputLabelLeading" destination="vR2-j7-LxR" id="F4S-47-LpV"/>
                 <outlet property="resultLabel" destination="AYN-i8-2dW" id="Qpu-QG-bhK"/>
                 <outlet property="resultView" destination="RXw-PJ-igs" id="Qy1-rM-4On"/>
                 <outlet property="testTypeLabel" destination="Pii-FW-pfV" id="tfY-9Q-MKK"/>
                 <outlet property="timeLabel" destination="t7e-ze-wMz" id="0K7-qE-4Ko"/>
+                <outlet property="timeLabelLeading" destination="FEb-7u-mX6" id="8lD-oF-1Tf"/>
                 <outlet property="timeView" destination="tUL-ZM-RWG" id="GSk-ng-WYW"/>
                 <outlet property="twxtTypeView" destination="H6G-ii-w11" id="YVs-pf-scV"/>
             </connections>

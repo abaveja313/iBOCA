@@ -169,12 +169,18 @@ class PicturesViewController: ViewController {
         result.name = TestName.NAMING_PICTURE
         result.startTime = startTime2 as Date
         result.endTime = NSDate() as Date
-//        result.longDescription.add("\(corr) correct out of \(count)")
-//        if wrongList.count > 0  {
-//            result.longDescription.add("The incorrect picture\(wrongList.count > 1 ? "s were" : " was") the \(wrongList)")
-//        }
+        
+        var imageResult = "["
+        for i in 0...namingImages.count - 1 {
+            if i == namingImages.count - 1 {
+                imageResult.append("\(namingImages[i])]")
+            } else {
+                imageResult.append("\(namingImages[i]), ")
+            }
+        }
+        
         result.rounds = namingImages.count
-        result.longDescription.add("The correct pictures were: \(namingImages)")
+        result.longDescription.add("The correct pictures were: \(imageResult)")
         result.numErrors = (count - corr)
         result.numCorrects = corr
         result.json["Answered"] = count
