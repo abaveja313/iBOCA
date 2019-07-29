@@ -36,7 +36,7 @@ enum DemographicsCategory: String {
     case Ethnicity = "Ethnicity"
 }
 
-class Demographics: ViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate {
+class Demographics: BaseViewController, MFMailComposeViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate {
     
     // MARK: - Outlet
     @IBOutlet weak var vBack: UIView!

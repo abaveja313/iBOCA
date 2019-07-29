@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class ThreeDFigureCopy: ViewController {
+class ThreeDFigureCopy: BaseViewController {
     // MARK: - Outlet
     @IBOutlet weak var CorrectButton: UIButton!
     @IBOutlet weak var IncorrectButton: UIButton!

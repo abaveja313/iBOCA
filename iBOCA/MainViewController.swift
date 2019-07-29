@@ -39,7 +39,7 @@ class GoToTestCellModel : NSObject{
     }
 }
 
-class MainViewController: ViewController, MFMailComposeViewControllerDelegate{
+class MainViewController: BaseViewController, MFMailComposeViewControllerDelegate{
     var mailSubject : String = "iBOCA Results of "
     
     var iTimer: Timer?

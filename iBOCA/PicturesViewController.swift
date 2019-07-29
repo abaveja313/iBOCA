@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class PicturesViewController: ViewController {
+class PicturesViewController: BaseViewController {
     
     let namingImages:[String] = ["ring", "chimney", "clover", "ladle", "piano", "eyebrow", "shovel", "lighthouse", "goggles", "horseshoe", "corkscrew", "anvil", "yarn", "llama", "skeleton"]
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AdministeredViewController: ViewController {
+class AdministeredViewController: BaseViewController {
 
     
     @IBOutlet weak var mTitleBack: UILabel!

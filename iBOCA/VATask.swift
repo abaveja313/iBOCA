@@ -11,7 +11,7 @@ import UIKit
 
 var StartTime = Foundation.Date()
 
-class VATask: ViewController, UIPickerViewDelegate {
+class VATask: BaseViewController, UIPickerViewDelegate {
     
     var recallErrors = [Int]()
     var recallTimes = [Double]()

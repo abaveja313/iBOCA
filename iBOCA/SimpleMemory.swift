@@ -22,7 +22,7 @@ var incorrectImageSetSM = Int()
 var startTimeSM = TimeInterval()
 var timerSM = Timer()
 var StartTimer = Foundation.Date()
-class SimpleMemoryTask: ViewController {
+class SimpleMemoryTask: BaseViewController {
     
     // MARK: - Outlet
     @IBOutlet weak var lblBack: UILabel!

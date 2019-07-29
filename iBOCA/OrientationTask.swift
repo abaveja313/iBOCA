@@ -14,7 +14,7 @@ var firstTimeThrough = true
 //declare variables to be defined by pickerviews
 var startTime = Foundation.Date()
 
-class OrientationTask: ViewController {
+class OrientationTask: BaseViewController {
     // MARK: - Outlet
     @IBOutlet weak var lblBack: UILabel!
     @IBOutlet weak var btnComplete: GradientButton!

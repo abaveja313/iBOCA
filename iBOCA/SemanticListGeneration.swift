@@ -9,7 +9,7 @@
 import UIKit
 var Category : String?
 
-class SemanticListGeneration: ViewController, UIPickerViewDelegate {
+class SemanticListGeneration: BaseViewController, UIPickerViewDelegate {
     var counter = 30
     var myTimer : Timer = Timer()
     
