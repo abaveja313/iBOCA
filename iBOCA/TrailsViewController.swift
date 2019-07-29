@@ -551,7 +551,7 @@ extension TrailsAViewController {
         if let nav = self.navigationController {
             if isPracticeTest == false &&
                 ended == false && self.vCounterTimer.isHidden == false && self.drawingView.bubbles.segmenttimes.count != 0 {
-                self.done(showAlertComplete: false)
+//                self.done(showAlertComplete: false)
             }
             ended = false
             endedPracticeTest = false
