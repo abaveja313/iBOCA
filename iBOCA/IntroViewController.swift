@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IntroViewController: ViewController {
+class IntroViewController: BaseViewController {
 
     @IBOutlet weak var backTitleLabel: UILabel!
     @IBOutlet weak var innerShadowView: UIView!

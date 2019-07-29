@@ -53,7 +53,7 @@ let answers = [false, true,  true,  true,  false,
 
 
 
-class GeriatricDepressionScale:  ViewController {
+class GeriatricDepressionScale:  BaseViewController {
     var justView: UIView!
     var scrollView: UIScrollView!
     

@@ -19,7 +19,7 @@ var theTestClass : Int = 0
 let testClassName = ["CNU", "COMM", "ECT", "DW", "PHY", "ICU", "B1", "B2", "B3", "TEST"]
 let BIDMCpassKey = "PressOn"
 
-class Setup: ViewController  {
+class Setup: BaseViewController  {
     var autoID: Int = Int()
     
     // MARK: Outlet

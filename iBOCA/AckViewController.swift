@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class AckViewController:  ViewController {
+class AckViewController:  BaseViewController {
 
     @IBOutlet weak var versionLabel: UILabel!
     

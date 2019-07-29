@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class GoldStandard: ViewController, UIPickerViewDelegate  {
+class GoldStandard: BaseViewController, UIPickerViewDelegate  {
     
     
     var startTime  = Foundation.Date()

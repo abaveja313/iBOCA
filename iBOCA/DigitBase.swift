@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class DigitBase: ViewController {
+class DigitBase: BaseViewController {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var backTitleLabel: UILabel!
     @IBOutlet weak var innerShadowView: UIView!

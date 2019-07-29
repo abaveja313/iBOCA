@@ -19,7 +19,7 @@ var numBubbles = 0
 
 var isPracticeTest: Bool = false
 
-class TrailsAViewController: ViewController, UIPickerViewDelegate {
+class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
     
     // MARK: - Outlet
     @IBOutlet weak var vBack: UIView!

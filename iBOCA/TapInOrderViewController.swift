@@ -10,7 +10,7 @@ import UIKit
 
 import Darwin
 
-class TapInOrderViewController: ViewController {
+class TapInOrderViewController: BaseViewController {
     
     
     
