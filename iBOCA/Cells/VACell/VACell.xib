@@ -97,10 +97,12 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="containView" destination="H2p-sc-9uM" id="9K7-e3-JXe"/>
+                <outlet property="inputLabelLeading" destination="vR2-j7-LxR" id="F4S-47-LpV"/>
                 <outlet property="resultLabel" destination="AYN-i8-2dW" id="Qpu-QG-bhK"/>
                 <outlet property="resultView" destination="RXw-PJ-igs" id="Qy1-rM-4On"/>
                 <outlet property="testTypeLabel" destination="Pii-FW-pfV" id="tfY-9Q-MKK"/>
                 <outlet property="timeLabel" destination="t7e-ze-wMz" id="0K7-qE-4Ko"/>
+                <outlet property="timeLabelLeading" destination="FEb-7u-mX6" id="8lD-oF-1Tf"/>
                 <outlet property="timeView" destination="tUL-ZM-RWG" id="GSk-ng-WYW"/>
                 <outlet property="twxtTypeView" destination="H6G-ii-w11" id="YVs-pf-scV"/>
             </connections>

@@ -18,23 +18,22 @@ class VACell: UITableViewCell {
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var twxtTypeView: UIView!
+    @IBOutlet weak var timeLabelLeading: NSLayoutConstraint!
+    @IBOutlet weak var inputLabelLeading: NSLayoutConstraint!
     
     fileprivate var labelGroup: [UILabel]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
         containView.backgroundColor = Color.color(hexString: "#EAEAEA")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
     }
 }
 
 extension VACell {
     func bindData(result: Results, row: Int) {
+        timeLabelLeading.constant = 43.5
+        inputLabelLeading.constant = 14
         if let recallList = result.json["Recall"] as? [String: Any], let regconizeList = result.json["Recognize"] as? [String: Any] {
             setupContentCell()
             resultLabel.textAlignment = .left
@@ -62,6 +61,8 @@ extension VACell {
     
     
     func configRecallTest(imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
+        timeLabelLeading.constant = 0
+        inputLabelLeading.constant = 0
         if indexPath.row == 0 {
             setupHeaderCell()
             testTypeLabel.text = "Recalled Test"
@@ -76,6 +77,8 @@ extension VACell {
     }
     
     func configRegconizedTest(imageNameList: [String], recognizeErrors: [Int], timeList: [Double], indexPath: IndexPath) {
+        timeLabelLeading.constant = 0
+        inputLabelLeading.constant = 0
         if indexPath.row == 0 {
             setupHeaderCell()
             testTypeLabel.text = "Recognized Test"

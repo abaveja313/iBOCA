@@ -591,6 +591,10 @@ class VATask: ViewController, UIPickerViewDelegate {
         regconizedTableView.reloadData()
     }
     
+    fileprivate func roundedNumber(number: Double) -> Double {
+        return (number * 10).rounded() / 10
+    }
+    
     fileprivate func dismissDropDownList() {
         isDropDownViewHidden(true)
         isDropDownShowing = false
@@ -647,7 +651,7 @@ extension VATask {
                     
                     textInputList.append(missingItemTextField.text!)
                     missingItemTextField.text = ""
-                    recallTimes.append((timeInput * 10).rounded() / 10)
+                    recallTimes.append(roundedNumber(number: timeInput))
                     
                     isMissingItemTextFieldChanged = false
                     remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
@@ -668,17 +672,17 @@ extension VATask {
                     if testCount - 1 == textInputList.count {
                         textInputList.append(missingItemTextField.text!)
                         missingItemTextField.text = ""
-                        recallTimes.append((timeInput * 10).rounded() / 10)
+                        recallTimes.append(roundedNumber(number: timeInput))
                     } else if testCount == textInputList.count {
                         textInputList[testCount - 1] = missingItemTextField.text!
                         missingItemTextField.text = ""
                         if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
                         }
                     } else {
                         textInputList[testCount - 1] = missingItemTextField.text!
                         if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += (timeInput * 10).rounded() / 10
+                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
                         }
                         missingItemTextField.text = textInputList[testCount]
                     }
@@ -731,7 +735,7 @@ extension VATask {
     }
     
     @IBAction func recognize1(_ sender: AnyObject) {
-        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        recognizeTimes.append(roundedNumber(number: timeInput))
         timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(0)
@@ -743,7 +747,7 @@ extension VATask {
     }
     
     @IBAction func recognize2(_ sender: AnyObject) {
-        recognizeTimes.append((timeInput * 10).rounded() / 10)
+        recognizeTimes.append(roundedNumber(number: timeInput))
         timeInput = 0
         if (orderRecognize[testCount] == 0) {
             recognizeErrors.append(1)
