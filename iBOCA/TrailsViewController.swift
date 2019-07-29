@@ -77,6 +77,7 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
     var ended = false
     var startTime = TimeInterval()
     var startTime2 = Foundation.Date()
+    var runtimer: Timer?
     
     var counterTime: CounterTimeView!
     
@@ -91,6 +92,11 @@ class TrailsAViewController: ViewController, UIPickerViewDelegate {
         
         self.setupView()
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        runtimer?.invalidate()
     }
     
     /*   @IBAction func HelpButton(sender: AnyObject) {
@@ -531,8 +537,8 @@ extension TrailsAViewController {
         self.drawingView.canDraw = true
         bubbleColor = UIColor.red
         
-        let runtimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
-        runtimer.fire()
+        runtimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        runtimer?.fire()
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
@@ -625,7 +631,7 @@ extension TrailsAViewController {
         self.dismissDropdownChooseNumberOfPoints()
     }
     
-    func update(timer: Timer) {
+    @objc func update(timer: Timer) {
         if stopTrailsA == false {
             if isPracticeTest == false { // Mode is Trails Test
                 // Update data into Counter Timer View
