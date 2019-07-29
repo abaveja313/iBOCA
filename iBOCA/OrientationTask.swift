@@ -123,6 +123,7 @@ class OrientationTask: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
+        startTime = Foundation.Date()
         // delegate pickerviews
         WeekPicker.delegate = self
         StatePicker.delegate = self
@@ -156,7 +157,7 @@ class OrientationTask: ViewController {
             currentTime.setDate(date_random,  animated: false)
             formatter.dateFormat = "HH:MM"
             Time = formatter.string(from: currentTime.date)
-            TimeOK = true
+            TimeOK = TimeDiffOK(date1: startTime, date2: currentDate.date)
             
             // Get the random week
             Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
@@ -177,8 +178,11 @@ class OrientationTask: ViewController {
         currentTime.alpha = 1.0
         WeekPicker.alpha = 1.0
         StatePicker.alpha = 1.0
-        
-        startTime = Foundation.Date()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.timerOrientationTask.invalidate()
     }
     
     deinit {
@@ -567,7 +571,8 @@ extension OrientationTask {
         if h1 == 1 && h2 == 12 {
             h1 = 13
         }
-        return abs(h1*60 + m1 - h2*60 - m2) < 15*60
+        
+        return abs(h1*60 + m1 - h2*60 - m2) < 15
     }
     
     private func completeTest() {
