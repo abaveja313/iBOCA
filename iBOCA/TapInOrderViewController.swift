@@ -42,6 +42,7 @@ class TapInOrderViewController: BaseViewController {
     var resultTmpList : [String:Any] = [:]
     var levelStartTime = Foundation.Date()
     var resultList : [String:Any] = [:]
+    var testStatus = -1
 
     //MARK: NEW UI
     @IBOutlet weak var mViewMain: UIView!
@@ -71,11 +72,15 @@ class TapInOrderViewController: BaseViewController {
         
         if testName == "ForwardSpatialSpan" {
             forwardNotBackward = true
+            testStatus = TestForwardSpatialSpan
             self.navigationItem.title = "Forward Spatial Span"
         } else if testName == "BackwardSpatialSpan" {
             forwardNotBackward = false
+            testStatus = TestBackwardSpatialSpan
             self.navigationItem.title = "Backward Spatial Span"
         }
+        
+        Status[TestForwardSpatialSpan] = TestStatus.NotStarted
 
         endButton.isEnabled = false
         resetButton.isEnabled = false
@@ -686,8 +691,9 @@ class TapInOrderViewController: BaseViewController {
     
     @IBAction func tapBtnBack(_ sender: Any) {
         debugPrint("tap btn back")
-        if !ended {
-            donetest()
+        
+        if Status[testStatus] != TestStatus.Done {
+            Status[testStatus] = TestStatus.NotStarted
         }
         
         // Check if is in quickStart mode
@@ -705,9 +711,7 @@ class TapInOrderViewController: BaseViewController {
         endButton.isEnabled = false
         resetButton.isEnabled = true
         //backButton.isEnabled = true
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
-        }
+        
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {

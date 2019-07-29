@@ -210,8 +210,8 @@ extension ThreeDFigureCopy {
 // MARK: - Action
 extension ThreeDFigureCopy {
     @IBAction func actionBack(_ sender: Any) {
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
+        if Status[Test3DFigureCopy] != TestStatus.Done {
+            Status[Test3DFigureCopy] = TestStatus.NotStarted
         }
         self.startTime2 = Foundation.Date()
         self.timer3DFigureCopy.invalidate()
@@ -251,6 +251,9 @@ extension ThreeDFigureCopy {
     fileprivate func startTask() {
         self.result = Results()
         self.result.name = TestName.THREE_DIMENSION_FIGURE_COPY
+        
+        Status[Test3DFigureCopy] = TestStatus.NotStarted
+        
         self.curr = 0
         if self.mode == .admin {
             self.NextButton.isEnabled = true

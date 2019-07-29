@@ -514,6 +514,8 @@ extension TrailsAViewController {
         self.vCounterTimer.isHidden = false
         self.title = self.lblChooseTheTest.text
         
+        Status[TestTrails] = TestStatus.NotStarted
+        
         // Show button Reset
         self.btnReset.isHidden = false
         
@@ -553,6 +555,10 @@ extension TrailsAViewController {
         guard !quickStartModeOn else {
             didBackToResult?()
             return
+        }
+        
+        if Status[TestTrails] != TestStatus.Done {
+            Status[TestTrails] = TestStatus.NotStarted
         }
         
         if let nav = self.navigationController {

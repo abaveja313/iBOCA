@@ -269,6 +269,8 @@ class PicturesViewController: BaseViewController {
         self.resultsLabel.text = ""
         self.tfObjectName.text = ""
         
+        Status[TestNampingPictures] = TestStatus.NotStarted
+        
         count = 0
         corr = 0
         back = 0
@@ -325,7 +327,10 @@ extension PicturesViewController {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.view.endEditing(true)
-        Status[TestNampingPictures] = TestStatus.NotStarted
+        
+        if Status[TestNampingPictures] != TestStatus.Done {
+            Status[TestNampingPictures] = TestStatus.NotStarted
+        }
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -363,8 +368,8 @@ extension PicturesViewController {
     
     @IBAction func btnBackTapped(_ sender: Any) {
         self.view.endEditing(true)
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
+        if Status[TestNampingPictures] != TestStatus.Done {
+            Status[TestNampingPictures] = TestStatus.NotStarted
         }
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()

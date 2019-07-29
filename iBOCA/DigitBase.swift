@@ -58,8 +58,11 @@ class DigitBase: BaseViewController {
         } else {
             assert(true, "Error, got here with wrong name")
         }
+        
         base!.base = self
         base!.doStart()
+        
+        Status[base!.testStatus] = TestStatus.NotStarted
         
         setupCounterTimeView()
         

@@ -139,6 +139,8 @@ class OrientationTask: BaseViewController {
            lblBack.text = "RESULT"
         }
         
+        Status[TestOrientation] = TestStatus.NotStarted
+        
         // Get the random State
         let indexState = Int(arc4random_uniform(UInt32(stateData.count)))
         State = stateData[indexState]
@@ -409,8 +411,8 @@ extension OrientationTask {
 // MARK: - Action
 extension OrientationTask {
     @IBAction func actionBack(_ sender: Any) {
-        if Status[TestVisualAssociation] != TestStatus.Done {
-            Status[TestVisualAssociation] = TestStatus.NotStarted
+        if Status[TestOrientation] != TestStatus.Done {
+            Status[TestOrientation] = TestStatus.NotStarted
         }
         self.timerOrientationTask.invalidate()
         
