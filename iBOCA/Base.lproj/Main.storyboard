@@ -2087,10 +2087,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test complete in 22.0 seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKB-Id-kN6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test complete in 22.0 seconds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKB-Id-kN6">
                                 <rect key="frame" x="380.5" y="193" width="263" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="263" id="JiW-Vy-cpS"/>
+                                    <constraint firstAttribute="width" constant="400" id="JiW-Vy-cpS"/>
                                     <constraint firstAttribute="height" constant="22" id="T60-nM-b9w"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2107,7 +2107,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.0 seconds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-xR-QSE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.0 seconds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-xR-QSE">
                                 <rect key="frame" x="821" y="193" width="118" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="iak-8s-deZ"/>
@@ -2219,7 +2219,7 @@
                             <constraint firstItem="UH0-nC-xo2" firstAttribute="trailing" secondItem="J85-1L-pmA" secondAttribute="leading" constant="-11" id="gwX-He-mtp"/>
                             <constraint firstItem="Npl-C7-z2U" firstAttribute="leading" secondItem="goU-XL-TJq" secondAttribute="leading" constant="42" id="hBf-1q-asB"/>
                             <constraint firstItem="If5-tm-J9h" firstAttribute="trailing" secondItem="goU-XL-TJq" secondAttribute="trailing" constant="-42" id="n1B-Z1-hBQ"/>
-                            <constraint firstAttribute="trailing" secondItem="yjq-xR-QSE" secondAttribute="trailing" constant="85" id="o3B-iV-0JR"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yjq-xR-QSE" secondAttribute="trailing" constant="20" id="o3B-iV-0JR"/>
                             <constraint firstItem="rVP-EB-s5S" firstAttribute="top" secondItem="lYH-nT-eYa" secondAttribute="bottom" constant="28" id="pMn-zC-33x"/>
                             <constraint firstItem="gIf-Rb-KsR" firstAttribute="leading" secondItem="goU-XL-TJq" secondAttribute="leading" id="rSe-qO-HQe"/>
                             <constraint firstItem="J85-1L-pmA" firstAttribute="centerY" secondItem="Npl-C7-z2U" secondAttribute="centerY" id="s0x-38-CpZ"/>
