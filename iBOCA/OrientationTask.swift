@@ -155,7 +155,7 @@ class OrientationTask: BaseViewController {
             // Get the random time
             formatter.dateFormat = "yyyy/MM/dd HH:mm"
             currentTime.setDate(date_random,  animated: false)
-            formatter.dateFormat = "HH:MM"
+            formatter.dateFormat = "HH:mm"
             Time = formatter.string(from: currentTime.date)
             TimeOK = TimeDiffOK(date1: startTime, date2: currentDate.date)
             
@@ -601,7 +601,7 @@ extension OrientationTask {
         formatter.dateFormat = "y-MM-dd"
         let rightDate = formatter.string(from: startTime)
         result.json["Date Tested"] = rightDate
-        formatter.dateFormat = "HH:MM"
+        formatter.dateFormat = "HH:mm"
         let rightTime = formatter.string(from: startTime)
         result.json["Time Tested"] = rightTime
         formatter.dateFormat = "EEEE"
