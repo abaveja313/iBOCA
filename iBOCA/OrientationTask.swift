@@ -618,30 +618,38 @@ extension OrientationTask {
         result.json["Don't know year"] = dkYear
         result.json["State Correct"] = stateOK
         
+        var tempNumberErrors = 0
         if stateOK == false {
             result.shortDescription = "State: \(State!)(\(currentState)) "
+            tempNumberErrors += 1
         }
         if WeekOK == false {
             result.shortDescription = result.shortDescription! + " Week: \(Week!)(\(rightWeek)) "
+            tempNumberErrors += 1
         }
         if DateOK == false {
             result.shortDescription = result.shortDescription! + " Date: \(Date!)(\(rightDate)) "
+            tempNumberErrors += 1
         }
         if dkDate {
             result.shortDescription = result.shortDescription! + " Don't know date "
+            tempNumberErrors += 1
         }
         if dkMonth {
             result.shortDescription = result.shortDescription! + " Don't know month "
+            tempNumberErrors += 1
         }
         
         if dkYear {
             result.shortDescription = result.shortDescription! + " Don't know year "
+            tempNumberErrors += 1
         }
         
         if TimeOK == false {
             result.shortDescription = result.shortDescription! + " Time: \(Time!)(\(rightTime)) "
+            tempNumberErrors += 1
         }
-        
+        result.numErrors = tempNumberErrors
         result.longDescription.add(result.shortDescription!)
         resultsArray.add(result)
         Status[TestOrientation] = TestStatus.Done
