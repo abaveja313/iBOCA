@@ -69,6 +69,7 @@ class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
     
     // Practice Test
     var endedPracticeTest = false
+    var timerPractice: Timer?
     
     var drawingView: DrawingViewTrails!
     var imageView: UIImageView!
@@ -96,7 +97,12 @@ class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        runtimer?.invalidate()
+        if isPracticeTest == true {
+            timerPractice?.invalidate()
+        }
+        else {
+            runtimer?.invalidate()
+        }
     }
     
     /*   @IBAction func HelpButton(sender: AnyObject) {
@@ -498,7 +504,8 @@ extension TrailsAViewController {
         self.drawingView.canDraw = true
         bubbleColor = UIColor.red
         
-        _ = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        timerPractice = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        timerPractice?.fire()
     }
     
     // Start Trail Test
@@ -560,6 +567,8 @@ extension TrailsAViewController {
     }
     
     @objc func resetTapped(_ sender: GradientButton) {
+        runtimer?.invalidate()
+        timerPractice?.invalidate()
         self.startTest()
     }
     
@@ -723,7 +732,7 @@ extension TrailsAViewController {
         
         displayImgTrailsA = false
         
-        bubbleColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
+//        bubbleColor = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
     }
     
     func drawCustomImage(size: CGSize) -> UIImage {
