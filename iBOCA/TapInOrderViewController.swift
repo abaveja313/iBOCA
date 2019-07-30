@@ -291,6 +291,16 @@ class TapInOrderViewController: BaseViewController {
         }
     }
     
+    private func pauseTest() {
+        ended = true
+        
+        startButton.isEnabled = false
+        endButton.isEnabled = false
+        resetButton.isEnabled = true
+        
+        mCounterView?.setTimeWith(startTime: Date(), currentTime: Date())
+        stopCounter()
+    }
     
     func donetest() {
         ended = true
@@ -709,7 +719,7 @@ class TapInOrderViewController: BaseViewController {
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
             isPause = true
-            donetest()
+            pauseTest()
             didBackToResult?()
             return
         }
