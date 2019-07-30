@@ -555,6 +555,9 @@ class TapInOrderViewController: BaseViewController {
                 
                 //if it's the correct button but there are more in sequence, curpressed increases by 1 to check next tap
                 currpressed = currpressed + 1
+                
+                // Delete the action itself
+                sender.removeTarget(self, action: #selector(self.buttonAction(sender:)), for: .touchUpInside)
             }
         }
     }
