@@ -143,6 +143,7 @@ extension IntroViewController {
         self.videoView.delegate = self
         
         self.introDescriptionTextView.isEditable = false
+        self.introDescriptionTextView.isSelectable = false
         self.introDescriptionTextView.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         
         self.trailStartButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
