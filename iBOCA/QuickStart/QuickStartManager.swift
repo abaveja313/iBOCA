@@ -62,6 +62,7 @@ class QuickStartManager: NSObject {
         let introVC = UIStoryboard(name: "Main", bundle:Bundle.main).instantiateViewController(withIdentifier: "IntroViewController") as! IntroViewController
         introVC.showResultButton = type != .orientation
         introVC.quickStartModeOn = true
+        introVC.testTypeQuickStart = type
         introVC.didBackToResult = backToResult
         introVC.didMoveToTestScreen = {
             switch type {
@@ -113,7 +114,6 @@ class QuickStartManager: NSObject {
         else {
             navigationController = UINavigationController.init(rootViewController: introVC)
             navigationController?.isNavigationBarHidden = true
-            
             viewController.present(navigationController!, animated: true, completion: nil)
         }
     }
