@@ -26,6 +26,7 @@ class IntroViewController: BaseViewController {
     var quickStartModeOn: Bool = false
     var didBackToResult: (() -> ())?
     var didMoveToTestScreen: (() -> ())?
+    var testTypeQuickStart: QuickStartManager.TestType = .orientation
     
     var testId: String!
     var videoName: String!
@@ -34,11 +35,22 @@ class IntroViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.videoName = "sample-test-intro"
-        self.setupView()
         
-        self.isPracticeButtonHidden(!Settings.SegueId!)
+        self.videoName = "sample-test-intro"
         self.testId = Settings.TestId
+        self.setupView()
+        self.isPracticeButtonHidden(!Settings.SegueId!)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.testId = Settings.TestId
+        if quickStartModeOn == false {
+            self.loadDataIntroDescription()
+        }
+        else {
+            self.loadDataIntroDescription(withTestType: self.testTypeQuickStart)
+        }
     }
     
     private func stopVideo() {
@@ -115,8 +127,6 @@ class IntroViewController: BaseViewController {
 
 extension IntroViewController {
     fileprivate func setupView() {
-        
-        
         self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
         self.backTitleLabel.addTextSpacing(-0.56)
@@ -150,6 +160,72 @@ extension IntroViewController {
         self.startButton.layer.masksToBounds = true
     }
     
+    func loadDataIntroDescription() {
+        switch self.testId {
+        case "orientation":
+            self.introDescriptionTextView.text = IntroDescription.ORIENTATION
+        case "simple-memory":
+            self.introDescriptionTextView.text = IntroDescription.SIMPLE_MEMORY
+        case "visual-association":
+            self.introDescriptionTextView.text = IntroDescription.VISUAL_ASSOCIATION
+        case "trails":
+            self.introDescriptionTextView.text = IntroDescription.TRAILS
+        case "ForwardDigitSpan":
+            self.introDescriptionTextView.text = IntroDescription.FORWARD_DIGIT_SPAN
+        case "BackwardDigitSpan":
+            self.introDescriptionTextView.text = IntroDescription.BACKWARD_DIGIT_SPAN
+        case "SerialSeven":
+            self.introDescriptionTextView.text = IntroDescription.SERIAL_SEVENS
+        case "3d-figure":
+            self.introDescriptionTextView.text = IntroDescription.THREE_DIMENSION_FIGURE_COPY
+        case "naming-picture":
+            self.introDescriptionTextView.text = IntroDescription.NAMING_PICTURE
+        case "ForwardSpatialSpan":
+            self.introDescriptionTextView.text = IntroDescription.FORWARD_SPATIAL_SPAN
+        case "BackwardSpatialSpan":
+            self.introDescriptionTextView.text = IntroDescription.BACKWARD_SPATIAL_SPAN
+        default:
+            break
+        }
+        
+        self.introDescriptionTextView.addTextSpacing(-0.36)
+        self.introDescriptionTextView.addLineSpacing(10.0)
+        self.introDescriptionTextView.textAlignment = .center
+    }
+    
+    func loadDataIntroDescription(withTestType testType: QuickStartManager.TestType) {
+        switch testType {
+        case .orientation:
+            self.introDescriptionTextView.text = IntroDescription.ORIENTATION
+        case .simpleMemory:
+            self.introDescriptionTextView.text = IntroDescription.SIMPLE_MEMORY
+        case .visualAssociation:
+            self.introDescriptionTextView.text = IntroDescription.VISUAL_ASSOCIATION
+        case .trails:
+            self.introDescriptionTextView.text = IntroDescription.TRAILS
+        case .forwardDigitSpan:
+            self.introDescriptionTextView.text = IntroDescription.FORWARD_DIGIT_SPAN
+        case .backwardDigitSpan:
+            self.introDescriptionTextView.text = IntroDescription.BACKWARD_DIGIT_SPAN
+        case .serialSevens:
+            self.introDescriptionTextView.text = IntroDescription.SERIAL_SEVENS
+        case .figureCopy:
+            self.introDescriptionTextView.text = IntroDescription.THREE_DIMENSION_FIGURE_COPY
+        case .namingPicture:
+            self.introDescriptionTextView.text = IntroDescription.NAMING_PICTURE
+        case .forwardSpatialSpan:
+            self.introDescriptionTextView.text = IntroDescription.FORWARD_SPATIAL_SPAN
+        case .backwardSpatialSpan:
+            self.introDescriptionTextView.text = IntroDescription.BACKWARD_SPATIAL_SPAN
+        default:
+            break
+        }
+        
+        self.introDescriptionTextView.addTextSpacing(-0.36)
+        self.introDescriptionTextView.addLineSpacing(10.0)
+        self.introDescriptionTextView.textAlignment = .center
+    }
+   
     fileprivate func isPracticeButtonHidden(_ isHidden: Bool) {
         self.trailStartButton.isHidden = isHidden
         self.trailStartPracticeButton.isHidden = isHidden
