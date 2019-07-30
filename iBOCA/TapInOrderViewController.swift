@@ -80,7 +80,7 @@ class TapInOrderViewController: BaseViewController {
             self.navigationItem.title = "Backward Spatial Span"
         }
         
-        Status[TestForwardSpatialSpan] = TestStatus.NotStarted
+        Status[testStatus] = TestStatus.NotStarted
 
         endButton.isEnabled = false
         resetButton.isEnabled = false
