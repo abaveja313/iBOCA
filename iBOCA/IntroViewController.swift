@@ -14,7 +14,8 @@ class IntroViewController: BaseViewController {
     @IBOutlet weak var innerShadowView: UIView!
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var playVideoButton: UIButton!
-    @IBOutlet weak var introDescriptionLabel: UILabel!
+    @IBOutlet weak var introDescriptionTextView: UITextView!
+    
     @IBOutlet weak var trailContentButtonView: UIView!
     @IBOutlet weak var trailStartButton: UIButton!
     @IBOutlet weak var trailStartPracticeButton: UIButton!
@@ -131,8 +132,7 @@ extension IntroViewController {
         
         self.videoView.delegate = self
         
-        self.introDescriptionLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        self.introDescriptionLabel.addTextSpacing(-0.36)
+        self.introDescriptionTextView.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         
         self.trailStartButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
         self.trailStartButton.setTitle("START YOUR TEST", for: .normal)
