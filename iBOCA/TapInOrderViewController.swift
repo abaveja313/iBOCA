@@ -715,11 +715,9 @@ class TapInOrderViewController: BaseViewController {
         resetButton.isEnabled = true
         //backButton.isEnabled = true
         
-        
+        donetest()
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
-            // End test here
-            donetest()
             
             QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
                 self.didBackToResult?()
