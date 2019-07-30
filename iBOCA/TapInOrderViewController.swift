@@ -464,7 +464,7 @@ class TapInOrderViewController: BaseViewController {
         //return color to normal, currpressed to zero (restarting that sequence), record the repeat, light up buttons
         
        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             if self.ended == false {
 //                self.statusLabel.text = "Repeating, Observe the pattern"
                 let alert = UIAlertController.init(title: "", message: "Repeating, Observe the pattern", preferredStyle: .alert)
@@ -715,11 +715,9 @@ class TapInOrderViewController: BaseViewController {
         resetButton.isEnabled = true
         //backButton.isEnabled = true
         
-        
+        donetest()
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
-            // End test here
-            donetest()
             
             QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
                 self.didBackToResult?()
