@@ -132,14 +132,14 @@ class TapInOrderViewController: BaseViewController {
     //allow buttons to be pressed
     func enableButtons() {
         for (index, _) in order.enumerated() {
-            buttonList[index].addTarget(self, action: #selector(buttonAction), for: UIControlEvents.touchUpInside)
+            buttonList[index].addTarget(self, action: #selector(buttonAction), for: UIControl.Event.touchUpInside)
         }
     }
     
     //stop buttons from being pressed
     func disableButtons() {
         for (index, _) in order.enumerated() {
-            buttonList[index].removeTarget(self, action: #selector(buttonAction), for: UIControlEvents.touchUpInside)
+            buttonList[index].removeTarget(self, action: #selector(buttonAction), for: UIControl.Event.touchUpInside)
             print("buttons disabled")
         }
     }
@@ -201,7 +201,7 @@ class TapInOrderViewController: BaseViewController {
             let x : CGFloat = CGFloat(a)
             let y : CGFloat = CGFloat(b - 50)
             
-            let button = UIButton(type: UIButtonType.system)
+            let button = UIButton(type: UIButton.ButtonType.system)
             buttonList.append(button)
             button.frame = CGRect(x: x, y: y, width: 61, height: 61)
             button.backgroundColor = Color.color(hexString: "649BFF")
@@ -521,7 +521,7 @@ class TapInOrderViewController: BaseViewController {
     }
     
     //what happens when a user taps a button (if buttons are enabled at the time)
-    func buttonAction(sender:UIButton!)
+    @objc func buttonAction(sender:UIButton!)
     {
         print("Button tapped")
         let currTime = Foundation.Date()

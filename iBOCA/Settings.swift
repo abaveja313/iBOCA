@@ -187,28 +187,28 @@ class Settings {
 public extension UserDefaults {
     
     // MARK: - UserDefaults
-    public class func obj(forKey key: String) -> Any? {
+    class func obj(forKey key: String) -> Any? {
         let defaults = UserDefaults.standard
         
         let obj = defaults.object(forKey: key)
         return obj
     }
     
-    public class func setObj(_ obj: Any?, forKey key: String) {
+    class func setObj(_ obj: Any?, forKey key: String) {
         let defaults = UserDefaults.standard
         
         defaults.set(obj, forKey: key)
         defaults.synchronize()
     }
     
-    public class func removeObj(forKey key: String) {
+    class func removeObj(forKey key: String) {
         let defaults = UserDefaults.standard
         
         defaults.removeObject(forKey: key)
         defaults.synchronize()
     }
     
-    public class func obj(forKey key: String, unarchive: Bool) -> Any? {
+    class func obj(forKey key: String, unarchive: Bool) -> Any? {
         var obj = self.obj(forKey: key)
         //Check for archiving/unarchiving
         if unarchive && (obj is Data) {
@@ -217,7 +217,7 @@ public extension UserDefaults {
         return obj
     }
     
-    public class func setObj(_ obj: Any?, forKey key: String, archive: Bool) {
+    class func setObj(_ obj: Any?, forKey key: String, archive: Bool) {
         
         //Error protection
         if let obj = obj {
@@ -230,7 +230,7 @@ public extension UserDefaults {
         }
     }
     
-    public class func clearDefaults() {
+    class func clearDefaults() {
         let appDomain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
     }

@@ -32,7 +32,7 @@ class DropdownView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.setupUI()
     }
@@ -57,7 +57,7 @@ extension DropdownView {
         }
         else {
             self.isHidden = false
-            if let iSelected = self.itemSelected, self.dataArray.count != 0, let row = self.dataArray.index(of: iSelected) {
+            if let iSelected = self.itemSelected, self.dataArray.count != 0, let row = self.dataArray.firstIndex(of: iSelected) {
                 self.reloadData()
                 let idxPath = IndexPath.init(row: row, section: 0)
                 self.selectRow(at: idxPath, animated: false, scrollPosition: .middle)

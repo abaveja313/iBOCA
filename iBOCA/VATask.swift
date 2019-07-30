@@ -210,7 +210,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         self.totalTimeCounter.fire()
     }
     
-    func updateTime(timer: Timer) {
+    @objc func updateTime(timer: Timer) {
         self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     

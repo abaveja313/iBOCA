@@ -71,8 +71,8 @@ extension LocationManager: CLLocationManagerDelegate {
                     self.viewController?.dismiss(animated: true, completion: nil)
                 }
                 let okAction = UIAlertAction.init(title: "OK", style: .default) { (_) in
-                    if let url = URL.init(string: UIApplicationOpenSettingsURLString) {
-                        UIApplication.shared.openURL(url)
+                    if let url = URL.init(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                     
                     self.viewController?.dismiss(animated: true, completion: nil)

@@ -104,8 +104,8 @@ class OrientationTask: BaseViewController {
                 self.dismiss(animated: true, completion: nil)
             }
             let okAction = UIAlertAction.init(title: "OK", style: .default) { (_) in
-                if let url = URL.init(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.openURL(url)
+                if let url = URL.init(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
                 
                 self.dismiss(animated: true, completion: nil)
@@ -165,7 +165,7 @@ class OrientationTask: BaseViewController {
             Week = weekData[WeekPicker.selectedRow(inComponent: 0)]
             formatter.dateFormat = "EEEE"
             let wk = formatter.string(from: date_random)
-            let v = weekData.index(of: wk)
+            let v = weekData.firstIndex(of: wk)
             if (v != nil) {
                 Week  = wk
                 WeekPicker.selectRow(v!, inComponent: 0, animated: false)
@@ -402,7 +402,7 @@ extension OrientationTask {
         self.timerOrientationTask.fire()
     }
     
-    func updateTime(timer: Timer) {
+    @objc func updateTime(timer: Timer) {
         // Update data into Counter Timer View
         self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
@@ -664,9 +664,9 @@ extension OrientationTask {
 }
 
 // MARK: - UIPickerView Delegate
-extension OrientationTask: UIPickerViewDelegate {
+extension OrientationTask: UIPickerViewDelegate, UIPickerViewDataSource {
     //pickerview setup and whatnot
-    func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     

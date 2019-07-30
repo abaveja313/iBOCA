@@ -255,7 +255,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         return bottomConstraint
     }
     
-    func update(timer: Timer) {
+    @objc func update(timer: Timer) {
         if segueToLanding == true { // The HACK!
             iTimer?.invalidate()
             self.performSegue(withIdentifier: "BackToLanding", sender: self)

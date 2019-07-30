@@ -399,11 +399,11 @@ extension SimpleMemoryTask {
         self.totalTimeCounter.fire()
     }
     
-    func updateTime(timer: Timer) {
+    @objc func updateTime(timer: Timer) {
         self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
-    func startAlert() {
+    @objc func startAlert() {
         //back.isEnabled = false
         next1.isHidden = true
         
@@ -457,7 +457,7 @@ extension SimpleMemoryTask {
         }
     }
     
-    func startNewTask() {
+    @objc func startNewTask() {
         
         self.lblChooseDelayTime.text = self.minuteOfString()
         // Update item Selected Dropdown & hide DropDown
@@ -630,7 +630,7 @@ extension SimpleMemoryTask {
         timerLabel.text = "\(strMinutes) : \(strSeconds)"
     }
     
-    func updateTimeDecreases(timer:Timer) {
+    @objc func updateTimeDecreases(timer:Timer) {
         timerLabel.text = "\(timeFormatted(totalTime))"
         if totalTime != 0 {
             totalTime -= 1
@@ -672,7 +672,7 @@ extension SimpleMemoryTask {
             self.collectionViewObjectName.reloadData()
             self.next1.isHidden = false
             self.next1.isEnabled = true
-            self.next1.addTarget(self, action: #selector(self.doneSM), for: UIControlEvents.touchUpInside)
+            self.next1.addTarget(self, action: #selector(self.doneSM), for: UIControl.Event.touchUpInside)
         }))
         self.present(recallAlert, animated: true, completion: nil)
     }
@@ -900,7 +900,7 @@ extension SimpleMemoryTask {
     }
     
     @IBAction func btnSetDelayTimeTapped(_ sender: Any) {
-        if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.index(of: item) {
+        if let item = self.lblChooseDelayTime.text, let idx = self.dataMinutesDropDown.firstIndex(of: item) {
             Settings.SMDelayTime = idx + 1
         }
         self.updateDataDropDown()
@@ -1022,8 +1022,8 @@ extension SimpleMemoryTask {
             Status[TestSimpleMemory] = TestStatus.Done
             
             // Set attributed into lblDelayLength
-            let attrs1 = [NSFontAttributeName : Font.font(name: Font.Montserrat.medium, size: 18.0), NSForegroundColorAttributeName : Color.color(hexString: "#8A9199")]
-            let attrs2 = [NSFontAttributeName : Font.font(name: Font.Montserrat.medium, size: 18.0), NSForegroundColorAttributeName : UIColor.black]
+            let attrs1 = [NSAttributedString.Key.font : Font.font(name: Font.Montserrat.medium, size: 18.0), NSAttributedString.Key.foregroundColor : Color.color(hexString: "#8A9199")]
+            let attrs2 = [NSAttributedString.Key.font : Font.font(name: Font.Montserrat.medium, size: 18.0), NSAttributedString.Key.foregroundColor : UIColor.black]
             let attrDelayTitle = NSMutableAttributedString(string:"Delay length :", attributes:attrs1)
             let attrDelayContent = NSMutableAttributedString(string:" \(delayTime) seconds", attributes:attrs2)
             

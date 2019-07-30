@@ -106,7 +106,7 @@ extension GradientButton {
     
     func updateTitle(title: String, spacing: CGFloat) {
         let attributedString = NSMutableAttributedString(string: title)
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: attributedString.length))
         self.setAttributedTitle(attributedString, for: .normal)
     }
     
@@ -165,7 +165,7 @@ extension GradientButton {
         self.layer.insertSublayer(self.shadowLayer, at: 0)
         
         if let label = self.titleLabel {
-            self.bringSubview(toFront: label)
+            self.bringSubviewToFront(label)
         }
     }
     
@@ -188,7 +188,7 @@ extension GradientButton {
         self.layer.insertSublayer(self.shadowLayer, at: 0)
         
         if let label = self.titleLabel {
-            self.bringSubview(toFront: label)
+            self.bringSubviewToFront(label)
         }
     }
    

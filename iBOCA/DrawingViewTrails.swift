@@ -178,15 +178,15 @@ class DrawingViewTrails: UIView {
 
         let aFont = Font.font(name: Font.Montserrat.semiBold, size: 22.0)//UIFont(name: "Menlo-Bold", size: 24)
         // create a dictionary of attributes to be applied to the string
-        let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
+        let attr = [NSAttributedString.Key.font:aFont,NSAttributedString.Key.foregroundColor:UIColor.black]
         // create the attributed string
-        let text = CFAttributedStringCreate(nil, name as CFString!, attr as CFDictionary!)
+        let text = CFAttributedStringCreate(nil, name as CFString, attr as CFDictionary)
         // create the line of text
         let line = CTLineCreateWithAttributedString(text!)
 
        context?.textMatrix = CGAffineTransform(rotationAngle: CGFloat.pi).scaledBy(x: -1, y: 1)
 
-        let num = name.characters.count
+        let num = name.count
 
         if num == 1 {
             context?.textPosition = CGPoint(x:CGFloat(x-7), y:CGFloat(y+8))
@@ -199,8 +199,8 @@ class DrawingViewTrails: UIView {
 
         if (name == "1") {
             let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
-            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
-            let text = CFAttributedStringCreate(nil, "Start" as CFString!, attr as CFDictionary!)
+            let attr = [NSAttributedString.Key.font:aFont,NSAttributedString.Key.foregroundColor:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "Start" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
             context?.textPosition = CGPoint(x:CGFloat(x-25), y:CGFloat(y+69))
@@ -210,8 +210,8 @@ class DrawingViewTrails: UIView {
         // Practice Tests
         if self.isPracticeTests == true && name == "b" {
             let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
-            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
-            let text = CFAttributedStringCreate(nil, "End" as CFString!, attr as CFDictionary!)
+            let attr = [NSAttributedString.Key.font:aFont,NSAttributedString.Key.foregroundColor:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "End" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
             context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+69))
@@ -220,8 +220,8 @@ class DrawingViewTrails: UIView {
 
         if self.isPracticeTests == false && (TrailsTests[selectedTest].1[numBubbles-1].0 == name) {
             let aFont = Font.font(name: Font.Montserrat.semiBold, size: 18.0)//UIFont(name: "Menlo", size: 19)
-            let attr = [NSFontAttributeName:aFont,NSForegroundColorAttributeName:UIColor.black]
-            let text = CFAttributedStringCreate(nil, "End" as CFString!, attr as CFDictionary!)
+            let attr = [NSAttributedString.Key.font:aFont,NSAttributedString.Key.foregroundColor:UIColor.black]
+            let text = CFAttributedStringCreate(nil, "End" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
             context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+69))

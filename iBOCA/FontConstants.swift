@@ -14,7 +14,7 @@ import UIKit
 /// All fonts define here.
 public struct Font {
     
-    public static func font(size: CGFloat, weight: UIFont.Weight = UIFontWeightRegular) -> UIFont {
+    public static func font(size: CGFloat, weight: UIFont.Weight = UIFont.Weight.regular) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: weight)
     }
     

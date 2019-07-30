@@ -44,8 +44,8 @@ class QuickStartManager: NSObject {
             
             let transition = CATransition()
             transition.duration = 0.5
-            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            transition.type = CATransitionType.fade
             self.navigationController?.view.layer.add(transition, forKey: nil)
             
             self.navigationController?.pushViewController(resultVC, animated: true)

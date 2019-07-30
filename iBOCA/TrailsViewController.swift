@@ -607,7 +607,7 @@ extension TrailsAViewController {
         else {
             self.vChooseTheTest.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
             // Update state selected first
-            if let item = self.lblChooseTheTest.text, let idx = self.TestTypes.index(of: item) {
+            if let item = self.lblChooseTheTest.text, let idx = self.TestTypes.firstIndex(of: item) {
                 self.ddChooseTheTest.reloadData()
                 self.ddChooseTheTest.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
             }
@@ -624,7 +624,7 @@ extension TrailsAViewController {
         else {
             self.vChooseNumberOfPoints.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
             // Update state selected first
-            if let item = self.lblChooseNumberOfPoints.text, let idx = self.arrNumberOfPoints.index(of: item) {
+            if let item = self.lblChooseNumberOfPoints.text, let idx = self.arrNumberOfPoints.firstIndex(of: item) {
                 self.ddChooseNumberOfPoints.reloadData()
                 self.ddChooseNumberOfPoints.selectRow(at: IndexPath.init(row: idx, section: 0), animated: false, scrollPosition: .middle)
             }

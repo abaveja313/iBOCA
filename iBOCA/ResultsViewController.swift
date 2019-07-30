@@ -79,9 +79,10 @@ class ResultsViewController: BaseViewController {
     
 }
 
-extension ResultsViewController: ResultsHeaderSectionViewDelegate {
+extension ResultsViewController: ResultsHeaderSectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return resultsArray.numResults()
     }
     
@@ -105,10 +106,10 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let result = resultsArray.get(indexPath.section)
         
         switch result.name {
@@ -117,7 +118,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS, TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN, TestName.SIMPLE_MEMORY, TestName.FORWARD_SPATIAL_SPAN, TestName.BACKWARD_SPATIAL_SPAN:
             return 40
         default:
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -129,7 +130,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let result = resultsArray.get(indexPath.section)
         
         switch result.name {

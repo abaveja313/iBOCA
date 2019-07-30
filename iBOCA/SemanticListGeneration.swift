@@ -137,7 +137,7 @@ class SemanticListGeneration: BaseViewController, UIPickerViewDelegate {
     }
     
     
-    func updateCounter() {
+    @objc func updateCounter() {
         //you code, this is an example
         if counter >= 0 {
             print("\(counter) seconds to the end of the world")

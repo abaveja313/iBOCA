@@ -28,7 +28,7 @@ extension UIButton {
             attributedString = NSMutableAttributedString(attributedString: attributedText)
         }
         
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: attributedString.length))
         self.setAttributedTitle(attributedString, for: state)
     }
     
@@ -38,13 +38,13 @@ extension UIButton {
         if let attributedText = self.attributedTitle(for: state) {
             attributedString = NSMutableAttributedString(attributedString: attributedText)
         }
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: attributedString.length))
         if useDefaultFontColor {
             if let textColor = self.titleColor(for: state) {
-                attributedString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSRange(location: 0, length: attributedString.length))
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: attributedString.length))
             }
             if let font = self.titleLabel?.font {
-                attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: attributedString.length))
+                attributedString.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: attributedString.length))
             }
         }
         self.setAttributedTitle(attributedString, for: state)
@@ -57,8 +57,8 @@ extension UIButton {
             attributedString = NSMutableAttributedString(attributedString: attributedText)
         }
         
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSRange(location: 0, length: attributedString.length))
-        attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: attributedString.length))
         self.setAttributedTitle(attributedString, for: state)
     }
 }

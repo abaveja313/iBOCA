@@ -33,7 +33,7 @@ class VideoView: UIView {
         player = AVPlayer(url: URL(fileURLWithPath: path))
         playerLayer = AVPlayerLayer(player: player)
         playerLayer?.frame = bounds
-        playerLayer?.videoGravity = AVLayerVideoGravityResize
+        playerLayer?.videoGravity = AVLayerVideoGravity.resize
         if let playerLayer = self.playerLayer {
             layer.addSublayer(playerLayer)
         }
@@ -41,7 +41,7 @@ class VideoView: UIView {
     }
     
     func play() {
-        if player?.timeControlStatus != AVPlayerTimeControlStatus.playing {
+        if player?.timeControlStatus != AVPlayer.TimeControlStatus.playing {
             player?.play()
         }
     }
@@ -52,7 +52,7 @@ class VideoView: UIView {
     
     func stop() {
         player?.pause()
-        player?.seek(to: kCMTimeZero)
+        player?.seek(to: CMTime.zero)
         if let playerLayer = self.playerLayer {
             playerLayer.removeFromSuperlayer()
         }
@@ -60,10 +60,10 @@ class VideoView: UIView {
     }
     
     func isPlaying() -> Bool {
-        return player?.timeControlStatus == AVPlayerTimeControlStatus.playing
+        return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing
     }
     
-    func playerDidFinishPlaying() {
+    @objc func playerDidFinishPlaying() {
         print("Video Finished")
         if let playerLayer = self.playerLayer {
             playerLayer.removeFromSuperlayer()

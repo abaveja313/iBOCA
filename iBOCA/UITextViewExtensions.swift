@@ -30,7 +30,7 @@ extension UITextView {
         if let attributedText = attributedText {
             attributedString = NSMutableAttributedString(attributedString: attributedText)
         }
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: attributedString.length))
         attributedText = attributedString
     }
     
@@ -41,7 +41,7 @@ extension UITextView {
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
         attributedText = attributedString
     }
@@ -53,8 +53,8 @@ extension UITextView {
         paragraphStyle.alignment = self.textAlignment
         
         let attrString = NSMutableAttributedString(string: self.text ?? "")
-        attrString.addAttribute(NSFontAttributeName, value: self.font as Any, range: NSRange(location: 0, length: attrString.length))
-        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.font, value: self.font as Any, range: NSRange(location: 0, length: attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attrString.length))
         self.attributedText = attrString
     }
 }

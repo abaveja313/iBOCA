@@ -18,7 +18,7 @@ func encryptString(str : String) -> Data {
     do {
         let aes = try AES(key: key, iv: initvec, blockMode: .CBC, padding:Padding.zeroPadding)
         let ciphertext = try aes.encrypt(Array(str.utf8))
-        return Data(bytes: ciphertext)
+        return Data(ciphertext)
     } catch { }
     return Data()
 }
@@ -28,7 +28,7 @@ func decryptString(ciphertext : Data) -> String {
     do {
         let aes = try AES(key: key, iv: initvec, blockMode: .CBC, padding:Padding.zeroPadding)
         let data = try aes.decrypt(ciphertext.bytes)
-        return String(data: Data(bytes: data), encoding: String.Encoding.utf8)!
+        return String(data: Data(data), encoding: String.Encoding.utf8)!
     } catch { }
     return ""
 }

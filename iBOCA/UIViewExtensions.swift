@@ -499,20 +499,20 @@ extension UIView {
     func swipeRight() {
         let transition: CATransition = CATransition.init()
         transition.duration = 0.35
-        transition.type = CATransitionType.init(string: "push") as String
-        transition.subtype = CATransitionSubtype.init(string: "fromRight") as String
-        transition.fillMode = CAMediaTimingFillMode.init(string: "both") as String
-        transition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.init(string: "easeInEaseOut") as String)
+        transition.type = CATransitionType.init(rawValue: "push")
+        transition.subtype = CATransitionSubtype.init(rawValue: "fromRight")
+        transition.fillMode = CAMediaTimingFillMode.init(rawValue: "both")
+        transition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.init(rawValue: "easeInEaseOut"))
         self.layer.add(transition, forKey: kCATransition)
     }
     
     func swipeLeft() {
         let transition: CATransition = CATransition.init()
         transition.duration = 0.35
-        transition.type = CATransitionType.init(string: "push") as String
-        transition.subtype = CATransitionSubtype.init(string: "fromLeft") as String
-        transition.fillMode = CAMediaTimingFillMode.init(string: "both") as String
-        transition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.init(string: "easeInEaseOut") as String)
+        transition.type = CATransitionType.init(rawValue: "push")
+        transition.subtype = CATransitionSubtype.init(rawValue: "fromLeft")
+        transition.fillMode = CAMediaTimingFillMode.init(rawValue: "both")
+        transition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.init(rawValue: "easeInEaseOut"))
         self.layer.add(transition, forKey: kCATransition)
     }
 }

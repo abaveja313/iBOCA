@@ -108,7 +108,7 @@ extension ThreeDFigureCopy {
         self.timer3DFigureCopy.fire()
     }
     
-    func updateTime(timer: Timer) {
+    @objc func updateTime(timer: Timer) {
         self.counterTime.setTimeWith(startTime: self.startTime2, currentTime: Foundation.Date())
     }
     

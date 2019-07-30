@@ -91,11 +91,11 @@ class PatiantID {
             return
         }
 
-        for (index, char) in testAdminName.characters.enumerated() {
+        for (index, char) in testAdminName.enumerated() {
             let indexminus1 = index - 1
             if index == 0 {
                 currInitials = String(char).uppercased()
-            } else if testAdminName[testAdminName.characters.index(testAdminName.startIndex, offsetBy:indexminus1)] == " " {
+            } else if testAdminName[testAdminName.index(testAdminName.startIndex, offsetBy:indexminus1)] == " " {
                 self.currInitials += String(char).uppercased()
             }
         }

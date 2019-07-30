@@ -284,7 +284,7 @@ class AllResults  {
     
     func returnEmailStringBase64EncodedImage(_ image:UIImage) -> String {
         //BUGBUG: Fix this!!
-        let imgData:Data = UIImagePNGRepresentation(image)! as Data;
+        let imgData:Data = image.pngData()!
         let dataString = imgData.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
         return dataString
     }
