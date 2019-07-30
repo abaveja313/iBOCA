@@ -2446,15 +2446,13 @@
                                             <constraint firstItem="MPe-P7-WMA" firstAttribute="centerY" secondItem="cpz-mP-ZVO" secondAttribute="centerY" id="Mne-aw-nTA"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt (Subtitles for the video)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSy-oD-Exo">
-                                        <rect key="frame" x="190" y="366.5" width="560" height="62"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="62" id="vSV-Zb-jqF"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oam-Ho-CPq">
+                                        <rect key="frame" x="190" y="366.5" width="560" height="95"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gZ-wV-s6B">
                                         <rect key="frame" x="133.5" y="478" width="673" height="72"/>
                                         <subviews>
@@ -2515,14 +2513,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="3gZ-wV-s6B" secondAttribute="bottom" constant="38" id="1GW-RJ-FHC"/>
-                                    <constraint firstItem="xSy-oD-Exo" firstAttribute="centerX" secondItem="cpz-mP-ZVO" secondAttribute="centerX" id="6Zv-aH-EQS"/>
-                                    <constraint firstItem="xSy-oD-Exo" firstAttribute="top" secondItem="cpz-mP-ZVO" secondAttribute="bottom" constant="16.600000000000001" id="9oI-yH-wmU"/>
                                     <constraint firstAttribute="bottom" secondItem="cpz-mP-ZVO" secondAttribute="bottom" constant="238" id="IAM-4d-LKn"/>
                                     <constraint firstAttribute="bottom" secondItem="et2-lf-Kdr" secondAttribute="bottom" constant="38" id="L94-tT-11w"/>
+                                    <constraint firstItem="3gZ-wV-s6B" firstAttribute="top" secondItem="oam-Ho-CPq" secondAttribute="bottom" constant="16.600000000000001" id="PeS-XE-C2X"/>
+                                    <constraint firstItem="oam-Ho-CPq" firstAttribute="top" secondItem="cpz-mP-ZVO" secondAttribute="bottom" constant="16.600000000000001" id="Rr5-eH-PkI"/>
                                     <constraint firstAttribute="trailing" secondItem="cpz-mP-ZVO" secondAttribute="trailing" constant="190" id="VkI-v5-Nj0"/>
                                     <constraint firstAttribute="height" constant="588" id="Vwt-Sl-BgE"/>
                                     <constraint firstItem="et2-lf-Kdr" firstAttribute="centerX" secondItem="dX1-uD-rsJ" secondAttribute="centerX" id="dnE-Mh-srQ"/>
-                                    <constraint firstItem="xSy-oD-Exo" firstAttribute="width" secondItem="cpz-mP-ZVO" secondAttribute="width" id="qLF-EK-JY5"/>
+                                    <constraint firstItem="oam-Ho-CPq" firstAttribute="centerX" secondItem="dX1-uD-rsJ" secondAttribute="centerX" id="nZj-GM-jfp"/>
+                                    <constraint firstItem="oam-Ho-CPq" firstAttribute="width" secondItem="cpz-mP-ZVO" secondAttribute="width" id="oOi-Np-8uu"/>
                                     <constraint firstItem="3gZ-wV-s6B" firstAttribute="centerX" secondItem="dX1-uD-rsJ" secondAttribute="centerX" id="rw6-LQ-eXk"/>
                                     <constraint firstItem="cpz-mP-ZVO" firstAttribute="top" secondItem="dX1-uD-rsJ" secondAttribute="top" constant="36" id="uxD-Td-jIu"/>
                                     <constraint firstItem="cpz-mP-ZVO" firstAttribute="leading" secondItem="dX1-uD-rsJ" secondAttribute="leading" constant="190" id="wlX-63-Xm8"/>
@@ -2546,7 +2545,7 @@
                     <connections>
                         <outlet property="backTitleLabel" destination="0ov-zH-laa" id="v7i-ul-GXZ"/>
                         <outlet property="innerShadowView" destination="dX1-uD-rsJ" id="VCy-wn-Cxq"/>
-                        <outlet property="introDescriptionLabel" destination="xSy-oD-Exo" id="0BC-Ec-Uik"/>
+                        <outlet property="introDescriptionTextView" destination="oam-Ho-CPq" id="dvj-PI-5wy"/>
                         <outlet property="playVideoButton" destination="MPe-P7-WMA" id="vlE-ps-nGs"/>
                         <outlet property="startButton" destination="et2-lf-Kdr" id="Su3-Vk-86x"/>
                         <outlet property="trailContentButtonView" destination="3gZ-wV-s6B" id="RzD-QX-1bC"/>
@@ -2557,7 +2556,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0o-9s-YOv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4379.8828125" y="1029.6875"/>
+            <point key="canvasLocation" x="-4381.640625" y="1029.6875"/>
         </scene>
         <!--Demographics-->
         <scene sceneID="1qk-yG-6Pt">
