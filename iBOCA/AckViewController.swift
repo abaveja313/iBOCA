@@ -15,11 +15,15 @@ class AckViewController:  BaseViewController {
     @IBOutlet weak var versionLabel: UILabel!
     
     @IBAction func BCSbutton(_ sender: Any) {
-        UIApplication.shared.openURL(NSURL(string: "http://www.bostoncognitive.org")! as URL)
+        if let url = URL.init(string: "http://www.bostoncognitive.org") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func CNBSbutton(_ sender: Any) {
-        UIApplication.shared.openURL(NSURL(string: "http://tmslab.org/")! as URL)
+        if let url = URL.init(string: "http://tmslab.org") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     override func viewDidLoad() {

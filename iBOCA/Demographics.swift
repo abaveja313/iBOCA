@@ -196,7 +196,7 @@ extension Demographics {
         Education = educationData[12]
         Race = raceData[0]
         
-        guard let _PID = Settings.patiantID else { return }
+        guard let _ = Settings.patiantID else { return }
         testStartTime = Foundation.Date()
         
         PUID = ""

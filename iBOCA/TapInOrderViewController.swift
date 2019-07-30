@@ -126,7 +126,7 @@ class TapInOrderViewController: BaseViewController {
             self.buttonList[index].backgroundColor = UIColor.red
         }
         
-        StartTest(resetButton)
+        StartTest(resetButton as Any)
     }
     
     //allow buttons to be pressed
@@ -371,14 +371,14 @@ class TapInOrderViewController: BaseViewController {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){ [weak self] in
                             if self?.ended == false{
                                 self?.buttonList[num].backgroundColor = Color.color(hexString: "649BFF")
-                                print("Drawing \(self?.index)")
+                                debugPrint("Drawing \(self?.index)")
                                 var num2 : Int = num
                                 if self?.forwardNotBackward == true{
                                     num2 += 1
                                 } else {
                                     num2 -= 1
                                 }
-                                print("num2: \(num2)")
+                                debugPrint("num2: \(num2)")
                                 self?.drawSequenceRecursively(num: num2)
                             }
                         }

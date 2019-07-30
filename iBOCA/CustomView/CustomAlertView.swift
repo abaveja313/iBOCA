@@ -148,7 +148,7 @@ class CustomAlertView: UIView {
     }
     
     private func renderOneItem(){
-        guard let item = items.first else{
+        guard let _ = items.first else{
             return
         }
         
