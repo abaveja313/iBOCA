@@ -64,6 +64,7 @@ class TapInOrderViewController: BaseViewController {
     
     var mCounterView : CounterTimeView?
     var mTimerCounting : Timer?
+    private var isPause: Bool = false
     
     //randomize 1st order; light up 1st button
     override func viewDidLoad() {
@@ -97,7 +98,13 @@ class TapInOrderViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startTest()
+        if isPause {
+            isPause = false
+            reset()
+        }
+        else {
+            startTest()
+        }
     }
     
     
@@ -701,6 +708,8 @@ class TapInOrderViewController: BaseViewController {
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
+            isPause = true
+            donetest()
             didBackToResult?()
             return
         }
