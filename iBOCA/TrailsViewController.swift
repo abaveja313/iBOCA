@@ -98,6 +98,7 @@ class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if isPracticeTest == true {
+            isPracticeTest = false
             timerPractice?.invalidate()
         }
         else {
