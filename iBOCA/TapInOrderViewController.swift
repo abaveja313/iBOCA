@@ -64,6 +64,7 @@ class TapInOrderViewController: BaseViewController {
     
     var mCounterView : CounterTimeView?
     var mTimerCounting : Timer?
+    private var isPause: Bool = false
     
     //randomize 1st order; light up 1st button
     override func viewDidLoad() {
@@ -97,7 +98,13 @@ class TapInOrderViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startTest()
+        if isPause {
+            isPause = false
+            reset()
+        }
+        else {
+            startTest()
+        }
     }
     
     
@@ -284,6 +291,16 @@ class TapInOrderViewController: BaseViewController {
         }
     }
     
+    private func pauseTest() {
+        ended = true
+        
+        startButton.isEnabled = false
+        endButton.isEnabled = false
+        resetButton.isEnabled = true
+        
+        mCounterView?.setTimeWith(startTime: Date(), currentTime: Date())
+        stopCounter()
+    }
     
     func donetest() {
         ended = true
@@ -464,7 +481,7 @@ class TapInOrderViewController: BaseViewController {
         //return color to normal, currpressed to zero (restarting that sequence), record the repeat, light up buttons
         
        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             if self.ended == false {
 //                self.statusLabel.text = "Repeating, Observe the pattern"
                 let alert = UIAlertController.init(title: "", message: "Repeating, Observe the pattern", preferredStyle: .alert)
@@ -555,6 +572,9 @@ class TapInOrderViewController: BaseViewController {
                 
                 //if it's the correct button but there are more in sequence, curpressed increases by 1 to check next tap
                 currpressed = currpressed + 1
+                
+                // Delete the action itself
+                sender.removeTarget(self, action: #selector(self.buttonAction(sender:)), for: .touchUpInside)
             }
         }
     }
@@ -696,8 +716,12 @@ class TapInOrderViewController: BaseViewController {
             Status[testStatus] = TestStatus.NotStarted
         }
         
+        // Stop the test
+        pauseTest()
+        
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
+            isPause = true
             didBackToResult?()
             return
         }
@@ -712,11 +736,9 @@ class TapInOrderViewController: BaseViewController {
         resetButton.isEnabled = true
         //backButton.isEnabled = true
         
-        
+        donetest()
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
-            // End test here
-            donetest()
             
             QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
                 self.didBackToResult?()
