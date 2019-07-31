@@ -8,6 +8,7 @@
 
 import UIKit
 
+var adminTransmitOn : Bool = false
 class AdministeredViewController: BaseViewController {
 
     
@@ -49,11 +50,16 @@ class AdministeredViewController: BaseViewController {
         mTfMail.layer.borderWidth = 1
         mTfMail.layer.cornerRadius = 5
         mTfMail.layer.masksToBounds = true
+        mTfMail.delegate = self
+        if let email = Settings.resultsEmailAddressByAdmin {
+            mTfMail.text = email
+        }
         //
         mTextEnableConsent.font = Font.font(name: Font.Montserrat.medium, size: 18)
         mTextEnableConsent.textColor = UIColor.black
         //
         mSwitch.onTintColor = Color.color(hexString: "69C394")
+        mSwitch.isOn = UserDefaults.standard.bool(forKey: "AdminTransmit")
         //
         mBtnSelectTest.layer.cornerRadius = 8
         mBtnSelectTest.layer.masksToBounds = true
@@ -68,36 +74,60 @@ class AdministeredViewController: BaseViewController {
         mBtnQuickStart.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
     }
     
+    fileprivate func validate() -> Bool {
+        if !mTfMail.text!.isEmpty {
+            if !mTfMail.text!.isValidEmail() {
+                self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
+                return false
+            } else {
+                // UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                Settings.resultsEmailAddressByAdmin = mTfMail.text
+                return true
+            }
+        }
+        
+        return true
+    }
+    
     @IBAction func switchChange(_ sender: Any) {
-        debugPrint("isON: \(mSwitch.isOn)")
         if mSwitch.isOn == true{
             showAlertTurnOnConsent()
+        } else {
+            UserDefaults.standard.set(self.mSwitch.isOn, forKey: "AdminTransmit")
+            UserDefaults.standard.synchronize()
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }
     }
     
     @IBAction func tapSelectTest(_ sender: Any) {
-        if mSwitch.isOn == true {
-            // Consent to provide data
-            self.goToDemoGraphics()
-        }
-        else {
-            self.goToSelectTest()
+        if validate() {
+            if mSwitch.isOn == true {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
+            else {
+                self.goToSelectTest()
+            }
         }
     }
+    
     @IBAction func actionBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
-        if mSwitch.isOn == true {
-            // Consent to provide data
-            self.goToDemoGraphics()
-        }
-        else {
-            savePID()
-            
-            let manager = QuickStartManager.init(controller: self)
-            manager.start()
+        if validate() {
+            if mSwitch.isOn == true {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
+            else {
+                savePID()
+                
+                let manager = QuickStartManager.init(controller: self)
+                manager.start()
+            }
         }
     }
     
@@ -114,9 +144,14 @@ class AdministeredViewController: BaseViewController {
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.mSwitch.isOn = false
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }))
         alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
-            
+            UserDefaults.standard.set(self.mSwitch.isOn, forKey: "AdminTransmit")
+            UserDefaults.standard.synchronize()
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -135,5 +170,12 @@ class AdministeredViewController: BaseViewController {
             vc.mode = .admin
             self.present(vc, animated: true, completion: nil)
         }
+    }
+}
+
+extension AdministeredViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

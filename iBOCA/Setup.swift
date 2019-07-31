@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-var transmitOn : Bool = false
+var proctoredTransmitOn : Bool = false
 var atBIDMCOn  : Bool = false
 var emailOn    : Bool = false
 var emailAddress       : String = ""
@@ -46,7 +46,7 @@ class Setup: BaseViewController  {
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
         
-        if let email = UserDefaults.standard.string(forKey: "emailAddress") {
+        if let email = Settings.resultsEmailAddressByProctored { //UserDefaults.standard.string(forKey: "emailAddress")
             emailTextField.text = email
         }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
@@ -62,7 +62,8 @@ class Setup: BaseViewController  {
                 self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
                 return false
             } else {
-                UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                // UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                Settings.resultsEmailAddressByProctored = emailTextField.text
                 return true
             }
         }
@@ -74,10 +75,14 @@ class Setup: BaseViewController  {
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.provideDataSwitch.isOn = false
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }))
         alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
             UserDefaults.standard.set(self.provideDataSwitch.isOn, forKey: "Transmit")
             UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -140,6 +145,8 @@ extension Setup {
         } else {
             UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
             UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }
     }
     
@@ -200,6 +207,7 @@ extension Setup {
         self.emailTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.emailTextField.layer.cornerRadius = 5
         self.emailTextField.layer.masksToBounds = true
+        self.emailTextField.delegate = self
         
         self.provideDataLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.provideDataLabel.textColor = Color.color(hexString: "#000000")
@@ -217,6 +225,11 @@ extension Setup {
 }
 
 extension Setup: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

@@ -37,7 +37,7 @@ class DigitBothDirection:DigitBaseClass {
     override func doStart() {
         testInitialize()
         base.setButtonEnabled(false)
-        base.infoLabel.text = "Tell the patient the numbers, followed by intering his/her response"
+        base.infoLabel.text = "Tell the patient the numbers, followed by entering his/her response"
         level = levelStart() - 1
         redo = 0
         

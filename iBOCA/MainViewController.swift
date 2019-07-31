@@ -90,7 +90,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
             emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
         }
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
+        proctoredTransmitOn = UserDefaults.standard.bool(forKey: "Transmit")
         
         PatiantID.text = PID.getID()
         
@@ -148,23 +148,43 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     @IBAction func sendEmail(_ sender: Any) {
         var body:String?
-        
         if(MFMailComposeViewController.canSendMail()  && resultsArray.numResults() > 0) {
-            if(emailOn) {
-                // send the e-mail
-                body = resultsArray.emailBody()
-                sendEmail(body: body!, address: [emailAddress])
-                if(transmitOn) {
-                    // queue the 2nd e-mail to server
-                    doSecondEmail = true
+            // Check mode Admin or Proctored
+            switch mode {
+            case .admin:
+                if let email = Settings.resultsEmailAddressByAdmin {
+                    body = resultsArray.emailBody()
+                    sendEmail(body: body!, address: [email])
+                    if (adminTransmitOn) {
+                        // queue the 2nd e-mail to server
+                        doSecondEmail = true
+                    }
                 }
-            } else if(transmitOn) {
-                // email to server
-                sendEmail(body: "", address: [serverEmailAddress])
-            } else {
-                // nothing to send
-                resultsArray.doneWithPatient()
-                segueToLanding = true
+                else if (adminTransmitOn) {
+                    // email to server
+                    sendEmail(body: "", address: [serverEmailAddress])
+                }
+                else {
+                    resultsArray.doneWithPatient()
+                    segueToLanding = true
+                }
+            case .patient:
+                if let email = Settings.resultsEmailAddressByProctored {
+                    body = resultsArray.emailBody()
+                    sendEmail(body: body!, address: [email])
+                    if (proctoredTransmitOn) {
+                        // queue the 2nd e-mail to server
+                        doSecondEmail = true
+                    }
+                }
+                else if (proctoredTransmitOn) {
+                    // email to server
+                    sendEmail(body: "", address: [serverEmailAddress])
+                }
+                else {
+                    resultsArray.doneWithPatient()
+                    segueToLanding = true
+                }
             }
         } else {
             // nothing to send
@@ -348,7 +368,7 @@ extension MainViewController {
     }
     
     func setupData(){
-        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Foward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Foward\nSpatial Span","Backward\nSpatial Span","MOCA\n"]
+        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Forward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Forward\nSpatial Span","Backward\nSpatial Span","MOCA\n"]
         let arrIcon = ["orientation","simple-memory","visual-association","trails","speech-to-text","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","moca"]
         let arrSegueID = ["orientation","simple-memory","visual-association","trails","speech-to-text","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","moca"]
         let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestSpeechToText,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestMOCAResults]

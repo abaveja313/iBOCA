@@ -14,6 +14,8 @@ class AllResults  {
     
     var results:NSMutableArray = NSMutableArray()
     
+    var mode: TestMode = .admin
+    
     // Get the results at # index
     func get(_ index: Int) -> Results {
         return results.object(at: index) as! Results
@@ -55,9 +57,7 @@ class AllResults  {
             e += "<h4>The Test Class: \(theTestClass) </h4>\n"
         }
         
-        if transmitOn {
-            e += "<h4>Results recorded to server</h4>\n"
-        }
+        e += mode == .admin ? (adminTransmitOn ? "<h4>Results recorded to server</h4>\n" : "") : (proctoredTransmitOn ? "<h4>Results recorded to server</h4>\n" : "")
         
         if PUID != "" {
             e += "<h4>Patiant Unique ID : \(PUID)</h4>\n"
