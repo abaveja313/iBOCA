@@ -60,6 +60,7 @@ class AdministeredViewController: BaseViewController {
         //
         mSwitch.onTintColor = Color.color(hexString: "69C394")
         mSwitch.isOn = UserDefaults.standard.bool(forKey: "AdminTransmit")
+        adminTransmitOn = mSwitch.isOn
         //
         mBtnSelectTest.layer.cornerRadius = 8
         mBtnSelectTest.layer.masksToBounds = true
@@ -84,6 +85,8 @@ class AdministeredViewController: BaseViewController {
                 Settings.resultsEmailAddressByAdmin = mTfMail.text
                 return true
             }
+        } else {
+            Settings.resultsEmailAddressByAdmin = nil
         }
         
         return true
@@ -159,6 +162,7 @@ class AdministeredViewController: BaseViewController {
     fileprivate func goToDemoGraphics() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
+            vc.mode = .admin
             self.present(vc, animated:true, completion:nil)
         }
     }

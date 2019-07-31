@@ -49,6 +49,8 @@ class Demographics: BaseViewController, MFMailComposeViewControllerDelegate, UIT
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnNext: UIButton!
     
+    var mode: TestMode = .admin
+    
     // MARK: - Variable
     let genderData = ["Male", "Female", "Other", "Prefer Not To Say"]
     
@@ -298,7 +300,8 @@ extension Demographics {
         Settings.isGotoTest = true
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "main") as! MainViewController
+        vc.mode = self.mode
         self.present(vc, animated: true, completion: nil)
     }
     
