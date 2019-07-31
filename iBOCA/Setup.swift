@@ -206,6 +206,7 @@ extension Setup {
         self.emailTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
         self.emailTextField.layer.cornerRadius = 5
         self.emailTextField.layer.masksToBounds = true
+        self.emailTextField.delegate = self
         
         self.provideDataLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
         self.provideDataLabel.textColor = Color.color(hexString: "#000000")
@@ -223,6 +224,11 @@ extension Setup {
 }
 
 extension Setup: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

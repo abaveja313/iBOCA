@@ -99,7 +99,7 @@ class DemographicsCell: UICollectionViewCell {
         }
         
         if style == .PaientIDNumber {
-            self.lblTitle.text = "Paient ID Number"
+            self.lblTitle.text = "Patient ID Number"
         }
         else if style == .Ethnicity {
             self.lblTitle.text = "Ethnicity"

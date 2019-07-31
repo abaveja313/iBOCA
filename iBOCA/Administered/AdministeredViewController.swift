@@ -50,6 +50,7 @@ class AdministeredViewController: BaseViewController {
         mTfMail.layer.borderWidth = 1
         mTfMail.layer.cornerRadius = 5
         mTfMail.layer.masksToBounds = true
+        mTfMail.delegate = self
         //
         mTextEnableConsent.font = Font.font(name: Font.Montserrat.medium, size: 18)
         mTextEnableConsent.textColor = UIColor.black
@@ -146,5 +147,12 @@ class AdministeredViewController: BaseViewController {
             vc.mode = .admin
             self.present(vc, animated: true, completion: nil)
         }
+    }
+}
+
+extension AdministeredViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
