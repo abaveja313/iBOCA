@@ -90,7 +90,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
             emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
         }
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
+        proctoredTransmitOn = UserDefaults.standard.bool(forKey: "Transmit")
         
         PatiantID.text = PID.getID()
         
@@ -154,11 +154,11 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                 // send the e-mail
                 body = resultsArray.emailBody()
                 sendEmail(body: body!, address: [emailAddress])
-                if(transmitOn) {
+                if(proctoredTransmitOn) {
                     // queue the 2nd e-mail to server
                     doSecondEmail = true
                 }
-            } else if(transmitOn) {
+            } else if(proctoredTransmitOn) {
                 // email to server
                 sendEmail(body: "", address: [serverEmailAddress])
             } else {

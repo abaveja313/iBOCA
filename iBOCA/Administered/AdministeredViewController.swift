@@ -8,6 +8,7 @@
 
 import UIKit
 
+var adminTransmitOn : Bool = false
 class AdministeredViewController: BaseViewController {
 
     
@@ -54,6 +55,7 @@ class AdministeredViewController: BaseViewController {
         mTextEnableConsent.textColor = UIColor.black
         //
         mSwitch.onTintColor = Color.color(hexString: "69C394")
+        mSwitch.isOn = UserDefaults.standard.bool(forKey: "AdminTransmit")
         //
         mBtnSelectTest.layer.cornerRadius = 8
         mBtnSelectTest.layer.masksToBounds = true
@@ -69,9 +71,13 @@ class AdministeredViewController: BaseViewController {
     }
     
     @IBAction func switchChange(_ sender: Any) {
-        debugPrint("isON: \(mSwitch.isOn)")
         if mSwitch.isOn == true{
             showAlertTurnOnConsent()
+        } else {
+            UserDefaults.standard.set(self.mSwitch.isOn, forKey: "AdminTransmit")
+            UserDefaults.standard.synchronize()
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }
     }
     
@@ -114,9 +120,14 @@ class AdministeredViewController: BaseViewController {
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.mSwitch.isOn = false
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }))
         alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
-            
+            UserDefaults.standard.set(self.mSwitch.isOn, forKey: "AdminTransmit")
+            UserDefaults.standard.synchronize()
+            adminTransmitOn = self.mSwitch.isOn
+            print("Hihihi \(adminTransmitOn)")
         }))
         self.present(alert, animated: true, completion: nil)
     }

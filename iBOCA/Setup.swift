@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-var transmitOn : Bool = false
+var proctoredTransmitOn : Bool = false
 var atBIDMCOn  : Bool = false
 var emailOn    : Bool = false
 var emailAddress       : String = ""
@@ -74,10 +74,14 @@ class Setup: BaseViewController  {
         let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
         alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
             self.provideDataSwitch.isOn = false
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }))
         alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
             UserDefaults.standard.set(self.provideDataSwitch.isOn, forKey: "Transmit")
             UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -140,6 +144,8 @@ extension Setup {
         } else {
             UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
             UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
         }
     }
     

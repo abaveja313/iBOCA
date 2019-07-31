@@ -55,7 +55,7 @@ class AllResults  {
             e += "<h4>The Test Class: \(theTestClass) </h4>\n"
         }
         
-        if transmitOn {
+        if proctoredTransmitOn {
             e += "<h4>Results recorded to server</h4>\n"
         }
         
