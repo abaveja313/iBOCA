@@ -191,18 +191,30 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        
-        
-        if doSecondEmail {
-            controller.dismiss(animated: true)
-            doSecondEmail = false
-            // TransmitOn is why we are here
-            sendEmail(body: "", address: [serverEmailAddress])
-        } else {
-            // all e-mail sent
-            resultsArray.doneWithPatient()
-            PID.incID()
-            segueToLanding = true
+        controller.dismiss(animated: true)
+        switch result {
+        case MFMailComposeResult.cancelled:
+            break
+        case MFMailComposeResult.saved:
+            break
+        case MFMailComposeResult.sent:
+            if doSecondEmail {
+                doSecondEmail = false
+                // TransmitOn is why we are here
+                sendEmail(body: "", address: [serverEmailAddress])
+            } else {
+                // all e-mail sent
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                    guard let strongSelf = self else {return}
+                    resultsArray.doneWithPatient()
+                    PID.incID()
+                    strongSelf.performSegue(withIdentifier: "BackToLanding", sender: self)
+                }
+            }
+        case MFMailComposeResult.failed:
+            break
+        default:
+            break
         }
     }
     
