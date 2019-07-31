@@ -716,10 +716,12 @@ class TapInOrderViewController: BaseViewController {
             Status[testStatus] = TestStatus.NotStarted
         }
         
+        // Stop the test
+        pauseTest()
+        
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
             isPause = true
-            pauseTest()
             didBackToResult?()
             return
         }
