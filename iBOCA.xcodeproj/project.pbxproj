@@ -171,41 +171,6 @@
 			remoteGlobalIDString = 7564F0602072EAEB00CA5A96;
 			remoteInfo = "TestsPerformance-iOS";
 		};
-		18AE425B22F1505D00EC26BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 754BE45519693E190098E6F3;
-			remoteInfo = CryptoSwift;
-		};
-		18AE425D22F1505D00EC26BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 75211F92207249D8004E41F8;
-			remoteInfo = "CryptoSwift-TestHostApp";
-		};
-		18AE425F22F1505D00EC26BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 754BE46019693E190098E6F3;
-			remoteInfo = Tests;
-		};
-		18AE426122F1505D00EC26BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7595C14A2072E48C00EA1A5F;
-			remoteInfo = "TestsPerformance-Mac";
-		};
-		18AE426322F1505D00EC26BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7564F0602072EAEB00CA5A96;
-			remoteInfo = "TestsPerformance-iOS";
-		};
 		1BC2E0001D4F821F0020D430 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1BC2DFE31D4F821F0020D430 /* Project object */;
@@ -283,7 +248,7 @@
 		0EB10B7422C9F229001997BB /* SMResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMResultCell.swift; sourceTree = "<group>"; };
 		0EB10B7522C9F229001997BB /* SMResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMResultCell.xib; sourceTree = "<group>"; };
 		0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
-		18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
+		18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
 		1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticListGeneration.swift; sourceTree = "<group>"; };
@@ -530,22 +495,15 @@
 			path = SimpleMemoryTask;
 			sourceTree = "<group>";
 		};
-		18AE425422F1505C00EC26BD /* Products */ = {
+		18AE426D22F152B200EC26BD /* Products */ = {
 			isa = PBXGroup;
-			children = (
-				18AE425C22F1505D00EC26BD /* CryptoSwift.framework */,
-				18AE425E22F1505D00EC26BD /* CryptoSwift-TestHostApp.app */,
-				18AE426022F1505D00EC26BD /* Tests.xctest */,
-				18AE426222F1505D00EC26BD /* TestsPerformance-Mac.xctest */,
-				18AE426422F1505D00EC26BD /* TestsPerformance-iOS.xctest */,
-			);
 			name = Products;
 			sourceTree = "<group>";
 		};
 		1BC2DFE21D4F821F0020D430 = {
 			isa = PBXGroup;
 			children = (
-				18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */,
+				18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */,
 				1BC2DFED1D4F821F0020D430 /* iBOCA */,
 				1BC2E0021D4F821F0020D430 /* iBOCATests */,
 				1BC2E00D1D4F821F0020D430 /* iBOCAUITests */,
@@ -1131,8 +1089,8 @@
 					ProjectRef = F2229C821F01AFDF000F2CBA /* CryptoSwift.xcodeproj */;
 				},
 				{
-					ProductGroup = 18AE425422F1505C00EC26BD /* Products */;
-					ProjectRef = 18AE425322F1505C00EC26BD /* CryptoSwift.xcodeproj */;
+					ProductGroup = 18AE426D22F152B200EC26BD /* Products */;
+					ProjectRef = 18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1164,41 +1122,6 @@
 			fileType = wrapper.cfbundle;
 			path = "TestsPerformance-iOS.xctest";
 			remoteRef = 1858162422F0321A00499562 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18AE425C22F1505D00EC26BD /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = 18AE425B22F1505D00EC26BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18AE425E22F1505D00EC26BD /* CryptoSwift-TestHostApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "CryptoSwift-TestHostApp.app";
-			remoteRef = 18AE425D22F1505D00EC26BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18AE426022F1505D00EC26BD /* Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.xctest;
-			remoteRef = 18AE425F22F1505D00EC26BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18AE426222F1505D00EC26BD /* TestsPerformance-Mac.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "TestsPerformance-Mac.xctest";
-			remoteRef = 18AE426122F1505D00EC26BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18AE426422F1505D00EC26BD /* TestsPerformance-iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "TestsPerformance-iOS.xctest";
-			remoteRef = 18AE426322F1505D00EC26BD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F2229C881F01AFDF000F2CBA /* CryptoSwift.framework */ = {
