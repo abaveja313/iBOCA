@@ -51,6 +51,9 @@ class AdministeredViewController: BaseViewController {
         mTfMail.layer.cornerRadius = 5
         mTfMail.layer.masksToBounds = true
         mTfMail.delegate = self
+        if let email = Settings.resultsEmailAddressByAdmin {
+            mTfMail.text = email
+        }
         //
         mTextEnableConsent.font = Font.font(name: Font.Montserrat.medium, size: 18)
         mTextEnableConsent.textColor = UIColor.black
@@ -71,6 +74,21 @@ class AdministeredViewController: BaseViewController {
         mBtnQuickStart.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
     }
     
+    fileprivate func validate() -> Bool {
+        if !mTfMail.text!.isEmpty {
+            if !mTfMail.text!.isValidEmail() {
+                self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
+                return false
+            } else {
+                // UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                Settings.resultsEmailAddressByAdmin = mTfMail.text
+                return true
+            }
+        }
+        
+        return true
+    }
+    
     @IBAction func switchChange(_ sender: Any) {
         if mSwitch.isOn == true{
             showAlertTurnOnConsent()
@@ -83,28 +101,33 @@ class AdministeredViewController: BaseViewController {
     }
     
     @IBAction func tapSelectTest(_ sender: Any) {
-        if mSwitch.isOn == true {
-            // Consent to provide data
-            self.goToDemoGraphics()
-        }
-        else {
-            self.goToSelectTest()
+        if validate() {
+            if mSwitch.isOn == true {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
+            else {
+                self.goToSelectTest()
+            }
         }
     }
+    
     @IBAction func actionBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
-        if mSwitch.isOn == true {
-            // Consent to provide data
-            self.goToDemoGraphics()
-        }
-        else {
-            savePID()
-            
-            let manager = QuickStartManager.init(controller: self)
-            manager.start()
+        if validate() {
+            if mSwitch.isOn == true {
+                // Consent to provide data
+                self.goToDemoGraphics()
+            }
+            else {
+                savePID()
+                
+                let manager = QuickStartManager.init(controller: self)
+                manager.start()
+            }
         }
     }
     

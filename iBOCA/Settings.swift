@@ -111,12 +111,21 @@ class Settings {
     }
     
     // MARK: - Results Email Address
-    public class var resultsEmailAddress: String? {
+    public class var resultsEmailAddressByAdmin: String? {
         set {
-            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddress")
+            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddressByAdmin")
         }
         get {
-            return UserDefaults.obj(forKey: "ResultsEmailAddress") as? String
+            return UserDefaults.obj(forKey: "ResultsEmailAddressByAdmin") as? String
+        }
+    }
+    
+    public class var resultsEmailAddressByProctored: String? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddressByProctored")
+        }
+        get {
+            return UserDefaults.obj(forKey: "ResultsEmailAddressByProctored") as? String
         }
     }
     

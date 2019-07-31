@@ -46,7 +46,7 @@ class Setup: BaseViewController  {
         // Do any additional setup after loading the view, typically from a nib.
         self.setupView()
         
-        if let email = UserDefaults.standard.string(forKey: "emailAddress") {
+        if let email = Settings.resultsEmailAddressByProctored { //UserDefaults.standard.string(forKey: "emailAddress")
             emailTextField.text = email
         }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
@@ -62,7 +62,8 @@ class Setup: BaseViewController  {
                 self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
                 return false
             } else {
-                UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                // UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                Settings.resultsEmailAddressByProctored = emailTextField.text
                 return true
             }
         }
