@@ -50,6 +50,7 @@ class Setup: BaseViewController  {
             emailTextField.text = email
         }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
+        proctoredTransmitOn = provideDataSwitch.isOn
         patiantIDTextField.text = PID.getID()
         adminNameTextField.text = PID.getName()
         
@@ -66,6 +67,8 @@ class Setup: BaseViewController  {
                 Settings.resultsEmailAddressByProctored = emailTextField.text
                 return true
             }
+        } else {
+            Settings.resultsEmailAddressByProctored = nil
         }
         
         return true
@@ -111,6 +114,7 @@ extension Setup {
                 // Consent to provide data
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
+                    vc.mode = .patient
                     self.present(vc, animated:true, completion:nil)
                 }
             }

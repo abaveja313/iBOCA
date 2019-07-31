@@ -124,7 +124,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         }
         
         segueToLanding = false
-        iTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        iTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
         
         //NEW UI
         self.setupLabelPatientID()
@@ -159,12 +159,10 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                         // queue the 2nd e-mail to server
                         doSecondEmail = true
                     }
-                }
-                else if (adminTransmitOn) {
+                } else if (adminTransmitOn) {
                     // email to server
                     sendEmail(body: "", address: [serverEmailAddress])
-                }
-                else {
+                } else {
                     resultsArray.doneWithPatient()
                     segueToLanding = true
                 }
@@ -176,12 +174,10 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                         // queue the 2nd e-mail to server
                         doSecondEmail = true
                     }
-                }
-                else if (proctoredTransmitOn) {
+                } else if (proctoredTransmitOn) {
                     // email to server
                     sendEmail(body: "", address: [serverEmailAddress])
-                }
-                else {
+                } else {
                     resultsArray.doneWithPatient()
                     segueToLanding = true
                 }
@@ -195,10 +191,10 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-  
-        controller.dismiss(animated: true)
+        
         
         if doSecondEmail {
+            controller.dismiss(animated: true)
             doSecondEmail = false
             // TransmitOn is why we are here
             sendEmail(body: "", address: [serverEmailAddress])
@@ -223,7 +219,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         
         present(picker, animated: true)
     }
-
+    
     func updateButton(id: UInt, ectid: UInt, button: UIButton, status : TestStatus) {
         switch(status) {
         case .NotStarted:
@@ -257,7 +253,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
             } else {
                 button.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant:-250).isActive = true
             }
-
+            
             let newid = ((id < 8) ? id : id - 8)
             let spacing: CGFloat = 60.0
             let centerY: CGFloat = self.bottomConstraintButtonResults() + (CGFloat(newid) * spacing)
@@ -270,7 +266,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         var bottomConstraint = self.ButtonResults.frame.origin.y + self.ButtonResults.frame.size.height + 20
         if #available(iOS 11.0, *) { }
         else {
-        bottomConstraint = self.ButtonResults.frame.origin.y + self.ButtonResults.frame.size.height + 40
+            bottomConstraint = self.ButtonResults.frame.origin.y + self.ButtonResults.frame.size.height + 40
         }
         return bottomConstraint
     }
@@ -303,9 +299,9 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
         let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
         
-       return "(\(strMinutes) : \(strSeconds))"
+        return "(\(strMinutes) : \(strSeconds))"
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
