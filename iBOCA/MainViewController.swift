@@ -148,23 +148,43 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     @IBAction func sendEmail(_ sender: Any) {
         var body:String?
-        
         if(MFMailComposeViewController.canSendMail()  && resultsArray.numResults() > 0) {
-            if(emailOn) {
-                // send the e-mail
-                body = resultsArray.emailBody()
-                sendEmail(body: body!, address: [emailAddress])
-                if(proctoredTransmitOn) {
-                    // queue the 2nd e-mail to server
-                    doSecondEmail = true
+            // Check mode Admin or Proctored
+            switch mode {
+            case .admin:
+                if let email = Settings.resultsEmailAddressByAdmin {
+                    body = resultsArray.emailBody()
+                    sendEmail(body: body!, address: [email])
+                    if (adminTransmitOn) {
+                        // queue the 2nd e-mail to server
+                        doSecondEmail = true
+                    }
                 }
-            } else if(proctoredTransmitOn) {
-                // email to server
-                sendEmail(body: "", address: [serverEmailAddress])
-            } else {
-                // nothing to send
-                resultsArray.doneWithPatient()
-                segueToLanding = true
+                else if (adminTransmitOn) {
+                    // email to server
+                    sendEmail(body: "", address: [serverEmailAddress])
+                }
+                else {
+                    resultsArray.doneWithPatient()
+                    segueToLanding = true
+                }
+            case .patient:
+                if let email = Settings.resultsEmailAddressByProctored {
+                    body = resultsArray.emailBody()
+                    sendEmail(body: body!, address: [email])
+                    if (proctoredTransmitOn) {
+                        // queue the 2nd e-mail to server
+                        doSecondEmail = true
+                    }
+                }
+                else if (proctoredTransmitOn) {
+                    // email to server
+                    sendEmail(body: "", address: [serverEmailAddress])
+                }
+                else {
+                    resultsArray.doneWithPatient()
+                    segueToLanding = true
+                }
             }
         } else {
             // nothing to send
