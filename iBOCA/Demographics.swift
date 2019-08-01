@@ -289,7 +289,7 @@ extension Demographics {
         Results1.append(PUID)
         print(Results1)
         
-        Settings.patiantID = _PID
+        Settings.patiantID = !_PID.isEmpty ? _PID : PID.getID()
         Settings.genderUser = _genderUser
         Settings.ageUser = _ageUser
         Settings.educationUser = _educationUser

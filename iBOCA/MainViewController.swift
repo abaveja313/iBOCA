@@ -42,10 +42,6 @@ class GoToTestCellModel : NSObject{
 class MainViewController: BaseViewController, MFMailComposeViewControllerDelegate{
     var mailSubject : String = "iBOCA Results of "
     
-    var iTimer: Timer?
-    
-    var segueToLanding = false // COmplete hack to get back to landing page.  The timer will keep issuing segue command if this variable is set. Deals with the asynchronous mail window (need to find a better way!)
-    
     // NOTE: All buttons have to have the keypath translatesAutoresizingMaskIntoConstraints unset!!!
     // Otherwise setting constraints don't work
     @IBOutlet weak var ButtonOrientation: UIButton!
@@ -123,9 +119,6 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
             ButtonGoldStandard.isHidden = true
         }
         
-        segueToLanding = false
-        iTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: true)
-        
         //NEW UI
         self.setupLabelPatientID()
         setupButton()
@@ -164,7 +157,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                     sendEmail(body: "", address: [serverEmailAddress])
                 } else {
                     resultsArray.doneWithPatient()
-                    segueToLanding = true
+                    backToLandingPage()
                 }
             case .patient:
                 if let email = Settings.resultsEmailAddressByProctored {
@@ -178,14 +171,13 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                     // email to server
                     sendEmail(body: "", address: [serverEmailAddress])
                 } else {
-                    resultsArray.doneWithPatient()
-                    segueToLanding = true
+                    backToLandingPage()
                 }
             }
         } else {
             // nothing to send
             resultsArray.doneWithPatient()
-            segueToLanding = true
+            backToLandingPage()
         }
     }
     
@@ -208,7 +200,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
                     guard let strongSelf = self else {return}
                     resultsArray.doneWithPatient()
                     PID.incID()
-                    strongSelf.performSegue(withIdentifier: "BackToLanding", sender: self)
+                    strongSelf.backToLandingPage()
                 }
             }
         case MFMailComposeResult.failed:
@@ -282,14 +274,6 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         }
         return bottomConstraint
     }
-    
-    @objc func update(timer: Timer) {
-        if segueToLanding == true { // The HACK!
-            iTimer?.invalidate()
-            self.performSegue(withIdentifier: "BackToLanding", sender: self)
-        }
-    }
-    
     
     func getTimeDelay(startTime:TimeInterval) -> String {
         
@@ -397,6 +381,12 @@ extension MainViewController {
         case .NotStarted,.Running:
             return false
         }
+    }
+    
+    func backToLandingPage() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LandingPage") as! LandingPage
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
