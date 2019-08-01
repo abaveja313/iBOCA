@@ -50,7 +50,7 @@ class AllResults  {
         e += "</style>\n"
         e += "</head>\n"
         e += "<body>\n"
-        e += "<h4>Patiant ID : \(PID.getID())</h4>\n"
+        e += "<h4>Patient ID : \(PID.getID())</h4>\n"
         e += "<h4>Tester : \(PID.getName())</h4>\n"
         if atBIDMCOn {
             e += "<h4>Done at BIDMC </h4>\n"
@@ -60,7 +60,7 @@ class AllResults  {
         e += mode == .admin ? (adminTransmitOn ? "<h4>Results recorded to server</h4>\n" : "") : (proctoredTransmitOn ? "<h4>Results recorded to server</h4>\n" : "")
         
         if PUID != "" {
-            e += "<h4>Patiant Unique ID : \(PUID)</h4>\n"
+            e += "<h4>Patient Unique ID : \(PUID)</h4>\n"
         }
         
         if(Gender != nil) {
@@ -101,7 +101,7 @@ class AllResults  {
                 if r.numErrors > 0 {
                     e += "<td> \(r.numErrors) </td>"
                 } else {
-                    e += "<td> No errors </td>"
+                    e += "<td> No error </td>"
                 }
                 let elapsedTime = r.endTime!.timeIntervalSince(r.startTime! as Date)
                 let duration = ((Double)((Int(1000*elapsedTime))))/1000.0
@@ -165,7 +165,7 @@ class AllResults  {
     func toJson() -> String {
         var e : String = ""
         var jst : [String:String] = [:]
-        jst["Patiant ID #"] = PID.getID()
+        jst["Patient ID #"] = PID.getID()
         jst["Tester Name"] = PID.getName()
         jst["Done at BIDMC"] = String(atBIDMCOn)
         if atBIDMCOn {
