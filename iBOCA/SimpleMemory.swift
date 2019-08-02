@@ -977,7 +977,7 @@ extension SimpleMemoryTask {
                 guard let inputValue = cell.tfObjectName.text else {return}
                 let objectName = "Object \(i+1)"
                 let exactResult = imagesSM[i]
-                if imagesSM.contains(inputValue.lowercased()) {
+                if imagesSM[i] == inputValue.lowercased() {
                     outputResult += "Input \(inputValue) - Correct\n"
                     correct += 1
                     
