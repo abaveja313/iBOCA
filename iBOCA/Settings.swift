@@ -20,13 +20,13 @@ class Settings {
         }
     }
     
-    // MARK: - Patiant ID
-    public class var patiantID: String? {
+    // MARK: - Patient ID
+    public class var patientID: String? {
         set {
-            UserDefaults.setObj(newValue, forKey: "PatiantID")
+            UserDefaults.setObj(newValue, forKey: "PatientID")
         }
         get {
-            return UserDefaults.obj(forKey: "PatiantID") as? String
+            return UserDefaults.obj(forKey: "PatientID") as? String
         }
     }
     
@@ -129,7 +129,7 @@ class Settings {
         }
     }
     
-    // MARK: - Patiant ID
+    // MARK: - Patient ID
     public class var isGotoTest: Bool? {
         set {
             UserDefaults.setObj(newValue, forKey: "GotoTest")
@@ -142,7 +142,7 @@ class Settings {
     // MARK: - Functions
     public class func removeALL() {
         Settings.administratorName = nil
-        Settings.patiantID = nil
+        Settings.patientID = nil
         Settings.genderUser = nil
         Settings.ageUser = nil
         Settings.educationUser = nil

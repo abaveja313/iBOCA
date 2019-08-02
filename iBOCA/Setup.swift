@@ -30,7 +30,7 @@ class Setup: BaseViewController  {
     @IBOutlet weak var adminNameTextField: UITextField!
     
     @IBOutlet weak var patientIdLabel: UILabel!
-    @IBOutlet weak var patiantIDTextField: UITextField!
+    @IBOutlet weak var patientIDTextField: UITextField!
     
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
@@ -51,7 +51,7 @@ class Setup: BaseViewController  {
         }
         provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
         proctoredTransmitOn = provideDataSwitch.isOn
-        patiantIDTextField.text = PID.getID()
+        patientIDTextField.text = PID.getID()
         adminNameTextField.text = PID.getName()
         
         doneSetup = true
@@ -100,8 +100,8 @@ class Setup: BaseViewController  {
 extension Setup {
     @IBAction func actionBegin(_ sender: Any) {
         if validate() {
-            guard let _patiantID = self.patiantIDTextField.text else { return }
-            Settings.patiantID = _patiantID
+            guard let _patientID = self.patientIDTextField.text else { return }
+            Settings.patientID = _patientID
             Settings.isGotoTest = true
             
             if let passcode = testingPasscodeTextField.text {
@@ -131,8 +131,8 @@ extension Setup {
     
     @IBAction func actionBack(_ sender: Any) {
         if validate() {
-            guard let _patiantID = self.patiantIDTextField.text else { return }
-            Settings.patiantID = _patiantID
+            guard let _patientID = self.patientIDTextField.text else { return }
+            Settings.patientID = _patientID
             
             if let passcode = testingPasscodeTextField.text {
                 if !passcode.isEmpty {
@@ -158,14 +158,14 @@ extension Setup {
         let curNum = PID.currNum
         PID.nameSet(name: adminNameTextField.text!)
         PID.currNum = curNum
-        patiantIDTextField.text = PID.getID()
+        patientIDTextField.text = PID.getID()
     }
     
-    @IBAction func patiantIDEdited(_ sender: UITextField) {
-        if !PID.changeID(proposed: patiantIDTextField.text!) {
-            patiantIDTextField.text = PID.getID()
+    @IBAction func patientIDEdited(_ sender: UITextField) {
+        if !PID.changeID(proposed: patientIDTextField.text!) {
+            patientIDTextField.text = PID.getID()
         } else {
-            patiantIDTextField.text = PID.getID()
+            patientIDTextField.text = PID.getID()
         }
     }
 }
@@ -198,10 +198,10 @@ extension Setup {
         self.patientIdLabel.textColor = Color.color(hexString: "#8A9199")
         self.patientIdLabel.addTextSpacing(-0.36)
         
-        self.patiantIDTextField.layer.borderWidth = 1
-        self.patiantIDTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
-        self.patiantIDTextField.layer.cornerRadius = 5
-        self.patiantIDTextField.layer.masksToBounds = true
+        self.patientIDTextField.layer.borderWidth = 1
+        self.patientIDTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.patientIDTextField.layer.cornerRadius = 5
+        self.patientIDTextField.layer.masksToBounds = true
         
         self.emailLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
         self.emailLabel.textColor = Color.color(hexString: "#8A9199")

@@ -98,13 +98,13 @@ class DigitSerialSeven:DigitBaseClass {
             
             if num == lastNum - 7 && num == startNum - 7 * level {
                 totCorrects += 1
-                base.infoLabel.text = "Correct: Ask patiant for number minus 7, Enter it"
+                base.infoLabel.text = "Correct: Ask patient for number minus 7, Enter it"
             } else  if num == lastNum - 7 {
                 totCorrects += 1
-                base.infoLabel.text = "Correct, but off the sequence: Ask patiant for number minus 7, Enter it"
+                base.infoLabel.text = "Correct, but off the sequence: Ask patient for number minus 7, Enter it"
             } else {
                 totErrors += 1
-                base.infoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
+                base.infoLabel.text = "Incorrect subtraction: End the test or ask patient for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
             }
             
             round += 1

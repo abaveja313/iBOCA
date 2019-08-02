@@ -816,8 +816,8 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patiant ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Ae-DEs">
-                                <rect key="frame" x="475.5" y="137" width="73.5" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-Ae-DEs">
+                                <rect key="frame" x="475" y="137" width="74" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -960,7 +960,7 @@
                         <outlet property="ButtonSimpleMemory" destination="9Yk-2H-hs0" id="9i8-lJ-pVO"/>
                         <outlet property="ButtonTrails" destination="144-5O-YWO" id="1s5-im-83b"/>
                         <outlet property="ButtonVisualAssociation" destination="2DB-z8-IDB" id="pGz-jC-OIz"/>
-                        <outlet property="PatiantID" destination="fZ6-Ae-DEs" id="tBs-EL-sdw"/>
+                        <outlet property="PatientID" destination="fZ6-Ae-DEs" id="tBs-EL-sdw"/>
                         <outlet property="lblPatientID" destination="Clp-r8-wDS" id="0ee-dj-fqo"/>
                         <outlet property="mBtnDWP" destination="quu-ao-NlL" id="8Ip-K1-vtJ"/>
                         <outlet property="mBtnResult" destination="1vN-LH-FJt" id="JIP-vi-fgx"/>
@@ -2238,7 +2238,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="patiantIDEdited:" destination="uIz-3z-MW0" eventType="editingDidEnd" id="bHQ-mN-xhE"/>
+                                    <action selector="patientIDEdited:" destination="uIz-3z-MW0" eventType="editingDidEnd" id="bHQ-mN-xhE"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results Email Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHw-5f-zda">
@@ -2352,7 +2352,7 @@
                         <outlet property="beginButton" destination="TiA-1Z-LTR" id="ZlU-96-3Ql"/>
                         <outlet property="emailLabel" destination="JHw-5f-zda" id="Yu6-dk-ER6"/>
                         <outlet property="emailTextField" destination="HHK-GF-sPt" id="a6w-bT-lQf"/>
-                        <outlet property="patiantIDTextField" destination="DyP-wG-qya" id="TE0-5s-1HD"/>
+                        <outlet property="patientIDTextField" destination="DyP-wG-qya" id="TE0-5s-1HD"/>
                         <outlet property="patientIdLabel" destination="qaW-D2-2dg" id="Hhl-0j-yVc"/>
                         <outlet property="provideDataLabel" destination="WRY-0z-msi" id="ydL-rp-jql"/>
                         <outlet property="provideDataSwitch" destination="Lpx-sn-b5u" id="WD5-Qs-kg9"/>

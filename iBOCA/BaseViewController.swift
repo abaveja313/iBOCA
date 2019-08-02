@@ -30,7 +30,7 @@ class BaseViewController: UIViewController {
     }
     
     func savePID(){
-        Settings.patiantID = PID.getID()
+        Settings.patientID = PID.getID()
     }
 
     func showPopup(_ title: String, message: String, okAction: @escaping () -> Void) {

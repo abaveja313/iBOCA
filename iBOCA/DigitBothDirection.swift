@@ -29,7 +29,7 @@ class DigitBothDirection:DigitBaseClass {
     
     override func DoInitialize() {
         testInitialize()
-        base.infoLabel.text = "Press start to begin \(testName) and tell the patiant the first set of numbers"
+        base.infoLabel.text = "Press start to begin \(testName) and tell the patient the first set of numbers"
         level  = levelStart() - 1
         redo = 0
     }

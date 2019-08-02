@@ -61,7 +61,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     @IBOutlet weak var ButtonSemanticListGeneration: UIButton!
     @IBOutlet weak var ButtonGDT: UIButton!
     @IBOutlet weak var ButtonGoldStandard: UIButton!
-    @IBOutlet weak var PatiantID: UILabel!
+    @IBOutlet weak var PatientID: UILabel!
     
     @IBOutlet weak var ButtonResults: UIButton!
     @IBOutlet weak var ButtonDWP: UIButton!
@@ -88,7 +88,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         }
         proctoredTransmitOn = UserDefaults.standard.bool(forKey: "Transmit")
         
-        PatiantID.text = PID.getID()
+        PatientID.text = PID.getID()
         
         updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])
         updateButton(id: 1, ectid:0, button: ButtonSimpleMemory, status: Status[TestSimpleMemory])
@@ -308,8 +308,8 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
 extension MainViewController {
     
     func setupLabelPatientID() {
-        if let patiantID = Settings.patiantID {
-            self.lblPatientID.text = patiantID
+        if let patientID = Settings.patientID {
+            self.lblPatientID.text = patientID
         }
         self.lblPatientID.textColor = Color.color(hexString: "#0039A7")
         self.lblPatientID.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)

@@ -198,7 +198,7 @@ extension Demographics {
         Education = educationData[12]
         Race = raceData[0]
         
-        guard let _ = Settings.patiantID else { return }
+        guard let _ = Settings.patientID else { return }
         testStartTime = Foundation.Date()
         
         PUID = ""
@@ -289,7 +289,7 @@ extension Demographics {
         Results1.append(PUID)
         print(Results1)
         
-        Settings.patiantID = !_PID.isEmpty ? _PID : PID.getID()
+        Settings.patientID = !_PID.isEmpty ? _PID : PID.getID()
         Settings.genderUser = _genderUser
         Settings.ageUser = _ageUser
         Settings.educationUser = _educationUser
@@ -378,10 +378,10 @@ extension Demographics {
     }
     
     @objc func updatePaientIDNumber(_ textField: UITextField) {
-        guard let _patiantID = textField.text, let cell = self.collectionView.cellForItem(at: IndexPath.init(item: 0, section: 0)) as? DemographicsCell else { return }
-        cell.textField.text = _patiantID
-        if !PID.changeID(proposed: _patiantID) {
-            Settings.patiantID = PID.getID()
+        guard let _patientID = textField.text, let cell = self.collectionView.cellForItem(at: IndexPath.init(item: 0, section: 0)) as? DemographicsCell else { return }
+        cell.textField.text = _patientID
+        if !PID.changeID(proposed: _patientID) {
+            Settings.patientID = PID.getID()
         }
     }
 }

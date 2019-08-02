@@ -37,7 +37,7 @@ var Status  = [TestStatus](repeating: TestStatus.NotStarted, count: 20)
 var doneSetup = false
 
 // Patient ID use through app
-let PID = PatiantID()
+let PID = PatientID()
 
 class LandingPage: BaseViewController {
     
@@ -86,7 +86,7 @@ class LandingPage: BaseViewController {
         Status[TestGDTResults] = TestStatus.NotStarted
         Status[TestGoldStandard] = TestStatus.NotStarted
         
-        if Settings.patiantID != nil {
+        if Settings.patientID != nil {
             GotoTests.isEnabled = true
         } else {
             GotoTests.isEnabled = false
