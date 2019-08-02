@@ -203,7 +203,7 @@ class DrawingViewTrails: UIView {
             let text = CFAttributedStringCreate(nil, "Start" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
-            context?.textPosition = CGPoint(x:CGFloat(x-25), y:CGFloat(y+69))
+            context?.textPosition = CGPoint(x:CGFloat(x-25), y:CGFloat(y+60))
             CTLineDraw(line, context!)
         }
 
@@ -214,7 +214,7 @@ class DrawingViewTrails: UIView {
             let text = CFAttributedStringCreate(nil, "End" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
-            context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+69))
+            context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+60))
             CTLineDraw(line, context!)
         }
 
@@ -224,7 +224,7 @@ class DrawingViewTrails: UIView {
             let text = CFAttributedStringCreate(nil, "End" as CFString, attr as CFDictionary)
             let line = CTLineCreateWithAttributedString(text!)
 
-            context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+69))
+            context?.textPosition = CGPoint(x:CGFloat(x-18), y:CGFloat(y+60))
             CTLineDraw(line, context!)
         }
     }
