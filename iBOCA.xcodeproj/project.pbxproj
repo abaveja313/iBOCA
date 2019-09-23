@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,8 @@
 		0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B7422C9F229001997BB /* SMResultCell.swift */; };
 		0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B7522C9F229001997BB /* SMResultCell.xib */; };
 		0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */; };
+		188A56B62306687600C224F9 /* Asymmetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188A56A12306687500C224F9 /* Asymmetric.swift */; };
+		18B61E7923386386007E7210 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18B61E7823386386007E7210 /* CryptoSwift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
 		1B6567401D7DE07B00C92FA3 /* SemanticListGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */; };
@@ -125,8 +127,6 @@
 		F20FF4C61F04757300B806B7 /* GeriatricDepressionScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20FF4C51F04757300B806B7 /* GeriatricDepressionScale.swift */; };
 		F21941581FD47C9800B0997D /* ProtocolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21941571FD47C9800B0997D /* ProtocolData.swift */; };
 		F2229C7D1F01AC39000F2CBA /* crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2229C7C1F01AC39000F2CBA /* crypto.swift */; };
-		F2229CA61F01B078000F2CBA /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2229C881F01AFDF000F2CBA /* CryptoSwift.framework */; };
-		F2229CA71F01B078000F2CBA /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2229C881F01AFDF000F2CBA /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233EABE1F9423BF0012702C /* GoldStandard.swift */; };
 		F23951351EEE1ACF004B09E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F23951341EEE1ACF004B09E5 /* AVFoundation.framework */; };
 		F23951371EF4B2DE004B09E5 /* DigitSerialSeven.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23951361EF4B2DE004B09E5 /* DigitSerialSeven.swift */; };
@@ -199,28 +199,7 @@
 			remoteGlobalIDString = 754BE46019693E190098E6F3;
 			remoteInfo = Tests;
 		};
-		F2229CA81F01B078000F2CBA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2229C821F01AFDF000F2CBA /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 754BE45419693E190098E6F3;
-			remoteInfo = CryptoSwift;
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		F2229CAA1F01B078000F2CBA /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F2229CA71F01B078000F2CBA /* CryptoSwift.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0E1A22D322C4654E00C8CFDF /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
@@ -248,7 +227,8 @@
 		0EB10B7422C9F229001997BB /* SMResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMResultCell.swift; sourceTree = "<group>"; };
 		0EB10B7522C9F229001997BB /* SMResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMResultCell.xib; sourceTree = "<group>"; };
 		0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
-		18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
+		188A56A12306687500C224F9 /* Asymmetric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Asymmetric.swift; path = "../../../../Downloads/f64a4cf3e6257ff27c41133fda97c824-95b95b5f3285916a8d0a0719d788d7905ba9ccd8/Asymmetric.swift"; sourceTree = "<group>"; };
+		1891F9EF233864980019080E /* Crypto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Crypto; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
 		1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureCopy.swift; sourceTree = "<group>"; };
 		1B65673F1D7DE07B00C92FA3 /* SemanticListGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticListGeneration.swift; sourceTree = "<group>"; };
@@ -380,7 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F23951351EEE1ACF004B09E5 /* AVFoundation.framework in Frameworks */,
-				F2229CA61F01B078000F2CBA /* CryptoSwift.framework in Frameworks */,
+				18B61E7923386386007E7210 /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,15 +475,10 @@
 			path = SimpleMemoryTask;
 			sourceTree = "<group>";
 		};
-		18AE426D22F152B200EC26BD /* Products */ = {
-			isa = PBXGroup;
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1BC2DFE21D4F821F0020D430 = {
 			isa = PBXGroup;
 			children = (
-				18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */,
+				1891F9EF233864980019080E /* Crypto */,
 				1BC2DFED1D4F821F0020D430 /* iBOCA */,
 				1BC2E0021D4F821F0020D430 /* iBOCATests */,
 				1BC2E00D1D4F821F0020D430 /* iBOCAUITests */,
@@ -688,6 +663,7 @@
 		B1A46DB522EECDE200EBB187 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				188A56A12306687500C224F9 /* Asymmetric.swift */,
 				F2A0F1271F02626D00A92B1F /* LandingPage.swift */,
 				1BC2DFF21D4F821F0020D430 /* Main.storyboard */,
 				1BC2DFF71D4F821F0020D430 /* LaunchScreen.storyboard */,
@@ -993,14 +969,15 @@
 				1BC2DFE71D4F821F0020D430 /* Sources */,
 				1BC2DFE81D4F821F0020D430 /* Frameworks */,
 				1BC2DFE91D4F821F0020D430 /* Resources */,
-				F2229CAA1F01B078000F2CBA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F2229CA91F01B078000F2CBA /* PBXTargetDependency */,
 			);
 			name = iBOCA;
+			packageProductDependencies = (
+				18B61E7823386386007E7210 /* CryptoSwift */,
+			);
 			productName = iBOCA;
 			productReference = 1BC2DFEB1D4F821F0020D430 /* iBOCA.app */;
 			productType = "com.apple.product-type.application";
@@ -1053,9 +1030,8 @@
 				TargetAttributes = {
 					1BC2DFEA1D4F821F0020D430 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = N4Q7U8RR8X;
 						LastSwiftMigration = 0820;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					1BC2DFFE1D4F821F0020D430 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1087,10 +1063,6 @@
 				{
 					ProductGroup = F2229C831F01AFDF000F2CBA /* Products */;
 					ProjectRef = F2229C821F01AFDF000F2CBA /* CryptoSwift.xcodeproj */;
-				},
-				{
-					ProductGroup = 18AE426D22F152B200EC26BD /* Products */;
-					ProjectRef = 18AE426C22F152B200EC26BD /* CryptoSwift.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1244,6 +1216,7 @@
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
+				188A56B62306687600C224F9 /* Asymmetric.swift in Sources */,
 				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
 				0E1E349E22E96BC7009271C7 /* ResultTrailsCell.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
@@ -1335,11 +1308,6 @@
 			isa = PBXTargetDependency;
 			target = 1BC2DFEA1D4F821F0020D430 /* iBOCA */;
 			targetProxy = 1BC2E00B1D4F821F0020D430 /* PBXContainerItemProxy */;
-		};
-		F2229CA91F01B078000F2CBA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CryptoSwift;
-			targetProxy = F2229CA81F01B078000F2CBA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1463,7 +1431,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1472,17 +1441,19 @@
 		1BC2E0141D4F821F0020D430 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA.develop1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = iBoca.distribution;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1490,17 +1461,19 @@
 		1BC2E0151D4F821F0020D430 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCA.develop1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = iBoca.distribution;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1512,7 +1485,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCATests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1528,7 +1505,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCATests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1542,7 +1523,11 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCAUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCAUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1555,7 +1540,11 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = N4Q7U8RR8X;
 				INFOPLIST_FILE = iBOCAUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SethIzzyEllison.iBOCAUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1603,6 +1592,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		18B61E7823386386007E7210 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1BC2DFE31D4F821F0020D430 /* Project object */;
 }

@@ -95,6 +95,8 @@ class LandingPage: BaseViewController {
         setupUI()
         
         setupPIDFirstTime()
+        
+        decodeBase64()
     }
     
     override func didReceiveMemoryWarning() {

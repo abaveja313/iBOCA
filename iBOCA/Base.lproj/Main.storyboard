@@ -1988,13 +1988,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HeA-AM-2G0" userLabel="View Back">
-                                <rect key="frame" x="46" y="66" width="243" height="34"/>
+                                <rect key="frame" x="46" y="66" width="245" height="34"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="PEy-xC-GAQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="14" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Administered" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4e-TZ-aFI">
-                                        <rect key="frame" x="44" y="0.0" width="199" height="34"/>
+                                        <rect key="frame" x="46" y="0.0" width="199" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="jl1-RL-7rf"/>
                                         </constraints>
@@ -2571,13 +2571,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7X-af-py1" userLabel="View Back">
-                                <rect key="frame" x="42" y="59" width="243" height="34"/>
+                                <rect key="frame" x="42" y="59" width="245" height="34"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="sUt-un-Kbs">
-                                        <rect key="frame" x="0.0" y="0.0" width="14" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BACK" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bn2-ED-5UQ" userLabel="Label Back">
-                                        <rect key="frame" x="44" y="0.0" width="199" height="34"/>
+                                        <rect key="frame" x="46" y="0.0" width="199" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="710-FN-zaG"/>
                                         </constraints>
@@ -2586,7 +2586,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmq-bq-8VV" userLabel="Button Back">
-                                        <rect key="frame" x="0.0" y="0.0" width="243" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="245" height="34"/>
                                         <connections>
                                             <action selector="btnBackTapped:" destination="7sQ-B6-R4d" eventType="touchUpInside" id="LUJ-OA-A3C"/>
                                         </connections>
@@ -4190,13 +4190,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBB-4p-3Wn" userLabel="View Back">
-                                <rect key="frame" x="42" y="55" width="245" height="34"/>
+                                <rect key="frame" x="42" y="55" width="243" height="34"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="LzA-Ld-jF0">
-                                        <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="14" height="34"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ORIENTATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-s9-9yx">
-                                        <rect key="frame" x="46" y="0.0" width="199" height="34"/>
+                                        <rect key="frame" x="44" y="0.0" width="199" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="h5B-JE-Sfv"/>
                                         </constraints>
@@ -5473,6 +5473,6 @@
         <image name="seth1.jpg" width="960" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zYT-Gy-o49"/>
+        <segue reference="fDd-3Z-93Z"/>
     </inferredMetricsTieBreakers>
 </document>
