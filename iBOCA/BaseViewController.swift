@@ -17,13 +17,24 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // iPadPro resizing
-        if self.view.frame.size.width > 1024 {
-            let scale = self.view.frame.size.width / 1024.0
-            self.view.transform = CGAffineTransform(scaleX: scale, y: scale);
-        }
+                // iPadPro resizing
+        //        if self.view.frame.size.width > 1024 {
+        //            let scale = self.view.frame.size.width / 1024.0
+        //            self.scale = scale
+        //            self.view.transform = CGAffineTransform(scaleX: scale, y: scale)
+        //        }
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

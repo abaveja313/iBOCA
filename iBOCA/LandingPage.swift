@@ -54,12 +54,12 @@ class LandingPage: BaseViewController {
         if Settings.isGotoTest == true {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-            self.present(vc, animated: true, completion: nil)
+            presentViewController(viewController: vc, animated: true, completion: nil)
         }
         else {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Demographics")
-            self.present(nextViewController, animated:true, completion:nil)
+            presentViewController(viewController: nextViewController, animated:true, completion:nil)
         }
     }
     

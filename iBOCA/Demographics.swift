@@ -302,7 +302,7 @@ extension Demographics {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "main") as! MainViewController
         vc.mode = self.mode
-        self.present(vc, animated: true, completion: nil)
+        presentViewController(viewController: vc, animated: true, completion: nil)
     }
     
     @IBAction func CancelPressed(_ sender: Any) {

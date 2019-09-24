@@ -81,7 +81,7 @@ extension LocationManager: CLLocationManagerDelegate {
                 alertController.addAction(cancelAction)
                 alertController.addAction(okAction)
                 DispatchQueue.main.async {
-                    self.viewController?.present(alertController, animated: true, completion: nil)
+                    self.viewController?.presentViewController(viewController: alertController, animated: true, completion: nil)
                 }
 
             }

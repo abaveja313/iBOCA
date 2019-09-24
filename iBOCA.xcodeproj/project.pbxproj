@@ -32,6 +32,7 @@
 		0EB10B7622C9F229001997BB /* SMResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB10B7422C9F229001997BB /* SMResultCell.swift */; };
 		0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B7522C9F229001997BB /* SMResultCell.xib */; };
 		0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */; };
+		182D435D23386969004FC995 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D435C23386969004FC995 /* UIViewControllerExtension.swift */; };
 		188A56B62306687600C224F9 /* Asymmetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188A56A12306687500C224F9 /* Asymmetric.swift */; };
 		18B61E7923386386007E7210 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18B61E7823386386007E7210 /* CryptoSwift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
@@ -227,6 +228,7 @@
 		0EB10B7422C9F229001997BB /* SMResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMResultCell.swift; sourceTree = "<group>"; };
 		0EB10B7522C9F229001997BB /* SMResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMResultCell.xib; sourceTree = "<group>"; };
 		0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
+		182D435C23386969004FC995 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		188A56A12306687500C224F9 /* Asymmetric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Asymmetric.swift; path = "../../../../Downloads/f64a4cf3e6257ff27c41133fda97c824-95b95b5f3285916a8d0a0719d788d7905ba9ccd8/Asymmetric.swift"; sourceTree = "<group>"; };
 		1891F9EF233864980019080E /* Crypto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Crypto; sourceTree = "<group>"; };
 		1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DFigureDraw.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				0E1A22D922C4678A00C8CFDF /* UIButtonExtensions.swift */,
 				0E3E1D9122C49EAC008E69EC /* UIViewExtensions.swift */,
 				B10BD0E922CDE992008A195C /* String+Extensions.swift */,
+				182D435C23386969004FC995 /* UIViewControllerExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1264,6 +1267,7 @@
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
 				B1D1E3A222E8470900323928 /* Constant.swift in Sources */,
 				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
+				182D435D23386969004FC995 /* UIViewControllerExtension.swift in Sources */,
 				E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,
 				B1D1E3D422E9A5A100323928 /* ResultDigitSpanCell.swift in Sources */,

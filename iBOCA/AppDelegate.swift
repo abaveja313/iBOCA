@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
         
+        // iPadPro resizing
+        if window!.frame.width > 1024 {
+            let scale = window!.frame.width / 1024.0
+            window!.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        
+        
         return true
     }
 

@@ -115,14 +115,14 @@ extension Setup {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
                     vc.mode = .patient
-                    self.present(vc, animated:true, completion:nil)
+                    presentViewController(viewController: vc, animated:true, completion:nil)
                 }
             }
             else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
                     vc.mode = .patient
-                    self.present(vc, animated: true, completion: nil)
+                    presentViewController(viewController: vc, animated: true, completion: nil)
                 }
             }
             

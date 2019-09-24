@@ -163,7 +163,7 @@ class AdministeredViewController: BaseViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
             vc.mode = .admin
-            self.present(vc, animated:true, completion:nil)
+            presentViewController(viewController: vc, animated:true, completion:nil)
         }
     }
 
@@ -172,7 +172,7 @@ class AdministeredViewController: BaseViewController {
         if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController {
             savePID()
             vc.mode = .admin
-            self.present(vc, animated: true, completion: nil)
+            presentViewController(viewController: vc, animated: true, completion: nil)
         }
     }
 }

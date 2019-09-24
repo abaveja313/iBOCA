@@ -114,7 +114,7 @@ class QuickStartManager: NSObject {
         else {
             navigationController = UINavigationController.init(rootViewController: introVC)
             navigationController?.isNavigationBarHidden = true
-            viewController.present(navigationController!, animated: true, completion: nil)
+            viewController.presentViewController(viewController:navigationController!, animated: true, completion: nil)
         }
     }
     
@@ -294,6 +294,6 @@ class QuickStartManager: NSObject {
         alertController.addAction(quitAction)
         alertController.addAction(noAction)
         alertController.addAction(yesAction)
-        viewController.present(alertController, animated: true, completion: nil)
+        viewController.presentViewController(viewController: alertController, animated: true, completion: nil)
     }
 }

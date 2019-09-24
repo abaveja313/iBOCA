@@ -90,34 +90,34 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         
         PatientID.text = PID.getID()
         
-        updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])
-        updateButton(id: 1, ectid:0, button: ButtonSimpleMemory, status: Status[TestSimpleMemory])
-        updateButton(id: 2, ectid:0, button: ButtonVisualAssociation, status: Status[TestVisualAssociation])
-        updateButton(id: 3, ectid:4, button: ButtonTrails, status: Status[TestTrails])
-        updateButton(id: 4, ectid:2, button: ButtonForwardDigitSpan, status: Status[TestForwardDigitSpan])
-        updateButton(id: 5, ectid:3, button: ButtonBackwardDigitSpan, status: Status[TestBackwardsDigitSpan])
-        updateButton(id: 6, ectid:1, button: ButtonCatsAndDogs, status: Status[TestCatsAndDogs])
-        updateButton(id: 7, ectid:0, button: Button3DFigureCopy, status: Status[Test3DFigureCopy])
-        updateButton(id: 8, ectid:5, button: ButtonSerialSevens, status: Status[TestSerialSevens])
-        updateButton(id: 9, ectid:6, button: ButtonForwardSpatialSpan, status: Status[TestForwardSpatialSpan])
-        updateButton(id:10, ectid:7, button: ButtonBackwardSpatialSpan, status: Status[TestBackwardSpatialSpan])
-        updateButton(id:11, ectid:0, button: ButtonNamingPictures, status: Status[TestNampingPictures])
-        updateButton(id:13, ectid:0, button: ButtonMOCA, status: Status[TestMOCAResults])
-        
-        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
-        updateButton(id:14, ectid:0, button: ButtonGDT, status: Status[TestGDTResults])
-        updateButton(id:15, ectid:0, button: ButtonGoldStandard, status: Status[TestGoldStandard])
-        
-        if ModeECT == false {
-            ButtonMOCA.isHidden = false
-            ButtonGoldStandard.isHidden = false
-        }
-        
-        // Do GDT only at BIDMC
-        if atBIDMCOn == false {
-            ButtonGDT.isHidden = true
-            ButtonGoldStandard.isHidden = true
-        }
+//        updateButton(id: 0, ectid:0, button: ButtonOrientation, status: Status[TestOrientation])
+//        updateButton(id: 1, ectid:0, button: ButtonSimpleMemory, status: Status[TestSimpleMemory])
+//        updateButton(id: 2, ectid:0, button: ButtonVisualAssociation, status: Status[TestVisualAssociation])
+//        updateButton(id: 3, ectid:4, button: ButtonTrails, status: Status[TestTrails])
+//        updateButton(id: 4, ectid:2, button: ButtonForwardDigitSpan, status: Status[TestForwardDigitSpan])
+//        updateButton(id: 5, ectid:3, button: ButtonBackwardDigitSpan, status: Status[TestBackwardsDigitSpan])
+//        updateButton(id: 6, ectid:1, button: ButtonCatsAndDogs, status: Status[TestCatsAndDogs])
+//        updateButton(id: 7, ectid:0, button: Button3DFigureCopy, status: Status[Test3DFigureCopy])
+//        updateButton(id: 8, ectid:5, button: ButtonSerialSevens, status: Status[TestSerialSevens])
+//        updateButton(id: 9, ectid:6, button: ButtonForwardSpatialSpan, status: Status[TestForwardSpatialSpan])
+//        updateButton(id:10, ectid:7, button: ButtonBackwardSpatialSpan, status: Status[TestBackwardSpatialSpan])
+//        updateButton(id:11, ectid:0, button: ButtonNamingPictures, status: Status[TestNampingPictures])
+//        updateButton(id:13, ectid:0, button: ButtonMOCA, status: Status[TestMOCAResults])
+//
+//        updateButton(id:12, ectid:8, button: ButtonSemanticListGeneration, status: Status[TestSemanticListGeneration])
+//        updateButton(id:14, ectid:0, button: ButtonGDT, status: Status[TestGDTResults])
+//        updateButton(id:15, ectid:0, button: ButtonGoldStandard, status: Status[TestGoldStandard])
+//
+//        if ModeECT == false {
+//            ButtonMOCA.isHidden = false
+//            ButtonGoldStandard.isHidden = false
+//        }
+//
+//        // Do GDT only at BIDMC
+//        if atBIDMCOn == false {
+//            ButtonGDT.isHidden = true
+//            ButtonGoldStandard.isHidden = true
+//        }
         
         //NEW UI
         self.setupLabelPatientID()
@@ -128,9 +128,17 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Reload data, check status Done
-        self.setupData()
+        view.setNeedsLayout()
     }
+    
+//    public override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//
+//       //Setting view's frame
+//       let width = UIScreen.main.bounds.size.width - 10
+//       let height = (43 * UIScreen.main.bounds.height) / 100 //%43 of the screen
+//       self.view.frame = CGRect(x: 5, y: 80, width: width, height: height)
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         navigationItem.title = nil
@@ -386,7 +394,7 @@ extension MainViewController {
     func backToLandingPage() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LandingPage") as! LandingPage
-        self.present(vc, animated: true, completion: nil)
+        presentViewController(viewController: vc, animated: true, completion: nil)
     }
 }
 
@@ -432,7 +440,7 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
                 introVC.mode = mode
                 let navigationController = UINavigationController(rootViewController: introVC)
                 navigationController.setNavigationBarHidden(true, animated: false)
-                self.present(navigationController, animated: true, completion: nil)
+                presentViewController(viewController: navigationController, animated: true, completion: nil)
                 Settings.SegueId = item.segueID == "trails" ? true : false
                 Settings.TestId = item.segueID
             }
