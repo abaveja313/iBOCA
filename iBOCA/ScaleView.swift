@@ -32,7 +32,7 @@ class ScaleView: UIView {
         let context = UIGraphicsGetCurrentContext();
         let aFont = UIFont(name: "Optima-Bold", size: 10)
 //        let attr:CFDictionary = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.blackColor()]
-        let attr:NSDictionary = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.black]
+        let attr:NSDictionary = [NSAttributedString.Key.font:aFont!,NSAttributedString.Key.foregroundColor:UIColor.black]
 
         
         for i in 0...100 {
@@ -53,7 +53,7 @@ class ScaleView: UIView {
             prev = next
             
             if i % 10 == 0 {
-                let text = CFAttributedStringCreate(nil, String(Int(c)) as CFString!, attr)
+                let text = CFAttributedStringCreate(nil, String(Int(c)) as CFString, attr)
                 let line = CTLineCreateWithAttributedString(text!)
                 context!.textMatrix = CGAffineTransform(a: CGFloat(1), b: CGFloat(0), c: CGFloat(0), d: CGFloat(-1), tx: CGFloat(0), ty: CGFloat(0))
                 context!.textPosition = CGPoint(x: v, y: 25)

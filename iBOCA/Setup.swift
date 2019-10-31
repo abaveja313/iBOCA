@@ -10,9 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-let PID = PatiantID()
-
-var transmitOn : Bool = false
+var proctoredTransmitOn : Bool = false
 var atBIDMCOn  : Bool = false
 var emailOn    : Bool = false
 var emailAddress       : String = ""
@@ -21,197 +19,222 @@ var theTestClass : Int = 0
 let testClassName = ["CNU", "COMM", "ECT", "DW", "PHY", "ICU", "B1", "B2", "B3", "TEST"]
 let BIDMCpassKey = "PressOn"
 
-class Setup: ViewController, UIPickerViewDelegate  {
-
-    @IBOutlet weak var transmitOnOff: UISwitch!
-    @IBOutlet weak var atBIDMCOnOff:  UISwitch!
-    @IBOutlet weak var emailOnOff:    UISwitch!
-    @IBOutlet weak var email:         UITextField!
-    @IBOutlet weak var emailLabel:    UILabel!
-    @IBOutlet weak var adminName:     UITextField!
-    @IBOutlet weak var adminInitials: UILabel!
-    @IBOutlet weak var patiantID:     UITextField!
-    
-    @IBOutlet weak var testClass: UIPickerView!
-    @IBOutlet weak var testClassLabel: UILabel!
-    
+class Setup: BaseViewController  {
     var autoID: Int = Int()
     
-    @IBAction func transmitOnOff(_ sender: UISwitch) {
-        transmitOn = transmitOnOff.isOn
-        UserDefaults.standard.set(transmitOn, forKey: "Transmit")
-        UserDefaults.standard.synchronize()
-    }
+    // MARK: Outlet
+    @IBOutlet weak var backTitleLabel: UILabel!
+    @IBOutlet weak var beginButton: GradientButton!
     
-    @IBAction func atBIDMCOnOff(_ sender: UISwitch) {
-        if(atBIDMCOnOff.isOn) { // Trying to use BIDMC content
-            if(UserDefaults.standard.object(forKey: "BIDMCproceedKey") == nil) { // See if the person has permission
-                // Ask for the key pharse
-                let alertController = UIAlertController(title: "Enter passkey", message: "Enter Pass Key to use BIDMC Features", preferredStyle: .alert)
-                
-                //the confirm action taking the inputs
-                let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
-                    //getting the input values from user
-                    let key = alertController.textFields?[0].text
-                    if (key == BIDMCpassKey) { // Got the right key
-                        UserDefaults.standard.set(key, forKey: "BIDMCproceedKey")
-                        UserDefaults.standard.synchronize()
-                        self.setAtBIDMC()
-                    } else { // bad key
-                        self.atBIDMCOnOff.isOn = false
-                    }
-                }
-                
-                //the cancel action, no key
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-                     self.atBIDMCOnOff.isOn = false
-                }
-                
-                //adding textfields to our dialog box
-                alertController.addTextField { (textField) in
-                    textField.placeholder = "Enter Pass Key"
-                }
-                //adding the action to dialogbox
-                alertController.addAction(confirmAction)
-                alertController.addAction(cancelAction)
-                
-                //finally presenting the dialog box
-                self.present(alertController, animated: true, completion: nil)
-            } else { // key exist in the system, should be OK
-            setAtBIDMC()
-            }
-        } else { // trying to set it off, should be OK
-            setAtBIDMC()
-        }
-    }
+    @IBOutlet weak var adminNameLabel: UILabel!
+    @IBOutlet weak var adminNameTextField: UITextField!
     
-    func setAtBIDMC() {
-        atBIDMCOn = atBIDMCOnOff.isOn
-        UserDefaults.standard.set(atBIDMCOn, forKey: "AtBIDMC")
-        UserDefaults.standard.synchronize()
-        patiantID.text = PID.getID()
-        if atBIDMCOn == true {
-            testClass.isHidden = false
-            testClassLabel.isHidden = false
-        } else {
-            testClass.isHidden = true
-            testClassLabel.isHidden = true
-        }
-    }
+    @IBOutlet weak var patientIdLabel: UILabel!
+    @IBOutlet weak var patientIDTextField: UITextField!
     
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var emailTextField: UITextField!
     
-    @IBAction func emailOnOff(_ sender: Any) {
-        emailOn = emailOnOff.isOn
-        email.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        UserDefaults.standard.set(emailOn, forKey: "emailOn")
-        UserDefaults.standard.synchronize()
-    }
+    @IBOutlet weak var provideDataSwitch: UISwitch!
+    @IBOutlet weak var provideDataLabel: UILabel!
     
-
-    @IBAction func emailChanged(_ sender: Any) {
-        emailAddress = email.text!
-        UserDefaults.standard.set(emailAddress, forKey:"emailAddress")
-        UserDefaults.standard.synchronize()
-    }
-    
-    @IBAction func adminNameChanged(_ sender: UITextField) {
-        PID.nameSet(name: adminName.text!)
-        adminInitials.text = PID.getInitials()
-        PID.currNum = self.autoID
-        patiantID.text = PID.getID()
-    }
-    
-    
-    @IBAction func patiantIDEdited(_ sender: UITextField) {
-        if !PID.changeID(proposed: patiantID.text!) {
-            patiantID.text = PID.getID()
-        } else {
-            patiantID.text = PID.getID()
-        }
-    }
-    
-    @IBAction func btnBackTapped(_ sender: Any) {
-        guard let _patiantID = self.patiantID.text else { return }
-        Settings.patiantID = _patiantID
-        Settings.isGotoTest = false
-    }
+    @IBOutlet weak var testingPasscodeLabel: UILabel!
+    @IBOutlet weak var testingPasscodeTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.setupView()
         
-        transmitOn = UserDefaults.standard.bool(forKey: "Transmit")
-        transmitOnOff.isOn = transmitOn
-        
-        atBIDMCOn = UserDefaults.standard.bool(forKey: "AtBIDMC")
-        atBIDMCOnOff.isOn = atBIDMCOn
-       
-        emailOn = UserDefaults.standard.bool(forKey: "emailOn")
-        if(UserDefaults.standard.object(forKey: "emailAddress") != nil) {
-            emailAddress = UserDefaults.standard.object(forKey: "emailAddress") as! String
+        if let email = Settings.resultsEmailAddressByProctored { //UserDefaults.standard.string(forKey: "emailAddress")
+            emailTextField.text = email
         }
-        email.isEnabled = emailOn
-        emailLabel.isEnabled = emailOn
-        emailOnOff.isOn = emailOn
-        email.text = emailAddress
-    
-        // Get Current Date time
-        let date = Date()
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        
-        self.autoID = Int("\(hour)\(minutes)")!
-        PID.currNum = self.autoID
-        patiantID.text = PID.getID()
-        adminName.text = PID.getName()
-        adminInitials.text = PID.getInitials()
-        
-        testClass.delegate = self
-        if atBIDMCOn == true {
-            testClass.isHidden = false
-            testClassLabel.isHidden = false
-        } else {
-            testClass.isHidden = true
-            testClassLabel.isHidden = true
-        }
-        theTestClass = UserDefaults.standard.integer(forKey: "TheTestClass")
-        testClass.selectRow(theTestClass, inComponent: 0, animated: true)
+        provideDataSwitch.isOn = UserDefaults.standard.bool(forKey: "Transmit")
+        proctoredTransmitOn = provideDataSwitch.isOn
+        patientIDTextField.text = PID.getID()
+        adminNameTextField.text = PID.getName()
         
         doneSetup = true
     }
     
-    func numberOfComponentsInPickerView(_ pickerView : UIPickerView!) -> Int{
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-        if pickerView == testClass {
-            return testClassName.count
+    fileprivate func validate() -> Bool {
+        if !emailTextField.text!.isEmpty {
+            if !emailTextField.text!.isValidEmail() {
+                self.showPopup(ErrorMessage.errorTitle, message: "Email is invalid", okAction: {})
+                return false
+            } else {
+                // UserDefaults.standard.set(emailTextField.text, forKey:"emailAddress")
+                Settings.resultsEmailAddressByProctored = emailTextField.text
+                return true
+            }
         } else {
-            return 1
+            Settings.resultsEmailAddressByProctored = nil
         }
+        
+        return true
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == testClass {
-            return testClassName[row]
-        } else {
-            return ""
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == testClass {
-            theTestClass = row
-            UserDefaults.standard.set(row, forKey:"TheTestClass")
-        } else  {
-        }
+    fileprivate func showAlertTurnOnConsent(){
+        let alert = UIAlertController.init(title: "Conset Request", message: "Please confirm your consent to\nprovide test data", preferredStyle: .alert)
+        alert.addAction(.init(title: "CANCEL", style: .cancel, handler: { (iaction) in
+            self.provideDataSwitch.isOn = false
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
+        }))
+        alert.addAction(.init(title: "APPROVE", style: .default, handler: { (iaction) in
+            UserDefaults.standard.set(self.provideDataSwitch.isOn, forKey: "Transmit")
+            UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+// MARK: Action
+extension Setup {
+    @IBAction func actionBegin(_ sender: Any) {
+        if validate() {
+            guard let _patientID = self.patientIDTextField.text else { return }
+            Settings.patientID = _patientID
+            Settings.isGotoTest = true
+            
+            if let passcode = testingPasscodeTextField.text {
+                if !passcode.isEmpty {
+                    UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+                }
+            }
+            
+            if provideDataSwitch.isOn == true {
+                // Consent to provide data
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let vc = storyboard.instantiateViewController(withIdentifier: "Demographics") as? Demographics {
+                    vc.mode = .patient
+                    presentViewController(viewController: vc, animated:true, completion:nil)
+                }
+            }
+            else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let vc = storyboard.instantiateViewController(withIdentifier: "main") as? MainViewController{
+                    vc.mode = .patient
+                    presentViewController(viewController: vc, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
+    @IBAction func actionBack(_ sender: Any) {
+        if validate() {
+            guard let _patientID = self.patientIDTextField.text else { return }
+            Settings.patientID = _patientID
+            
+            if let passcode = testingPasscodeTextField.text {
+                if !passcode.isEmpty {
+                    UserDefaults.standard.set(BIDMCpassKey, forKey: "BIDMCproceedKey")
+                }
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func actionProvideData(_ sender: UISwitch) {
+        if provideDataSwitch.isOn {
+            showAlertTurnOnConsent()
+        } else {
+            UserDefaults.standard.set(provideDataSwitch.isOn, forKey: "Transmit")
+            UserDefaults.standard.synchronize()
+            proctoredTransmitOn = self.provideDataSwitch.isOn
+            print("Hihi \(proctoredTransmitOn)")
+        }
+    }
+    
+    @IBAction func adminNameChanged(_ sender: UITextField) {
+        let curNum = PID.currNum
+        PID.nameSet(name: adminNameTextField.text!)
+        PID.currNum = curNum
+        patientIDTextField.text = PID.getID()
+    }
+    
+    @IBAction func patientIDEdited(_ sender: UITextField) {
+        if !PID.changeID(proposed: patientIDTextField.text!) {
+            patientIDTextField.text = PID.getID()
+        } else {
+            patientIDTextField.text = PID.getID()
+        }
+    }
+}
+
+extension Setup {
+    fileprivate func setupView() {
+        // Label Back
+        self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
+        self.backTitleLabel.addTextSpacing(-0.56)
+        self.backTitleLabel.text = "PROCTORED"
+        
+        // Button Start New
+        self.beginButton.setTitle(title: "BEGIN", withFont: Font.font(name: Font.Montserrat.bold, size: 22.0))
+        self.beginButton.setupShadow(withColor: .clear, sketchBlur: 0, opacity: 0)
+        self.beginButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.beginButton.addTextSpacing(-0.36)
+        self.beginButton.render()
+        
+        self.adminNameLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.adminNameLabel.textColor = Color.color(hexString: "#8A9199")
+        self.adminNameLabel.addTextSpacing(-0.36)
+        
+        self.adminNameTextField.layer.borderWidth = 1
+        self.adminNameTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.adminNameTextField.layer.cornerRadius = 5
+        self.adminNameTextField.layer.masksToBounds = true
+        
+        self.patientIdLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.patientIdLabel.textColor = Color.color(hexString: "#8A9199")
+        self.patientIdLabel.addTextSpacing(-0.36)
+        
+        self.patientIDTextField.layer.borderWidth = 1
+        self.patientIDTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.patientIDTextField.layer.cornerRadius = 5
+        self.patientIDTextField.layer.masksToBounds = true
+        
+        self.emailLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.emailLabel.textColor = Color.color(hexString: "#8A9199")
+        self.emailLabel.addTextSpacing(-0.36)
+        
+        self.emailTextField.layer.borderWidth = 1
+        self.emailTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.emailTextField.layer.cornerRadius = 5
+        self.emailTextField.layer.masksToBounds = true
+        self.emailTextField.delegate = self
+        
+        self.provideDataLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.provideDataLabel.textColor = Color.color(hexString: "#000000")
+        self.provideDataLabel.addTextSpacing(-0.36)
+        
+        self.testingPasscodeLabel.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
+        self.testingPasscodeLabel.textColor = Color.color(hexString: "#8A9199")
+        self.testingPasscodeLabel.addTextSpacing(-0.36)
+        
+        self.testingPasscodeTextField.layer.borderWidth = 1
+        self.testingPasscodeTextField.layer.borderColor = Color.color(hexString: "#649BFF").cgColor
+        self.testingPasscodeTextField.layer.cornerRadius = 5
+        self.testingPasscodeTextField.layer.masksToBounds = true
+    }
+}
+
+extension Setup: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

@@ -20,13 +20,13 @@ class Settings {
         }
     }
     
-    // MARK: - Patiant ID
-    public class var patiantID: String? {
+    // MARK: - Patient ID
+    public class var patientID: String? {
         set {
-            UserDefaults.setObj(newValue, forKey: "PatiantID")
+            UserDefaults.setObj(newValue, forKey: "PatientID")
         }
         get {
-            return UserDefaults.obj(forKey: "PatiantID") as? String
+            return UserDefaults.obj(forKey: "PatientID") as? String
         }
     }
     
@@ -111,16 +111,25 @@ class Settings {
     }
     
     // MARK: - Results Email Address
-    public class var resultsEmailAddress: String? {
+    public class var resultsEmailAddressByAdmin: String? {
         set {
-            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddress")
+            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddressByAdmin")
         }
         get {
-            return UserDefaults.obj(forKey: "ResultsEmailAddress") as? String
+            return UserDefaults.obj(forKey: "ResultsEmailAddressByAdmin") as? String
         }
     }
     
-    // MARK: - Patiant ID
+    public class var resultsEmailAddressByProctored: String? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "ResultsEmailAddressByProctored")
+        }
+        get {
+            return UserDefaults.obj(forKey: "ResultsEmailAddressByProctored") as? String
+        }
+    }
+    
+    // MARK: - Patient ID
     public class var isGotoTest: Bool? {
         set {
             UserDefaults.setObj(newValue, forKey: "GotoTest")
@@ -133,7 +142,7 @@ class Settings {
     // MARK: - Functions
     public class func removeALL() {
         Settings.administratorName = nil
-        Settings.patiantID = nil
+        Settings.patientID = nil
         Settings.genderUser = nil
         Settings.ageUser = nil
         Settings.educationUser = nil
@@ -144,33 +153,71 @@ class Settings {
         Settings.PUID = nil
         Settings.isGotoTest = false
     }
+    
+    // MARK: - Comments User
+    public class var SMDelayTime: Int? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "SMDelayTime")
+        }
+        get {
+            return UserDefaults.obj(forKey: "SMDelayTime") as? Int
+        }
+    }
+    
+    public class var VADelayTime: Int? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "VADelayTime")
+        }
+        get {
+            return UserDefaults.obj(forKey: "VADelayTime") as? Int
+        }
+    }
+    
+    public class var TestId: String? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "TestId")
+        }
+        get {
+            return UserDefaults.obj(forKey: "TestId") as? String
+        }
+    }
+    
+    public class var SegueId: Bool? {
+        set {
+            UserDefaults.setObj(newValue, forKey: "SegueId")
+        }
+        get {
+            return UserDefaults.obj(forKey: "SegueId") as? Bool
+        }
+    }
+    
 }
 
 public extension UserDefaults {
     
     // MARK: - UserDefaults
-    public class func obj(forKey key: String) -> Any? {
+    class func obj(forKey key: String) -> Any? {
         let defaults = UserDefaults.standard
         
         let obj = defaults.object(forKey: key)
         return obj
     }
     
-    public class func setObj(_ obj: Any?, forKey key: String) {
+    class func setObj(_ obj: Any?, forKey key: String) {
         let defaults = UserDefaults.standard
         
         defaults.set(obj, forKey: key)
         defaults.synchronize()
     }
     
-    public class func removeObj(forKey key: String) {
+    class func removeObj(forKey key: String) {
         let defaults = UserDefaults.standard
         
         defaults.removeObject(forKey: key)
         defaults.synchronize()
     }
     
-    public class func obj(forKey key: String, unarchive: Bool) -> Any? {
+    class func obj(forKey key: String, unarchive: Bool) -> Any? {
         var obj = self.obj(forKey: key)
         //Check for archiving/unarchiving
         if unarchive && (obj is Data) {
@@ -179,7 +226,7 @@ public extension UserDefaults {
         return obj
     }
     
-    public class func setObj(_ obj: Any?, forKey key: String, archive: Bool) {
+    class func setObj(_ obj: Any?, forKey key: String, archive: Bool) {
         
         //Error protection
         if let obj = obj {
@@ -192,7 +239,7 @@ public extension UserDefaults {
         }
     }
     
-    public class func clearDefaults() {
+    class func clearDefaults() {
         let appDomain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
     }

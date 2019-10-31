@@ -1,5 +1,5 @@
 //
-//  PatiantID.swift
+//  PatientID.swift
 //  iBOCA
 //
 //  Created by saman on 6/25/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PatiantID {
+class PatientID {
     var testAdminName    : String = ""
     var currNum : Int = 0
     var currInitials : String = ""
@@ -28,8 +28,8 @@ class PatiantID {
         if UserDefaults.standard.object(forKey: "lastTestDate") != nil {
             let ltd = UserDefaults.standard.object(forKey: "lastTestDate") as! String
             if ltd == currDate {
-                if UserDefaults.standard.object(forKey: "lastPatiantNumber") != nil {
-                    currNum = (UserDefaults.standard.object(forKey: "lastPatiantNumber") as! Int) + 1
+                if UserDefaults.standard.object(forKey: "lastPatientNumber") != nil {
+                    currNum = (UserDefaults.standard.object(forKey: "lastPatientNumber") as! Int) + 1
                 }
             } else {
                 UserDefaults.standard.set(currDate, forKey:"lastTestDate")
@@ -45,7 +45,7 @@ class PatiantID {
             UserDefaults.standard.set(testAdminName, forKey:"testAdministrator")
             setInitials()
             currNum = 0
-            UserDefaults.standard.set(currNum, forKey:"lastPatiantNumber")
+            UserDefaults.standard.set(currNum, forKey:"lastPatientNumber")
         }
     }
     
@@ -64,7 +64,7 @@ class PatiantID {
             return false
         }
         currNum = Int(str)!
-        UserDefaults.standard.set(currNum, forKey:"lastPatiantNumber")
+        UserDefaults.standard.set(currNum, forKey:"lastPatientNumber")
         return true
     }
     
@@ -74,7 +74,7 @@ class PatiantID {
     
     func incID() {
         currNum += 1
-        UserDefaults.standard.set(currNum, forKey:"lastPatiantNumber")
+        UserDefaults.standard.set(currNum, forKey:"lastPatientNumber")
     }
     
     func getName() -> String {
@@ -91,11 +91,11 @@ class PatiantID {
             return
         }
 
-        for (index, char) in testAdminName.characters.enumerated() {
+        for (index, char) in testAdminName.enumerated() {
             let indexminus1 = index - 1
             if index == 0 {
                 currInitials = String(char).uppercased()
-            } else if testAdminName[testAdminName.characters.index(testAdminName.startIndex, offsetBy:indexminus1)] == " " {
+            } else if testAdminName[testAdminName.index(testAdminName.startIndex, offsetBy:indexminus1)] == " " {
                 self.currInitials += String(char).uppercased()
             }
         }

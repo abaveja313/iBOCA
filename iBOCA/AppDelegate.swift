@@ -14,11 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Configure keyboardManager
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
+        
+        // iPadPro resizing
+        if window!.frame.width > 1024 {
+            let scale = window!.frame.width / 1024.0
+            window!.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        
         
         return true
     }

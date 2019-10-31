@@ -11,43 +11,42 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class DigitBase: ViewController {
-    var base:DigitBaseClass? = nil  // Cannot do a subclass, so using composition
-
-    @IBOutlet weak var StartButton: UIButton!
-    @IBOutlet weak var EndButton: UIButton!
-    @IBOutlet weak var BackButton: UIButton!
+class DigitBase: BaseViewController {
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var backTitleLabel: UILabel!
+    @IBOutlet weak var innerShadowView: UIView!
     
-    @IBOutlet weak var Button_1: UIButton!
-    @IBOutlet weak var Button_2: UIButton!
-    @IBOutlet weak var Button_3: UIButton!
-    @IBOutlet weak var Button_4: UIButton!
-    @IBOutlet weak var Button_5: UIButton!
-    @IBOutlet weak var Button_6: UIButton!
-    @IBOutlet weak var Button_7: UIButton!
-    @IBOutlet weak var Button_8: UIButton!
-    @IBOutlet weak var Button_9: UIButton!
-    @IBOutlet weak var Button_0: UIButton!
-    @IBOutlet weak var Button_done: UIButton!
-    @IBOutlet weak var Button_delete: UIButton!
+    @IBOutlet weak var numKeyboard: NumberKeyboardView!
+    @IBOutlet weak var keypadLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var showRandomNumberLabel: UILabel!
+    @IBOutlet weak var randomNumberLabel: UILabel!
     
-    var NumKeys:[UIButton] = []
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var correctAnswerLabel: UILabel!
     
-    @IBOutlet weak var NumberLabel: UILabel!
-    @IBOutlet weak var KeypadLabel: UILabel!
-    @IBOutlet weak var InfoLabel: UILabel!
-    @IBOutlet weak var lbCorrectAnswer: UILabel!
-    @IBOutlet weak var lbShowRandomNumber: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var quitButton: GradientButton!
+    @IBOutlet weak var resetButton: GradientButton!
     
-    
-    var value:String = ""
-    
+    var base: DigitBaseClass? = nil  // Cannot do a subclass, so using composition
+    var value: String = ""
     var ended = false
-    
     let speechSynthesizer = AVSpeechSynthesizer()
+    
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToResult: (() -> ())?
+    var didCompleted: (() -> ())?
+    
+    var counterTimeView: CounterTimeView!
+    var totalTimeCounter = Timer()
+    var startTimeTask = Foundation.Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        numKeyboard.delegate = self
         
         // Dispatch according to incoming
         if testName == "ForwardDigitSpan" {
@@ -59,144 +58,72 @@ class DigitBase: ViewController {
         } else {
             assert(true, "Error, got here with wrong name")
         }
+        
         base!.base = self
+        base!.doStart()
         
+        Status[base!.testStatus] = TestStatus.NotStarted
         
-        NumKeys.append(Button_1)
-        NumKeys.append(Button_2)
-        NumKeys.append(Button_3)
-        NumKeys.append(Button_4)
-        NumKeys.append(Button_5)
-        NumKeys.append(Button_6)
-        NumKeys.append(Button_7)
-        NumKeys.append(Button_8)
-        NumKeys.append(Button_9)
-        NumKeys.append(Button_0)
-        NumKeys.append(Button_done)
-        NumKeys.append(Button_delete)
+        setupCounterTimeView()
+        
+        // Change back button title if quickStartMode is On
+        if quickStartModeOn {
+            backTitleLabel.text = "RESULTS"
+            quitButton.updateTitle(title: "CONTINUE")
+        }
         
         value = ""
-        InfoLabel.text = ""
-        NumberLabel.text = ""
-        KeypadLabel.text = ""
+        numberLabel.text = ""
+        keypadLabel.text = ""
         
-        StartButton.isHidden = false
-        EndButton.isHidden = true
-        BackButton.isHidden = false
-        
-        base!.DoInitialize()
+        backButton.isHidden = false
     }
     
-    func enableKeypad() {
-        for key in NumKeys {
-            key.isHidden = false
-            key.isEnabled = true
-        }
+    fileprivate func runTimer() {
+        self.totalTimeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        self.totalTimeCounter.fire()
     }
     
-    func disableKeypad() {
-        for key in NumKeys {
-            key.isEnabled = false
-        }
-    }
-    
-    func hideKeypad() {
-        for key in NumKeys {
-            key.isEnabled = false
-            key.isHidden = true
-        }
-    }
-    
-    @IBAction func KeyPadKeyPressed(_ sender: UIButton) {
-        guard Int(value + sender.currentTitle!) != nil else {return}
-        
-        // Hide answer label
-        lbCorrectAnswer.isHidden = true
-        
-        value = value + sender.currentTitle!
-        KeypadLabel.text = value
-        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-        base!.gotKeys[(String)(elapsedTime)] = sender.currentTitle!
-    }
-    
-    @IBAction func DoneKeyPressed(_ sender: UIButton) {
-        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-        base!.gotKeys[(String)(elapsedTime)] = "done"
-
-        base!.DoEnterDone()
-    }
-    
-    @IBAction func DeleteKeyPressed(_ sender: UIButton) {
-        value = String(value.characters.dropLast())
-        KeypadLabel.text = value
-        let elapsedTime = (Int)(1000*Foundation.Date().timeIntervalSince(base!.levelStartTime))
-        base!.gotKeys[(String)(elapsedTime)] = "del"
-    }
-    
-    
-    @IBAction func StartPressed(_ sender: UIButton) {
-        ended = false
-        StartButton.isHidden = true
-        EndButton.isHidden = false
-        BackButton.isHidden = true
-        NumberLabel.isHidden = false
-        base!.DoStart()
-    }
-    
-    @IBAction func EndPressed(_ sender: UIButton) {
-        speechSynthesizer.stopSpeaking(at: AVSpeechBoundary.immediate)
-        base!.DoEnd()
-        NumberLabel.isHidden = true
+    @objc func updateTime(timer: Timer) {
+        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
     }
     
     // This may be call more than when EndPressed, DoEnd may be call within the subclass, which should call this
-    func EndTest() {
+    func endTest() {
         ended = true
         value = ""
-        NumberLabel.text = ""
-        KeypadLabel.text = ""
-        lbCorrectAnswer.text = ""
-
-        disableKeypad()
-        StartButton.isHidden = false
-        EndButton.isHidden = true
-        BackButton.isHidden = false
-        lbCorrectAnswer.isHidden = true
+        numberLabel.text = ""
+        keypadLabel.text = ""
+        correctAnswerLabel.text = ""
     }
     
     func showCorrectAnswer(value: Int) {
-        self.lbCorrectAnswer.isHidden = false
-        self.lbCorrectAnswer.text = "Correct answer: \(value)"
+        self.correctAnswerLabel.isHidden = false
+        self.correctAnswerLabel.text = "Correct answer: \(value)"
     }
     
-    
-    
     func DisplayStringShowContinue(val:String) {
-        if BackButton.isHidden == true {
-            // digit utterances in the sequence with a short delay in between
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                if val.characters.count == 0 {
-                    //self.ContinueButton.isHidden = false
-                    self.InfoLabel.text = "Start entering the number sequence given by patient, followed by done"
-                    self.value = ""
-                    self.KeypadLabel.text = ""
-                    self.base!.levelStartTime = Foundation.Date()
-                    self.base!.gotKeys = [:]
-                    self.enableKeypad()
-                } else {
-                    let c = String(val.characters.first!)
-                    self.value = self.value + c
-                    let rest = String(Array(repeating: ".", count: self.base!.level - self.value.characters.count + 1))
-                    
-                    if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
-                        self.NumberLabel.text = self.value + rest
-                    }
-                    
-                    let utterence = AVSpeechUtterance(string: c)
-                    self.speechSynthesizer.speak(utterence)
-                    
-                    self.DisplayStringShowContinue(val: String(val.characters.dropFirst(1)))
+        // digit utterances in the sequence with a short delay in between
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            if val.count == 0 {
+                self.infoLabel.text = "Start entering the number sequence given by patient, followed by done"
+                self.value = ""
+                self.keypadLabel.text = ""
+                self.base!.levelStartTime = Foundation.Date()
+                self.setButtonEnabled(true)
+            } else {
+                let c = String(val.first!)
+                self.value = self.value + c
+                let rest = String(Array(repeating: ".", count: self.base!.level - self.value.count + 1))
+                
+                if testName != "ForwardDigitSpan" && testName != "BackwardDigitSpan" {
+                    self.numberLabel.text = self.value + rest
                 }
+                
+                let utterence = AVSpeechUtterance(string: c)
+                self.speechSynthesizer.speak(utterence)
+                
+                self.DisplayStringShowContinue(val: String(val.dropFirst(1)))
             }
         }
     }
@@ -204,14 +131,130 @@ class DigitBase: ViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
         if !ended {
-            base!.DoEnd()
+            base!.doEnd()
         }
     }
-    
-    
 }
 
+// MARK: Action
+extension DigitBase {
+    @IBAction func actionBack(_ sender: Any) {
+        if Status[base!.testStatus] != TestStatus.Done {
+            Status[base!.testStatus] = TestStatus.NotStarted
+        }
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        speechSynthesizer.stopSpeaking(at: .immediate)
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            didBackToResult?()
+            return
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func actionQuit(_ sender: UIButton) {
+        if Status[base!.testStatus] != TestStatus.Done {
+            Status[base!.testStatus] = TestStatus.NotStarted
+        }
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        speechSynthesizer.stopSpeaking(at: .immediate)
+        
+        // Check if is in quickStart mode
+        guard !quickStartModeOn else {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+            return
+        }
+        
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func actionReset(_ sender: Any) {
+        self.startTimeTask = Foundation.Date()
+        self.totalTimeCounter.invalidate()
+        speechSynthesizer.stopSpeaking(at: .immediate)
+        self.runTimer()
+        
+        base!.doStart()
+    }
+}
+
+extension DigitBase {
+    fileprivate func setupView() {
+        self.backTitleLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.backTitleLabel.textColor = Color.color(hexString: "#013AA5")
+        self.backTitleLabel.addTextSpacing(-0.56)
+        self.backTitleLabel.text = "BACK"
+        
+        self.innerShadowView.layer.cornerRadius = 8
+        self.innerShadowView.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        self.innerShadowView.layer.shadowOpacity = 1
+        self.innerShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.innerShadowView.layer.shadowRadius = 10 / 2
+        self.innerShadowView.layer.shadowPath = nil
+        self.innerShadowView.layer.masksToBounds = false
+        
+        self.quitButton.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.quitButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        self.quitButton.render()
+        self.quitButton.addTextSpacing(-0.36)
+        
+        self.resetButton.setTitle(title: "RESET", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
+        self.resetButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
+        self.resetButton.setupGradient(arrColor: [Color.color(hexString: "#FFDC6E"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
+        self.resetButton.render()
+        self.resetButton.addTextSpacing(-0.36)
+        
+        self.keypadLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.keypadLabel.textColor = Color.color(hexString: "#013AA5")
+        self.keypadLabel.backgroundColor = Color.color(hexString: "#F7F7F7")
+        self.keypadLabel.layer.borderWidth = 1
+        self.keypadLabel.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
+        self.keypadLabel.layer.cornerRadius = 8
+        self.keypadLabel.layer.masksToBounds = true
+        
+        self.infoLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
+        self.infoLabel.addTextSpacing(-0.36)
+        
+        self.showRandomNumberLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
+        self.showRandomNumberLabel.text = "STARTING NUMBER:"
+        
+        self.randomNumberLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
+        self.randomNumberLabel.textColor = Color.color(hexString: "#FF5430")
+    }
+    
+    fileprivate func setupCounterTimeView() {
+        counterTimeView = CounterTimeView()
+        contentView.addSubview(counterTimeView!)
+        counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        counterTimeView?.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor).isActive = true
+        self.totalTimeCounter.invalidate()
+        self.runTimer()
+    }
+    
+    func isNumKeyboardHidden(isHidden: Bool) {
+        self.numKeyboard.isHidden = isHidden
+        self.keypadLabel.isHidden = isHidden
+    }
+    
+    func setButtonEnabled(_ isEnabled: Bool) {
+        self.quitButton.isEnabled = isEnabled
+        self.backButton.isEnabled = isEnabled
+        self.resetButton.isEnabled = isEnabled
+        self.numKeyboard.isEnabled(isEnabled)
+    }
+}
 
 // A hacky superclass that implementations can subclass as subclassing DigitBase don't work (cannot  initialize supervlasses within the sotrybaord)
 class DigitBaseClass {
@@ -225,13 +268,29 @@ class DigitBaseClass {
     var levelStartTime = Foundation.Date()
     
     var gotKeys : [String:String] = [:]
-
     
     func DoInitialize() {  }
     
-    func DoStart()      {  }
+    func doStart()      {  }
     
-    func DoEnterDone()  {  }
+    func doEnterDone()  {  }
     
-    func DoEnd()        {  }
+    func doEnd()        {  }
+}
+
+extension DigitBase: NumberKeyboardViewDelegate {
+    func didNumberPressed(_ text: String) {
+        correctAnswerLabel.isHidden = true
+        keypadLabel.text = keypadLabel.text! + text
+    }
+    
+    func didEnterPressed() {
+        base!.doEnterDone()
+    }
+    
+    func didDeletePressed() {
+        if !keypadLabel.text!.isEmpty {
+            keypadLabel.text?.removeLast()
+        }
+    }
 }

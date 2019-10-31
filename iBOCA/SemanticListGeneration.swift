@@ -9,7 +9,7 @@
 import UIKit
 var Category : String?
 
-class SemanticListGeneration: ViewController, UIPickerViewDelegate {
+class SemanticListGeneration: BaseViewController, UIPickerViewDelegate {
     var counter = 30
     var myTimer : Timer = Timer()
     
@@ -43,7 +43,7 @@ class SemanticListGeneration: ViewController, UIPickerViewDelegate {
         Category = CategoryData[CategoryPicker.selectedRow(inComponent: 0)]
 
         StartButton.isHidden = false
-        //BackButton.isHidden = false
+        //backButton.isHidden = false
         IncorrectButton.isHidden = true
         CorrectButton.isHidden = true
         RepeatButton.isHidden = true
@@ -137,7 +137,7 @@ class SemanticListGeneration: ViewController, UIPickerViewDelegate {
     }
     
     
-    func updateCounter() {
+    @objc func updateCounter() {
         //you code, this is an example
         if counter >= 0 {
             print("\(counter) seconds to the end of the world")

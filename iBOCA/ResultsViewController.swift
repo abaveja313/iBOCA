@@ -8,126 +8,206 @@
 
 import UIKit
 
-class ResultsViewController: ViewController {
+class ResultsViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var container: UIView!
+    @IBOutlet weak var lbBack: UILabel!
+    @IBOutlet weak var lbResult: UILabel!
+    @IBOutlet weak var shadowContainer: UIView!
+    
+    private var headerView: UIView?
+    
+    // QuickStart Mode
+    var quickStartModeOn: Bool = false
+    var didBackToMainView: (() -> ())?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if headerView == nil {
+            if let hView = UINib.init(nibName: ResultsHeaderView.identifier(), bundle: nil).instantiate(withOwner: self, options: nil).first as? ResultsHeaderView {
+                self.headerView = hView
+                self.tableView.tableHeaderView = self.headerView
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        configureUI()
     }
+    
+    
+    private func configureUI() {
+        lbBack.textColor    = Color.color(hexString: "013AA5")
+        lbBack.font         = Font.font(name: Font.Montserrat.semiBold, size: 28)
+        lbResult.textColor  = Color.color(hexString: "013AA5")
+        lbResult.font       = Font.font(name: Font.Montserrat.semiBold, size: 28)
+        container.layer.cornerRadius = 8
+        
+        shadowContainer.layer.cornerRadius = 8.0
+        shadowContainer.layer.shadowColor = Color.color(hexString: "#649BFF").withAlphaComponent(0.32).cgColor
+        shadowContainer.layer.shadowOpacity = 1.0
+        shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 2)
+        shadowContainer.layer.shadowRadius = 10 / 2.0
+        shadowContainer.layer.shadowPath = nil
+        shadowContainer.layer.masksToBounds = false
+        
+        tableView.estimatedSectionHeaderHeight = 40
+        tableView.estimatedRowHeight = 40
+        tableView.register(UINib.init(nibName: ResultsHeaderSectionView.identifier(), bundle: nil), forHeaderFooterViewReuseIdentifier: ResultsHeaderSectionView.identifier())
+        tableView.register(UINib.init(nibName: ResultsCell.cellIdentifier, bundle: nil), forCellReuseIdentifier: ResultsCell.cellIdentifier)
+        tableView.register(UINib.init(nibName: VACell.cellId, bundle: nil), forCellReuseIdentifier: VACell.cellId)
+        tableView.register(ResultTrailsCell.nib(), forCellReuseIdentifier: ResultTrailsCell.identifier())
+        tableView.register(SMResultCell.nib(), forCellReuseIdentifier: SMResultCell.identifier())
+        tableView.register(UINib.init(nibName: ResultSerialSevenCell.cellId, bundle: nil), forCellReuseIdentifier: ResultSerialSevenCell.cellId)
+        tableView.register(UINib.init(nibName: ResultDigitSpanCell.cellId, bundle: nil), forCellReuseIdentifier: ResultDigitSpanCell.cellId)
+        tableView.register(UINib.init(nibName: ResultDetailCell.identifier(), bundle: nil), forCellReuseIdentifier: ResultDetailCell.identifier())
+    }
+    
+    
+    @IBAction func actionBack(_ sender: Any) {
+        if quickStartModeOn {
+            didBackToMainView?()
+        }
+        else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+extension ResultsViewController: ResultsHeaderSectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return resultsArray.numResults()
     }
-    
-    
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
-        return resultsArray.numResults()+2
-    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        if section == 0 {
-            //return resultsArray.numResults()
-        } else if section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(section-1)
-            if(res.collapsed == false)
-            {
-                let res:Results = resultsArray.get(section-1)
-                return res.numRows()
-            }
+        let result = resultsArray.get(section)
+        
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
+            return result.collapsed ? 0 : result.screenshot.count
+        case TestName.TRAILS:
+            return result.collapsed ? 0 : result.screenshot.count
+        case TestName.SIMPLE_MEMORY:
+            return result.collapsed ? 0 : result.arrSMResult.count
+        case TestName.SERIAL_SEVENS:
+            return result.collapsed ? 0 : result.rounds! + 1
+        case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
+            return result.collapsed ? 0 : result.rounds!
+        default:
+            return result.collapsed ? 0 : result.longDescription.count
         }
-        return 0;
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "ABC"
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            
-        } else if indexPath.section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(indexPath.section-1)
-            if(res.collapsed == false){
-                return CGFloat(res.heightForRow(indexPath.row))
-            }
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let result = resultsArray.get(indexPath.section)
         
-        return 2;
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
+            return 190
+        case TestName.VISUAL_ASSOCIATION, TestName.SERIAL_SEVENS, TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN, TestName.SIMPLE_MEMORY, TestName.FORWARD_SPATIAL_SPAN, TestName.BACKWARD_SPATIAL_SPAN:
+            return 40
+        default:
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-        } else if section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(section-1)
-            
-            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-            headerView.backgroundColor = UIColor.gray
-            headerView.tag = section
-            
-            let headerString = UILabel(frame: CGRect(x: 10, y: 10, width: tableView.frame.size.width-10, height: 30)) as UILabel
-            headerString.text = String(section) + ".  " + res.header()
-            headerView.addSubview(headerString)
-            
-            let headerTapped = UITapGestureRecognizer (target: self, action:#selector(ResultsViewController.sectionHeaderTapped(_:)))
-            headerView.addGestureRecognizer(headerTapped)
-            
-            return headerView
-        } else {
-            let scaleViewFrame = CGRect(x: 0.0, y: 85.0, width: view.bounds.width, height: 50)
-            let scaleView = ScaleView(frame: scaleViewFrame)
-            return scaleView
-        }
-    }
-    
-    func sectionHeaderTapped(_ recognizer: UITapGestureRecognizer) {
-        let loc = recognizer.location(in: view)
-        let subview = view?.hitTest(loc, with: nil)
-        let tag = subview!.tag
-        let indexPath : NSIndexPath = NSIndexPath(row: 0, section:tag)
-        let res:Results = resultsArray.get(indexPath.section-1)
-        if (indexPath.row == 0) {
-            res.collapsed = !res.collapsed
-            
-            //reload specific section animated
-            let range = NSMakeRange(indexPath.section, 1)
-            let sectionToReload = IndexSet(integersIn:range.toRange()!)
-            self.tableView.reloadSections(sectionToReload as IndexSet, with:UITableViewRowAnimation.fade)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell{
-        let CellIdentifier = "Cell"
-        var cell :UITableViewCell
-        cell = self.tableView.dequeueReusableCell(withIdentifier: CellIdentifier)! as UITableViewCell
-        
-        if indexPath.section == 0 {
-            
-        } else if indexPath.section <= resultsArray.numResults() {
-            let res:Results = resultsArray.get(indexPath.section - 1)
-            
-            if (res.collapsed) {
-                cell.textLabel?.text = "click to enlarge"
-            }
-            else{
-                res.setRow(indexPath.row, cell:cell)
-            }
-        }
+        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ResultsHeaderSectionView") as? ResultsHeaderSectionView
+        cell?.delegate = self
+        cell?.bindData(result: resultsArray.get(section), section: section)
         
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let result = resultsArray.get(indexPath.section)
+        
+        switch result.name {
+        case TestName.THREE_DIMENSION_FIGURE_COPY:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultsCell.cellIdentifier, for: indexPath) as! ResultsCell
+            cell.bindData(result: result, row: indexPath.row)
+            tableView.separatorStyle = .none
+            
+            return cell
+        case TestName.VISUAL_ASSOCIATION:
+            let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        case TestName.TRAILS:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultTrailsCell.identifier(), for: indexPath) as! ResultTrailsCell
+            cell.configResult(result: result)
+            
+            return cell
+        case TestName.SIMPLE_MEMORY:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
+            cell.isHeader = false
+            
+            if result.arrSMResult.count > 0 {
+                cell.model = result.arrSMResult[indexPath.row]
+                if indexPath.row < result.arrSMResult.count - 1 {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
+                }
+                else {
+                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
+                }
+            }
+            
+            return cell
+        case TestName.SERIAL_SEVENS:
+            if indexPath.row == 0 {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+                cell.bindData(result: result, row: indexPath.row)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ResultSerialSevenCell.cellId, for: indexPath) as! ResultSerialSevenCell
+                cell.bindData(result: result, row: indexPath.row)
+                
+                return cell
+            }
+        case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ResultDigitSpanCell.cellId, for: indexPath) as! ResultDigitSpanCell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        case TestName.FORWARD_SPATIAL_SPAN:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.backgroundColor = Color.color(hexString: "#F9F9F9")
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        case TestName.BACKWARD_SPATIAL_SPAN:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.backgroundColor = Color.color(hexString: "#F9F9F9")
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        default:
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell
+            cell.bindData(result: result, row: indexPath.row)
+            
+            return cell
+        }
+    }
+    
+    
+    func resultsHeaderSectionView(didExpand expand: Bool, at section: Int, sender: ResultsHeaderSectionView) {
+        resultsArray.get(section).collapsed = !expand
+        
+        tableView.reloadSections([section], with: .fade)
+    }
+    
 }
+

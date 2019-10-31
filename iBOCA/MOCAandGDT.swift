@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MOCAandGDT: ViewController, UIPickerViewDelegate  {
+class MOCAandGDT: BaseViewController, UIPickerViewDelegate  {
     
     
     var startTime  = Foundation.Date()

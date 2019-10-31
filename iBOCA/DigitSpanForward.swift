@@ -12,20 +12,20 @@ import UIKit
 
 class DigitSpanForward:DigitBothDirection {
     
-    override func ProcesString(val: String) -> String {
+    override func procesString(val: String) -> String {
         return val
     }
     
-    override func TestInitialize() {
-        testName =  "Forward Digit Span Test"
+    override func testInitialize() {
+        testName = TestName.FORWARD_DIGIT_SPAN
         testStatus = TestForwardDigitSpan
     }
     
-    override func LevelStart() -> Int {
+    override func levelStart() -> Int {
         return 4
     }
     
-    override func LevelEnd() -> Int {
+    override func levelEnd() -> Int {
         return 9
     }
 }

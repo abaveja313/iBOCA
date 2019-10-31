@@ -53,7 +53,7 @@ let answers = [false, true,  true,  true,  false,
 
 
 
-class GeriatricDepressionScale:  ViewController {
+class GeriatricDepressionScale:  BaseViewController {
     var justView: UIView!
     var scrollView: UIScrollView!
     
@@ -76,7 +76,7 @@ class GeriatricDepressionScale:  ViewController {
         scrollView = UIScrollView(frame: CGRect(x:0, y:100, width:view.bounds.width, height: view.bounds.height-100))
         scrollView.backgroundColor = UIColor.white
         scrollView.contentSize = justView.bounds.size
-        scrollView.autoresizingMask = UIViewAutoresizing.flexibleHeight
+        scrollView.autoresizingMask = UIView.AutoresizingMask.flexibleHeight
         
         scrollView.addSubview(justView)
         view.addSubview(scrollView)
@@ -125,7 +125,7 @@ class GeriatricDepressionScale:  ViewController {
         return -1
     }
     
-    func clickYes(b: UIButton!) {
+    @objc func clickYes(b: UIButton!) {
         let i = findButton(button: b, list: yesButtonList)
         b.backgroundColor = .blue
         noButtonList[i].backgroundColor = .gray
@@ -133,7 +133,7 @@ class GeriatricDepressionScale:  ViewController {
        
     }
     
-    func clickNo(b:UIButton!) {
+    @objc func clickNo(b:UIButton!) {
         let i = findButton(button: b, list: noButtonList)
         b.backgroundColor = .blue
         yesButtonList[i].backgroundColor = .gray

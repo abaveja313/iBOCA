@@ -21,7 +21,54 @@ class Results: NSObject {
     var screenshot : [UIImage] = []
     var json : [String:Any] = [:]
     
+    // Visual Association
+    var imageVA = [String]()
+    var inputVA = [String]()
+    
+    // Simple Memory
+    var arrSMResult: [SMResultModel] = [SMResultModel]()
+    
     var collapsed : Bool = true // for use by the View Controller
+    
+
+    var elapsedTime: String {
+        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
+        let duration = Int(elapsedTime)
+        let secondString = duration <= 1 ? "sec" : "secs"
+        return "\(duration) \(secondString)"
+    }
+    
+    var numOfErrors: String {
+        if numErrors == 0 || numErrors == 1 {
+            return "\(numErrors) Error"
+        }
+        
+        return "\(numErrors) Errors"
+    }
+
+    var numOfCorrects: String {
+        guard numCorrects != -1 else { return "" }
+        if numCorrects <= 1 {
+            return "\(numCorrects) Correct"
+        }
+        
+        return "\(numCorrects) Corrects"
+    }
+    
+    var numOfRounds: String {
+        guard let rounds = rounds else {return ""}
+        
+        if rounds <= 1 {
+            return "\(rounds) round"
+        }
+        
+        return "\(rounds) rounds"
+    }
+    
+    var rounds: Int?
+    var numCorrects: Int = -1
+    var originalImages = [String]()
+
     
     // Constructor
     func Results(_ nm:String, startTime:Foundation.Date, endTime:Foundation.Date) {
@@ -32,8 +79,7 @@ class Results: NSObject {
     
     // Return the string function to put on the header
     func header() -> String {
-        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
-        let duration = Int(elapsedTime)
+        let duration = totalElapsedSeconds()
         var res = name! + " (" + String(duration) + " secs): "
         if numErrors > 0 {
             res = res + "\(numErrors) Error\(numErrors > 1 ? "s" : ""); "
@@ -44,6 +90,11 @@ class Results: NSObject {
         return res
     }
     
+    func totalElapsedSeconds() -> Int {
+        let elapsedTime = endTime!.timeIntervalSince(startTime! as Date)
+        let duration = Int(elapsedTime)
+        return duration
+    }
     
     // Number of rows should be long description + # of screenshots
     func numRows() -> Int {

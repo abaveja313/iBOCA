@@ -7,11 +7,8 @@
 //
 
 import Foundation
-
-
 import UIKit
 import AVFoundation
-
 
 class DigitSerialSeven:DigitBaseClass {
     var startNum = 0
@@ -24,33 +21,17 @@ class DigitSerialSeven:DigitBaseClass {
     var sequenceNumber:[Int] = []
     var gotTime:[Date] = []
     var totErrors = 0
+    var totCorrects = 0
+    var round = 0
     var keys : [[String:String]] = [[:]]
-    var buttons : [UIButton] = []
     
     var timer: Timer?
     var countdownTime: Int = 6
     var randomNumber: Int = 50
     
-    override func DoInitialize() {
-        testName =  "Serial Sevens Test"
+    override func doStart() {
         testStatus = TestSerialSevens
-        base.InfoLabel.text = "Press start to begin \(testName)"
-        base.hideKeypad()
         level = -1
-        
-//        for (i, val) in [50, 60, 70, 80, 90, 100].enumerated() {
-//            let button  = UIButton(frame: CGRect(x: 150+125*i, y: 150, width: 100, height: 50))
-//            button.setTitle(String(val), for: .normal)
-//            button.setTitleColor(UIColor.blue, for: .normal)
-//            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 42.0)
-//            button.addTarget(self, action: #selector(DigitSerialSeven.StartNumberButtonTapped), for: .touchDown)
-//            button.isHidden = true
-//            buttons.append(button)
-//            base.view.addSubview(button)
-//        }
-    }
-    
-    override func DoStart() {
         let startingNumbers = [50, 60, 70, 80, 90, 100]
         let randomIndex = Int(arc4random_uniform(UInt32(startingNumbers.count)))
         let randomStartingNumber = startingNumbers[randomIndex]
@@ -59,14 +40,13 @@ class DigitSerialSeven:DigitBaseClass {
         // Reset countdown time every starting
         countdownTime = 6
         randomNumber = randomStartingNumber
-        base.lbShowRandomNumber.isHidden = false
+        base.showRandomNumberLabel.isHidden = false
+        base.isNumKeyboardHidden(isHidden: false)
+        base.numKeyboard.isEnabled(true)
+        base.randomNumberLabel.text = "\(randomNumber)"
+        base.keypadLabel.text = ""
+        self.startTheTest(startingNumber: self.randomNumber)
         
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DigitSerialSeven.countdown), userInfo: nil, repeats: true)
-        timer?.fire()
-        
-        
-        base.InfoLabel.text = ""
-        level = -1
         startTime = Foundation.Date()
         
         enteredNumber = []
@@ -74,101 +54,60 @@ class DigitSerialSeven:DigitBaseClass {
         sequenceNumber = []
         gotTime = []
         totErrors = 0
+        totCorrects = 0
         keys = []
-        
-        base.hideKeypad()
-        for button in buttons {
-            button.isHidden = false
-        }
-        
-    }
-    
-    @objc private func countdown() {
-        countdownTime -= 1
-        
-        let attributedString = NSMutableAttributedString.init(string: "Starting number is ", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
-        let randomNumberString = NSAttributedString.init(string: "\(randomNumber)", attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont.boldSystemFont(ofSize: 40)])
-        let countdownString = NSAttributedString.init(string: "\n\nThe test will start in ", attributes: [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
-        let countdownNumber = NSAttributedString.init(string: "\(countdownTime)", attributes: [NSForegroundColorAttributeName: UIColor.red, NSFontAttributeName: UIFont.systemFont(ofSize: 35)])
-        attributedString.append(randomNumberString)
-        attributedString.append(countdownString)
-        attributedString.append(countdownNumber)
-        base.lbShowRandomNumber.attributedText = attributedString
-        
-        if countdownTime == 0 {
-            // Stop timer
-            self.timer?.invalidate()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                // Hide countdown
-                self.base.lbShowRandomNumber.isHidden = true
-                self.base.lbShowRandomNumber.text = ""
-                
-                self.startTheTest(startingNumber: self.randomNumber)
-            }
-        }
     }
     
     private func startTheTest(startingNumber: Int) {
         startNum = startingNumber
         lastNum = startNum
         level = 0
-        for button in buttons {
-            button.isHidden = true
-        }
-        base.enableKeypad()
+        base.isNumKeyboardHidden(isHidden: false)
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Ask patient to enter the selected start number minus 7"
+        base.infoLabel.text = "Ask patient for the starting number minus 7 and then enter it"
     }
     
     @objc fileprivate func StartNumberButtonTapped(button: UIButton){
         startNum = Int(button.title(for: .normal)!)!
         lastNum = startNum
         level = 0
-        for button in buttons {
-            button.isHidden = true
-        }
-        base.enableKeypad()
+        
+        base.isNumKeyboardHidden(isHidden: false)
+        self.base.showRandomNumberLabel.isHidden = false
         
         levelStartTime = Foundation.Date()
         
-        base.InfoLabel.text = "Ask patient to enter the selected start number minus 7"
+        base.infoLabel.text = "Enter the start number minus 7"
     }
     
-    
-    override func DoEnterDone() {
-        base.disableKeypad()
-        
+    override func doEnterDone() {
         if level == -1 {
             // Should not get here....
-       } else {
+        } else {
             // Middle of the test
-            guard let num = Int(base.value) else {
-                base.InfoLabel.text = "Error: Enter a number"
-                base.enableKeypad()
+            guard let num = Int(base.keypadLabel.text!) else {
+                base.infoLabel.text = "Error: Enter a number"
                 return
             }
             
             level += 1
-            base.KeypadLabel.text = ""
+            base.keypadLabel.text = ""
             base.value = ""
             
-            if num == lastNum - 7 && num == startNum - 7*level {
-                base.InfoLabel.text = "Correct: Ask patiant for number minus 7, Enter it"
+            if num == lastNum - 7 && num == startNum - 7 * level {
+                totCorrects += 1
+                base.infoLabel.text = "Correct: Ask patient for number minus 7, Enter it"
             } else  if num == lastNum - 7 {
-                base.InfoLabel.text = "Correct, but off the sequence: Ask patiant for number minus 7, Enter it"
+                totCorrects += 1
+                base.infoLabel.text = "Correct, but off the sequence: Ask patient for number minus 7, Enter it"
             } else {
                 totErrors += 1
-                base.InfoLabel.text = "Incorrect subtraction: End the test or ask patiant for number minus 7 and enter it"
-                
-                // Show correct answer to let user know
-                if lastNum - 7 > 0 {
-                    base.showCorrectAnswer(value: lastNum - 7)
-                }
+                base.infoLabel.text = "Incorrect subtraction: End the test or ask patient for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
             }
             
+            round += 1
             enteredNumber.append(num)
             expectedNumber.append(lastNum - 7)
             sequenceNumber.append(startNum - 7*level)
@@ -177,50 +116,56 @@ class DigitSerialSeven:DigitBaseClass {
             
             lastNum -= 7
         }
-   
+        
         if (lastNum - 7 <= 0)  { // || (level >= 5)
             // Done test
-            base.InfoLabel.text = "Test Ended"
-            DoEnd()
+            base.infoLabel.text = "Test Ended"
+            base.startTimeTask = Foundation.Date()
+            base.totalTimeCounter.invalidate()
+            base.numKeyboard.isEnabled(false)
+            doEnd()
             return
         }
-    
-        base.enableKeypad()
     }
     
-    override func DoEnd() {
-        // Stop timer
+    override func doEnd() {
         timer?.invalidate()
-        
-        // Hide countdown
-        base.lbShowRandomNumber.isHidden = true
-        base.lbShowRandomNumber.text = ""
-        
-        base.InfoLabel.text = "Press start to begin \(testName)"
         
         let endTime = Foundation.Date()
         
         let result = Results()
-        result.name = testName
+        result.name = TestName.SERIAL_SEVENS
         result.startTime = startTime
         result.endTime = endTime
         
-        result.longDescription.add("Starting with \(startNum)")
         result.json["Starting Number"] = startNum
+        result.numCorrects = totCorrects
+        result.numErrors = totErrors
+        result.rounds = round
         var resultList : [Int:Any] = [:]
         var sttime = levelStartTime
         for (i, l) in enteredNumber.enumerated() {
             var res : [String:Any] = [:]
-            res["Entered"] = l
-            res["Subtract 7"] = expectedNumber[i]
-            res["Sequence 7"] = sequenceNumber[i]
             
             let elapsedTime = (Int)(1000*gotTime[i].timeIntervalSince(sttime))
             sttime = gotTime[i]
             res["time (msec)"] = elapsedTime
+            res["Entered"] = l
+            res["Subtract 7"] = expectedNumber[i]
+            res["Sequence 7"] = sequenceNumber[i]
             resultList[i] = res
-            result.longDescription.add("\(i): \(enteredNumber[i]) --> Subtract 7: \(expectedNumber[i]) (Sequence 7: \(sequenceNumber[i]))  (\(elapsedTime) msec)")
+//            result.longDescription.add("\(i): \(enteredNumber[i]) --> Subtract 7: \(expectedNumber[i]) (Sequence 7: \(sequenceNumber[i]))  (\(elapsedTime) msec)")
         }
+        var numberSequence = "Starting with \(startNum) --> ("
+        for i in 0...expectedNumber.count - 1 {
+            if i == expectedNumber.count - 1 {
+                numberSequence.append("\(expectedNumber[i]))")
+            } else {
+                numberSequence.append("\(expectedNumber[i]), ")
+            }
+        }
+        
+        result.longDescription.add(numberSequence)
         result.json["Results"] = resultList
         result.json["Errors"] = totErrors
         result.json["Rounds"] = level
@@ -229,7 +174,8 @@ class DigitSerialSeven:DigitBaseClass {
         
         resultsArray.add(result)
         Status[testStatus] = TestStatus.Done
-    
-        base.EndTest()
+        
+        base.infoLabel.text = "Test ended"
+        base.endTest()
     }
 }
