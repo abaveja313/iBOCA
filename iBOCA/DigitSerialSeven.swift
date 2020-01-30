@@ -32,10 +32,9 @@ class DigitSerialSeven:DigitBaseClass {
     override func doStart() {
         testStatus = TestSerialSevens
         level = -1
-        let startingNumbers = [50, 60, 70, 80, 90, 100]
-        let randomIndex = Int(arc4random_uniform(UInt32(startingNumbers.count)))
-        let randomStartingNumber = startingNumbers[randomIndex]
-        debugPrint(randomStartingNumber)
+        // Get a random integer from 60 to 100
+        let randomStartingNumber = Int.random(in: 60 ... 100)
+        debugPrint("Starting Number: \(randomStartingNumber)")
         
         // Reset countdown time every starting
         countdownTime = 6
@@ -95,7 +94,6 @@ class DigitSerialSeven:DigitBaseClass {
             level += 1
             base.keypadLabel.text = ""
             base.value = ""
-            
             if num == lastNum - 7 && num == startNum - 7 * level {
                 totCorrects += 1
                 base.infoLabel.text = "Correct: Ask patient for number minus 7, Enter it"
@@ -104,7 +102,7 @@ class DigitSerialSeven:DigitBaseClass {
                 base.infoLabel.text = "Correct, but off the sequence: Ask patient for number minus 7, Enter it"
             } else {
                 totErrors += 1
-                base.infoLabel.text = "Incorrect subtraction: End the test or ask patient for number minus 7 and enter it.\nCorrect answer: \(lastNum - 7)"
+                base.infoLabel.text = "Incorrect subtraction: End the test or ask patient for number minus 7 and enter it.\nYour answer: \(num)"
             }
             
             round += 1
@@ -114,10 +112,17 @@ class DigitSerialSeven:DigitBaseClass {
             keys.append(gotKeys)
             gotTime.append(Foundation.Date())
             
-            lastNum -= 7
+            print("num \(num)")
+            print("startNum \(startNum)")
+            print("lastNum \(lastNum)")
+            print("expectedNumber \(lastNum - 7)")
+            print("sequenceNumber \(startNum - 7*level)")
+            print("gotKeys \(gotKeys)")
+            
+            lastNum = num
         }
         
-        if (lastNum - 7 <= 0)  { // || (level >= 5)
+        if (level >= 7) || (lastNum - 7 <= 0)  {
             // Done test
             base.infoLabel.text = "Test Ended"
             base.startTimeTask = Foundation.Date()

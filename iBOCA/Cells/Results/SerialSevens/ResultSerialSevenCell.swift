@@ -32,7 +32,7 @@ class ResultSerialSevenCell: UITableViewCell {
         if let result = result.json["Results"] as? [Int: Any], let item = result[row - 1] as? [String: Any] {
             enteredLabel.text = "\(row - 1).  \(item["Entered"] as! Int)"
             subtractLabel.text = "Subject 7 - \(item["Subtract 7"] as! Int)"
-            sequenceLabel.text = "Sequence 7 - \(item["Sequence 7"] as! Int)"
+            sequenceLabel.text = ""//"Sequence 7 - \(item["Sequence 7"] as! Int)"
             timeLabel.text = "\(item["time (msec)"] as! Int) msec"
         }
     }
