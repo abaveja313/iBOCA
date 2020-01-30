@@ -336,24 +336,26 @@ extension TrailsAViewController {
     
     fileprivate func randomTest() {
         selectedTest = Int.random(in: 0...6)
-        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
-        self.arrNumberOfPoints.removeAll()
-        for i in 0..<self.maxNumberOfPoints {
-            self.arrNumberOfPoints.append("\(i+2)")
-        }
+        numBubbles = 20
         
-        // Load data selected default from dropdown choose number of points
-        let idxNumber = TrailsTests[selectedTest].1.count - 3
-        self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
-        numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
-        self.dismissDropdownChooseTheTest()
-        
-        let randomBubble = selectedTest == 6 ? Int.random(in: 0...21) : Int.random(in: 0...17)
-        let numberOfPoints = self.arrNumberOfPoints[randomBubble]
-        self.lblChooseNumberOfPoints.text = numberOfPoints
-        numBubbles = randomBubble + 2
-        self.dismissDropdownChooseNumberOfPoints()
-        
+//        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
+//        self.arrNumberOfPoints.removeAll()
+//        for i in 0..<self.maxNumberOfPoints {
+//            self.arrNumberOfPoints.append("\(i+2)")
+//        }
+//
+//        // Load data selected default from dropdown choose number of points
+//        let idxNumber = TrailsTests[selectedTest].1.count - 3
+//        self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
+//        numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
+//        self.dismissDropdownChooseTheTest()
+//
+//        let randomBubble = selectedTest == 6 ? Int.random(in: 0...21) : Int.random(in: 0...17)
+//        let numberOfPoints = self.arrNumberOfPoints[randomBubble]
+//        self.lblChooseNumberOfPoints.text = numberOfPoints
+//        numBubbles = randomBubble + 2
+//        self.dismissDropdownChooseNumberOfPoints()
+//
         self.lblTitlePracticeTest.isHidden = true
         // Hidden View Begin Trails
         self.lblDesc.isHidden = true
