@@ -56,6 +56,11 @@ class ResultsHeaderSectionView: UITableViewHeaderFooterView {
         lbRound.font    = lbTestName.font
         lbNumOfErrors.font      = lbTestName.font
         lbNumOfCorrects.font    = lbTestName.font
+        lbTestName.text = ""
+        lbTime.text     = ""
+        lbRound.text    = ""
+        lbNumOfErrors.text      = ""
+        lbNumOfCorrects.text    = ""
     }
     
     func bindData(result: Results, section: Int) {
