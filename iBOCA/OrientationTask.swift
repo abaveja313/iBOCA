@@ -147,11 +147,12 @@ class OrientationTask: BaseViewController {
         StatePicker.selectRow(indexState, inComponent: 0, animated: true)
         
         let formatter = DateFormatter()
+        
         if let date_random = Foundation.Date().generateRandomDate(daysBack: 20) {
             // Get the random date
             formatter.dateFormat = "y-MM-dd"
             currentDate.setDate( date_random,  animated: false)
-            Date = formatter.string(from: currentDate.date)
+            self.Date = formatter.string(from: currentDate.date)
             DateOK = true
             
             // Get the random time
