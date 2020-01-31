@@ -27,7 +27,6 @@ class ResultSerialSevenCell: UITableViewCell {
             label.addTextSpacing(-0.36)
         }
         
-        // clear data
         enteredLabel.text = ""
         subtractLabel.text = ""
         sequenceLabel.text = ""
