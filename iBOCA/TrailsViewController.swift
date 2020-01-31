@@ -335,7 +335,7 @@ extension TrailsAViewController {
     }
     
     fileprivate func randomTest() {
-        selectedTest = Int.random(in: 0...6)
+        selectedTest = Int.random(in: 0...9)
         numBubbles = 20
         
 //        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
