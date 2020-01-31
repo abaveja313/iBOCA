@@ -13,6 +13,13 @@ var StartTime = Foundation.Date()
 
 class VATask: BaseViewController, UIPickerViewDelegate {
     
+    // Check mode is admin or patient
+    var mode : TestMode = TestMode.admin
+    
+    // Check Timer Next Picture
+    var counterNextPicture = 0
+    var timerNextPicture = Timer()
+    
     var recallErrors = [Int]()
     var recallTimes = [Double]()
     
@@ -143,7 +150,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         self.setupView()
         setupCounterTimeView()
-        
         startDisplayAlert()
         
         result = Results()
@@ -310,21 +316,31 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     @objc fileprivate func display() {
         testCount = 0
         isRememberAgainViewHidden(true)
-        outputDisplayImage(withImageName: mixedImages[testCount])
+        self.outputDisplayImage(withImageName: mixedImages[testCount])
     }
     
     fileprivate func outputDisplayImage(withImageName name: String) {
-        // Check Show/ Hide Arrow
-        if testCount == 0 {
-            self.arrowLeftButton.isHidden = true
-            self.arrowRightButton.isHidden = false
-        } else {
-            self.arrowLeftButton.isHidden = false
-            self.arrowRightButton.isHidden = false
-        }
+        // Hidden Arrow left & right
+        self.arrowLeftButton.isHidden = true
+        self.arrowRightButton.isHidden = true
         
         self.taskImageView.isHidden = false
         self.taskImageView.image = UIImage(named: name)!
+        
+        // Check if textfield hidden then 2s Next picture Image
+        if self.isRecalledTestMode == false {
+            self.createTimerNextPicture()
+        }
+        else {
+            // Check Show/ Hide Arrow
+            if testCount == 0 {
+                self.arrowLeftButton.isHidden = true
+                self.arrowRightButton.isHidden = false
+            } else {
+                self.arrowLeftButton.isHidden = false
+                self.arrowRightButton.isHidden = false
+            }
+        }
     }
     
     fileprivate func beginDelay() {
@@ -609,6 +625,83 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.landscape
     }
+    
+    func createTimerNextPicture() {
+        self.timerNextPicture.invalidate()
+        self.timerNextPicture = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerNextPictureAction), userInfo: nil, repeats: true)
+    }
+    
+    func cancelTimerNextPicture() {
+        self.timerNextPicture.invalidate()
+        self.counterNextPicture = 0
+    }
+    
+    // called every time interval from the timer
+    @objc func timerNextPictureAction() {
+        self.counterNextPicture += 1
+        if self.counterNextPicture == 2 {
+            self.cancelTimerNextPicture()
+            self.nextOutputDisplayImage()
+        }
+    }
+    
+    func nextOutputDisplayImage() {
+        view.endEditing(true)
+        self.testCount += 1
+        if (testCount == mixedImages.count) {
+            print("delay")
+            self.isImageViewHidden(true)
+            if self.isRecalledTestMode {
+                self.isMissingItemViewHidden(true)
+                self.isRememberAgainViewHidden(false)
+                
+                self.textInputList.append(missingItemTextField.text!)
+                self.missingItemTextField.text = ""
+                self.recallTimes.append(roundedNumber(number: timeInput))
+                
+                self.isMissingItemTextFieldChanged = false
+                self.remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+            } else {
+                if !self.firstDisplay {
+                    self.beginDelay()
+                } else {
+                    self.firstDisplay = false
+                    self.isRememberAgainViewHidden(false)
+                    self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+                }
+            }
+        } else {
+            print("testCount: \(testCount)")
+            if self.isRecalledTestMode {
+                if testCount - 1 == textInputList.count {
+                    textInputList.append(missingItemTextField.text!)
+                    missingItemTextField.text = ""
+                    recallTimes.append(roundedNumber(number: timeInput))
+                } else if testCount == textInputList.count {
+                    textInputList[testCount - 1] = missingItemTextField.text!
+                    missingItemTextField.text = ""
+                    if isMissingItemTextFieldChanged {
+                        recallTimes[testCount - 1] += roundedNumber(number: timeInput)
+                    }
+                } else {
+                    textInputList[testCount - 1] = missingItemTextField.text!
+                    if isMissingItemTextFieldChanged {
+                        recallTimes[testCount - 1] += roundedNumber(number: timeInput)
+                    }
+                    missingItemTextField.text = textInputList[testCount]
+                }
+                
+                timeInput = 0
+                
+                isMissingItemTextFieldChanged = false
+                remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+                self.outputDisplayImage(withImageName: halfImages[testCount])
+            } else {
+                self.outputDisplayImage(withImageName: mixedImages[testCount])
+            }
+        }
+    }
 }
 
 extension VATask {
@@ -640,62 +733,7 @@ extension VATask {
             self.present(warningAlert, animated: true, completion: nil)
         } else {
             print("Arrow Right Tapped")
-            view.endEditing(true)
-            testCount += 1
-            if (testCount == mixedImages.count) {
-                print("delay")
-                isImageViewHidden(true)
-                if isRecalledTestMode {
-                    isMissingItemViewHidden(true)
-                    isRememberAgainViewHidden(false)
-                    
-                    textInputList.append(missingItemTextField.text!)
-                    missingItemTextField.text = ""
-                    recallTimes.append(roundedNumber(number: timeInput))
-                    
-                    isMissingItemTextFieldChanged = false
-                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
-                } else {
-                    if !firstDisplay {
-                        beginDelay()
-                    } else {
-                        firstDisplay = false
-                        isRememberAgainViewHidden(false)
-                        self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
-                        self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
-                    }
-                }
-            } else {
-                print("testCount: \(testCount)")
-                if isRecalledTestMode {
-                    
-                    if testCount - 1 == textInputList.count {
-                        textInputList.append(missingItemTextField.text!)
-                        missingItemTextField.text = ""
-                        recallTimes.append(roundedNumber(number: timeInput))
-                    } else if testCount == textInputList.count {
-                        textInputList[testCount - 1] = missingItemTextField.text!
-                        missingItemTextField.text = ""
-                        if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
-                        }
-                    } else {
-                        textInputList[testCount - 1] = missingItemTextField.text!
-                        if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
-                        }
-                        missingItemTextField.text = textInputList[testCount]
-                    }
-                    
-                    timeInput = 0
-                    
-                    isMissingItemTextFieldChanged = false
-                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
-                    self.outputDisplayImage(withImageName: halfImages[testCount])
-                } else {
-                    self.outputDisplayImage(withImageName: mixedImages[testCount])
-                }
-            }
+            self.nextOutputDisplayImage()
         }
     }
     
