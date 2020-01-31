@@ -24,6 +24,10 @@ class ResultDigitSpanCell: UITableViewCell {
             label.textColor = Color.color(hexString: "#000000")
             label.addTextSpacing(-0.36)
         }
+        
+        digitLabel.text = ""
+        resultLabel.text = ""
+        timeLabel.text = ""
     }
     
     func bindData(result: Results, row: Int) {

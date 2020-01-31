@@ -42,6 +42,10 @@ class ResultTrailsCell: UITableViewCell {
         self.lblDescIncorrect.addTextSpacing(-0.36)
         
         self.ivTrails.contentMode = .scaleAspectFit
+        
+        lblTitleTrails.text = ""
+        lblDescCorrect.text = ""
+        lblDescIncorrect.text = ""
     }
     
 }

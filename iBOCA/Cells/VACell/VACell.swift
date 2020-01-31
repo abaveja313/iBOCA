@@ -27,6 +27,10 @@ class VACell: UITableViewCell {
         super.awakeFromNib()
         labelGroup = [testTypeLabel, resultLabel, timeLabel]
         containView.backgroundColor = Color.color(hexString: "#EAEAEA")
+        
+        testTypeLabel.text = ""
+        resultLabel.text = ""
+        timeLabel.text = ""
     }
 }
 

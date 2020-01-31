@@ -66,6 +66,7 @@ class ResultsCell: UITableViewCell {
     private func configureUI() {
         lbStatus.font   = Font.font(name: Font.Montserrat.medium, size: 15)
         statusContainer.layer.cornerRadius = 5
+        lbStatus.text = ""
     }
     
     func bindData(result: Results, row: Int) {
