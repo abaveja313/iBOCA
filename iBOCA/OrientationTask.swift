@@ -763,7 +763,7 @@ extension OrientationTask: MFMailComposeViewControllerDelegate {
 
 // MARK: - Extension Date
 extension Date {
-    func generateRandomDate(daysBack: Int)-> Date?{
+    func generateRandomDate(daysBack: Int) -> Date?{
         let day = arc4random_uniform(UInt32(daysBack))+1
         let hour = arc4random_uniform(23)
         let minute = arc4random_uniform(59)
@@ -774,8 +774,10 @@ extension Date {
         offsetComponents.day = Int(day - 1)
         offsetComponents.hour = Int(hour)
         offsetComponents.minute = Int(minute)
+        offsetComponents.year = Int.random(in: -10...10)
         
-        let randomDate = gregorian?.date(byAdding: offsetComponents, to: today, options: .init(rawValue: 0) )
+        let randomDate = gregorian?.date(byAdding: offsetComponents, to: today, options: .init(rawValue: 0))
+        
         return randomDate
     }
 }
