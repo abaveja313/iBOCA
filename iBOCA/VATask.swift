@@ -11,6 +11,35 @@ import UIKit
 
 var StartTime = Foundation.Date()
 
+class MyGlobalVA: NSObject {
+
+    static let shared: MyGlobalVA = MyGlobalVA()
+    var internalTimer: Timer?
+    var timerDelay: Int = 0
+    var mixedImages = [String]()
+    var halfImages = [String]()
+    var recognizeIncorrectVA = [String]()
+
+    func startTimer() {
+        if self.internalTimer == nil {
+            self.internalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTimerAction), userInfo: nil, repeats: true)
+        }
+    }
+
+    func stopTimer(){
+        if self.internalTimer != nil {
+           self.internalTimer!.invalidate()
+           self.internalTimer = nil
+        }
+    }
+
+    @objc func fireTimerAction(sender: AnyObject?){
+        debugPrint("Timer Fired! \(sender)")
+        timerDelay = sender as! Int
+    }
+
+}
+
 class VATask: BaseViewController, UIPickerViewDelegate {
     
     // Check mode is admin or patient
@@ -175,16 +204,10 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             timerVA.fire()
             
             startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
-        } else {
-//            imageSetVA = 0
-//            mixedImages = mixed0
-//            halfImages = half0
-//            recognizeIncorrectVA = incorrect0
-            
+        }
+        else {
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
-        
-        print(afterBreakVA)
     }
     
     private func randomTest() {
@@ -401,6 +424,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     }
     
     @objc fileprivate func updateTimeDecreases(timer:Timer) {
+//        MyGlobalVA.shared.startTimer()
+//        MyGlobalVA.shared.mixedImages = mixedImages
+//        MyGlobalVA.shared.halfImages = halfImages
+//        MyGlobalVA.shared.recognizeIncorrectVA = recognizeIncorrectVA
+        
         timerLabel.text = "\(timeFormatted(totalTime))"
         
         if totalTime != 0 {
