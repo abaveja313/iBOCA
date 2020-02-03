@@ -83,6 +83,9 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     @IBOutlet weak var taskImageView: UIImageView!
     @IBOutlet weak var arrowLeftButton: UIButton!
     @IBOutlet weak var arrowRightButton: UIButton!
+    @IBOutlet weak var correctButton: UIButton!
+    @IBOutlet weak var incorrectButton: UIButton!
+    @IBOutlet weak var dontKnowButton: UIButton!
     
     @IBOutlet weak var noticeLabel: UILabel!
     @IBOutlet weak var noticeButton: GradientButton!
@@ -139,6 +142,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     var isRecalledTestMode = false
     
     var textInputList: [String]!
+    var textDeterminedAdminList: [String]!
     
     var isDropDownShowing = false
     var delayReccommendedTime: Int!
@@ -230,6 +234,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         firstDisplay = true
         
         textInputList = []
+        textDeterminedAdminList = []
         
         let newStartAlert = UIAlertController(title: "Display", message: "Name out loud and remember the two items in the photographs.", preferredStyle: .alert)
         newStartAlert.addAction(UIAlertAction(title: "Start", style: .default, handler: { (action) -> Void in
@@ -333,12 +338,18 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         }
         else {
             // Check Show/ Hide Arrow
-            if testCount == 0 {
+            if self.mode == .admin {
                 self.arrowLeftButton.isHidden = true
-                self.arrowRightButton.isHidden = false
-            } else {
-                self.arrowLeftButton.isHidden = false
-                self.arrowRightButton.isHidden = false
+                self.arrowRightButton.isHidden = true
+            }
+            else {
+                if testCount == 0 {
+                    self.arrowLeftButton.isHidden = true
+                    self.arrowRightButton.isHidden = false
+                } else {
+                    self.arrowLeftButton.isHidden = false
+                    self.arrowRightButton.isHidden = false
+                }
             }
         }
     }
@@ -429,6 +440,18 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     fileprivate func recall() {
         inputTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimeInput), userInfo: nil, repeats: true)
         inputTimer.fire()
+        
+        // Check show 3 button Correct/ Incorrect/ Don't know
+        if self.mode == .admin {
+            self.correctButton.isHidden = false
+            self.incorrectButton.isHidden = false
+            self.dontKnowButton.isHidden = false
+        }
+        else {
+            self.correctButton.isHidden = true
+            self.incorrectButton.isHidden = true
+            self.dontKnowButton.isHidden = true
+        }
         
         testCount = 0
         
@@ -556,8 +579,13 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         result.inputVA = self.textInputList
         
         for i in 0...textInputList.count - 1 {
-            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
-            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
+            var determinedAdmin = ""
+            if self.mode == .admin {
+                determinedAdmin = "(\(self.textDeterminedAdminList[i]))"
+            }
+            
+            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTimes[i]) seconds")
+            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTimes[i]) seconds\n"
         }
         
         for k in 0 ..< mixedImages.count {
@@ -593,7 +621,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var tmpResultList2 : [String:Any] = [:]
         
         for i in 0...textInputList.count-1 {
-            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
+            var determinedAdmin = ""
+            if self.mode == .admin {
+                determinedAdmin = " (\(self.textDeterminedAdminList[i]))"
+            }
+            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i]+determinedAdmin, "Time":recallTimes[i]]
         }
         
         resultList["Recall"] = tmpResultList2
@@ -645,7 +677,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         }
     }
     
-    func nextOutputDisplayImage() {
+    func nextOutputDisplayImage(_ determinedAdmin: String = "") {
         view.endEditing(true)
         self.testCount += 1
         if (testCount == mixedImages.count) {
@@ -656,6 +688,10 @@ class VATask: BaseViewController, UIPickerViewDelegate {
                 self.isRememberAgainViewHidden(false)
                 
                 self.textInputList.append(missingItemTextField.text!)
+                if determinedAdmin != "" {
+                    self.textDeterminedAdminList.append(determinedAdmin)
+                }
+                
                 self.missingItemTextField.text = ""
                 self.recallTimes.append(roundedNumber(number: timeInput))
                 
@@ -675,7 +711,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             print("testCount: \(testCount)")
             if self.isRecalledTestMode {
                 if testCount - 1 == textInputList.count {
-                    textInputList.append(missingItemTextField.text!)
+                    self.textInputList.append(missingItemTextField.text!)
+                    if determinedAdmin != "" {
+                        self.textDeterminedAdminList.append(determinedAdmin)
+                    }
+                    
                     missingItemTextField.text = ""
                     recallTimes.append(roundedNumber(number: timeInput))
                 } else if testCount == textInputList.count {
@@ -706,6 +746,43 @@ class VATask: BaseViewController, UIPickerViewDelegate {
 
 extension VATask {
     // MARK: Action
+    
+    @IBAction func correctButtonTapped(_ sender: Any) {
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        } else {
+           self.nextOutputDisplayImage("Correct")
+        }
+    }
+    
+    @IBAction func incorrectButtonTapped(_ sender: Any) {
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        } else {
+           self.nextOutputDisplayImage("InCorrect")
+        }
+    }
+    
+    @IBAction func dontKnowButtonTapped(_ sender: Any) {
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        } else {
+           self.nextOutputDisplayImage("Don't Know")
+        }
+    }
+    
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
         print("Arrow Left Tapped")
         view.endEditing(true)
@@ -920,6 +997,14 @@ extension VATask {
         self.arrowLeftButton.layer.cornerRadius = self.arrowLeftButton.frame.size.height / 2.0
         self.arrowRightButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.arrowRightButton.layer.cornerRadius = self.arrowRightButton.frame.size.height / 2.0
+        
+        self.correctButton.layer.cornerRadius = 5
+        self.incorrectButton.layer.cornerRadius = 5
+        self.dontKnowButton.layer.cornerRadius = 5
+        self.correctButton.isHidden = true
+        self.incorrectButton.isHidden = true
+        self.dontKnowButton.isHidden = true
+        print("====== mode: \(self.mode)")
     }
     
     fileprivate func setupViewDelay() {
@@ -1072,6 +1157,11 @@ extension VATask {
         self.missingItemLabel.isHidden = isHidden
         self.missingItemTextField.isHidden = isHidden
         self.remainingPhotoLabel.isHidden = isHidden
+        if self.mode == .admin {
+            self.correctButton.isHidden = isHidden
+            self.incorrectButton.isHidden = isHidden
+            self.dontKnowButton.isHidden = isHidden
+        }
     }
     
     fileprivate func isRememberAgainViewHidden(_ isHidden: Bool) {
@@ -1218,9 +1308,10 @@ extension VATask: UITableViewDataSource {
             var cell = VACell()
             cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
             if tableView == recalledTableView {
-                cell.configRecallTest(imageNameList: mixedImages, resultList: textInputList, timeList: recallTimes, indexPath: indexPath)
-            } else {
-                cell.configRegconizedTest(imageNameList: mixedImages, recognizeErrors: recognizeErrors, timeList: recognizeTimes, indexPath: indexPath)
+                cell.configRecallTest(imageNameList: self.mixedImages, resultList: self.textInputList, determinedAdminList: self.textDeterminedAdminList, timeList: self.recallTimes, indexPath: indexPath)
+            }
+            else {
+                cell.configRegconizedTest(imageNameList: self.mixedImages, recognizeErrors: self.recognizeErrors, timeList: self.recognizeTimes, indexPath: indexPath)
             }
             return cell
         }
