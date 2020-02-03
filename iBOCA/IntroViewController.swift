@@ -96,7 +96,7 @@ class IntroViewController: BaseViewController {
             (viewController as! SimpleMemoryTask).mode = self.mode
         case "visual-association":
             viewController = (storyboard.instantiateViewController(withIdentifier: "VATask") as? VATask)!
-            (viewController as! VATask).mode = self.mode
+            (viewController as! VATask).mode = self.mode == .admin ? .patient : .admin
         case "trails":
             viewController = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController)!
             isPracticeTest = false
