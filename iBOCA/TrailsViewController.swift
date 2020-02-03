@@ -17,6 +17,8 @@ var bubbleColor:UIColor?
 var selectedTest = 0
 var numBubbles = 0
 
+var previousTestNumber = -1
+
 var isPracticeTest: Bool = false
 
 class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
@@ -335,7 +337,10 @@ extension TrailsAViewController {
     }
     
     fileprivate func randomTest() {
-        selectedTest = Int(arc4random_uniform(10))
+        repeat {
+            selectedTest = Int.random(in: 0...9)
+        } while selectedTest == previousTestNumber
+        previousTestNumber = selectedTest
         numBubbles = 20
         
 //        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
