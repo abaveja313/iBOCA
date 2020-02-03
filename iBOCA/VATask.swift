@@ -772,15 +772,7 @@ extension VATask {
     }
     
     @IBAction func dontKnowButtonTapped(_ sender: Any) {
-        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
-            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
-            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
-                warningAlert.dismiss(animated: true, completion: nil)
-            }))
-            self.present(warningAlert, animated: true, completion: nil)
-        } else {
-           self.nextOutputDisplayImage("Don't Know")
-        }
+        self.nextOutputDisplayImage("Don't Know")
     }
     
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
