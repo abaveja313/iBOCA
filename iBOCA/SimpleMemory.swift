@@ -23,6 +23,11 @@ var startTimeSM = TimeInterval()
 var timerSM = Timer()
 var StartTimer = Foundation.Date()
 class SimpleMemoryTask: BaseViewController {
+    // Check mode is admin or patient
+    var mode : TestMode = TestMode.admin
+    
+    // Check Timer Next Picture\
+    var timerNextPicture = Timer()
     
     // MARK: - Outlet
     @IBOutlet weak var lblBack: UILabel!
@@ -550,28 +555,50 @@ extension SimpleMemoryTask {
         print("imagesSM[testCount] = \(imagesSM[testCount])")
         
         // Show Arrow
-        self.btnArrowRight.isHidden = false
+        self.btnArrowRight.isHidden = true
         self.btnArrowLeft.isHidden = true
-        //        outputImage(name: imagesSM[testCount])
         self.outputImage(withImageName: imagesSM[testCount])
+        self.createTimerNextPicture()
     }
     
     func outputImage(withImageName name: String) {
         // Check Show/ Hide Arrow
-        if testCount == 0 {
-            self.btnArrowLeft.isHidden = true
-            self.btnArrowRight.isHidden = false
-        }
-        else if testCount == imagesSM.count {
-            self.btnArrowLeft.isHidden = false
-            self.btnArrowRight.isHidden = true
-        }
-        else {
-            self.btnArrowLeft.isHidden = false
-            self.btnArrowRight.isHidden = false
-        }
+//        if testCount == 0 {
+//            self.btnArrowLeft.isHidden = true
+//            self.btnArrowRight.isHidden = false
+//        }
+//        else if testCount == imagesSM.count {
+//            self.btnArrowLeft.isHidden = false
+//            self.btnArrowRight.isHidden = true
+//        }
+//        else {
+//            self.btnArrowLeft.isHidden = false
+//            self.btnArrowRight.isHidden = false
+//        }
         
         self.ivTask.image = UIImage(named: name)!
+    }
+    
+    func createTimerNextPicture() {
+        self.timerNextPicture.invalidate()
+        self.timerNextPicture = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerNextPictureAction), userInfo: nil, repeats: true)
+    }
+    
+    // called every time interval from the timer
+    @objc func timerNextPictureAction() {
+        testCount += 1
+        if(testCount == imagesSM.count) {
+            self.timerNextPicture.invalidate()
+            imageView.removeFromSuperview()
+            print("delay")
+            self.start.removeTarget(nil, action: nil, for: .allEvents)
+            self.start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+            self.beginDelay()
+        }
+        else {
+            print("pic: \(testCount)")
+            self.outputImage(withImageName: imagesSM[testCount])
+        }
     }
     
     func beginDelay() {
