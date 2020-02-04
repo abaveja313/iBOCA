@@ -14,28 +14,59 @@ var StartTime = Foundation.Date()
 class MyGlobalVA: NSObject {
 
     static let shared: MyGlobalVA = MyGlobalVA()
+    var totalTimer: Timer?
     var internalTimer: Timer?
-    var timerDelay: Int = 0
+    var delay: Int = 0
+    var total: Int = 0
     var mixedImages = [String]()
     var halfImages = [String]()
     var recognizeIncorrectVA = [String]()
+    
+    var resultStartTime: Foundation.Date!
+    var resultEndTime:Foundation.Date!
 
-    func startTimer() {
+    func startDelayTimer() {
         if self.internalTimer == nil {
             self.internalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTimerAction), userInfo: nil, repeats: true)
         }
     }
+    
+    func startTotalTimer() {
+        if self.totalTimer == nil {
+            self.totalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTotalTimerAction), userInfo: nil, repeats: true)
+            self.resultStartTime = Foundation.Date()
+        }
+    }
 
-    func stopTimer(){
+    func stopDelayTimer(){
         if self.internalTimer != nil {
            self.internalTimer!.invalidate()
            self.internalTimer = nil
         }
     }
+    func stopTotalTimer(){
+        if self.totalTimer != nil {
+           self.resultEndTime = Foundation.Date()
+           self.totalTimer!.invalidate()
+           self.totalTimer = nil
+        }
+    }
 
     @objc func fireTimerAction(sender: AnyObject?){
-        debugPrint("Timer Fired! \(sender)")
-        timerDelay = sender as! Int
+        delay += 1
+        debugPrint("Delay! \(delay)")
+    }
+    
+    @objc func fireTotalTimerAction(sender: AnyObject?){
+        total += 1
+        debugPrint("Total! \(total)")
+    }
+    
+    func clearAll() {
+        self.stopDelayTimer()
+        self.mixedImages.removeAll()
+        self.halfImages.removeAll()
+        self.recognizeIncorrectVA.removeAll()
     }
 
 }
@@ -163,7 +194,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     
     var counterTimeView: CounterTimeView!
     var totalTimeCounter = Timer()
-    var startTimeTask = Foundation.Date()
     
     var inputTimer = Timer()
     var timeInput = Double()
@@ -182,8 +212,12 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         super.viewDidLoad()
         
         self.setupView()
-        setupCounterTimeView()
-        startDisplayAlert()
+        self.setupCounterTimeView()
+        
+        MyGlobalVA.shared.startTotalTimer()
+        if MyGlobalVA.shared.internalTimer == nil {
+            self.startDisplayAlert()
+        }
         
         result = Results()
         result.name = TestName.VISUAL_ASSOCIATION
@@ -207,6 +241,44 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         }
         else {
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
+        }
+        
+        // Check Global time Delay
+        if MyGlobalVA.shared.internalTimer != nil {
+            // Check VADelayTime in Settings
+            self.afterBreakVA = true
+            self.isTaskViewHidden(false)
+            self.isImageViewHidden(true)
+            self.beginDelay()
+            // Reload data images
+            self.textInputList = []
+            self.textDeterminedAdminList = []
+            self.mixedImages = MyGlobalVA.shared.mixedImages
+            self.halfImages = MyGlobalVA.shared.halfImages
+            self.recognizeIncorrectVA = MyGlobalVA.shared.recognizeIncorrectVA
+            if let delayTime = Settings.VADelayTime {
+                self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
+                if MyGlobalVA.shared.delay > delayTime {
+                    self.timerLabel.text = "00 : 00"
+                    self.endTimer()
+                }
+                else {
+                    self.totalTime = delayTime - MyGlobalVA.shared.delay
+                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
+                }
+            }
+            else {
+                self.delayLabel.text = "Recommended Delay : 5 minutes"
+                let delayTime = 5*60 // Timer delay default of system
+                if MyGlobalVA.shared.delay > delayTime {
+                    self.timerLabel.text = "00 : 00"
+                    self.endTimer()
+                }
+                else {
+                    self.totalTime = delayTime - MyGlobalVA.shared.delay
+                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
+                }
+            }
         }
     }
     
@@ -236,6 +308,10 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             halfImages = half4
             recognizeIncorrectVA = incorrect4
         }
+        
+        MyGlobalVA.shared.mixedImages = self.mixedImages
+        MyGlobalVA.shared.halfImages = self.halfImages
+        MyGlobalVA.shared.recognizeIncorrectVA = self.recognizeIncorrectVA
     }
     
     fileprivate func runTimer() {
@@ -244,14 +320,14 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     }
     
     @objc func updateTime(timer: Timer) {
-        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+//        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+        self.counterTimeView.setSeconds(seconds: MyGlobalVA.shared.total)
     }
     
     @objc fileprivate func startDisplayAlert() {
         Status[TestVisualAssociation] = TestStatus.Running
         randomTest()
         
-//        isCollectionViewHidden(true)
         isTaskViewHidden(false)
         
         firstDisplay = true
@@ -264,6 +340,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             print("start")
             self.display()
         }))
+        
         self.present(newStartAlert, animated: true, completion: nil)
     }
     
@@ -278,6 +355,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
             print("start new")
+            MyGlobalVA.shared.clearAll()
+            MyGlobalVA.shared.stopTotalTimer()
+            MyGlobalVA.shared.total = 0
+            MyGlobalVA.shared.delay = 0
+            
             self.startNewTask()
         }))
         
@@ -297,6 +379,8 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     
     fileprivate func startNewTask() {
         inputTimer.invalidate()
+        MyGlobalVA.shared.stopDelayTimer()
+        MyGlobalVA.shared.startTotalTimer()
         
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
@@ -308,25 +392,15 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             self.delayLabel.text = "Recommended Delay : 5 minutes"
         }
         
-        self.result.startTime = Foundation.Date()
-        
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
         
         self.isRecalledTestMode = false
         self.isRecommendDelayHidden(true)
-//        self.isCollectionViewHidden(false)
-//        self.isTaskViewHidden(true)
         
         result.startTime = Foundation.Date()
         
-//        imageSetVA = 0
-//        mixedImages = self.mixed0
-//        halfImages = self.half0
-//        recognizeIncorrectVA = self.incorrect0
-        
-        timerVA.invalidate()
+        self.timerVA.invalidate()
         
         recallErrors = [Int]()
         recallTimes = [Double]()
@@ -393,42 +467,23 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             totalTime = 300
         }
         
+        if MyGlobalVA.shared.internalTimer == nil {
+            MyGlobalVA.shared.startDelayTimer()
+            MyGlobalVA.shared.mixedImages = self.mixedImages
+            MyGlobalVA.shared.halfImages = self.halfImages
+            MyGlobalVA.shared.recognizeIncorrectVA = self.recognizeIncorrectVA
+        }
+        
         timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerVA.fire()
+        
         startTimeVA = NSDate.timeIntervalSinceReferenceDate
         
         startButton.removeTarget(self, action: nil, for:.allEvents)
         startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
     }
     
-    fileprivate func updateInDelay(_ timer: Timer) {
-        let currTime = Foundation.Date.timeIntervalSinceReferenceDate
-        var diff: TimeInterval = currTime - startTimeVA
-        
-        let minutes = UInt8(diff / 60.0)
-        
-        diff -= (TimeInterval(minutes)*60.0)
-        
-        let seconds = UInt8(diff)
-        
-        diff = TimeInterval(seconds)
-        
-        let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
-        let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
-        
-        // Check  the time is over 5 minute
-        if let intMinutes = Int(strMinutes), intMinutes >= 5, strSeconds != "00" {
-            timerLabel.textColor = UIColor.red
-        }
-        timerLabel.text = "\(strMinutes) : \(strSeconds)"
-    }
-    
     @objc fileprivate func updateTimeDecreases(timer:Timer) {
-//        MyGlobalVA.shared.startTimer()
-//        MyGlobalVA.shared.mixedImages = mixedImages
-//        MyGlobalVA.shared.halfImages = halfImages
-//        MyGlobalVA.shared.recognizeIncorrectVA = recognizeIncorrectVA
-        
         timerLabel.text = "\(timeFormatted(totalTime))"
         
         if totalTime != 0 {
@@ -455,6 +510,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         delayTime = delayTime - Double(self.totalTime)
         
+        MyGlobalVA.shared.stopDelayTimer()
         timerVA.invalidate()
         
         let recallAlert = UIAlertController(title: "Recall", message: "Type the name of the item that is missing from the picture.", preferredStyle: .alert)
@@ -575,8 +631,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     }
     
     fileprivate func done() {
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        self.counterTimeView.setSeconds(seconds: MyGlobalVA.shared.total)
+        
         self.isResultViewHidden(false)
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.inputTimer.invalidate()
         
@@ -591,18 +650,37 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var delayResult = ""
         var imageSetResult = ""
         
+        if let time = Settings.VADelayTime {
+            if MyGlobalVA.shared.delay > time {
+                self.delayTime = Double(time)
+            }
+            else {
+                self.delayTime = Double(MyGlobalVA.shared.delay)
+            }
+        } else {
+            let time = 5*60
+            if MyGlobalVA.shared.delay > time {
+                self.delayTime = Double(time)
+            }
+            else {
+                self.delayTime = Double(MyGlobalVA.shared.delay)
+            }
+        }
+        
         imageSetResult = "Image set = \(imageSetVA+1)\n"
         
-        delayResult = "Delay length of \(delayTime) seconds\n"
+        delayResult = "Delay length of \(self.delayTime) seconds\n"
         
         result.numErrors = 0
         result.numCorrects = 0
         
         recalledTableView.reloadData()
         
-        totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
-        delayTimeLabel.text = "\(delayTime) seconds"
+        totalTimeLabel.text = "Text complete in \(MyGlobalVA.shared.total) seconds"
+        delayTimeLabel.text = "\(self.delayTime) seconds"
         
+        result.startTime = MyGlobalVA.shared.resultStartTime
+        result.endTime = MyGlobalVA.shared.resultEndTime
         result.imageVA = self.mixedImages
         result.inputVA = self.textInputList
         
@@ -633,7 +711,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         resultLabel.isHidden = true
         
         resultList["ImageSet"] = imageSetVA
-        resultList["DelayTime"] = delayTime
+        resultList["DelayTime"] = self.delayTime
         
         var tmpResultList : [String:Any] = [:]
         
@@ -840,7 +918,6 @@ extension VATask {
         }
         timerVA.invalidate()
         inputTimer.invalidate()
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
         
@@ -848,6 +925,15 @@ extension VATask {
         guard !quickStartModeOn else {
             didBackToResult?()
             return
+        }
+        
+        
+        // Check global delay time not runing
+        if MyGlobalVA.shared.internalTimer == nil {
+            MyGlobalVA.shared.clearAll()
+            MyGlobalVA.shared.stopTotalTimer()
+            MyGlobalVA.shared.total = 0
+            MyGlobalVA.shared.delay = 0
         }
         
         navigationController?.popViewController(animated: true)
@@ -897,9 +983,14 @@ extension VATask {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
+        
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        MyGlobalVA.shared.total = 0
+        MyGlobalVA.shared.delay = 0
+        
         timerVA.invalidate()
         inputTimer.invalidate()
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
         
@@ -918,7 +1009,11 @@ extension VATask {
     
     @IBAction func actionReset(_ sender: Any) {
         
-//        isTaskViewHidden(true)
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        MyGlobalVA.shared.total = 0
+        MyGlobalVA.shared.delay = 0
+        
         isImageViewHidden(true)
         isRecommendDelayHidden(true)
         isRememberAgainViewHidden(true)
@@ -926,6 +1021,8 @@ extension VATask {
         isMissingItemViewHidden(true)
         isResultViewHidden(true)
         isDropDownViewHidden(true)
+        self.cancelTimerNextPicture()
+        
         self.startNewTask()
     }
     

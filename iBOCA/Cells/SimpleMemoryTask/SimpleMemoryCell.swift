@@ -58,13 +58,22 @@ class SimpleMemoryCell: UICollectionViewCell {
     
     @IBAction func actionCorrect(_ sender: Any) {
         self.textDeterminedAdmin = "Correct"
+        self.correctButton.setTitleColor(.red, for: .normal)
+        self.incorrectButton.setTitleColor(Color.color(hexString: "505259"), for: .normal)
+        self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
     }
     
     @IBAction func actionIncorrect(_ sender: Any) {
         self.textDeterminedAdmin = "Incorrect"
+        self.correctButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        self.incorrectButton.setTitleColor(.red, for: .normal)
+        self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
     }
     
     @IBAction func actionDontKnow(_ sender: Any) {
         self.textDeterminedAdmin = "Don't know"
+        self.correctButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        self.incorrectButton.setTitleColor(Color.color(hexString: "505259"), for: .normal)
+        self.dontKnowButton.setTitleColor(.red, for: .normal)
     }
 }
