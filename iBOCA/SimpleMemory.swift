@@ -14,14 +14,15 @@ var previousSMTest = -1
 
 class MyGlobalSM: NSObject {
 
-    static let shared: MyGlobalVA = MyGlobalVA()
+    static let shared: MyGlobalSM = MyGlobalSM()
     var totalTimer: Timer?
     var internalTimer: Timer? // delay time
     var delay: Int = 0
     var total: Int = 0
-    var mixedImages = [String]()
-    var halfImages = [String]()
+    var imagesSM = [String]()
+    var imageSetSM = Int()
     var recognizeIncorrectSM = [String]()
+    var incorrectImageSetSM = Int()
     
     var resultStartTime: Foundation.Date!
     var resultEndTime:Foundation.Date!
@@ -65,9 +66,10 @@ class MyGlobalSM: NSObject {
     
     func clearAll() {
         self.stopDelayTimer()
-        self.mixedImages.removeAll()
-        self.halfImages.removeAll()
+        self.imagesSM.removeAll()
+        self.imageSetSM = Int()
         self.recognizeIncorrectSM.removeAll()
+        self.incorrectImageSetSM = Int()
     }
 
 }
@@ -202,6 +204,7 @@ class SimpleMemoryTask: BaseViewController {
         super.viewDidLoad()
         
         self.setupViews()
+        MyGlobalSM.shared.startTotalTimer()
         self.startTest()
         
         StartTimer = Foundation.Date()
@@ -225,6 +228,49 @@ class SimpleMemoryTask: BaseViewController {
         
         // MARK: - TODO
         self.start.isHidden = true
+        
+        // Check Global time Delay
+        if MyGlobalSM.shared.internalTimer != nil {
+            // Check VADelayTime in Settings
+            self.afterBreakSM = true
+            self.collectionViewLevel.isHidden = true
+            self.lblDescTask.isHidden = true
+            self.vShadowTask.isHidden = false
+            self.vTask.isHidden = false
+            self.start.removeTarget(nil, action: nil, for: .allEvents)
+            self.start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
+            self.beginDelay()
+            // Reload data images
+            self.textInputList = []
+            self.imagesSM = MyGlobalSM.shared.imagesSM
+            self.imageSetSM = MyGlobalSM.shared.imageSetSM
+            self.recognizeIncorrectSM = MyGlobalSM.shared.recognizeIncorrectSM
+            self.incorrectImageSetSM = MyGlobalSM.shared.incorrectImageSetSM
+            
+            if let delayTime = Settings.SMDelayTime {
+                self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
+                if MyGlobalSM.shared.delay > delayTime {
+                    self.timerLabel.text = "00 : 00"
+                    self.endTimer()
+                }
+                else {
+                    self.totalTime = delayTime - MyGlobalSM.shared.delay
+                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
+                }
+            }
+            else {
+                self.delayLabel.text = "Recommended Delay : 1 minute"
+                let delayTime = 60 // Timer delay default of system
+                if MyGlobalSM.shared.delay > delayTime {
+                    self.timerLabel.text = "00 : 00"
+                    self.endTimer()
+                }
+                else {
+                    self.totalTime = delayTime - MyGlobalSM.shared.delay
+                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -464,7 +510,8 @@ extension SimpleMemoryTask {
     }
     
     @objc func updateTime(timer: Timer) {
-        self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+//        self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+        self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
     }
     
     @objc func startAlert() {
@@ -516,6 +563,13 @@ extension SimpleMemoryTask {
     }
     
     @objc func startNewTask() {
+        MyGlobalSM.shared.clearAll()
+        MyGlobalSM.shared.stopTotalTimer()
+        MyGlobalSM.shared.total = 0
+        MyGlobalSM.shared.delay = 0
+        MyGlobalSM.shared.stopDelayTimer()
+        MyGlobalSM.shared.startTotalTimer()
+        
         self.isRecalledTestMode = false
         self.lblChooseDelayTime.text = self.minuteOfString()
         // Update item Selected Dropdown & hide DropDown
@@ -562,7 +616,9 @@ extension SimpleMemoryTask {
             self.collectionViewLevel.isHidden = false
         case .patient:
             self.randomTest()
-            self.startDisplayAlert()
+            if MyGlobalSM.shared.internalTimer == nil {
+                self.startDisplayAlert()
+            }
         }
     }
     
@@ -659,6 +715,14 @@ extension SimpleMemoryTask {
             totalTime = 60
         }
         
+        if MyGlobalSM.shared.internalTimer == nil {
+            MyGlobalSM.shared.startDelayTimer()
+            MyGlobalSM.shared.imagesSM = self.imagesSM
+            MyGlobalSM.shared.imageSetSM = self.imageSetSM
+            MyGlobalSM.shared.recognizeIncorrectSM = self.recognizeIncorrectSM
+            MyGlobalSM.shared.incorrectImageSetSM = self.incorrectImageSetSM
+        }
+        
         timerSM = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerSM.fire()
         startTimeSM = NSDate.timeIntervalSinceReferenceDate
@@ -709,6 +773,7 @@ extension SimpleMemoryTask {
     }
     
     func resumeTask() {
+        MyGlobalSM.shared.stopDelayTimer()
         timerSM.invalidate()
         self.isRecalledTestMode = true
         self.shouldHiddenDelayViews(true)
@@ -771,6 +836,11 @@ extension SimpleMemoryTask {
             recognizeIncorrectSM = images0
             incorrectImageSetSM = 0
         }
+        
+        MyGlobalSM.shared.imagesSM = self.imagesSM
+        MyGlobalSM.shared.imageSetSM = self.imageSetSM
+        MyGlobalSM.shared.recognizeIncorrectSM = self.recognizeIncorrectSM
+        MyGlobalSM.shared.incorrectImageSetSM = self.incorrectImageSetSM
     }
 }
 
@@ -875,7 +945,9 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
                 incorrectImageSetSM = 0
             }
             
-            self.startDisplayAlert()
+            if MyGlobalSM.shared.internalTimer == nil {
+                self.startDisplayAlert()
+            }
         }
     }
 }
@@ -965,6 +1037,12 @@ extension SimpleMemoryTask {
     @IBAction func actionQuit(_ sender: Any) {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
+        
+        MyGlobalSM.shared.clearAll()
+        MyGlobalSM.shared.stopTotalTimer()
+        MyGlobalSM.shared.total = 0
+        MyGlobalSM.shared.delay = 0
+        
         self.view.endEditing(true)
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
@@ -999,6 +1077,14 @@ extension SimpleMemoryTask {
             return
         }
         
+        // Check global delay time not runing
+        if MyGlobalSM.shared.internalTimer == nil {
+            MyGlobalSM.shared.clearAll()
+            MyGlobalSM.shared.stopTotalTimer()
+            MyGlobalSM.shared.total = 0
+            MyGlobalSM.shared.delay = 0
+        }
+        
         navigationController?.popViewController(animated: true)
         
     }
@@ -1016,6 +1102,28 @@ extension SimpleMemoryTask {
         else {
             ended = true
             //            totalTime = Int(self.maxSeconds)
+            
+            MyGlobalSM.shared.clearAll()
+            MyGlobalSM.shared.stopTotalTimer()
+            self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
+            
+            if let time = Settings.SMDelayTime {
+                if MyGlobalSM.shared.delay > time {
+                    self.delayTime = Double(time)
+                }
+                else {
+                    self.delayTime = Double(MyGlobalSM.shared.delay)
+                }
+            } else {
+                let time = 60
+                if MyGlobalSM.shared.delay > time {
+                    self.delayTime = Double(time)
+                }
+                else {
+                    self.delayTime = Double(MyGlobalSM.shared.delay)
+                }
+            }
+            
             self.collectionViewObjectName.isHidden = true
             afterBreakSM = false
             self.nextButton.isHidden = true
@@ -1053,6 +1161,7 @@ extension SimpleMemoryTask {
             
             // Save Results
             self.totalTimeCounter.invalidate()
+            result.startTime = MyGlobalSM.shared.resultStartTime
             result.endTime = Foundation.Date()
             let completeTime = result.totalElapsedSeconds()
             result.shortDescription = "Recall: \(correct) correct, \(incorrect) incorrect. (Sets correct:\(imageSetSM), incorrect:\(incorrectImageSetSM))"
