@@ -18,6 +18,8 @@ class SimpleMemoryCell: UICollectionViewCell {
     @IBOutlet weak var incorrectButton: UIButton!
     @IBOutlet weak var dontKnowButton: UIButton!
     
+    var textDeterminedAdmin = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,6 +29,10 @@ class SimpleMemoryCell: UICollectionViewCell {
     fileprivate func setupView() {
         self.backgroundColor = UIColor.clear
         self.vContents.backgroundColor = UIColor.clear
+        
+        self.correctButton.layer.cornerRadius = 5
+        self.incorrectButton.layer.cornerRadius = 5
+        self.dontKnowButton.layer.cornerRadius = 5
         
         self.lblTitle.font = Font.font(name: Font.Montserrat.medium, size: 16.0)
         self.lblTitle.textColor = Color.color(hexString: "#8A9199")
@@ -48,5 +54,17 @@ class SimpleMemoryCell: UICollectionViewCell {
     
     private func shouldHiddenButtons(_ isHidden: Bool) {
         self.buttonsStackView.isHidden = isHidden
+    }
+    
+    @IBAction func actionCorrect(_ sender: Any) {
+        self.textDeterminedAdmin = "Correct"
+    }
+    
+    @IBAction func actionIncorrect(_ sender: Any) {
+        self.textDeterminedAdmin = "Incorrect"
+    }
+    
+    @IBAction func actionDontKnow(_ sender: Any) {
+        self.textDeterminedAdmin = "Don't know"
     }
 }

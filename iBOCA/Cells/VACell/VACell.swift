@@ -60,7 +60,7 @@ extension VACell {
     
     
     
-    func configRecallTest(imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
+    func configRecallTest(imageNameList: [String], resultList: [String], determinedAdminList: [String], timeList: [Double], indexPath: IndexPath) {
         timeLabelLeading.constant = 0
         inputLabelLeading.constant = 0
         if indexPath.row == 0 {
@@ -71,7 +71,9 @@ extension VACell {
         } else {
             setupContentCell()
             testTypeLabel.text = "Recalled \(imageNameList[indexPath.row - 1])"
-            resultLabel.text = "\(resultList[indexPath.row - 1])"
+            // determinedAdmin is Correct | InCorrect | Don't Know
+            let determinedAdmin = determinedAdminList.count > 0 ? " (\(determinedAdminList[indexPath.row - 1]))" : ""
+            resultLabel.text = "\(resultList[indexPath.row - 1])\(determinedAdmin)"
             timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
         }
     }

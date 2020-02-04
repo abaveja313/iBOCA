@@ -35,6 +35,7 @@ class SimpleMemoryTask: BaseViewController {
     @IBOutlet weak var vDelay: UIView!
     
     @IBOutlet weak var collectionViewObjectName: UICollectionView!
+    @IBOutlet weak var originalAnswerButton: UIButton!
     
     @IBOutlet weak var vResults: UIView!
     @IBOutlet weak var lblDelayLength: UILabel!
@@ -67,6 +68,7 @@ class SimpleMemoryTask: BaseViewController {
     var timerNextPicture = Timer()
     
     var textInputList: [String]!
+    var textDeterminedAdminList: [String]!
     
     var resultList: [String:Any] = [:]
     
@@ -343,6 +345,7 @@ extension SimpleMemoryTask {
         self.collectionViewObjectName.delegate = self
         self.collectionViewObjectName.dataSource = self
         self.collectionViewObjectName.isHidden = true
+        self.originalAnswerButton.isHidden = true
         
         // Button complete
         self.nextButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
@@ -522,6 +525,7 @@ extension SimpleMemoryTask {
         }
         
         self.textInputList = []
+        self.textDeterminedAdminList = []
         
         let newStartAlert = UIAlertController(title: "Display", message: "Ask patient to name and remember these images.", preferredStyle: .alert)
         newStartAlert.addAction(UIAlertAction(title: "Start", style: .default, handler: { (action) -> Void in
@@ -661,6 +665,7 @@ extension SimpleMemoryTask {
             
             //action
             self.collectionViewObjectName.isHidden = false
+            self.originalAnswerButton.isHidden = self.mode == .patient
             self.collectionViewObjectName.reloadData()
             self.nextButton.isHidden = false
             self.nextButton.isEnabled = true
@@ -777,10 +782,10 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblTitle.text = "Object name \(indexPath.row + 1):"
             if self.isStartNew == true {
                 cell.tfObjectName.text = ""
+                cell.textDeterminedAdmin = ""
             }
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -859,6 +864,13 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Action
 extension SimpleMemoryTask {
+    @IBAction func originalAnswerAction(_ sender: Any) {
+        let originalAnswerVC = OriginalAnswerVC(frame: CGSize(width: self.view.frame.width / 4,
+                                                              height: self.view.frame.height / 3))
+        originalAnswerVC.nameList = self.imagesSM
+        self.presentPopover(originalAnswerVC, sourceRect: self.originalAnswerButton.frame, permittedArrowDirections: .up)
+    }
+    
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
         print("Arrow Left Tapped")
         testCount -= 1
@@ -946,17 +958,20 @@ extension SimpleMemoryTask {
     @objc fileprivate func doneSM() {
         self.view.endEditing(true)
         
-        if checkValid() == false {
-            let warningAlert = UIAlertController(title: "Warning", message: "Please enter all fields.", preferredStyle: .alert)
+        if !checkValid() {
+            let message = self.mode == .admin ? "Please determine all fields." : "Please enter all fields."
+            let warningAlert = UIAlertController(title: "Warning",
+                                                 message: message,
+                                                 preferredStyle: .alert)
             warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
                 warningAlert.dismiss(animated: true, completion: nil)
             }))
             self.present(warningAlert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             ended = true
             //            totalTime = Int(self.maxSeconds)
             self.collectionViewObjectName.isHidden = true
+            self.originalAnswerButton.isHidden = true
             afterBreakSM = false
             self.nextButton.isHidden = true
             
@@ -971,21 +986,25 @@ extension SimpleMemoryTask {
                 exactEsults += " \(imagesSM[i]),"
                 let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
                 guard let inputValue = cell.tfObjectName.text else {return}
-                let objectName = "Object \(i+1)"
-                let exactResult = imagesSM[i]
-                if imagesSM[i] == inputValue.lowercased() {
-                    outputResult += "Input \(inputValue) - Correct\n"
-                    correct += 1
-                    
-                    let correctResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: true)
-                    self.resultsTask.append(correctResult)
-                }
-                else {
-                    incorrect += 1
-                    outputResult += "Input \(inputValue) - Incorrect\n"
-                    
-                    let inCorrectResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: false)
-                    self.resultsTask.append(inCorrectResult)
+                switch self.mode {
+                case .admin:
+                    self.textDeterminedAdminList.append(cell.textDeterminedAdmin)
+                case .patient:
+                    let objectName = "Object \(i+1)"
+                    let exactResult = imagesSM[i]
+                    if imagesSM[i] == inputValue.lowercased() {
+                        outputResult += "Input \(inputValue) - Correct\n"
+                        correct += 1
+                        
+                        let correctResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: true)
+                        self.resultsTask.append(correctResult)
+                    } else {
+                        incorrect += 1
+                        outputResult += "Input \(inputValue) - Incorrect\n"
+                        
+                        let inCorrectResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: false)
+                        self.resultsTask.append(inCorrectResult)
+                    }
                 }
             }
             
@@ -1036,20 +1055,20 @@ extension SimpleMemoryTask {
     }
     
     private func checkValid() -> Bool {
-        var countEmpty = 0
         for i in 0 ..< imagesSM.count {
             let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
-            if let inputValue = cell.tfObjectName.text, inputValue.isEmpty {
-                countEmpty += 1
+            switch self.mode {
+            case .admin:
+                if cell.textDeterminedAdmin == "" {
+                    return false
+                }
+            case .patient:
+                if let inputValue = cell.tfObjectName.text, inputValue.isEmpty {
+                    return false
+                }
             }
         }
-        
-        if countEmpty != 0 {
-            return false
-        }
-        else {
-            return true
-        }
+        return true
     }
 }
 
