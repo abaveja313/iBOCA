@@ -12,6 +12,66 @@ import UIKit
 var StartTimer = Foundation.Date()
 var previousSMTest = -1
 
+class MyGlobalSM: NSObject {
+
+    static let shared: MyGlobalVA = MyGlobalVA()
+    var totalTimer: Timer?
+    var internalTimer: Timer? // delay time
+    var delay: Int = 0
+    var total: Int = 0
+    var mixedImages = [String]()
+    var halfImages = [String]()
+    var recognizeIncorrectSM = [String]()
+    
+    var resultStartTime: Foundation.Date!
+    var resultEndTime:Foundation.Date!
+
+    func startDelayTimer() {
+        if self.internalTimer == nil {
+            self.internalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTimerAction), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func startTotalTimer() {
+        if self.totalTimer == nil {
+            self.totalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTotalTimerAction), userInfo: nil, repeats: true)
+            self.resultStartTime = Foundation.Date()
+        }
+    }
+
+    func stopDelayTimer(){
+        if self.internalTimer != nil {
+           self.internalTimer!.invalidate()
+           self.internalTimer = nil
+        }
+    }
+    func stopTotalTimer(){
+        if self.totalTimer != nil {
+           self.resultEndTime = Foundation.Date()
+           self.totalTimer!.invalidate()
+           self.totalTimer = nil
+        }
+    }
+
+    @objc func fireTimerAction(sender: AnyObject?){
+        delay += 1
+        debugPrint("Delay! \(delay)")
+    }
+    
+    @objc func fireTotalTimerAction(sender: AnyObject?){
+        total += 1
+        debugPrint("Total! \(total)")
+    }
+    
+    func clearAll() {
+        self.stopDelayTimer()
+        self.mixedImages.removeAll()
+        self.halfImages.removeAll()
+        self.recognizeIncorrectSM.removeAll()
+    }
+
+}
+
 class SimpleMemoryTask: BaseViewController {
     
     // MARK: - Outlet
