@@ -10,9 +10,13 @@ import UIKit
 
 class SimpleMemoryCell: UICollectionViewCell {
 
+    @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var vContents: UIView!
     @IBOutlet weak var tfObjectName: UITextField!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var correctButton: UIButton!
+    @IBOutlet weak var incorrectButton: UIButton!
+    @IBOutlet weak var dontKnowButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,4 +42,11 @@ class SimpleMemoryCell: UICollectionViewCell {
         self.tfObjectName.addLeftTextPadding(11.0)
     }
     
+    func configureView(mode: TestMode) {
+        self.buttonsStackView.isHidden = mode == .patient
+    }
+    
+    private func shouldHiddenButtons(_ isHidden: Bool) {
+        self.buttonsStackView.isHidden = isHidden
+    }
 }
