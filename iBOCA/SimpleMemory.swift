@@ -612,6 +612,7 @@ extension SimpleMemoryTask {
         self.startTest()
         
         self.collectionViewLevel.reloadData()
+        self.collectionViewObjectName.reloadData()
         
         startTime = Foundation.Date()
         self.startTimeTask = Foundation.Date()
