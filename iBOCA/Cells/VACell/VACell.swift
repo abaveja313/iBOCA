@@ -42,7 +42,8 @@ extension VACell {
                 guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
                 testTypeLabel.text = "Recalled \(result.imageVA[row])"
                 resultLabel.text = "\(String(describing: item["Condition"] as! String))"
-                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+                let time = String(format:"%.1f", item["Time"] as! Double)
+                timeLabel.text = "\(time) seconds"
             } else {
                 testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
                 guard let item = regconizeList[result.imageVA[row - 5]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
@@ -53,7 +54,8 @@ extension VACell {
                     resultLabel.textColor = Color.color(hexString: "#E94533")
                     resultLabel.text = "Incorrect"
                 }
-                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+                let time = String(format:"%.1f", item["Time"] as! Double)
+                timeLabel.text = "\(time) seconds"
             }
         }
     }

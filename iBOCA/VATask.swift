@@ -43,6 +43,9 @@ class MyGlobalVA: NSObject {
         if self.internalTimer != nil {
            self.internalTimer!.invalidate()
            self.internalTimer = nil
+            
+            let dataDict:[String: Int] = ["VADelayTime": 0]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
         }
     }
     func stopTotalTimer(){
@@ -56,6 +59,8 @@ class MyGlobalVA: NSObject {
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
         debugPrint("Delay! \(delay)")
+        let dataDict:[String: Int] = ["VADelayTime": delay]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
     }
     
     @objc func fireTotalTimerAction(sender: AnyObject?){
