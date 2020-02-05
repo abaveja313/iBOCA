@@ -975,10 +975,11 @@ extension VATask {
         
         if self.quickStartModeOn {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+            }, ok: {
                 self.clearTimer()
-                self.didBackToResult?()
-            }) {
                 self.didCompleted?()
+            }) {
+                self.clearTimer()
             }
         } else {
             self.clearTimer()
@@ -1006,6 +1007,7 @@ extension VATask {
         timerVA.invalidate()
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
         afterBreakVA = false
     }
     

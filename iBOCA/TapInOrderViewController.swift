@@ -742,10 +742,9 @@ class TapInOrderViewController: BaseViewController {
             
             QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
                 self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.didCompleted?()
-            }
-            
+            })
             return
         }
         

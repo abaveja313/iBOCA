@@ -1063,11 +1063,11 @@ extension SimpleMemoryTask {
         
         if quickStartModeOn {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.clearTimer()
-                self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.clearTimer()
                 self.didCompleted?()
+            }) {
+                self.clearTimer()
             }
         } else {
             self.clearTimer()
@@ -1088,6 +1088,7 @@ extension SimpleMemoryTask {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
         
+        self.timerNextPicture.invalidate()
         self.totalTimeCounter.invalidate()
         
         MyGlobalSM.shared.clearAll()

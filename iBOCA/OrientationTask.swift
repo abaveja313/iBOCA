@@ -433,12 +433,12 @@ extension OrientationTask {
                 self.completeTest()
                 
                 self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.timerOrientationTask.invalidate()
                 self.completeTest()
                 
                 self.didCompleted?()
-            }
+            })
             return
         }
         
