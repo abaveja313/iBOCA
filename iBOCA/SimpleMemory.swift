@@ -771,8 +771,6 @@ extension SimpleMemoryTask {
             self.updateDataDropDown()
             endTimer()
         }
-        
-        
     }
     
     func timeFormatted(_ totalSeconds: Int) -> String {
@@ -1091,6 +1089,8 @@ extension SimpleMemoryTask {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
         
+        self.timerSM.invalidate()
+        self.regconizeTimer.invalidate()
         self.timerNextPicture.invalidate()
         self.totalTimeCounter.invalidate()
         
