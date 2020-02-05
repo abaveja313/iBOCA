@@ -17,6 +17,7 @@ class MyGlobalVA: NSObject {
     var totalTimer: Timer?
     var internalTimer: Timer?
     var delay: Int = 0
+    var delayInMain: Int = 0
     var total: Int = 0
     var VADelayTime: Int = 5*60
     var mixedImages = [String]()
@@ -44,7 +45,8 @@ class MyGlobalVA: NSObject {
            self.internalTimer!.invalidate()
            self.internalTimer = nil
             
-            let dataDict:[String: Int] = ["VADelayTime": 0]
+            self.delayInMain = 0
+            let dataDict:[String: Int] = ["VADelayTime": self.delayInMain]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
         }
     }
@@ -58,8 +60,9 @@ class MyGlobalVA: NSObject {
 
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
+        delayInMain += 1
         debugPrint("Delay! \(delay)")
-        let dataDict:[String: Int] = ["VADelayTime": delay]
+        let dataDict:[String: Int] = ["VADelayTime": delayInMain]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
     }
     
