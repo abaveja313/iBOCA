@@ -1323,11 +1323,11 @@ extension SimpleMemoryTask {
             
             if (recognizeErrors[i] == 0) {
                 self.result.longDescription.add("Recognized \(mixedImages[i]) - Correct in \(recognizeTimes[i]) seconds")
-                self.result.numCorrects += 1
+                correct += 1
             }
             if (recognizeErrors[i] == 1) {
                 self.result.longDescription.add("Recognized \(mixedImages[i]) - Incorrect in \(recognizeTimes[i]) seconds ")
-                self.result.numErrors += 1
+                incorrect += 1
             }
         }
         
