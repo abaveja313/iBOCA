@@ -13,6 +13,7 @@ class SMResultModel: NSObject {
     var input: String?
     var exactResult: String?
     var result: Bool?
+    var adminDetermine: String?
     
     override init() {
         super.init()
@@ -24,6 +25,14 @@ class SMResultModel: NSObject {
         self.input = input
         self.exactResult = exactResult
         self.result = result
+    }
+    
+    init(objectName: String, input: String, exactResult: String, adminDetermine: String) {
+        super.init()
+        self.objectName = objectName
+        self.input = input
+        self.exactResult = exactResult
+        self.adminDetermine = adminDetermine
     }
 }
 
@@ -49,19 +58,19 @@ class SMResultCell: UITableViewCell {
                 let resultObj = model,
                 let objName = resultObj.objectName,
                 let input = resultObj.input,
-                let exactResult = resultObj.exactResult,
-                let result = resultObj.result {
+                let exactResult = resultObj.exactResult {
                 // Set Data to UI
                 self.lblObjectName.text = objName
                 self.lblInput.text = input
                 self.lblExactResult.text = exactResult
-                if result == true {
-                    self.lblResult.textColor = Color.color(hexString: "#013AA5")
-                    self.lblResult.text = "Correct"
+                if let result = resultObj.result {
+                    self.lblResult.textColor = Color.color(hexString: result ? "#013AA5" : "#E94533")
+                    self.lblResult.text = result ? "Correct" : "Incorrect"
                 }
-                else {
-                    self.lblResult.textColor = Color.color(hexString: "#E94533")
-                    self.lblResult.text = "Incorrect"
+                
+                if let adminDetermine = resultObj.adminDetermine {
+                    self.lblResult.textColor = Color.color(hexString: adminDetermine == "Correct" ? "#013AA5" : ( adminDetermine == "Incorrect" ? "#E94533" : "505259"))
+                    self.lblResult.text = adminDetermine
                 }
             }
         }

@@ -61,7 +61,6 @@ class BaseViewController: UIViewController {
         if let pop = viewController.popoverPresentationController {
             pop.sourceView = sourceView ?? self.view
             pop.sourceRect = sourceRect ?? self.view.frame
-//            pop.sourceRect = CGRect(x: 886, y: 100, width: 114, height: 30)
             pop.permittedArrowDirections = permittedArrowDirections
             if sourceRect == nil {
                 pop.permittedArrowDirections = []

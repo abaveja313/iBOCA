@@ -13,7 +13,7 @@ var StartTimer = Foundation.Date()
 var previousSMTest = -1
 
 class MyGlobalSM: NSObject {
-
+    
     static let shared: MyGlobalSM = MyGlobalSM()
     var totalTimer: Timer?
     var internalTimer: Timer? // delay time
@@ -26,7 +26,7 @@ class MyGlobalSM: NSObject {
     
     var resultStartTime: Foundation.Date!
     var resultEndTime:Foundation.Date!
-
+    
     func startDelayTimer() {
         if self.internalTimer == nil {
             self.internalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTimerAction), userInfo: nil, repeats: true)
@@ -39,21 +39,22 @@ class MyGlobalSM: NSObject {
             self.resultStartTime = Foundation.Date()
         }
     }
-
+    
     func stopDelayTimer(){
         if self.internalTimer != nil {
-           self.internalTimer!.invalidate()
-           self.internalTimer = nil
+            self.internalTimer!.invalidate()
+            self.internalTimer = nil
         }
     }
+    
     func stopTotalTimer(){
         if self.totalTimer != nil {
-           self.resultEndTime = Foundation.Date()
-           self.totalTimer!.invalidate()
-           self.totalTimer = nil
+            self.resultEndTime = Foundation.Date()
+            self.totalTimer!.invalidate()
+            self.totalTimer = nil
         }
     }
-
+    
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
         debugPrint("Delay! \(delay)")
@@ -71,7 +72,6 @@ class MyGlobalSM: NSObject {
         self.recognizeIncorrectSM.removeAll()
         self.incorrectImageSetSM = Int()
     }
-
 }
 
 class SimpleMemoryTask: BaseViewController {
@@ -206,7 +206,6 @@ class SimpleMemoryTask: BaseViewController {
         super.viewDidLoad()
         
         self.setupViews()
-        MyGlobalSM.shared.startTotalTimer()
         self.startTest()
         
         StartTimer = Foundation.Date()
@@ -439,8 +438,7 @@ extension SimpleMemoryTask {
     fileprivate func minuteOfString() -> String {
         if let delayTime = Settings.SMDelayTime, delayTime > 1 {
             return "\(delayTime) minutes"
-        }
-        else {
+        } else {
             return "1 minute"
         }
     }
@@ -513,7 +511,6 @@ extension SimpleMemoryTask {
     }
     
     @objc func updateTime(timer: Timer) {
-//        self.counterTime.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
         self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
     }
     
@@ -554,8 +551,7 @@ extension SimpleMemoryTask {
             }))
             
             self.present(startAlert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             recognizeIncorrectSM = self.images0
             imagesSM = self.images0
             imageSetSM = 0
@@ -577,6 +573,9 @@ extension SimpleMemoryTask {
         self.lblChooseDelayTime.text = self.minuteOfString()
         // Update item Selected Dropdown & hide DropDown
         self.updateDataDropDown()
+        
+        self.collectionViewObjectName.isHidden = true
+        self.originalAnswerButton.isHidden = true
         
         self.vShadowTask.isHidden = true
         self.vTask.isHidden = true
@@ -618,6 +617,7 @@ extension SimpleMemoryTask {
         case .admin:
             self.collectionViewLevel.isHidden = false
         case .patient:
+            MyGlobalSM.shared.startTotalTimer()
             self.randomTest()
             if MyGlobalSM.shared.internalTimer == nil {
                 self.startDisplayAlert()
@@ -663,20 +663,6 @@ extension SimpleMemoryTask {
     }
     
     func outputImage(withImageName name: String) {
-        // Check Show/ Hide Arrow
-        //        if testCount == 0 {
-        //            self.btnArrowLeft.isHidden = true
-        //            self.btnArrowRight.isHidden = false
-        //        }
-        //        else if testCount == imagesSM.count {
-        //            self.btnArrowLeft.isHidden = false
-        //            self.btnArrowRight.isHidden = true
-        //        }
-        //        else {
-        //            self.btnArrowLeft.isHidden = false
-        //            self.btnArrowRight.isHidden = false
-        //        }
-        
         self.ivTask.image = UIImage(named: name)!
     }
     
@@ -688,14 +674,13 @@ extension SimpleMemoryTask {
     // called every time interval from the timer
     @objc func timerNextPictureAction() {
         testCount += 1
-        if(testCount == imagesSM.count) {
+        if testCount == imagesSM.count {
             self.timerNextPicture.invalidate()
             print("delay")
             self.start.removeTarget(nil, action: nil, for: .allEvents)
             self.start.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
             self.beginDelay()
-        }
-        else {
+        } else {
             print("pic: \(testCount)")
             self.outputImage(withImageName: imagesSM[testCount])
         }
@@ -766,7 +751,6 @@ extension SimpleMemoryTask {
     func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60
-        //     let hours: Int = totalSeconds / 3600
         return String(format: "%02d : %02d", minutes, seconds)
     }
     
@@ -856,11 +840,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.collectionViewLevel {
-            return self.imagesLevel.count
-        } else {
-            return 6
-        }
+        return collectionView == self.collectionViewLevel ? self.imagesLevel.count : 6
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -882,19 +862,13 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == self.collectionViewLevel {
             return 20.0
-        }
-        else {
+        } else {
             return self.mode == .admin ? 20.0 : 27.0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == self.collectionViewLevel {
-            return 20.0
-        }
-        else {
-            return 27.0
-        }
+        return collectionView == self.collectionViewLevel ? 20.0 : 27.0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -949,7 +923,8 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
                 recognizeIncorrectSM = images0
                 incorrectImageSetSM = 0
             }
-            
+
+            MyGlobalSM.shared.startTotalTimer()
             if MyGlobalSM.shared.internalTimer == nil {
                 self.startDisplayAlert()
             }
@@ -974,21 +949,11 @@ extension SimpleMemoryTask: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
         
-        if indexPath.row == 0 {
-            cell.isHeader = true
-        }
-        else {
-            cell.isHeader = false
-        }
+        cell.isHeader = indexPath.row == 0
         
         if self.resultsTask.count > 0 {
             cell.model = self.resultsTask[indexPath.row]
-            if indexPath.row < self.resultsTask.count - 1 {
-                cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
-            }
-            else {
-                cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
-            }
+            cell.arrayConstraintLineBottom.forEach{ $0.constant = indexPath.row < self.resultsTask.count - 1 ? 0 : 1 }
         }
         return cell
     }
@@ -1000,7 +965,11 @@ extension SimpleMemoryTask {
         let originalAnswerVC = OriginalAnswerVC(frame: CGSize(width: self.view.frame.width / 4,
                                                               height: self.view.frame.height / 3))
         originalAnswerVC.nameList = self.imagesSM
-        self.presentPopover(originalAnswerVC, sourceRect: self.originalAnswerButton.frame, permittedArrowDirections: .up)
+        
+        //        self.presentPopover(originalAnswerVC, sourceRect: self.originalAnswerButton.frame, permittedArrowDirections: .up)
+        self.presentPopover(originalAnswerVC,
+                            sourceRect: CGRect(x: 886, y: 180, width: 0, height: 0),
+                            permittedArrowDirections: .up)
     }
     
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
@@ -1114,28 +1083,17 @@ extension SimpleMemoryTask {
             }))
             self.present(warningAlert, animated: true, completion: nil)
         } else {
-            ended = true
-            //            totalTime = Int(self.maxSeconds)
+            self.ended = true
             
             MyGlobalSM.shared.clearAll()
             MyGlobalSM.shared.stopTotalTimer()
             self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
             
             if let time = Settings.SMDelayTime {
-                if MyGlobalSM.shared.delay > time {
-                    self.delayTime = Double(time)
-                }
-                else {
-                    self.delayTime = Double(MyGlobalSM.shared.delay)
-                }
+                self.delayTime = MyGlobalSM.shared.delay > time ? Double(time) : Double(MyGlobalSM.shared.delay)
             } else {
                 let time = 60
-                if MyGlobalSM.shared.delay > time {
-                    self.delayTime = Double(time)
-                }
-                else {
-                    self.delayTime = Double(MyGlobalSM.shared.delay)
-                }
+                self.delayTime = MyGlobalSM.shared.delay > time ? Double(time) : Double(MyGlobalSM.shared.delay)
             }
             
             self.collectionViewObjectName.isHidden = true
@@ -1144,39 +1102,51 @@ extension SimpleMemoryTask {
             self.nextButton.isHidden = true
             
             var outputResult = ""
-            var exactEsults = "Exact results are:"
             var correct = 0
             var incorrect = 0
             self.resultsTask.removeAll()
             self.resultsTask.append(SMResultModel.init())
             
             for i in 0 ..< imagesSM.count {
-                exactEsults += " \(imagesSM[i]),"
+                var result: SMResultModel
+                let objectName = "Object \(i+1)"
+                let exactResult = imagesSM[i]
+                
                 let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
                 guard let inputValue = cell.tfObjectName.text else {return}
                 switch self.mode {
                 case .admin:
-                    self.textDeterminedAdminList.append(cell.textDeterminedAdmin)
+                    if cell.textDeterminedAdmin == "Correct" {
+                        correct += 1
+                    } else if cell.textDeterminedAdmin == "Incorrect" {
+                        incorrect += 1
+                    }
+                    
+                    result = SMResultModel.init(objectName: objectName,
+                                                input: inputValue,
+                                                exactResult: exactResult,
+                                                adminDetermine: cell.textDeterminedAdmin)
                 case .patient:
-                    let objectName = "Object \(i+1)"
-                    let exactResult = imagesSM[i]
                     if imagesSM[i] == inputValue.lowercased() {
                         outputResult += "Input \(inputValue) - Correct\n"
                         correct += 1
                         
-                        let correctResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: true)
-                        self.resultsTask.append(correctResult)
+                        result = SMResultModel.init(objectName: objectName,
+                                                    input: inputValue,
+                                                    exactResult: exactResult,
+                                                    result: true)
                     } else {
                         incorrect += 1
                         outputResult += "Input \(inputValue) - Incorrect\n"
                         
-                        let inCorrectResult = SMResultModel.init(objectName: objectName, input: inputValue, exactResult: exactResult, result: false)
-                        self.resultsTask.append(inCorrectResult)
+                        result = SMResultModel.init(objectName: objectName,
+                                                    input: inputValue,
+                                                    exactResult: exactResult,
+                                                    result: false)
                     }
                 }
+                self.resultsTask.append(result)
             }
-            
-            //delayResult + outputResult + exactEsults + timeComplete
             
             // Save Results
             self.totalTimeCounter.invalidate()
@@ -1229,7 +1199,7 @@ extension SimpleMemoryTask {
             switch self.mode {
             case .admin:
                 if cell.textDeterminedAdmin == "" {
-//                    return false
+                    return false
                 }
             case .patient:
                 if let inputValue = cell.tfObjectName.text, inputValue.isEmpty {
@@ -1263,8 +1233,7 @@ extension SimpleMemoryTask: DropdownViewDelegate {
     func updateDataDropDown() {
         if let item = self.lblChooseDelayTime.text, item != self.minuteOfString() {
             self.dropDownView.itemSelected = item
-        }
-        else {
+        } else {
             self.dropDownView.itemSelected = self.minuteOfString()
         }
         self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
