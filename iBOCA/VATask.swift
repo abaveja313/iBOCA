@@ -58,14 +58,14 @@ class MyGlobalVA: NSObject {
 
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
-        debugPrint("Delay! \(delay)")
+        debugPrint("VA Delay! \(delay)")
         let dataDict:[String: Int] = ["VADelayTime": delay]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
     }
     
     @objc func fireTotalTimerAction(sender: AnyObject?){
         total += 1
-        debugPrint("Total! \(total)")
+        debugPrint("VA Total! \(total)")
     }
     
     func clearAll() {
@@ -255,6 +255,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         super.viewWillAppear(animated)
         
         self.runTimer()
+        
         // Check Global time Delay
         if MyGlobalVA.shared.internalTimer != nil {
             // Check VADelayTime in Settings
@@ -971,6 +972,21 @@ extension VATask {
     }
     
     @IBAction func actionQuit(_ sender: Any) {
+        
+        if self.quickStartModeOn {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.clearTimer()
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+        } else {
+            self.clearTimer()
+            navigationController?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func clearTimer() {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
@@ -991,18 +1007,6 @@ extension VATask {
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
-            }
-            return
-        }
-        
-        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionReset(_ sender: Any) {
