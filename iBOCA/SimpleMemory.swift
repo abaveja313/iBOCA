@@ -1409,7 +1409,7 @@ extension SimpleMemoryTask {
                     return false
                 }
             case .patient:
-                if let inputValue = cell.tfObjectName.text, inputValue.isEmpty {
+                if let inputValue = cell.tfObjectName.text, inputValue.trimmingCharacters(in: .whitespaces).isEmpty {
                     return false
                 }
             }
