@@ -1167,9 +1167,9 @@ extension SimpleMemoryTask {
         randomizeRecognize()
     
         if (orderRecognize[testCount] == 0) {
-            outputRecognizeImages(imagesSM[testCount], name2: recognizeIncorrectSM[testCount])
+            outputRecognizeImages(MyGlobalSM.shared.imagesSM[testCount], name2: MyGlobalSM.shared.recognizeIncorrectSM[testCount])
         } else {
-            outputRecognizeImages(recognizeIncorrectSM[testCount], name2: imagesSM[testCount])
+            outputRecognizeImages(MyGlobalSM.shared.recognizeIncorrectSM[testCount], name2: MyGlobalSM.shared.imagesSM[testCount])
         }
 
     }
@@ -1241,9 +1241,9 @@ extension SimpleMemoryTask {
             
         } else {
             if(orderRecognize[testCount] == 0) {
-                outputRecognizeImages(imagesSM[testCount], name2: recognizeIncorrectSM[testCount])
+                outputRecognizeImages(MyGlobalSM.shared.imagesSM[testCount], name2: MyGlobalSM.shared.recognizeIncorrectSM[testCount])
             } else {
-                outputRecognizeImages(recognizeIncorrectSM[testCount], name2: imagesSM[testCount])
+                outputRecognizeImages(MyGlobalSM.shared.recognizeIncorrectSM[testCount], name2: MyGlobalSM.shared.imagesSM[testCount])
             }
         }
     }
