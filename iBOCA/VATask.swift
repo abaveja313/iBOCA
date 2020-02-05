@@ -18,6 +18,7 @@ class MyGlobalVA: NSObject {
     var internalTimer: Timer?
     var delay: Int = 0
     var total: Int = 0
+    var VADelayTime: Int = 5*60
     var mixedImages = [String]()
     var halfImages = [String]()
     var recognizeIncorrectVA = [String]()
@@ -256,28 +257,15 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             self.mixedImages = MyGlobalVA.shared.mixedImages
             self.halfImages = MyGlobalVA.shared.halfImages
             self.recognizeIncorrectVA = MyGlobalVA.shared.recognizeIncorrectVA
-            if let delayTime = Settings.VADelayTime {
-                self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-                if MyGlobalVA.shared.delay > delayTime {
-                    self.timerLabel.text = "00 : 00"
-                    self.endTimer()
-                }
-                else {
-                    self.totalTime = delayTime - MyGlobalVA.shared.delay
-                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
-                }
+            
+            self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
+            if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
+                self.timerLabel.text = "00 : 00"
+                self.endTimer()
             }
             else {
-                self.delayLabel.text = "Recommended Delay : 5 minutes"
-                let delayTime = 5*60 // Timer delay default of system
-                if MyGlobalVA.shared.delay > delayTime {
-                    self.timerLabel.text = "00 : 00"
-                    self.endTimer()
-                }
-                else {
-                    self.totalTime = delayTime - MyGlobalVA.shared.delay
-                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
-                }
+                self.totalTime = MyGlobalVA.shared.VADelayTime - MyGlobalVA.shared.delay
+                self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
             }
         }
     }
@@ -386,11 +374,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         self.remainingPhotoLabel.text = "1/5"
         
-        if let delayTime = Settings.VADelayTime {
-            self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-        } else {
-            self.delayLabel.text = "Recommended Delay : 5 minutes"
-        }
+        self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
         
         self.totalTimeCounter.invalidate()
         self.runTimer()
@@ -650,21 +634,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var delayResult = ""
         var imageSetResult = ""
         
-        if let time = Settings.VADelayTime {
-            if MyGlobalVA.shared.delay > time {
-                self.delayTime = Double(time)
-            }
-            else {
-                self.delayTime = Double(MyGlobalVA.shared.delay)
-            }
-        } else {
-            let time = 5*60
-            if MyGlobalVA.shared.delay > time {
-                self.delayTime = Double(time)
-            }
-            else {
-                self.delayTime = Double(MyGlobalVA.shared.delay)
-            }
+        if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
+            self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
+        }
+        else {
+            self.delayTime = Double(MyGlobalVA.shared.delay)
         }
         
         imageSetResult = "Image set = \(imageSetVA+1)\n"
@@ -744,6 +718,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         recalledTableView.reloadData()
         regconizedTableView.reloadData()
+        
+        // Update VADelayTime of singleton
+        if let delayTime = Settings.VADelayTime {
+            MyGlobalVA.shared.VADelayTime = delayTime
+        }
     }
     
     fileprivate func roundedNumber(number: Double) -> Double {
@@ -985,6 +964,13 @@ extension VATask {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
         
+        // Update VADelayTime of singleton
+        if MyGlobalVA.shared.internalTimer != nil {
+            if let delayTime = Settings.VADelayTime {
+                MyGlobalVA.shared.VADelayTime = delayTime
+            }
+        }
+        
         MyGlobalVA.shared.clearAll()
         MyGlobalVA.shared.stopTotalTimer()
         MyGlobalVA.shared.total = 0
@@ -1009,6 +995,13 @@ extension VATask {
     }
     
     @IBAction func actionReset(_ sender: Any) {
+        
+        // Update VADelayTime of singleton
+        if MyGlobalVA.shared.internalTimer != nil {
+            if let delayTime = Settings.VADelayTime {
+                MyGlobalVA.shared.VADelayTime = delayTime
+            }
+        }
         
         MyGlobalVA.shared.clearAll()
         MyGlobalVA.shared.stopTotalTimer()
@@ -1139,13 +1132,8 @@ extension VATask {
         
         var row: Int!
         self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        if let timeDelay = Settings.VADelayTime {
-            self.delayTimePickerLabel.text = timeDelay / 60 == 1 ? "1 minute" : "\(timeDelay / 60) minutes"
-            row = timeDelay / 60 - 1
-        } else {
-            self.delayTimePickerLabel.text = "5 minutes"
-            row = 4
-        }
+        self.delayTimePickerLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "1 minute" : "\(MyGlobalVA.shared.VADelayTime / 60) minutes"
+        row = MyGlobalVA.shared.VADelayTime / 60 - 1
         
         self.setDelayTimeButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.setDelayTimeButton.titleLabel?.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
@@ -1155,11 +1143,7 @@ extension VATask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        if let delayTime = Settings.VADelayTime {
-            self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-        } else {
-            self.delayLabel.text = "Recommended Delay : 5 minutes"
-        }
+        self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
         self.delayLabel.addTextSpacing(-0.56)
         
         self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
