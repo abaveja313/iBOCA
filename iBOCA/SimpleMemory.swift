@@ -17,6 +17,7 @@ class MyGlobalSM: NSObject {
     var totalTimer: Timer?
     var internalTimer: Timer? // delay time
     var delay: Int = 0
+    var delayInMain: Int = 0
     var total: Int = 0
     var SMDelayTime: Int = 60
     var imagesSM = [String]()
@@ -25,7 +26,6 @@ class MyGlobalSM: NSObject {
     var incorrectImageSetSM = Int()
     
     var resultStartTime: Foundation.Date!
-    var resultEndTime:Foundation.Date!
     
     func startDelayTimer() {
         if self.internalTimer == nil {
@@ -45,14 +45,14 @@ class MyGlobalSM: NSObject {
             self.internalTimer!.invalidate()
             self.internalTimer = nil
             
-            let dataDict:[String: Int] = ["SMDelayTime": 0]
+            self.delayInMain = 0
+            let dataDict:[String: Int] = ["SMDelayTime": self.delayInMain]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
         }
     }
     
     func stopTotalTimer(){
         if self.totalTimer != nil {
-            self.resultEndTime = Foundation.Date()
             self.totalTimer!.invalidate()
             self.totalTimer = nil
         }
@@ -60,9 +60,10 @@ class MyGlobalSM: NSObject {
     
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
+        delayInMain += 1
         debugPrint("SM Delay! \(delay)")
         
-        let dataDict:[String: Int] = ["SMDelayTime": delay]
+        let dataDict:[String: Int] = ["SMDelayTime": delayInMain]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
     }
     
@@ -1103,6 +1104,8 @@ extension SimpleMemoryTask {
         regconizeTimer.invalidate()
         
         self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
+        
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
