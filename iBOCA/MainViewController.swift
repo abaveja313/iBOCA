@@ -79,6 +79,7 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     var mCounterTimeView : CounterTimeView?
     
     var VADelayTime: Int = 0
+    var SMDelayTime: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +129,8 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         setupData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.showVADelayTime(_:)), name: NSNotification.Name(rawValue: "VADelayTime"), object: nil)
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showSMDelayTime(_:)), name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil)
     }
     
     deinit {
@@ -141,6 +143,17 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
             if let id = dict["VADelayTime"] as? Int {
                 // do something with VADelayTime
                 self.VADelayTime = id
+                self.mCollection?.reloadData()
+            }
+        }
+    }
+    
+    @objc func showSMDelayTime(_ notification: NSNotification) {
+        print(notification.userInfo ?? "")
+        if let dict = notification.userInfo as NSDictionary? {
+            if let id = dict["SMDelayTime"] as? Int {
+                // do something with VADelayTime
+                self.SMDelayTime = id
                 self.mCollection?.reloadData()
             }
         }
@@ -433,10 +446,19 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GoToTestCollectionCell", for: indexPath) as! GoToTestCollectionCell
         let item = arrData[indexPath.row]
         cell.setupInfo(model: item)
-        if item.title ==  "Visual Association" {
+        if (item.title ==  "Visual Association") {
             if self.VADelayTime != 0 {
                 cell.lblTimerDelay.isHidden = false
                 cell.lblTimerDelay.text = self.timeFormatted(self.VADelayTime)
+            }
+            else {
+                cell.lblTimerDelay.isHidden = true
+            }
+        }
+        else if (item.title ==  "Simple Memory") {
+            if self.SMDelayTime != 0 {
+                cell.lblTimerDelay.isHidden = false
+                cell.lblTimerDelay.text = self.timeFormatted(self.SMDelayTime)
             }
             else {
                 cell.lblTimerDelay.isHidden = true

@@ -18,6 +18,7 @@ class MyGlobalSM: NSObject {
     var internalTimer: Timer? // delay time
     var delay: Int = 0
     var total: Int = 0
+    var SMDelayTime: Int = 60
     var imagesSM = [String]()
     var imageSetSM = Int()
     var recognizeIncorrectSM = [String]()
@@ -43,6 +44,9 @@ class MyGlobalSM: NSObject {
         if self.internalTimer != nil {
             self.internalTimer!.invalidate()
             self.internalTimer = nil
+            
+            let dataDict:[String: Int] = ["SMDelayTime": 0]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
         }
     }
     
@@ -57,6 +61,9 @@ class MyGlobalSM: NSObject {
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
         debugPrint("Delay! \(delay)")
+        
+        let dataDict:[String: Int] = ["SMDelayTime": delay]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
     }
     
     @objc func fireTotalTimerAction(sender: AnyObject?){
@@ -265,28 +272,14 @@ class SimpleMemoryTask: BaseViewController {
             self.recognizeIncorrectSM = MyGlobalSM.shared.recognizeIncorrectSM
             self.incorrectImageSetSM = MyGlobalSM.shared.incorrectImageSetSM
             
-            if let delayTime = Settings.SMDelayTime {
-                self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-                if MyGlobalSM.shared.delay > delayTime {
-                    self.timerLabel.text = "00 : 00"
-                    self.endTimer()
-                }
-                else {
-                    self.totalTime = delayTime - MyGlobalSM.shared.delay
-                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
-                }
+            self.delayLabel.text = MyGlobalSM.shared.SMDelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalSM.shared.SMDelayTime / 60) minutes"
+            if MyGlobalSM.shared.delay > MyGlobalSM.shared.SMDelayTime {
+                self.timerLabel.text = "00 : 00"
+                self.endTimer()
             }
             else {
-                self.delayLabel.text = "Recommended Delay : 1 minute"
-                let delayTime = 60 // Timer delay default of system
-                if MyGlobalSM.shared.delay > delayTime {
-                    self.timerLabel.text = "00 : 00"
-                    self.endTimer()
-                }
-                else {
-                    self.totalTime = delayTime - MyGlobalSM.shared.delay
-                    self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
-                }
+                self.totalTime = MyGlobalSM.shared.SMDelayTime - MyGlobalSM.shared.delay
+                self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
             }
         }
     }
@@ -383,7 +376,7 @@ extension SimpleMemoryTask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        self.delayLabel.text = "Recommended Delay : \(self.minuteOfString())"
+        self.delayLabel.text = MyGlobalSM.shared.SMDelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalSM.shared.SMDelayTime / 60) minutes"
         self.delayLabel.addTextSpacing(-0.56)
         
         self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
@@ -453,11 +446,7 @@ extension SimpleMemoryTask {
     }
     
     fileprivate func minuteOfString() -> String {
-        if let delayTime = Settings.SMDelayTime, delayTime > 1 {
-            return "\(delayTime) minutes"
-        } else {
-            return "1 minute"
-        }
+        return MyGlobalSM.shared.SMDelayTime / 60 == 1 ? "1 minute" : "\(MyGlobalSM.shared.SMDelayTime / 60) minutes"
     }
     
     fileprivate func setupViewObjectName() {
@@ -576,6 +565,14 @@ extension SimpleMemoryTask {
     }
     
     @objc func startNewTask() {
+        
+        // Update SMDelayTime of singleton
+        if MyGlobalSM.shared.internalTimer != nil {
+            if let delayTime = Settings.SMDelayTime {
+                MyGlobalSM.shared.SMDelayTime = delayTime*60
+            }
+        }
+        
         MyGlobalSM.shared.clearAll()
         MyGlobalSM.shared.stopTotalTimer()
         MyGlobalSM.shared.total = 0
@@ -588,6 +585,7 @@ extension SimpleMemoryTask {
         self.isRegconizeViewHidden(true)
         self.isResutViewHidden(true)
         
+        self.delayLabel.text = MyGlobalSM.shared.SMDelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalSM.shared.SMDelayTime / 60) minutes"
         self.lblChooseDelayTime.text = self.minuteOfString()
         // Update item Selected Dropdown & hide DropDown
         self.updateDataDropDown()
@@ -1059,6 +1057,13 @@ extension SimpleMemoryTask {
         self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         
+        // Update SMDelayTime of singleton
+        if MyGlobalSM.shared.internalTimer != nil {
+            if let delayTime = Settings.SMDelayTime {
+                MyGlobalSM.shared.SMDelayTime = delayTime*60
+            }
+        }
+        
         MyGlobalSM.shared.clearAll()
         MyGlobalSM.shared.stopTotalTimer()
         MyGlobalSM.shared.total = 0
@@ -1243,11 +1248,11 @@ extension SimpleMemoryTask {
         MyGlobalSM.shared.stopTotalTimer()
         self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
         
-        if let time = Settings.SMDelayTime {
-            self.delayTime = MyGlobalSM.shared.delay > time ? Double(time) : Double(MyGlobalSM.shared.delay)
-        } else {
-            let time = 60
-            self.delayTime = MyGlobalSM.shared.delay > time ? Double(time) : Double(MyGlobalSM.shared.delay)
+        if MyGlobalSM.shared.delay > MyGlobalSM.shared.SMDelayTime {
+            self.delayTime = Double(MyGlobalSM.shared.SMDelayTime)
+        }
+        else {
+            self.delayTime = Double(MyGlobalSM.shared.delay)
         }
         
         self.collectionViewObjectName.isHidden = true
@@ -1353,6 +1358,11 @@ extension SimpleMemoryTask {
         
         Status[TestSimpleMemory] = TestStatus.Done
         
+        // Update SMDelayTime of singleton
+        if let delayTime = Settings.SMDelayTime {
+            MyGlobalSM.shared.SMDelayTime = delayTime
+        }
+        
         // Set attributed into lblDelayLength
         let attrs1 = [NSAttributedString.Key.font : Font.font(name: Font.Montserrat.medium, size: 18.0), NSAttributedString.Key.foregroundColor : Color.color(hexString: "#8A9199")]
         let attrs2 = [NSAttributedString.Key.font : Font.font(name: Font.Montserrat.medium, size: 18.0), NSAttributedString.Key.foregroundColor : UIColor.black]
@@ -1412,11 +1422,7 @@ extension SimpleMemoryTask: DropdownViewDelegate {
     
     /// Update data Item Selected, hide Dropdown and update State normal into button show dropdown
     func updateDataDropDown() {
-        if let item = self.lblChooseDelayTime.text, item != self.minuteOfString() {
-            self.dropDownView.itemSelected = item
-        } else {
-            self.dropDownView.itemSelected = self.minuteOfString()
-        }
+        self.dropDownView.itemSelected = MyGlobalSM.shared.SMDelayTime / 60 == 1 ? "1 minute" : "\(MyGlobalSM.shared.SMDelayTime / 60) minutes"
         self.vSetDelayTime.layer.borderColor = Color.color(hexString: "#EAEAEA").cgColor
         self.dropDownView.hideDropDown()
     }
