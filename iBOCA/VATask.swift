@@ -43,6 +43,9 @@ class MyGlobalVA: NSObject {
         if self.internalTimer != nil {
            self.internalTimer!.invalidate()
            self.internalTimer = nil
+            
+            let dataDict:[String: Int] = ["VADelayTime": 0]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
         }
     }
     func stopTotalTimer(){
@@ -55,12 +58,14 @@ class MyGlobalVA: NSObject {
 
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
-        debugPrint("Delay! \(delay)")
+        debugPrint("VA Delay! \(delay)")
+        let dataDict:[String: Int] = ["VADelayTime": delay]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
     }
     
     @objc func fireTotalTimerAction(sender: AnyObject?){
         total += 1
-        debugPrint("Total! \(total)")
+        debugPrint("VA Total! \(total)")
     }
     
     func clearAll() {
@@ -213,6 +218,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         super.viewDidLoad()
         
         self.setupView()
+        
         self.setupCounterTimeView()
         
         MyGlobalVA.shared.startTotalTimer()
@@ -243,6 +249,12 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         else {
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.runTimer()
         
         // Check Global time Delay
         if MyGlobalVA.shared.internalTimer != nil {
@@ -899,7 +911,6 @@ extension VATask {
         timerVA.invalidate()
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
-        afterBreakVA = false
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -907,6 +918,7 @@ extension VATask {
             return
         }
         
+        afterBreakVA = false
         
         // Check global delay time not runing
         if MyGlobalVA.shared.internalTimer == nil {
@@ -960,6 +972,21 @@ extension VATask {
     }
     
     @IBAction func actionQuit(_ sender: Any) {
+        
+        if self.quickStartModeOn {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+                self.clearTimer()
+                self.didBackToResult?()
+            }) {
+                self.didCompleted?()
+            }
+        } else {
+            self.clearTimer()
+            navigationController?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func clearTimer() {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
@@ -980,18 +1007,6 @@ extension VATask {
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
         afterBreakVA = false
-        
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
-            }
-            return
-        }
-        
-        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionReset(_ sender: Any) {
@@ -1203,7 +1218,6 @@ extension VATask {
         counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         counterTimeView?.centerYAnchor.constraint(equalTo: backTitleLabel.centerYAnchor).isActive = true
         self.totalTimeCounter.invalidate()
-        self.runTimer()
     }
     
     fileprivate func setupViewResult() {

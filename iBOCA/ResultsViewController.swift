@@ -16,6 +16,7 @@ class ResultsViewController: BaseViewController {
     @IBOutlet weak var lbResult: UILabel!
     @IBOutlet weak var shadowContainer: UIView!
     
+    var isCompleteQuickStart: Bool = false
     private var headerView: UIView?
     
     // QuickStart Mode
@@ -70,6 +71,9 @@ class ResultsViewController: BaseViewController {
     
     @IBAction func actionBack(_ sender: Any) {
         if quickStartModeOn {
+            if self.isCompleteQuickStart {
+                dismiss(animated: true, completion: nil)
+            }
             didBackToMainView?()
         }
         else {
@@ -95,7 +99,7 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate, UITableViewDe
         case TestName.TRAILS:
             return result.collapsed ? 0 : result.screenshot.count
         case TestName.SIMPLE_MEMORY:
-            return result.collapsed ? 0 : result.arrSMResult.count
+            return result.collapsed ? 0 : result.arrSMResult.count * 2
         case TestName.SERIAL_SEVENS:
             return result.collapsed ? 0 : result.rounds! + 1
         case TestName.FORWARD_DIGIT_SPAN, TestName.BACKWARD_DIGIT_SPAN:
@@ -151,20 +155,28 @@ extension ResultsViewController: ResultsHeaderSectionViewDelegate, UITableViewDe
             
             return cell
         case TestName.SIMPLE_MEMORY:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
-            cell.isHeader = false
             
-            if result.arrSMResult.count > 0 {
-                cell.model = result.arrSMResult[indexPath.row]
-                if indexPath.row < result.arrSMResult.count - 1 {
-                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
+            if indexPath.row < result.arrSMResult.count {
+                let cell = tableView.dequeueReusableCell(withIdentifier: SMResultCell.identifier(), for: indexPath) as! SMResultCell
+                cell.isHeader = false
+
+                if result.arrSMResult.count > 0 {
+                    cell.model = result.arrSMResult[indexPath.row]
+                    if indexPath.row < result.arrSMResult.count - 1 {
+                        cell.arrayConstraintLineBottom.forEach{ $0.constant = 0 }
+                    }
+                    else {
+                        cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
+                    }
                 }
-                else {
-                    cell.arrayConstraintLineBottom.forEach{ $0.constant = 1 }
-                }
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
+                cell.bindDataRecognize(result: result, row: indexPath.row)
+                return cell
             }
             
-            return cell
+            
         case TestName.SERIAL_SEVENS:
             if indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: ResultDetailCell.identifier()) as! ResultDetailCell

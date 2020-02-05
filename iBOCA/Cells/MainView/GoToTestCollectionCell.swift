@@ -12,6 +12,7 @@ class GoToTestCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var mImg: UIImageView!
     @IBOutlet weak var mTitle: UILabel!
+    @IBOutlet weak var lblTimerDelay: UILabel!
     
     @IBOutlet weak var topConstraintMImg: NSLayoutConstraint!
     
@@ -50,7 +51,7 @@ class GoToTestCollectionCell: UICollectionViewCell {
         mTitle.font = Font.font(name: Font.Montserrat.semiBold, size: 16)
         mTitle.textColor = Color.color(hexString: "0039A7")
         mTitle.textAlignment = .center
-        
+        self.lblTimerDelay.isHidden = true
         addCornerLayer()
     }
     

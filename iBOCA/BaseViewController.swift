@@ -52,5 +52,22 @@ class BaseViewController: UIViewController {
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
+    
+    func presentPopover(_ viewController: UIViewController, sourceView: UIView? = nil, sourceRect: CGRect? = nil, permittedArrowDirections: UIPopoverArrowDirection = .any) {
+        viewController.modalPresentationStyle = .popover
+        viewController.preferredContentSize = viewController.view.bounds.size
+        viewController.definesPresentationContext = true
+        viewController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        if let pop = viewController.popoverPresentationController {
+            pop.sourceView = sourceView ?? self.view
+            pop.sourceRect = sourceRect ?? self.view.frame
+            pop.permittedArrowDirections = permittedArrowDirections
+            if sourceRect == nil {
+                pop.permittedArrowDirections = []
+                pop.delegate = viewController as? UIPopoverPresentationControllerDelegate
+            }
+        }
+        self.present(viewController, animated: true, completion: nil)
+    }
 }
 

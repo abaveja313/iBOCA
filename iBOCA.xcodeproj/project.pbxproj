@@ -82,6 +82,10 @@
 		B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114027522D6D7BA00151AB8 /* IntroViewController.swift */; };
 		B114027822D6DA5E00151AB8 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114027722D6DA5E00151AB8 /* VideoView.swift */; };
 		B114027A22D6E5D800151AB8 /* sample-test-intro.mov in Resources */ = {isa = PBXBuildFile; fileRef = B114027922D6E5D700151AB8 /* sample-test-intro.mov */; };
+		B140F79823E95F1A0053DB4F /* OriginalAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140F79623E95F1A0053DB4F /* OriginalAnswerVC.swift */; };
+		B140F79923E95F1A0053DB4F /* OriginalAnswerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = B140F79723E95F1A0053DB4F /* OriginalAnswerVC.xib */; };
+		B140F79C23E978D00053DB4F /* OriginalAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140F79A23E978D00053DB4F /* OriginalAnswerCell.swift */; };
+		B140F79D23E978D00053DB4F /* OriginalAnswerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B140F79B23E978D00053DB4F /* OriginalAnswerCell.xib */; };
 		B1D135F722D5D90600E48476 /* VADropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D135F522D5D90500E48476 /* VADropDownCell.swift */; };
 		B1D135F822D5D90600E48476 /* VADropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D135F622D5D90500E48476 /* VADropDownCell.xib */; };
 		B1D1E3A222E8470900323928 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E3A122E8470900323928 /* Constant.swift */; };
@@ -284,6 +288,10 @@
 		B114027522D6D7BA00151AB8 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B114027722D6DA5E00151AB8 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		B114027922D6E5D700151AB8 /* sample-test-intro.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "sample-test-intro.mov"; sourceTree = "<group>"; };
+		B140F79623E95F1A0053DB4F /* OriginalAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalAnswerVC.swift; sourceTree = "<group>"; };
+		B140F79723E95F1A0053DB4F /* OriginalAnswerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OriginalAnswerVC.xib; sourceTree = "<group>"; };
+		B140F79A23E978D00053DB4F /* OriginalAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalAnswerCell.swift; sourceTree = "<group>"; };
+		B140F79B23E978D00053DB4F /* OriginalAnswerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OriginalAnswerCell.xib; sourceTree = "<group>"; };
 		B1D135F522D5D90500E48476 /* VADropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADropDownCell.swift; sourceTree = "<group>"; };
 		B1D135F622D5D90500E48476 /* VADropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VADropDownCell.xib; sourceTree = "<group>"; };
 		B1D1E3A122E8470900323928 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -473,6 +481,8 @@
 				0EB10B5C22C9AA12001997BB /* SimpleMemoryCell.xib */,
 				0EB10B7422C9F229001997BB /* SMResultCell.swift */,
 				0EB10B7522C9F229001997BB /* SMResultCell.xib */,
+				B140F79A23E978D00053DB4F /* OriginalAnswerCell.swift */,
+				B140F79B23E978D00053DB4F /* OriginalAnswerCell.xib */,
 			);
 			path = SimpleMemoryTask;
 			sourceTree = "<group>";
@@ -724,6 +734,8 @@
 			isa = PBXGroup;
 			children = (
 				4386775B1E33D551000309F2 /* SimpleMemory.swift */,
+				B140F79623E95F1A0053DB4F /* OriginalAnswerVC.swift */,
+				B140F79723E95F1A0053DB4F /* OriginalAnswerVC.xib */,
 			);
 			name = SimpleMemory;
 			sourceTree = "<group>";
@@ -1122,6 +1134,7 @@
 				B114027A22D6E5D800151AB8 /* sample-test-intro.mov in Resources */,
 				B10BD11B22CE2144008A195C /* NumberKeyboardView.xib in Resources */,
 				0EB10B5E22C9AA12001997BB /* SimpleMemoryCell.xib in Resources */,
+				B140F79D23E978D00053DB4F /* OriginalAnswerCell.xib in Resources */,
 				4A64C09922C4BD2D005A6F94 /* GoToTestCollectionCell.xib in Resources */,
 				4A328A7922C47B9100034075 /* Montserrat-Thin.ttf in Resources */,
 				4A328A7622C47B9100034075 /* Montserrat-MediumItalic.ttf in Resources */,
@@ -1158,6 +1171,7 @@
 				4A328A7722C47B9100034075 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				0E77854B22CF3B8B0082794B /* DemographicsCell.xib in Resources */,
 				E5B9B93B22D6E49F0091BB0E /* ResultDetailCell.xib in Resources */,
+				B140F79923E95F1A0053DB4F /* OriginalAnswerVC.xib in Resources */,
 				4A328A6922C47B9100034075 /* Montserrat-Black.ttf in Resources */,
 				B10A016A22CA21D2005188D7 /* VisualAssociationCell.xib in Resources */,
 				4A328A7522C47B9100034075 /* Montserrat-Bold.ttf in Resources */,
@@ -1257,6 +1271,7 @@
 				E5B4A7BD22D3201C00CB6218 /* ResultsCell.swift in Sources */,
 				0E1A22DD22C4689300C8CFDF /* GradientConstants.swift in Sources */,
 				F239513B1EFFE6A1004B09E5 /* PatiantID.swift in Sources */,
+				B140F79823E95F1A0053DB4F /* OriginalAnswerVC.swift in Sources */,
 				F2748CDA1F13BD6B00799836 /* AckViewController.swift in Sources */,
 				0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */,
 				4A64C09822C4BD2D005A6F94 /* GoToTestCollectionCell.swift in Sources */,
@@ -1265,6 +1280,7 @@
 				E5F13D1822572CDF002FB4FF /* IQUIScrollView+Additions.swift in Sources */,
 				B1D1E3A222E8470900323928 /* Constant.swift in Sources */,
 				B114027622D6D7BA00151AB8 /* IntroViewController.swift in Sources */,
+				B140F79C23E978D00053DB4F /* OriginalAnswerCell.swift in Sources */,
 				182D435D23386969004FC995 /* UIViewControllerExtension.swift in Sources */,
 				E520BC3A22D832DD0037EBA3 /* QuickStartManager.swift in Sources */,
 				0E3E1D9222C49EAC008E69EC /* UIViewExtensions.swift in Sources */,

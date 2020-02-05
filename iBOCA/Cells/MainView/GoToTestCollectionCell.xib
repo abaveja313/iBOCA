@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,12 +29,20 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oY-dY-aog">
+                        <rect key="frame" x="136" y="10" width="39" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="33E-tQ-zD8" firstAttribute="top" secondItem="O2t-W2-TGU" secondAttribute="bottom" constant="21" id="4tF-EE-m92"/>
+                <constraint firstAttribute="trailing" secondItem="9oY-dY-aog" secondAttribute="trailing" constant="5" id="KhV-8n-NBD"/>
                 <constraint firstAttribute="trailing" secondItem="O2t-W2-TGU" secondAttribute="trailing" id="aG2-a3-f1b"/>
                 <constraint firstItem="O2t-W2-TGU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="dA1-cb-GeC"/>
+                <constraint firstItem="9oY-dY-aog" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="hXZ-Ij-d5T"/>
                 <constraint firstItem="33E-tQ-zD8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="mO3-ZA-bkX"/>
                 <constraint firstItem="O2t-W2-TGU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="24" id="njh-2m-eOu"/>
                 <constraint firstAttribute="trailing" secondItem="33E-tQ-zD8" secondAttribute="trailing" constant="2" id="pFN-JI-ec5"/>
@@ -46,6 +52,7 @@
             <size key="customSize" width="142" height="100"/>
             <connections>
                 <outlet property="bottomConstraintMImg" destination="4tF-EE-m92" id="Fkx-Qb-uVt"/>
+                <outlet property="lblTimerDelay" destination="9oY-dY-aog" id="QTL-iN-g2r"/>
                 <outlet property="mImg" destination="O2t-W2-TGU" id="vSL-AK-6ee"/>
                 <outlet property="mTitle" destination="33E-tQ-zD8" id="fAx-eI-cJv"/>
                 <outlet property="topConstraintMImg" destination="njh-2m-eOu" id="Q8y-yL-Nhr"/>
