@@ -25,7 +25,16 @@ class SimpleMemoryCell: UICollectionViewCell {
         // Initialization code
         self.setupView()
     }
-
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.textDeterminedAdmin = ""
+        self.correctButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        self.incorrectButton.setTitleColor(Color.color(hexString: "505259"), for: .normal)
+        self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+    }
+    
     fileprivate func setupView() {
         self.backgroundColor = UIColor.clear
         self.vContents.backgroundColor = UIColor.clear
