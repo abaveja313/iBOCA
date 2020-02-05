@@ -690,8 +690,9 @@ class VATask: BaseViewController, UIPickerViewDelegate {
                 determinedAdmin = "(\(self.textDeterminedAdminList[i]))"
             }
             
-            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTimes[i]) seconds")
-            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTimes[i]) seconds\n"
+            let recallTime = String(format:"%.1f", recallTimes[i])
+            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTime) seconds")
+            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTime) seconds\n"
         }
         
         for k in 0 ..< mixedImages.count {

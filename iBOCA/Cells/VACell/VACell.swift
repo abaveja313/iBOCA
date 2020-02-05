@@ -74,7 +74,9 @@ extension VACell {
             // determinedAdmin is Correct | InCorrect | Don't Know
             let determinedAdmin = determinedAdminList.count > 0 ? " (\(determinedAdminList[indexPath.row - 1]))" : ""
             resultLabel.text = "\(resultList[indexPath.row - 1])\(determinedAdmin)"
-            timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
+            
+            let recalledTime = String(format:"%.1f", timeList[indexPath.row - 1])
+            timeLabel.text = "\(recalledTime) seconds"
         }
     }
     
@@ -96,7 +98,9 @@ extension VACell {
                 resultLabel.textColor = Color.color(hexString: "#E94533")
                 resultLabel.text = "Incorrect"
             }
-            timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
+            
+            let recognizedTime = String(format:"%.1f", timeList[indexPath.row - 1])
+            timeLabel.text = "\(recognizedTime) seconds"
         }
     }
     
