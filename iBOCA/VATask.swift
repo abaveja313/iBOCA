@@ -218,6 +218,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         super.viewDidLoad()
         
         self.setupView()
+        
         self.setupCounterTimeView()
         
         MyGlobalVA.shared.startTotalTimer()
@@ -248,7 +249,12 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         else {
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        self.runTimer()
         // Check Global time Delay
         if MyGlobalVA.shared.internalTimer != nil {
             // Check VADelayTime in Settings
@@ -904,7 +910,6 @@ extension VATask {
         timerVA.invalidate()
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
-        afterBreakVA = false
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -912,6 +917,7 @@ extension VATask {
             return
         }
         
+        afterBreakVA = false
         
         // Check global delay time not runing
         if MyGlobalVA.shared.internalTimer == nil {
@@ -1208,7 +1214,6 @@ extension VATask {
         counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         counterTimeView?.centerYAnchor.constraint(equalTo: backTitleLabel.centerYAnchor).isActive = true
         self.totalTimeCounter.invalidate()
-        self.runTimer()
     }
     
     fileprivate func setupViewResult() {

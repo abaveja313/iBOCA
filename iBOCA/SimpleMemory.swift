@@ -228,7 +228,6 @@ class SimpleMemoryTask: BaseViewController {
         
         self.nextButton.isHidden = true
         
-        
         // QuickStart Mode
         if quickStartModeOn {
             lblBack.text = "RESULT"
@@ -1087,7 +1086,7 @@ extension SimpleMemoryTask {
         ended = true
         timerSM.invalidate()
         regconizeTimer.invalidate()
-        afterBreakSM = false
+        
         self.totalTimeCounter.invalidate()
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
@@ -1098,6 +1097,8 @@ extension SimpleMemoryTask {
             self.didBackToResult?()
             return
         }
+        
+        afterBreakSM = false
         
         // Check global delay time not runing
         if MyGlobalSM.shared.internalTimer == nil {

@@ -16,6 +16,7 @@ class ResultsViewController: BaseViewController {
     @IBOutlet weak var lbResult: UILabel!
     @IBOutlet weak var shadowContainer: UIView!
     
+    var isCompleteQuickStart: Bool = false
     private var headerView: UIView?
     
     // QuickStart Mode
@@ -70,6 +71,9 @@ class ResultsViewController: BaseViewController {
     
     @IBAction func actionBack(_ sender: Any) {
         if quickStartModeOn {
+            if self.isCompleteQuickStart {
+                dismiss(animated: true, completion: nil)
+            }
             didBackToMainView?()
         }
         else {
