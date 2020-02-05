@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-var StartTimer = Foundation.Date()
 var previousSMTest = -1
 
 class MyGlobalSM: NSObject {
@@ -208,11 +207,9 @@ class SimpleMemoryTask: BaseViewController {
         self.setupViews()
         self.startTest()
         
-        StartTimer = Foundation.Date()
-        
         self.result = Results()
         self.result.name = TestName.SIMPLE_MEMORY
-        self.result.startTime = StartTimer
+        self.result.startTime = Foundation.Date()
         
         self.nextButton.isHidden = true
         
@@ -515,7 +512,7 @@ extension SimpleMemoryTask {
     }
     
     @objc func startAlert() {
-        nextButton.isHidden = true
+        self.nextButton.isHidden = true
         
         // Update item Selected Dropdown & hide Dropdown
         self.updateDataDropDown()
@@ -524,11 +521,6 @@ extension SimpleMemoryTask {
             let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
             startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
                 print("start new")
-                self.recognizeIncorrectSM = self.images0
-                self.imagesSM = self.images0
-                self.imageSetSM = 0
-                self.incorrectImageSetSM = 0
-                
                 self.startNewTask()
             }))
             
@@ -552,11 +544,6 @@ extension SimpleMemoryTask {
             
             self.present(startAlert, animated: true, completion: nil)
         } else {
-            recognizeIncorrectSM = self.images0
-            imagesSM = self.images0
-            imageSetSM = 0
-            incorrectImageSetSM = 0
-            
             self.startNewTask()
         }
     }
@@ -585,6 +572,7 @@ extension SimpleMemoryTask {
         
         self.timerNextPicture.invalidate()
         self.ivTask.image = nil
+        
         self.startTest()
         
         self.collectionViewLevel.reloadData()
