@@ -78,6 +78,8 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     var mCounterTimeView : CounterTimeView?
     
+    var VADelayTime: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         screenSize = UIScreen.main.bounds
@@ -124,6 +126,24 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         setupButton()
         setupCollectionView()
         setupData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showVADelayTime(_:)), name: NSNotification.Name(rawValue: "VADelayTime"), object: nil)
+
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func showVADelayTime(_ notification: NSNotification) {
+        print(notification.userInfo ?? "")
+        if let dict = notification.userInfo as NSDictionary? {
+            if let id = dict["VADelayTime"] as? Int {
+                // do something with VADelayTime
+                self.VADelayTime = id
+                self.mCollection?.reloadData()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -413,6 +433,19 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GoToTestCollectionCell", for: indexPath) as! GoToTestCollectionCell
         let item = arrData[indexPath.row]
         cell.setupInfo(model: item)
+        if item.title ==  "Visual Association" {
+            if self.VADelayTime != 0 {
+                cell.lblTimerDelay.isHidden = false
+                cell.lblTimerDelay.text = self.timeFormatted(self.VADelayTime)
+            }
+            else {
+                cell.lblTimerDelay.isHidden = true
+            }
+        }
+        else {
+            cell.lblTimerDelay.isHidden = true
+        }
+        
         return cell
     }
     
@@ -446,6 +479,12 @@ extension MainViewController : UICollectionViewDelegate,UICollectionViewDataSour
             }
         }
         
+    }
+    
+    fileprivate func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return String(format: "%02d : %02d", minutes, seconds)
     }
     
     func showAlertCommingSoon(){
