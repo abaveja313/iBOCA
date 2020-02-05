@@ -17,6 +17,7 @@ class MyGlobalVA: NSObject {
     var totalTimer: Timer?
     var internalTimer: Timer?
     var delay: Int = 0
+    var delayInMain: Int = 0
     var total: Int = 0
     var VADelayTime: Int = 5*60
     var mixedImages = [String]()
@@ -24,7 +25,6 @@ class MyGlobalVA: NSObject {
     var recognizeIncorrectVA = [String]()
     
     var resultStartTime: Foundation.Date!
-    var resultEndTime:Foundation.Date!
 
     func startDelayTimer() {
         if self.internalTimer == nil {
@@ -44,13 +44,13 @@ class MyGlobalVA: NSObject {
            self.internalTimer!.invalidate()
            self.internalTimer = nil
             
-            let dataDict:[String: Int] = ["VADelayTime": 0]
+            self.delayInMain = 0
+            let dataDict:[String: Int] = ["VADelayTime": self.delayInMain]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
         }
     }
     func stopTotalTimer(){
         if self.totalTimer != nil {
-           self.resultEndTime = Foundation.Date()
            self.totalTimer!.invalidate()
            self.totalTimer = nil
         }
@@ -58,8 +58,9 @@ class MyGlobalVA: NSObject {
 
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
+        delayInMain += 1
         debugPrint("VA Delay! \(delay)")
-        let dataDict:[String: Int] = ["VADelayTime": delay]
+        let dataDict:[String: Int] = ["VADelayTime": delayInMain]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
     }
     
@@ -666,7 +667,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         delayTimeLabel.text = "\(self.delayTime) seconds"
         
         result.startTime = MyGlobalVA.shared.resultStartTime
-        result.endTime = MyGlobalVA.shared.resultEndTime
         result.imageVA = self.mixedImages
         result.inputVA = self.textInputList
         
@@ -911,6 +911,7 @@ extension VATask {
         timerVA.invalidate()
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
@@ -975,10 +976,11 @@ extension VATask {
         
         if self.quickStartModeOn {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+            }, ok: {
                 self.clearTimer()
-                self.didBackToResult?()
-            }) {
                 self.didCompleted?()
+            }) {
+                self.clearTimer()
             }
         } else {
             self.clearTimer()
@@ -1006,6 +1008,7 @@ extension VATask {
         timerVA.invalidate()
         inputTimer.invalidate()
         self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
         afterBreakVA = false
     }
     

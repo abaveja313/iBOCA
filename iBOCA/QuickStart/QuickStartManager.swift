@@ -284,7 +284,7 @@ class QuickStartManager: NSObject {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    class func showAlertCompletion(viewController: UIViewController, endAllTest: Bool = false, cancel: (() -> ())?, ok: (() -> ())?) {
+    class func showAlertCompletion(viewController: UIViewController, endAllTest: Bool = false, cancel: (() -> ())?, ok: (() -> ())?, quit: (() -> ())? = nil) {
         let alertTitle  : String = endAllTest ? "Completed": "Warning"
         let alertMessage: String = endAllTest ? "You have completed all the tests. Do you want to check your result?" : "Do you want to move to the next test?"
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
@@ -295,6 +295,7 @@ class QuickStartManager: NSObject {
             ok?()
         }
         let quitAction = UIAlertAction.init(title: "Quit", style: .cancel) { (_) in
+            quit?()
             viewController.navigationController?.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(quitAction)

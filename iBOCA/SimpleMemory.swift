@@ -17,6 +17,7 @@ class MyGlobalSM: NSObject {
     var totalTimer: Timer?
     var internalTimer: Timer? // delay time
     var delay: Int = 0
+    var delayInMain: Int = 0
     var total: Int = 0
     var SMDelayTime: Int = 60
     var imagesSM = [String]()
@@ -25,7 +26,6 @@ class MyGlobalSM: NSObject {
     var incorrectImageSetSM = Int()
     
     var resultStartTime: Foundation.Date!
-    var resultEndTime:Foundation.Date!
     
     func startDelayTimer() {
         if self.internalTimer == nil {
@@ -45,14 +45,14 @@ class MyGlobalSM: NSObject {
             self.internalTimer!.invalidate()
             self.internalTimer = nil
             
-            let dataDict:[String: Int] = ["SMDelayTime": 0]
+            self.delayInMain = 0
+            let dataDict:[String: Int] = ["SMDelayTime": self.delayInMain]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
         }
     }
     
     func stopTotalTimer(){
         if self.totalTimer != nil {
-            self.resultEndTime = Foundation.Date()
             self.totalTimer!.invalidate()
             self.totalTimer = nil
         }
@@ -60,9 +60,10 @@ class MyGlobalSM: NSObject {
     
     @objc func fireTimerAction(sender: AnyObject?){
         delay += 1
+        delayInMain += 1
         debugPrint("SM Delay! \(delay)")
         
-        let dataDict:[String: Int] = ["SMDelayTime": delay]
+        let dataDict:[String: Int] = ["SMDelayTime": delayInMain]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SMDelayTime"), object: nil, userInfo: dataDict)
     }
     
@@ -419,8 +420,9 @@ extension SimpleMemoryTask {
         // MARK: - Config Dropdown minute
         let x = self.vSetDelayTime.origin.x
         let y = self.vSetDelayTime.origin.y + self.vSetDelayTime.bounds.height + 6.0
-        let frame = CGRect.init(x: x, y: y, width: self.vSetDelayTime.size.width, height: 118.0)
+        let frame = CGRect.init(x: x, y: y, width: self.vSetDelayTime.size.width, height: 200.0)
         self.dropDownView = DropdownView.init(frame: frame, style: .plain)
+        self.dropDownView.isScrollEnabled = false
         self.dropDownView.dataArray = self.dataMinutesDropDown
         if let timeChoose = self.lblChooseDelayTime.text {
             self.dropDownView.itemSelected = timeChoose
@@ -1063,11 +1065,11 @@ extension SimpleMemoryTask {
         
         if quickStartModeOn {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.clearTimer()
-                self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.clearTimer()
                 self.didCompleted?()
+            }) {
+                self.clearTimer()
             }
         } else {
             self.clearTimer()
@@ -1088,6 +1090,7 @@ extension SimpleMemoryTask {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
         
+        self.timerNextPicture.invalidate()
         self.totalTimeCounter.invalidate()
         
         MyGlobalSM.shared.clearAll()
@@ -1102,6 +1105,8 @@ extension SimpleMemoryTask {
         regconizeTimer.invalidate()
         
         self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
+        
         if Status[TestSimpleMemory] != TestStatus.Done {
             Status[TestSimpleMemory] = TestStatus.NotStarted
         }
@@ -1319,11 +1324,11 @@ extension SimpleMemoryTask {
             
             if (recognizeErrors[i] == 0) {
                 self.result.longDescription.add("Recognized \(mixedImages[i]) - Correct in \(recognizeTimes[i]) seconds")
-                self.result.numCorrects += 1
+                correct += 1
             }
             if (recognizeErrors[i] == 1) {
                 self.result.longDescription.add("Recognized \(mixedImages[i]) - Incorrect in \(recognizeTimes[i]) seconds ")
-                self.result.numErrors += 1
+                incorrect += 1
             }
         }
         
