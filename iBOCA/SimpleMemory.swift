@@ -722,13 +722,8 @@ extension SimpleMemoryTask {
         
         self.start.isHidden = false
         
-        if let delayTimes = Settings.SMDelayTime {
-            delayTime = Double(delayTimes) * 60
-            totalTime = delayTimes * 60
-        } else {
-            delayTime = 60
-            totalTime = 60
-        }
+        self.delayTime = Double(MyGlobalSM.shared.SMDelayTime)
+        self.totalTime = MyGlobalSM.shared.SMDelayTime - MyGlobalSM.shared.delay
         
         if MyGlobalSM.shared.internalTimer == nil {
             MyGlobalSM.shared.startDelayTimer()
