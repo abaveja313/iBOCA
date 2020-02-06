@@ -892,7 +892,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             let idx = indexPath.row + 1
             let strImageName = self.imagesLevel[indexPath.row]
             cell.ivLevel.image = UIImage.init(named: strImageName)
-            cell.lblTitle.text = "Level \(idx)"
+            cell.lblTitle.text = "Test \(idx)"
             return cell
         }
         else {
