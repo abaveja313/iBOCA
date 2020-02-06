@@ -901,7 +901,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblTitle.text = "Object name \(indexPath.row + 1):"
             cell.showError = {
                 let warningAlert = UIAlertController(title: "Warning",
-                                                     message: "This field is empty.",
+                                                     message: "Please enter this field.",
                                                      preferredStyle: .alert)
                 warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
                     warningAlert.dismiss(animated: true, completion: nil)
