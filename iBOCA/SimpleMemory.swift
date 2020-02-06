@@ -1162,7 +1162,8 @@ extension SimpleMemoryTask {
         self.collectionViewLevel.isHidden = true
         self.nextButton.isHidden = true
         self.vDelay.isHidden = true
-        
+        mixedImages = []
+        recognizeErrors = []
         timeInput = 0
         testCount = 0
         randomizeRecognize()
