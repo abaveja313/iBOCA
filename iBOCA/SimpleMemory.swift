@@ -852,11 +852,6 @@ extension SimpleMemoryTask {
             recognizeIncorrectSM = images0
             incorrectImageSetSM = 0
         }
-        
-        MyGlobalSM.shared.imagesSM = self.imagesSM
-        MyGlobalSM.shared.imageSetSM = self.imageSetSM
-        MyGlobalSM.shared.recognizeIncorrectSM = self.recognizeIncorrectSM
-        MyGlobalSM.shared.incorrectImageSetSM = self.incorrectImageSetSM
     }
 }
 
