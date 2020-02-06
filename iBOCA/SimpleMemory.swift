@@ -307,7 +307,7 @@ class SimpleMemoryTask: BaseViewController {
 // MARK: - Setup UI
 extension SimpleMemoryTask {
     fileprivate func setupViews() {
-        self.nextButtonConstraintBottom.constant = self.mode == .admin ? 100 : 150
+        self.nextButtonConstraintBottom.constant = self.mode == .admin ? 90 : 150
         
         // Label Back
         self.lblBack.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
@@ -470,7 +470,7 @@ extension SimpleMemoryTask {
         self.nextButton.titleLabel?.font = Font.font(name: Font.Montserrat.bold, size: 22.0)
         self.nextButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.nextButton.tintColor = Color.color(hexString: "#013AA5")
-        self.nextButton.setTitle("FINISH", for: .normal)
+        self.nextButton.setTitle("CONTINUE", for: .normal)
         self.nextButton.layer.cornerRadius = 8
         self.nextButton.layer.masksToBounds = true
     }
@@ -803,7 +803,6 @@ extension SimpleMemoryTask {
             self.originalAnswerButton.isHidden = self.mode == .patient
             self.collectionViewObjectName.reloadData()
             
-            self.nextButton.setTitle("CONTINUE", for: .normal)
             self.nextButton.isHidden = false
             self.nextButton.isEnabled = true
             self.nextButton.addTarget(self, action: #selector(self.doneSM), for: UIControl.Event.touchUpInside)
