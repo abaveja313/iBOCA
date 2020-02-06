@@ -456,13 +456,8 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         print("in delay...")
         afterBreakVA = true
         
-        if let delayTimes = Settings.VADelayTime {
-            delayTime = Double(delayTimes)
-            totalTime = delayTimes
-        } else {
-            delayTime = 300
-            totalTime = 300
-        }
+        self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
+        self.totalTime = MyGlobalVA.shared.VADelayTime - MyGlobalVA.shared.delay
         
         if MyGlobalVA.shared.internalTimer == nil {
             MyGlobalVA.shared.startDelayTimer()
