@@ -71,17 +71,22 @@ class GoToTestCollectionCell: UICollectionViewCell {
         mTitle.text = model.title
         mImg.image =  UIImage.init(named: model.icon)
         mImg.contentMode = .scaleAspectFit
-        if model.isComplete == false{
-            self.shadowLayer?.fillColor = UIColor.white.cgColor
-            self.shadowLayer?.shadowColor = Color.color(hexString: "649BFF").withAlphaComponent(0.32).cgColor
-            mTitle.alpha = 1
-            mImg.alpha = 1
-        }
-        else{
-            self.shadowLayer?.fillColor = Color.color(hexString: "E9F0F9").cgColor
-            self.shadowLayer?.shadowColor = UIColor.clear.cgColor
-            mTitle.alpha = 0.2
-            mImg.alpha = 0.2
-        }
+        
+        self.shadowLayer?.fillColor = UIColor.white.cgColor
+        self.shadowLayer?.shadowColor = Color.color(hexString: "649BFF").withAlphaComponent(0.32).cgColor
+        mTitle.alpha = 1
+        mImg.alpha = 1
+        
+//        if model.isComplete == false {
+//            self.shadowLayer?.fillColor = UIColor.white.cgColor
+//            self.shadowLayer?.shadowColor = Color.color(hexString: "649BFF").withAlphaComponent(0.32).cgColor
+//            mTitle.alpha = 1
+//            mImg.alpha = 1
+//        } else {
+//            self.shadowLayer?.fillColor = Color.color(hexString: "E9F0F9").cgColor
+//            self.shadowLayer?.shadowColor = UIColor.clear.cgColor
+//            mTitle.alpha = 0.2
+//            mImg.alpha = 0.2
+//        }
     }
 }

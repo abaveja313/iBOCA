@@ -236,7 +236,6 @@ class SimpleMemoryTask: BaseViewController {
         
         self.result = Results()
         self.result.name = TestName.SIMPLE_MEMORY
-        self.result.startTime = Foundation.Date()
         
         self.nextButton.isHidden = true
         
@@ -622,7 +621,6 @@ extension SimpleMemoryTask {
         
         result = Results()
         result.name = TestName.SIMPLE_MEMORY
-        result.startTime = startTime
         ended = true
         self.isStartNew = true
         self.collectionViewObjectName.reloadData()
