@@ -146,7 +146,7 @@ class DigitSerialSeven:DigitBaseClass {
         result.json["Starting Number"] = startNum
         result.numCorrects = totCorrects
         result.numErrors = totErrors
-        result.rounds = round
+        result.rounds = round >= 7 ? MAXLEVEL : round
         var resultList : [Int:Any] = [:]
         var sttime = levelStartTime
         for (i, l) in enteredNumber.enumerated() {
