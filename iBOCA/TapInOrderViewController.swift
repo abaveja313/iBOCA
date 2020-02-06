@@ -24,6 +24,7 @@ class TapInOrderViewController: BaseViewController {
     var numErrors = 0
     var numCorrects = 0
     var forwardNotBackward = true
+    var shouldAppendResult = true
     
     var startTime2 = Foundation.Date()
     
@@ -333,7 +334,7 @@ class TapInOrderViewController: BaseViewController {
             }
             
             self.statusLabel.text = "Spatial span: \(self.numplaces)"
-            result.longDescription.add("Spatial span: \(self.numplaces)")
+            result.longDescription.add("Spatial span: \(self.numplaces + 1)")
             
             result.json["Places"] = self.numplaces
             result.json["Levels"] = self.resultList
@@ -343,7 +344,10 @@ class TapInOrderViewController: BaseViewController {
             result.shortDescription = "Spatial span of \(self.numplaces) with \(self.numErrors) errors"
             print("json: \(result.json)")
             print("Spatial span of \(self.numplaces) with \(self.numErrors) errors")
-            resultsArray.add(result)
+            if self.shouldAppendResult {
+                resultsArray.add(result)
+                self.shouldAppendResult = false
+            }
             if self.forwardNotBackward {
                 Status[TestForwardSpatialSpan] = TestStatus.Done
             } else {
