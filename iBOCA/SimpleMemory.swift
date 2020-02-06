@@ -325,7 +325,8 @@ extension SimpleMemoryTask {
         
         self.quitButton.setTitle(title: "QUIT", withFont: Font.font(name: Font.Montserrat.bold, size: 18))
         self.quitButton.setupShadow(withColor: UIColor.clear, sketchBlur: 0, opacity: 0)
-        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")], direction: .topToBottom)
+        self.quitButton.setupGradient(arrColor: [Color.color(hexString: "FFAFA6"),Color.color(hexString: "FE786A")],
+                                      direction: .topToBottom)
         self.quitButton.render()
         self.quitButton.addTextSpacing(-0.36)
         
@@ -1260,6 +1261,10 @@ extension SimpleMemoryTask {
     fileprivate func displayResult() {
         self.ended = true
         
+        if let time = Settings.SMDelayTime {
+            MyGlobalSM.shared.SMDelayTime = time * 60
+        }
+        
         MyGlobalSM.shared.clearAll()
         MyGlobalSM.shared.stopTotalTimer()
         self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
@@ -1277,7 +1282,6 @@ extension SimpleMemoryTask {
         self.nextButton.isHidden = true
         
         var outputResult = ""
-        var recognizeResult = ""
         var correct = 0
         var incorrect = 0
         self.resultsTask.removeAll()
@@ -1377,7 +1381,7 @@ extension SimpleMemoryTask {
         
         // Update SMDelayTime of singleton
         if let delayTime = Settings.SMDelayTime {
-            MyGlobalSM.shared.SMDelayTime = delayTime
+            MyGlobalSM.shared.SMDelayTime = delayTime * 60
         }
         
         // Set attributed into lblDelayLength
