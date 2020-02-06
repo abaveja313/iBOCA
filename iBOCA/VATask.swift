@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-var StartTime = Foundation.Date()
-
 class MyGlobalVA: NSObject {
 
     static let shared: MyGlobalVA = MyGlobalVA()
@@ -229,7 +227,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         result = Results()
         result.name = TestName.VISUAL_ASSOCIATION
-        result.startTime = Foundation.Date()
         
         missingItemTextField.delegate = self
         startButton.removeTarget(self, action: nil, for:.allEvents)
@@ -394,8 +391,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         self.isRecalledTestMode = false
         self.isRecommendDelayHidden(true)
-        
-        result.startTime = Foundation.Date()
         
         self.timerVA.invalidate()
         
