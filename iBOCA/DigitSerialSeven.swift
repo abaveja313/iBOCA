@@ -173,7 +173,7 @@ class DigitSerialSeven:DigitBaseClass {
         result.longDescription.add(numberSequence)
         result.json["Results"] = resultList
         result.json["Errors"] = totErrors
-        result.json["Rounds"] = level
+        result.json["Rounds"] = level >= 7 ? MAXLEVEL : level
         
         result.shortDescription = "\(startNum)->\(enteredNumber) sequence, \(level) rounds with \(totErrors) errors"
         
