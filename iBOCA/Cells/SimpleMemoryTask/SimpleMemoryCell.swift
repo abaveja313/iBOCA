@@ -19,6 +19,7 @@ class SimpleMemoryCell: UICollectionViewCell {
     @IBOutlet weak var dontKnowButton: UIButton!
     
     var textDeterminedAdmin = ""
+    var showError: (() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,17 +67,25 @@ class SimpleMemoryCell: UICollectionViewCell {
     }
     
     @IBAction func actionCorrect(_ sender: Any) {
-        self.textDeterminedAdmin = "Correct"
-        self.correctButton.setTitleColor(.red, for: .normal)
-        self.incorrectButton.setTitleColor(Color.color(hexString: "505259"), for: .normal)
-        self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        if let text = tfObjectName.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
+            self.textDeterminedAdmin = "Correct"
+            self.correctButton.setTitleColor(.red, for: .normal)
+            self.incorrectButton.setTitleColor(Color.color(hexString: "505259"), for: .normal)
+            self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        } else {
+            self.showError?()
+        }
     }
     
     @IBAction func actionIncorrect(_ sender: Any) {
-        self.textDeterminedAdmin = "Incorrect"
-        self.correctButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
-        self.incorrectButton.setTitleColor(.red, for: .normal)
-        self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        if let text = tfObjectName.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
+            self.textDeterminedAdmin = "Incorrect"
+            self.correctButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+            self.incorrectButton.setTitleColor(.red, for: .normal)
+            self.dontKnowButton.setTitleColor(Color.color(hexString: "013AA5"), for: .normal)
+        } else {
+            self.showError?()
+        }
     }
     
     @IBAction func actionDontKnow(_ sender: Any) {

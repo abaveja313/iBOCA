@@ -899,6 +899,15 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimpleMemoryCell.identifier(), for: indexPath) as! SimpleMemoryCell
             cell.configureView(mode: self.mode)
             cell.lblTitle.text = "Object name \(indexPath.row + 1):"
+            cell.showError = {
+                let warningAlert = UIAlertController(title: "Warning",
+                                                     message: "This field is empty.",
+                                                     preferredStyle: .alert)
+                warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                    warningAlert.dismiss(animated: true, completion: nil)
+                }))
+                self.present(warningAlert, animated: true, completion: nil)
+            }
             if self.isStartNew == true {
                 cell.tfObjectName.text = ""
                 cell.textDeterminedAdmin = ""
