@@ -182,6 +182,14 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
     
     @IBAction func sendEmail(_ sender: Any) {
         var body:String?
+        
+        // Clear All Singleton SM & VA
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        
+        MyGlobalSM.shared.clearAll()
+        MyGlobalSM.shared.stopTotalTimer()
+        
         if(MFMailComposeViewController.canSendMail()  && resultsArray.numResults() > 0) {
             // Check mode Admin or Proctored
             switch mode {
