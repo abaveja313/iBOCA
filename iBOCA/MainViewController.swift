@@ -186,9 +186,13 @@ class MainViewController: BaseViewController, MFMailComposeViewControllerDelegat
         // Clear All Singleton SM & VA
         MyGlobalVA.shared.clearAll()
         MyGlobalVA.shared.stopTotalTimer()
+        MyGlobalVA.shared.total = 0
+        MyGlobalVA.shared.delay = 0
         
         MyGlobalSM.shared.clearAll()
         MyGlobalSM.shared.stopTotalTimer()
+        MyGlobalSM.shared.total = 0
+        MyGlobalSM.shared.delay = 0
         
         if(MFMailComposeViewController.canSendMail()  && resultsArray.numResults() > 0) {
             // Check mode Admin or Proctored
