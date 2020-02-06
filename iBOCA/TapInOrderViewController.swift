@@ -334,7 +334,7 @@ class TapInOrderViewController: BaseViewController {
             }
             
             self.statusLabel.text = "Spatial span: \(self.numplaces)"
-            result.longDescription.add("Spatial span: \(self.numplaces + 1)")
+            result.longDescription.add("Spatial span: \(self.numplaces)")
             
             result.json["Places"] = self.numplaces
             result.json["Levels"] = self.resultList
