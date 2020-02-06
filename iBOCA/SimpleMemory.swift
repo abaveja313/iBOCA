@@ -349,6 +349,7 @@ extension SimpleMemoryTask {
         self.shouldHiddenDelayViews(true)
         self.vResults.isHidden = true
         self.collectionViewLevel.isHidden = false
+        self.lblDescTask.isHidden = false
     }
     
     fileprivate func setupCollectionView() {
@@ -640,6 +641,7 @@ extension SimpleMemoryTask {
         switch self.mode {
         case .admin:
             self.collectionViewLevel.isHidden = false
+            self.lblDescTask.isHidden = false
         case .patient:
             MyGlobalSM.shared.startTotalTimer()
             self.randomTest()
