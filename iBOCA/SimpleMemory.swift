@@ -349,6 +349,7 @@ extension SimpleMemoryTask {
         self.shouldHiddenDelayViews(true)
         self.vResults.isHidden = true
         self.collectionViewLevel.isHidden = false
+        self.lblDescTask.isHidden = false
     }
     
     fileprivate func setupCollectionView() {
@@ -640,6 +641,7 @@ extension SimpleMemoryTask {
         switch self.mode {
         case .admin:
             self.collectionViewLevel.isHidden = false
+            self.lblDescTask.isHidden = false
         case .patient:
             MyGlobalSM.shared.startTotalTimer()
             self.randomTest()
@@ -901,7 +903,7 @@ extension SimpleMemoryTask: UICollectionViewDelegate, UICollectionViewDataSource
             cell.lblTitle.text = "Object name \(indexPath.row + 1):"
             cell.showError = {
                 let warningAlert = UIAlertController(title: "Warning",
-                                                     message: "This field is empty.",
+                                                     message: "Please enter this field.",
                                                      preferredStyle: .alert)
                 warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
                     warningAlert.dismiss(animated: true, completion: nil)
