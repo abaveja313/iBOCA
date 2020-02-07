@@ -241,6 +241,8 @@ class DrawingViewTrails: UIView {
         
         var action = "Moveto"
         if bubbles.inNewBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) == true {
+            
+            
             if bubbles.inCorrectBubble() == true {
                 mainPath.append(UIBezierPath(cgPath: currPath.cgPath))
                 
@@ -266,10 +268,10 @@ class DrawingViewTrails: UIView {
                 
             } else {
 //                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
-                currPath.removeAllPoints()
+//                currPath.removeAllPoints()
                 self.canDraw = false
 //                self.incorrect += 1
-                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
+//                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
             }
         }
         let loc = touch.location(in: self)
