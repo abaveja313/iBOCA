@@ -102,7 +102,7 @@ class DigitSerialSeven:DigitBaseClass {
                 base.infoLabel.text = "Correct, but off the sequence: Ask patient for number minus 7, Enter it"
             } else {
                 totErrors += 1
-                base.infoLabel.text = "Incorrect subtraction: End the test or ask patient for number minus 7 and enter it.\nYour answer: \(num)"
+                base.infoLabel.text = "Incorrect subtraction: Ask patient for number minus 7 and enter it.\nYour answer: \(num)"
             }
             
             round += 1
