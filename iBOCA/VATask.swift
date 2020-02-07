@@ -637,12 +637,14 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var delayResult = ""
         var imageSetResult = ""
         
-        if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
-            self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
-        }
-        else {
-            self.delayTime = Double(MyGlobalVA.shared.delay)
-        }
+//        if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
+//            self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
+//        }
+//        else {
+//            self.delayTime = Double(MyGlobalVA.shared.delay)
+//        }
+        
+        self.delayTime = Double(MyGlobalVA.shared.delay)
         
         imageSetResult = "Image set = \(imageSetVA+1)\n"
         

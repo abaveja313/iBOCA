@@ -265,10 +265,10 @@ class DrawingViewTrails: UIView {
                 print("in correct bubble")
                 
             } else {
-                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
+//                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
                 currPath.removeAllPoints()
                 self.canDraw = false
-                self.incorrect += 1
+//                self.incorrect += 1
                 action = "Moveto incorrect bubble \(bubbles.currentBubble)"
             }
         }
