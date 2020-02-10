@@ -256,9 +256,9 @@ class DrawingViewTrails: UIView {
                     nextBubb += 1
                     action = "Moveto next bubble \(bubbles.currentBubble)"
                 } else {
-                    var p = UIBezierPath()
-                    p = UIBezierPath(cgPath: currPath.cgPath)
-                    errorPath.append(p)
+//                    var p = UIBezierPath()
+//                    p = UIBezierPath(cgPath: currPath.cgPath)
+//                    errorPath.append(p)
                     action = "Moveto not next bubble \(bubbles.currentBubble)"
                 }
                 
@@ -301,11 +301,12 @@ class DrawingViewTrails: UIView {
                         nextBubb += 1
                         action = "Lineto next bubble \(bubbles.currentBubble)"
                     } else {
-                        var p = UIBezierPath()
-                        p = UIBezierPath(cgPath: currPath.cgPath)
+//                        var p = UIBezierPath()
+//                        p = UIBezierPath(cgPath: currPath.cgPath)
                         
-                        errorPath.append(p)
+//                        errorPath.append(p)
                         currPath.removeAllPoints()
+                        
                         action = "Lineto not next bubble \(bubbles.currentBubble)"
                     }
                     

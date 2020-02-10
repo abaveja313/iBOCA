@@ -1267,13 +1267,14 @@ extension SimpleMemoryTask {
         MyGlobalSM.shared.clearAll()
         MyGlobalSM.shared.stopTotalTimer()
         self.counterTime.setSeconds(seconds: MyGlobalSM.shared.total)
-        
-        if MyGlobalSM.shared.delay > MyGlobalSM.shared.SMDelayTime {
-            self.delayTime = Double(MyGlobalSM.shared.SMDelayTime)
-        }
-        else {
-            self.delayTime = Double(MyGlobalSM.shared.delay)
-        }
+
+//        if MyGlobalSM.shared.delay > MyGlobalSM.shared.SMDelayTime {
+//            self.delayTime = Double(MyGlobalSM.shared.SMDelayTime)
+//        }
+//        else {
+//            self.delayTime = Double(MyGlobalSM.shared.delay)
+//        }
+        self.delayTime = Double(MyGlobalSM.shared.delay)
         
         self.collectionViewObjectName.isHidden = true
         self.originalAnswerButton.isHidden = true

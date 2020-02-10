@@ -715,7 +715,7 @@ extension TrailsAViewController {
             result.longDescription.add("The incorrect segments are \(drawingView.incorrectlist)")
             result.shortDescription = "\(drawingView.incorrect) errors with \(drawingView.nextBubb) correct bubbles (test \(self.title!))"
             result.numErrors = drawingView.incorrect
-            result.numCorrects = drawingView.nextBubb
+            result.numCorrects = drawingView.nextBubb - 1
             result.json["Path"] = drawingView.bubbles.jsontimes
             result.json["Name"] = self.title
             result.json["Total Bubbles"] = numBubbles
