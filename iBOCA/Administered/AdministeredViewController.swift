@@ -116,7 +116,10 @@ class AdministeredViewController: BaseViewController {
     }
     
     @IBAction func actionBack(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            // Clear all resultsArray with mode QuickStart
+            resultsArray.results.removeAllObjects()
+        }
     }
     
     @IBAction func tapQuickStart(_ sender: Any) {
