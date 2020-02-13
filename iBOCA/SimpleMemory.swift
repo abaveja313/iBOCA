@@ -1280,12 +1280,59 @@ extension SimpleMemoryTask {
         self.originalAnswerButton.isHidden = true
         afterBreakSM = false
         self.nextButton.isHidden = true
-        
-        var outputResult = ""
         var correct = 0
         var incorrect = 0
         self.resultsTask.removeAll()
         self.resultsTask.append(SMResultModel.init())
+        
+        // Mode patient
+        if self.mode == .patient {
+            var inputValues: [String] = [String]()
+            var arrayExactResult = ["", "", "", "", "", ""]
+            
+            // Get List Input
+            for i in 0 ..< imagesSM.count {
+                let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
+                guard let inputValue = cell.tfObjectName.text else {return}
+                inputValues.append(inputValue)
+            }
+            
+            // Loop List Input update value arrayExactResult
+            for i in 0 ..< inputValues.count {
+                if imagesSM.contains(inputValues[i]) && !arrayExactResult.contains(inputValues[i]) {
+                    arrayExactResult[i] = inputValues[i]
+                }
+            }
+            
+            for i in 0..<arrayExactResult.count {
+                if arrayExactResult[i] == "" {
+                    let answer = imagesSM.first(where: { !arrayExactResult.contains($0) })
+                    arrayExactResult[i] = answer ?? ""
+                }
+            }
+            
+            
+            // Create result
+            for i in 0 ..< inputValues.count {
+                var result: SMResultModel
+                let objectName = "Object \(i+1)"
+                if inputValues[i] == arrayExactResult[i] {
+                    correct += 1
+                    result = SMResultModel.init(objectName: objectName,
+                                                input: inputValues[i],
+                                                exactResult: arrayExactResult[i],
+                                                result: true)
+                }
+                else {
+                    incorrect += 1
+                    result = SMResultModel.init(objectName: objectName,
+                                                input: inputValues[i],
+                                                exactResult: arrayExactResult[i],
+                                                result: false)
+                }
+                self.resultsTask.append(result)
+            }
+        }
         
         for i in 0 ..< imagesSM.count {
             var result: SMResultModel
@@ -1294,8 +1341,9 @@ extension SimpleMemoryTask {
             
             let cell = self.collectionViewObjectName.cellForItem(at: IndexPath.init(row: i, section: 0)) as! SimpleMemoryCell
             guard let inputValue = cell.tfObjectName.text else {return}
-            switch self.mode {
-            case .admin:
+            
+             // Mode admin
+            if self.mode == .admin {
                 if cell.textDeterminedAdmin == "Correct" {
                     correct += 1
                 } else if cell.textDeterminedAdmin == "Incorrect" {
@@ -1306,26 +1354,8 @@ extension SimpleMemoryTask {
                                             input: inputValue,
                                             exactResult: exactResult,
                                             adminDetermine: cell.textDeterminedAdmin)
-            case .patient:
-                if imagesSM[i] == inputValue.lowercased() {
-                    outputResult += "Input \(inputValue) - Correct\n"
-                    correct += 1
-                    
-                    result = SMResultModel.init(objectName: objectName,
-                                                input: inputValue,
-                                                exactResult: exactResult,
-                                                result: true)
-                } else {
-                    incorrect += 1
-                    outputResult += "Input \(inputValue) - Incorrect\n"
-                    
-                    result = SMResultModel.init(objectName: objectName,
-                                                input: inputValue,
-                                                exactResult: exactResult,
-                                                result: false)
-                }
+                self.resultsTask.append(result)
             }
-            self.resultsTask.append(result)
             
             if (recognizeErrors[i] == 0) {
                 self.result.longDescription.add("Recognized \(mixedImages[i]) - Correct in \(recognizeTimes[i]) seconds")
