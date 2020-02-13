@@ -1288,7 +1288,8 @@ extension SimpleMemoryTask {
         // Mode patient
         if self.mode == .patient {
             var inputValues: [String] = [String]()
-            var arrayExactResult = ["", "", "", "", "", ""]
+            var correctRecall = [String]()
+            var isResulRecall = [Bool]()
             
             // Get List Input
             for i in 0 ..< imagesSM.count {
@@ -1297,39 +1298,28 @@ extension SimpleMemoryTask {
                 inputValues.append(inputValue)
             }
             
-            // Loop List Input update value arrayExactResult
             for i in 0 ..< inputValues.count {
-                if imagesSM.contains(inputValues[i]) && !arrayExactResult.contains(inputValues[i]) {
-                    arrayExactResult[i] = inputValues[i]
-                }
-            }
-            
-            for i in 0..<arrayExactResult.count {
-                if arrayExactResult[i] == "" {
-                    let answer = imagesSM.first(where: { !arrayExactResult.contains($0) })
-                    arrayExactResult[i] = answer ?? ""
-                }
-            }
-            
-            
-            // Create result
-            for i in 0 ..< inputValues.count {
-                var result: SMResultModel
-                let objectName = "Object \(i+1)"
-                if inputValues[i] == arrayExactResult[i] {
-                    correct += 1
-                    result = SMResultModel.init(objectName: objectName,
-                                                input: inputValues[i],
-                                                exactResult: arrayExactResult[i],
-                                                result: true)
+                if imagesSM.contains(inputValues[i]) && !correctRecall.contains(inputValues[i]) {
+                    correctRecall.append(inputValues[i])
+                    isResulRecall.append(true)
                 }
                 else {
-                    incorrect += 1
-                    result = SMResultModel.init(objectName: objectName,
-                                                input: inputValues[i],
-                                                exactResult: arrayExactResult[i],
-                                                result: false)
+                    isResulRecall.append(false)
                 }
+            }
+            
+            for i in 0 ..< isResulRecall.count {
+                var result: SMResultModel
+                let objectName = "Object \(i+1)"
+                if isResulRecall[i] == true {
+                    correct += 1
+                } else {
+                    incorrect += 1
+                }
+                result = SMResultModel.init(objectName: objectName,
+                                            input: inputValues[i],
+                                            exactResult: imagesSM[i],
+                                            result: isResulRecall[i])
                 self.resultsTask.append(result)
             }
         }
