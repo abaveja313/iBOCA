@@ -413,10 +413,10 @@ extension MainViewController {
     }
     
     func setupData(){
-        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Forward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens","Naming Picture","Forward\nSpatial Span","Backward\nSpatial Span","MOCA\n"]
-        let arrIcon = ["orientation","simple-memory","visual-association","trails","speech-to-text","foward-digit-span","backward-digit-span","3d-figure","serial-sevens","naming-picture","forward-spatial-span","backward-spatial-span","moca"]
-        let arrSegueID = ["orientation","simple-memory","visual-association","trails","speech-to-text","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven","naming-picture","ForwardSpatialSpan","BackwardSpatialSpan","moca"]
-        let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestSpeechToText,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,TestNampingPictures,TestForwardSpatialSpan,TestBackwardSpatialSpan,TestMOCAResults]
+        let arrTitle = ["Orientation","Simple Memory","Visual Association","Trails","Speech To Text","Forward Digit Span","Backward Digit Span","3D Figure Copy","Serial Sevens",/*"Naming Picture",*/"Forward\nSpatial Span","Backward\nSpatial Span","MOCA\n"]
+        let arrIcon = ["orientation","simple-memory","visual-association","trails","speech-to-text","foward-digit-span","backward-digit-span","3d-figure","serial-sevens",/*"naming-picture",*/ "forward-spatial-span","backward-spatial-span","moca"]
+        let arrSegueID = ["orientation","simple-memory","visual-association","trails","speech-to-text","ForwardDigitSpan","BackwardDigitSpan","3d-figure","SerialSeven",/*"naming-picture", */"ForwardSpatialSpan","BackwardSpatialSpan","moca"]
+        let arrTag : [Int] = [TestOrientation,TestSimpleMemory,TestVisualAssociation,TestTrails,TestSpeechToText,TestForwardDigitSpan,TestBackwardsDigitSpan,Test3DFigureCopy,TestSerialSevens,/*TestNampingPictures,*/TestForwardSpatialSpan,TestBackwardSpatialSpan,TestMOCAResults]
         arrData.removeAll()
         for (index,item) in arrTitle.enumerated(){
             let iTestStatus = Status[arrTag[index]]

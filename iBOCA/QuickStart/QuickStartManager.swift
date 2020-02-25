@@ -234,7 +234,8 @@ class QuickStartManager: NSObject {
         vc.quickStartModeOn = true
         vc.didBackToResult = backToResult
         vc.didCompleted = {
-            self.launchIntroScreen(fromScreen: .namingPicture)
+//            self.launchIntroScreen(fromScreen: .namingPicture)
+            self.launchIntroScreen(fromScreen: .forwardSpatialSpan)
         }
         
         navigationController?.pushViewController(vc, animated: true)
