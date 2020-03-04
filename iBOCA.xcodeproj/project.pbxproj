@@ -33,7 +33,6 @@
 		0EB10B7722C9F229001997BB /* SMResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB10B7522C9F229001997BB /* SMResultCell.xib */; };
 		0EBD11C322DC578100DB853C /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBD11C222DC578000DB853C /* UIDeviceExtensions.swift */; };
 		182D435D23386969004FC995 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D435C23386969004FC995 /* UIViewControllerExtension.swift */; };
-		188A56B62306687600C224F9 /* Asymmetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188A56A12306687500C224F9 /* Asymmetric.swift */; };
 		18B61E7923386386007E7210 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18B61E7823386386007E7210 /* CryptoSwift */; };
 		1B49EEF31DAC3B6600931E8C /* 3DFigureDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B49EEF21DAC3B6600931E8C /* 3DFigureDraw.swift */; };
 		1B53650E1D7491CF0088B5D2 /* 3DFigureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B53650D1D7491CF0088B5D2 /* 3DFigureCopy.swift */; };
@@ -1219,7 +1218,6 @@
 				F233EABF1F9423BF0012702C /* GoldStandard.swift in Sources */,
 				F24E6E6F1E1BC2C300E29995 /* ResultsViewController.swift in Sources */,
 				E5F13D1722572CDF002FB4FF /* IQKeyboardManager.swift in Sources */,
-				188A56B62306687600C224F9 /* Asymmetric.swift in Sources */,
 				0E1A22D422C4654E00C8CFDF /* GradientButton.swift in Sources */,
 				0E1E349E22E96BC7009271C7 /* ResultTrailsCell.swift in Sources */,
 				F23951391EFFD660004B09E5 /* Setup.swift in Sources */,
