@@ -28,6 +28,8 @@ class QuickStartManager: NSObject {
     let viewController: UIViewController
     var navigationController: UINavigationController?
     
+    var isCompleteQuickStart = false
+    
     init(controller: UIViewController) {
         self.viewController = controller
     }
@@ -38,6 +40,7 @@ class QuickStartManager: NSObject {
         let backToResult: (() -> ()) = {
             let resultVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResultsViewController") as! ResultsViewController
             resultVC.quickStartModeOn = true
+            resultVC.isCompleteQuickStart = self.isCompleteQuickStart
             resultVC.didBackToMainView = {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -118,7 +121,6 @@ class QuickStartManager: NSObject {
         }
     }
     
-    
     private func orientationTest() { // 1st test
         guard let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrientationTask") as? OrientationTask else {
             debugPrint("Unable to launch test")
@@ -140,6 +142,7 @@ class QuickStartManager: NSObject {
             return
         }
         vc.quickStartModeOn = true
+        vc.mode = .patient
         vc.didBackToResult = backToResult
         vc.didCompleted = {
             self.launchIntroScreen(fromScreen: .visualAssociation)
@@ -154,6 +157,7 @@ class QuickStartManager: NSObject {
             return
         }
         vc.quickStartModeOn = true
+        vc.mode = .patient
         vc.didBackToResult = backToResult
         vc.didCompleted = {
             // Move to next test
@@ -230,7 +234,8 @@ class QuickStartManager: NSObject {
         vc.quickStartModeOn = true
         vc.didBackToResult = backToResult
         vc.didCompleted = {
-            self.launchIntroScreen(fromScreen: .namingPicture)
+//            self.launchIntroScreen(fromScreen: .namingPicture)
+            self.launchIntroScreen(fromScreen: .forwardSpatialSpan)
         }
         
         navigationController?.pushViewController(vc, animated: true)
@@ -273,12 +278,14 @@ class QuickStartManager: NSObject {
         testName  = "BackwardSpatialSpan"
         vc.quickStartModeOn = true
         vc.didBackToResult = backToResult
-        vc.didCompleted = backToResult
-        
+        vc.didCompleted = {
+            self.isCompleteQuickStart = true
+            self.backToResult?()
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    class func showAlertCompletion(viewController: UIViewController, endAllTest: Bool = false, cancel: (() -> ())?, ok: (() -> ())?) {
+    class func showAlertCompletion(viewController: UIViewController, endAllTest: Bool = false, cancel: (() -> ())?, ok: (() -> ())?, quit: (() -> ())? = nil) {
         let alertTitle  : String = endAllTest ? "Completed": "Warning"
         let alertMessage: String = endAllTest ? "You have completed all the tests. Do you want to check your result?" : "Do you want to move to the next test?"
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
@@ -289,6 +296,7 @@ class QuickStartManager: NSObject {
             ok?()
         }
         let quitAction = UIAlertAction.init(title: "Quit", style: .cancel) { (_) in
+            quit?()
             viewController.navigationController?.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(quitAction)

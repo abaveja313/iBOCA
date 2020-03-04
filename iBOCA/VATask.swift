@@ -9,9 +9,81 @@
 import Foundation
 import UIKit
 
-var StartTime = Foundation.Date()
+class MyGlobalVA: NSObject {
+
+    static let shared: MyGlobalVA = MyGlobalVA()
+    var totalTimer: Timer?
+    var internalTimer: Timer?
+    var delay: Int = 0
+    var delayInMain: Int = 0
+    var total: Int = 0
+    var VADelayTime: Int = 5*60
+    var mixedImages = [String]()
+    var halfImages = [String]()
+    var recognizeIncorrectVA = [String]()
+    
+    var resultStartTime: Foundation.Date!
+
+    func startDelayTimer() {
+        if self.internalTimer == nil {
+            self.internalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTimerAction), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func startTotalTimer() {
+        if self.totalTimer == nil {
+            self.totalTimer = Timer.scheduledTimer(timeInterval: 1.0 /*seconds*/, target: self, selector: #selector(fireTotalTimerAction), userInfo: nil, repeats: true)
+            self.resultStartTime = Foundation.Date()
+        }
+    }
+
+    func stopDelayTimer(){
+        if self.internalTimer != nil {
+           self.internalTimer!.invalidate()
+           self.internalTimer = nil
+            
+            self.delayInMain = 0
+            let dataDict:[String: Int] = ["VADelayTime": self.delayInMain]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
+        }
+    }
+    func stopTotalTimer(){
+        if self.totalTimer != nil {
+           self.totalTimer!.invalidate()
+           self.totalTimer = nil
+        }
+    }
+
+    @objc func fireTimerAction(sender: AnyObject?){
+        delay += 1
+        delayInMain += 1
+        debugPrint("VA Delay! \(delay)")
+        let dataDict:[String: Int] = ["VADelayTime": delayInMain]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VADelayTime"), object: nil, userInfo: dataDict)
+    }
+    
+    @objc func fireTotalTimerAction(sender: AnyObject?){
+        total += 1
+        debugPrint("VA Total! \(total)")
+    }
+    
+    func clearAll() {
+        self.stopDelayTimer()
+        self.mixedImages.removeAll()
+        self.halfImages.removeAll()
+        self.recognizeIncorrectVA.removeAll()
+    }
+
+}
 
 class VATask: BaseViewController, UIPickerViewDelegate {
+    
+    // Check mode is admin or patient
+    var mode : TestMode = TestMode.admin
+    
+    // Check Timer Next Picture
+    var counterNextPicture = 0
+    var timerNextPicture = Timer()
     
     var recallErrors = [Int]()
     var recallTimes = [Double]()
@@ -76,6 +148,9 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     @IBOutlet weak var taskImageView: UIImageView!
     @IBOutlet weak var arrowLeftButton: UIButton!
     @IBOutlet weak var arrowRightButton: UIButton!
+    @IBOutlet weak var correctButton: UIButton!
+    @IBOutlet weak var incorrectButton: UIButton!
+    @IBOutlet weak var dontKnowButton: UIButton!
     
     @IBOutlet weak var noticeLabel: UILabel!
     @IBOutlet weak var noticeButton: GradientButton!
@@ -124,7 +199,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     
     var counterTimeView: CounterTimeView!
     var totalTimeCounter = Timer()
-    var startTimeTask = Foundation.Date()
     
     var inputTimer = Timer()
     var timeInput = Double()
@@ -132,6 +206,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     var isRecalledTestMode = false
     
     var textInputList: [String]!
+    var textDeterminedAdminList: [String]!
     
     var isDropDownShowing = false
     var delayReccommendedTime: Int!
@@ -142,13 +217,16 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         super.viewDidLoad()
         
         self.setupView()
-        setupCounterTimeView()
         
-        startDisplayAlert()
+        self.setupCounterTimeView()
+        
+        MyGlobalVA.shared.startTotalTimer()
+        if MyGlobalVA.shared.internalTimer == nil {
+            self.startDisplayAlert()
+        }
         
         result = Results()
         result.name = TestName.VISUAL_ASSOCIATION
-        result.startTime = Foundation.Date()
         
         missingItemTextField.delegate = self
         startButton.removeTarget(self, action: nil, for:.allEvents)
@@ -165,16 +243,41 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             timerVA.fire()
             
             startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
-        } else {
-//            imageSetVA = 0
-//            mixedImages = mixed0
-//            halfImages = half0
-//            recognizeIncorrectVA = incorrect0
-            
+        }
+        else {
             startButton.addTarget(self, action: #selector(startDisplayAlert), for:.touchUpInside)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        print(afterBreakVA)
+        self.runTimer()
+        
+        // Check Global time Delay
+        if MyGlobalVA.shared.internalTimer != nil {
+            // Check VADelayTime in Settings
+            self.afterBreakVA = true
+            self.isTaskViewHidden(false)
+            self.isImageViewHidden(true)
+            self.beginDelay()
+            // Reload data images
+            self.textInputList = []
+            self.textDeterminedAdminList = []
+            self.mixedImages = MyGlobalVA.shared.mixedImages
+            self.halfImages = MyGlobalVA.shared.halfImages
+            self.recognizeIncorrectVA = MyGlobalVA.shared.recognizeIncorrectVA
+            
+            self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
+            if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
+                self.timerLabel.text = "00 : 00"
+                self.endTimer()
+            }
+            else {
+                self.totalTime = MyGlobalVA.shared.VADelayTime - MyGlobalVA.shared.delay
+                self.timerLabel.text = "\(self.timeFormatted(self.totalTime))"
+            }
+        }
     }
     
     private func randomTest() {
@@ -203,6 +306,10 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             halfImages = half4
             recognizeIncorrectVA = incorrect4
         }
+        
+        MyGlobalVA.shared.mixedImages = self.mixedImages
+        MyGlobalVA.shared.halfImages = self.halfImages
+        MyGlobalVA.shared.recognizeIncorrectVA = self.recognizeIncorrectVA
     }
     
     fileprivate func runTimer() {
@@ -211,25 +318,27 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     }
     
     @objc func updateTime(timer: Timer) {
-        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+//        self.counterTimeView.setTimeWith(startTime: self.startTimeTask, currentTime: Foundation.Date())
+        self.counterTimeView.setSeconds(seconds: MyGlobalVA.shared.total)
     }
     
     @objc fileprivate func startDisplayAlert() {
         Status[TestVisualAssociation] = TestStatus.Running
         randomTest()
         
-//        isCollectionViewHidden(true)
         isTaskViewHidden(false)
         
         firstDisplay = true
         
         textInputList = []
+        textDeterminedAdminList = []
         
         let newStartAlert = UIAlertController(title: "Display", message: "Name out loud and remember the two items in the photographs.", preferredStyle: .alert)
         newStartAlert.addAction(UIAlertAction(title: "Start", style: .default, handler: { (action) -> Void in
             print("start")
             self.display()
         }))
+        
         self.present(newStartAlert, animated: true, completion: nil)
     }
     
@@ -244,6 +353,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
             print("start new")
+            MyGlobalVA.shared.clearAll()
+            MyGlobalVA.shared.stopTotalTimer()
+            MyGlobalVA.shared.total = 0
+            MyGlobalVA.shared.delay = 0
+            
             self.startNewTask()
         }))
         
@@ -263,36 +377,22 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     
     fileprivate func startNewTask() {
         inputTimer.invalidate()
+        MyGlobalVA.shared.stopDelayTimer()
+        MyGlobalVA.shared.startTotalTimer()
         
         Status[TestVisualAssociation] = TestStatus.NotStarted
         
         self.remainingPhotoLabel.text = "1/5"
         
-        if let delayTime = Settings.VADelayTime {
-            self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-        } else {
-            self.delayLabel.text = "Recommended Delay : 5 minutes"
-        }
+        self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
         
-        self.result.startTime = Foundation.Date()
-        
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.runTimer()
         
         self.isRecalledTestMode = false
         self.isRecommendDelayHidden(true)
-//        self.isCollectionViewHidden(false)
-//        self.isTaskViewHidden(true)
         
-        result.startTime = Foundation.Date()
-        
-//        imageSetVA = 0
-//        mixedImages = self.mixed0
-//        halfImages = self.half0
-//        recognizeIncorrectVA = self.incorrect0
-        
-        timerVA.invalidate()
+        self.timerVA.invalidate()
         
         recallErrors = [Int]()
         recallTimes = [Double]()
@@ -310,21 +410,37 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     @objc fileprivate func display() {
         testCount = 0
         isRememberAgainViewHidden(true)
-        outputDisplayImage(withImageName: mixedImages[testCount])
+        self.outputDisplayImage(withImageName: mixedImages[testCount])
     }
     
     fileprivate func outputDisplayImage(withImageName name: String) {
-        // Check Show/ Hide Arrow
-        if testCount == 0 {
-            self.arrowLeftButton.isHidden = true
-            self.arrowRightButton.isHidden = false
-        } else {
-            self.arrowLeftButton.isHidden = false
-            self.arrowRightButton.isHidden = false
-        }
+        // Hidden Arrow left & right
+        self.arrowLeftButton.isHidden = true
+        self.arrowRightButton.isHidden = true
         
         self.taskImageView.isHidden = false
         self.taskImageView.image = UIImage(named: name)!
+        
+        // Check if textfield hidden then 2s Next picture Image
+        if self.isRecalledTestMode == false {
+            self.createTimerNextPicture()
+        }
+        else {
+            // Check Show/ Hide Arrow
+            if self.mode == .admin {
+                self.arrowLeftButton.isHidden = true
+                self.arrowRightButton.isHidden = true
+            }
+            else {
+                if testCount == 0 {
+                    self.arrowLeftButton.isHidden = true
+                    self.arrowRightButton.isHidden = false
+                } else {
+                    self.arrowLeftButton.isHidden = false
+                    self.arrowRightButton.isHidden = false
+                }
+            }
+        }
     }
     
     fileprivate func beginDelay() {
@@ -335,42 +451,23 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         print("in delay...")
         afterBreakVA = true
         
-        if let delayTimes = Settings.VADelayTime {
-            delayTime = Double(delayTimes)
-            totalTime = delayTimes
-        } else {
-            delayTime = 300
-            totalTime = 300
+        self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
+        self.totalTime = MyGlobalVA.shared.VADelayTime - MyGlobalVA.shared.delay
+        
+        if MyGlobalVA.shared.internalTimer == nil {
+            MyGlobalVA.shared.startDelayTimer()
+            MyGlobalVA.shared.mixedImages = self.mixedImages
+            MyGlobalVA.shared.halfImages = self.halfImages
+            MyGlobalVA.shared.recognizeIncorrectVA = self.recognizeIncorrectVA
         }
         
         timerVA = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeDecreases), userInfo: nil, repeats: true)
         timerVA.fire()
+        
         startTimeVA = NSDate.timeIntervalSinceReferenceDate
         
         startButton.removeTarget(self, action: nil, for:.allEvents)
         startButton.addTarget(self, action: #selector(startAlert), for:.touchUpInside)
-    }
-    
-    fileprivate func updateInDelay(_ timer: Timer) {
-        let currTime = Foundation.Date.timeIntervalSinceReferenceDate
-        var diff: TimeInterval = currTime - startTimeVA
-        
-        let minutes = UInt8(diff / 60.0)
-        
-        diff -= (TimeInterval(minutes)*60.0)
-        
-        let seconds = UInt8(diff)
-        
-        diff = TimeInterval(seconds)
-        
-        let strMinutes = minutes > 9 ? String(minutes):"0"+String(minutes)
-        let strSeconds = seconds > 9 ? String(seconds):"0"+String(seconds)
-        
-        // Check  the time is over 5 minute
-        if let intMinutes = Int(strMinutes), intMinutes >= 5, strSeconds != "00" {
-            timerLabel.textColor = UIColor.red
-        }
-        timerLabel.text = "\(strMinutes) : \(strSeconds)"
     }
     
     @objc fileprivate func updateTimeDecreases(timer:Timer) {
@@ -400,6 +497,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         delayTime = delayTime - Double(self.totalTime)
         
+        MyGlobalVA.shared.stopDelayTimer()
         timerVA.invalidate()
         
         let recallAlert = UIAlertController(title: "Recall", message: "Type the name of the item that is missing from the picture.", preferredStyle: .alert)
@@ -413,6 +511,18 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     fileprivate func recall() {
         inputTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimeInput), userInfo: nil, repeats: true)
         inputTimer.fire()
+        
+        // Check show 3 button Correct/ Incorrect/ Don't know
+        if self.mode == .admin {
+            self.correctButton.isHidden = false
+            self.incorrectButton.isHidden = false
+            self.dontKnowButton.isHidden = false
+        }
+        else {
+            self.correctButton.isHidden = true
+            self.incorrectButton.isHidden = true
+            self.dontKnowButton.isHidden = true
+        }
         
         testCount = 0
         
@@ -508,8 +618,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     }
     
     fileprivate func done() {
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        self.counterTimeView.setSeconds(seconds: MyGlobalVA.shared.total)
+        
         self.isResultViewHidden(false)
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
         self.inputTimer.invalidate()
         
@@ -524,24 +637,40 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var delayResult = ""
         var imageSetResult = ""
         
+//        if MyGlobalVA.shared.delay > MyGlobalVA.shared.VADelayTime {
+//            self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
+//        }
+//        else {
+//            self.delayTime = Double(MyGlobalVA.shared.delay)
+//        }
+        
+        self.delayTime = Double(MyGlobalVA.shared.delay)
+        
         imageSetResult = "Image set = \(imageSetVA+1)\n"
         
-        delayResult = "Delay length of \(delayTime) seconds\n"
+        delayResult = "Delay length of \(self.delayTime) seconds\n"
         
         result.numErrors = 0
         result.numCorrects = 0
         
         recalledTableView.reloadData()
         
-        totalTimeLabel.text = "Text complete in \(result.totalElapsedSeconds()) seconds"
-        delayTimeLabel.text = "\(delayTime) seconds"
+        totalTimeLabel.text = "Text complete in \(MyGlobalVA.shared.total) seconds"
+        delayTimeLabel.text = "\(self.delayTime) seconds"
         
+        result.startTime = MyGlobalVA.shared.resultStartTime
         result.imageVA = self.mixedImages
         result.inputVA = self.textInputList
         
         for i in 0...textInputList.count - 1 {
-            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds")
-            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) - in \(recallTimes[i]) seconds\n"
+            var determinedAdmin = ""
+            if self.mode == .admin {
+                determinedAdmin = "(\(self.textDeterminedAdminList[i]))"
+            }
+            
+            let recallTime = String(format:"%.1f", recallTimes[i])
+            result.longDescription.add("Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTime) seconds")
+            recallResult += "Recalled \(mixedImages[i]) - Input: \(textInputList[i]) \(determinedAdmin) - in \(recallTime) seconds\n"
         }
         
         for k in 0 ..< mixedImages.count {
@@ -561,7 +690,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         resultLabel.isHidden = true
         
         resultList["ImageSet"] = imageSetVA
-        resultList["DelayTime"] = delayTime
+        resultList["DelayTime"] = self.delayTime
         
         var tmpResultList : [String:Any] = [:]
         
@@ -577,7 +706,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         var tmpResultList2 : [String:Any] = [:]
         
         for i in 0...textInputList.count-1 {
-            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i], "Time":recallTimes[i]]
+            var determinedAdmin = ""
+            if self.mode == .admin {
+                determinedAdmin = " (\(self.textDeterminedAdminList[i]))"
+            }
+            tmpResultList2[mixedImages[i]] = ["Condition":textInputList[i]+determinedAdmin, "Time":recallTimes[i]]
         }
         
         resultList["Recall"] = tmpResultList2
@@ -589,6 +722,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         recalledTableView.reloadData()
         regconizedTableView.reloadData()
+        
+        // Update VADelayTime of singleton
+        if let delayTime = Settings.VADelayTime {
+            MyGlobalVA.shared.VADelayTime = delayTime
+        }
     }
     
     fileprivate func roundedNumber(number: Double) -> Double {
@@ -609,10 +747,124 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.landscape
     }
+    
+    func createTimerNextPicture() {
+        self.timerNextPicture.invalidate()
+        self.timerNextPicture = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerNextPictureAction), userInfo: nil, repeats: true)
+    }
+    
+    func cancelTimerNextPicture() {
+        self.timerNextPicture.invalidate()
+        self.counterNextPicture = 0
+    }
+    
+    // called every time interval from the timer
+    @objc func timerNextPictureAction() {
+        self.counterNextPicture += 1
+        if self.counterNextPicture == 2 {
+            self.cancelTimerNextPicture()
+            self.nextOutputDisplayImage()
+        }
+    }
+    
+    func nextOutputDisplayImage(_ determinedAdmin: String = "") {
+        view.endEditing(true)
+        self.testCount += 1
+        if (testCount == mixedImages.count) {
+            print("delay")
+            self.isImageViewHidden(true)
+            if self.isRecalledTestMode {
+                self.isMissingItemViewHidden(true)
+                self.isRememberAgainViewHidden(false)
+                
+                self.textInputList.append(missingItemTextField.text!)
+                if determinedAdmin != "" {
+                    self.textDeterminedAdminList.append(determinedAdmin)
+                }
+                
+                self.missingItemTextField.text = ""
+                self.recallTimes.append(roundedNumber(number: timeInput))
+                
+                self.isMissingItemTextFieldChanged = false
+                self.remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+            } else {
+                if !self.firstDisplay {
+                    self.beginDelay()
+                } else {
+                    self.firstDisplay = false
+                    self.isRememberAgainViewHidden(false)
+                    self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
+                }
+            }
+        } else {
+            print("testCount: \(testCount)")
+            if self.isRecalledTestMode {
+                if testCount - 1 == textInputList.count {
+                    self.textInputList.append(missingItemTextField.text!)
+                    if determinedAdmin != "" {
+                        self.textDeterminedAdminList.append(determinedAdmin)
+                    }
+                    
+                    missingItemTextField.text = ""
+                    recallTimes.append(roundedNumber(number: timeInput))
+                } else if testCount == textInputList.count {
+                    textInputList[testCount - 1] = missingItemTextField.text!
+                    missingItemTextField.text = ""
+                    if isMissingItemTextFieldChanged {
+                        recallTimes[testCount - 1] += roundedNumber(number: timeInput)
+                    }
+                } else {
+                    textInputList[testCount - 1] = missingItemTextField.text!
+                    if isMissingItemTextFieldChanged {
+                        recallTimes[testCount - 1] += roundedNumber(number: timeInput)
+                    }
+                    missingItemTextField.text = textInputList[testCount]
+                }
+                
+                timeInput = 0
+                
+                isMissingItemTextFieldChanged = false
+                remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
+                self.outputDisplayImage(withImageName: halfImages[testCount])
+            } else {
+                self.outputDisplayImage(withImageName: mixedImages[testCount])
+            }
+        }
+    }
 }
 
 extension VATask {
     // MARK: Action
+    
+    @IBAction func correctButtonTapped(_ sender: Any) {
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        } else {
+           self.nextOutputDisplayImage("Correct")
+        }
+    }
+    
+    @IBAction func incorrectButtonTapped(_ sender: Any) {
+        if !missingItemTextField.isHidden && (missingItemTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let warningAlert = UIAlertController(title: "Warning", message: "Please enter Missing Item fields.", preferredStyle: .alert)
+            warningAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                warningAlert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(warningAlert, animated: true, completion: nil)
+        } else {
+           self.nextOutputDisplayImage("InCorrect")
+        }
+    }
+    
+    @IBAction func dontKnowButtonTapped(_ sender: Any) {
+        self.nextOutputDisplayImage("Don't Know")
+    }
+    
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
         print("Arrow Left Tapped")
         view.endEditing(true)
@@ -640,62 +892,7 @@ extension VATask {
             self.present(warningAlert, animated: true, completion: nil)
         } else {
             print("Arrow Right Tapped")
-            view.endEditing(true)
-            testCount += 1
-            if (testCount == mixedImages.count) {
-                print("delay")
-                isImageViewHidden(true)
-                if isRecalledTestMode {
-                    isMissingItemViewHidden(true)
-                    isRememberAgainViewHidden(false)
-                    
-                    textInputList.append(missingItemTextField.text!)
-                    missingItemTextField.text = ""
-                    recallTimes.append(roundedNumber(number: timeInput))
-                    
-                    isMissingItemTextFieldChanged = false
-                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
-                } else {
-                    if !firstDisplay {
-                        beginDelay()
-                    } else {
-                        firstDisplay = false
-                        isRememberAgainViewHidden(false)
-                        self.noticeButton.removeTarget(nil, action: nil, for: .allEvents)
-                        self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
-                    }
-                }
-            } else {
-                print("testCount: \(testCount)")
-                if isRecalledTestMode {
-                    
-                    if testCount - 1 == textInputList.count {
-                        textInputList.append(missingItemTextField.text!)
-                        missingItemTextField.text = ""
-                        recallTimes.append(roundedNumber(number: timeInput))
-                    } else if testCount == textInputList.count {
-                        textInputList[testCount - 1] = missingItemTextField.text!
-                        missingItemTextField.text = ""
-                        if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
-                        }
-                    } else {
-                        textInputList[testCount - 1] = missingItemTextField.text!
-                        if isMissingItemTextFieldChanged {
-                            recallTimes[testCount - 1] += roundedNumber(number: timeInput)
-                        }
-                        missingItemTextField.text = textInputList[testCount]
-                    }
-                    
-                    timeInput = 0
-                    
-                    isMissingItemTextFieldChanged = false
-                    remainingPhotoLabel.text = "\(testCount + 1)/\(mixedImages.count)"
-                    self.outputDisplayImage(withImageName: halfImages[testCount])
-                } else {
-                    self.outputDisplayImage(withImageName: mixedImages[testCount])
-                }
-            }
+            self.nextOutputDisplayImage()
         }
     }
     
@@ -705,14 +902,23 @@ extension VATask {
         }
         timerVA.invalidate()
         inputTimer.invalidate()
-        self.startTimeTask = Foundation.Date()
         self.totalTimeCounter.invalidate()
-        afterBreakVA = false
+        self.timerNextPicture.invalidate()
         
         // Check if is in quickStart mode
         guard !quickStartModeOn else {
             didBackToResult?()
             return
+        }
+        
+        afterBreakVA = false
+        
+        // Check global delay time not runing
+        if MyGlobalVA.shared.internalTimer == nil {
+            MyGlobalVA.shared.clearAll()
+            MyGlobalVA.shared.stopTotalTimer()
+            MyGlobalVA.shared.total = 0
+            MyGlobalVA.shared.delay = 0
         }
         
         navigationController?.popViewController(animated: true)
@@ -759,31 +965,59 @@ extension VATask {
     }
     
     @IBAction func actionQuit(_ sender: Any) {
+        
+        if self.quickStartModeOn {
+            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
+            }, ok: {
+                self.clearTimer()
+                self.didCompleted?()
+            }) {
+                self.clearTimer()
+            }
+        } else {
+            self.clearTimer()
+            navigationController?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func clearTimer() {
         if Status[TestVisualAssociation] != TestStatus.Done {
             Status[TestVisualAssociation] = TestStatus.NotStarted
         }
-        timerVA.invalidate()
-        inputTimer.invalidate()
-        self.startTimeTask = Foundation.Date()
-        self.totalTimeCounter.invalidate()
-        afterBreakVA = false
         
-        // Check if is in quickStart mode
-        guard !quickStartModeOn else {
-            QuickStartManager.showAlertCompletion(viewController: self, cancel: {
-                self.didBackToResult?()
-            }) {
-                self.didCompleted?()
+        // Update VADelayTime of singleton
+        if MyGlobalVA.shared.internalTimer != nil {
+            if let delayTime = Settings.VADelayTime {
+                MyGlobalVA.shared.VADelayTime = delayTime
             }
-            return
         }
         
-        navigationController?.dismiss(animated: true, completion: nil)
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        MyGlobalVA.shared.total = 0
+        MyGlobalVA.shared.delay = 0
+        
+        timerVA.invalidate()
+        inputTimer.invalidate()
+        self.totalTimeCounter.invalidate()
+        self.timerNextPicture.invalidate()
+        afterBreakVA = false
     }
     
     @IBAction func actionReset(_ sender: Any) {
         
-//        isTaskViewHidden(true)
+        // Update VADelayTime of singleton
+        if MyGlobalVA.shared.internalTimer != nil {
+            if let delayTime = Settings.VADelayTime {
+                MyGlobalVA.shared.VADelayTime = delayTime
+            }
+        }
+        
+        MyGlobalVA.shared.clearAll()
+        MyGlobalVA.shared.stopTotalTimer()
+        MyGlobalVA.shared.total = 0
+        MyGlobalVA.shared.delay = 0
+        
         isImageViewHidden(true)
         isRecommendDelayHidden(true)
         isRememberAgainViewHidden(true)
@@ -791,6 +1025,8 @@ extension VATask {
         isMissingItemViewHidden(true)
         isResultViewHidden(true)
         isDropDownViewHidden(true)
+        self.cancelTimerNextPicture()
+        
         self.startNewTask()
     }
     
@@ -882,6 +1118,14 @@ extension VATask {
         self.arrowLeftButton.layer.cornerRadius = self.arrowLeftButton.frame.size.height / 2.0
         self.arrowRightButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.arrowRightButton.layer.cornerRadius = self.arrowRightButton.frame.size.height / 2.0
+        
+        self.correctButton.layer.cornerRadius = 5
+        self.incorrectButton.layer.cornerRadius = 5
+        self.dontKnowButton.layer.cornerRadius = 5
+        self.correctButton.isHidden = true
+        self.incorrectButton.isHidden = true
+        self.dontKnowButton.isHidden = true
+        print("====== mode: \(self.mode)")
     }
     
     fileprivate func setupViewDelay() {
@@ -898,13 +1142,8 @@ extension VATask {
         
         var row: Int!
         self.delayTimePickerLabel.font = Font.font(name: Font.Montserrat.medium, size: 18.0)
-        if let timeDelay = Settings.VADelayTime {
-            self.delayTimePickerLabel.text = timeDelay / 60 == 1 ? "1 minute" : "\(timeDelay / 60) minutes"
-            row = timeDelay / 60 - 1
-        } else {
-            self.delayTimePickerLabel.text = "5 minutes"
-            row = 4
-        }
+        self.delayTimePickerLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "1 minute" : "\(MyGlobalVA.shared.VADelayTime / 60) minutes"
+        row = MyGlobalVA.shared.VADelayTime / 60 - 1
         
         self.setDelayTimeButton.backgroundColor = Color.color(hexString: "#EEF3F9")
         self.setDelayTimeButton.titleLabel?.font = Font.font(name: Font.Montserrat.semiBold, size: 18.0)
@@ -914,11 +1153,7 @@ extension VATask {
         
         self.delayLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 28.0)
         self.delayLabel.textColor = Color.color(hexString: "#013AA5")
-        if let delayTime = Settings.VADelayTime {
-            self.delayLabel.text = delayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(delayTime / 60) minutes"
-        } else {
-            self.delayLabel.text = "Recommended Delay : 5 minutes"
-        }
+        self.delayLabel.text = MyGlobalVA.shared.VADelayTime / 60 == 1 ? "Recommended Delay : 1 minute" : "Recommended Delay : \(MyGlobalVA.shared.VADelayTime / 60) minutes"
         self.delayLabel.addTextSpacing(-0.56)
         
         self.timerLabel.font = Font.font(name: Font.Montserrat.semiBold, size: 72.0)
@@ -978,7 +1213,6 @@ extension VATask {
         counterTimeView?.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         counterTimeView?.centerYAnchor.constraint(equalTo: backTitleLabel.centerYAnchor).isActive = true
         self.totalTimeCounter.invalidate()
-        self.runTimer()
     }
     
     fileprivate func setupViewResult() {
@@ -1034,6 +1268,11 @@ extension VATask {
         self.missingItemLabel.isHidden = isHidden
         self.missingItemTextField.isHidden = isHidden
         self.remainingPhotoLabel.isHidden = isHidden
+        if self.mode == .admin {
+            self.correctButton.isHidden = isHidden
+            self.incorrectButton.isHidden = isHidden
+            self.dontKnowButton.isHidden = isHidden
+        }
     }
     
     fileprivate func isRememberAgainViewHidden(_ isHidden: Bool) {
@@ -1180,9 +1419,10 @@ extension VATask: UITableViewDataSource {
             var cell = VACell()
             cell = tableView.dequeueReusableCell(withIdentifier: VACell.cellId, for: indexPath) as! VACell
             if tableView == recalledTableView {
-                cell.configRecallTest(imageNameList: mixedImages, resultList: textInputList, timeList: recallTimes, indexPath: indexPath)
-            } else {
-                cell.configRegconizedTest(imageNameList: mixedImages, recognizeErrors: recognizeErrors, timeList: recognizeTimes, indexPath: indexPath)
+                cell.configRecallTest(imageNameList: self.mixedImages, resultList: self.textInputList, determinedAdminList: self.textDeterminedAdminList, timeList: self.recallTimes, indexPath: indexPath)
+            }
+            else {
+                cell.configRegconizedTest(imageNameList: self.mixedImages, recognizeErrors: self.recognizeErrors, timeList: self.recognizeTimes, indexPath: indexPath)
             }
             return cell
         }

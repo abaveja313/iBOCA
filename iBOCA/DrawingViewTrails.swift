@@ -241,6 +241,8 @@ class DrawingViewTrails: UIView {
         
         var action = "Moveto"
         if bubbles.inNewBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) == true {
+            
+            
             if bubbles.inCorrectBubble() == true {
                 mainPath.append(UIBezierPath(cgPath: currPath.cgPath))
                 
@@ -254,9 +256,9 @@ class DrawingViewTrails: UIView {
                     nextBubb += 1
                     action = "Moveto next bubble \(bubbles.currentBubble)"
                 } else {
-                    var p = UIBezierPath()
-                    p = UIBezierPath(cgPath: currPath.cgPath)
-                    errorPath.append(p)
+//                    var p = UIBezierPath()
+//                    p = UIBezierPath(cgPath: currPath.cgPath)
+//                    errorPath.append(p)
                     action = "Moveto not next bubble \(bubbles.currentBubble)"
                 }
                 
@@ -265,11 +267,11 @@ class DrawingViewTrails: UIView {
                 print("in correct bubble")
                 
             } else {
-                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
-                currPath.removeAllPoints()
+//                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
+//                currPath.removeAllPoints()
                 self.canDraw = false
-                self.incorrect += 1
-                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
+//                self.incorrect += 1
+//                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
             }
         }
         let loc = touch.location(in: self)
@@ -299,11 +301,12 @@ class DrawingViewTrails: UIView {
                         nextBubb += 1
                         action = "Lineto next bubble \(bubbles.currentBubble)"
                     } else {
-                        var p = UIBezierPath()
-                        p = UIBezierPath(cgPath: currPath.cgPath)
+//                        var p = UIBezierPath()
+//                        p = UIBezierPath(cgPath: currPath.cgPath)
                         
-                        errorPath.append(p)
+//                        errorPath.append(p)
                         currPath.removeAllPoints()
+                        
                         action = "Lineto not next bubble \(bubbles.currentBubble)"
                     }
                     

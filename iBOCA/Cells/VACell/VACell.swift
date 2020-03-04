@@ -46,7 +46,8 @@ extension VACell {
                 guard let item = recallList[result.imageVA[row]] as? [String: Any] else {return}
                 testTypeLabel.text = "Recalled \(result.imageVA[row])"
                 resultLabel.text = "\(String(describing: item["Condition"] as! String))"
-                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+                let time = String(format:"%.1f", item["Time"] as! Double)
+                timeLabel.text = "\(time) seconds"
             } else {
                 testTypeLabel.text = "Recognized \(result.imageVA[row - 5])"
                 guard let item = regconizeList[result.imageVA[row - 5]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
@@ -57,14 +58,35 @@ extension VACell {
                     resultLabel.textColor = Color.color(hexString: "#E94533")
                     resultLabel.text = "Incorrect"
                 }
-                timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+                let time = String(format:"%.1f", item["Time"] as! Double)
+                timeLabel.text = "\(time) seconds"
             }
         }
     }
     
+    func bindDataRecognize(result: Results, row: Int) {
+        timeLabelLeading.constant = 43.5
+        inputLabelLeading.constant = 14
+        if let regconizeList = result.json["Recognize"] as? [String: Any] {
+            setupContentCell()
+            resultLabel.textAlignment = .left
+            timeLabel.textAlignment = .left
+            
+            testTypeLabel.text = "Recognized \(result.imageVA[row-6])"
+            guard let item = regconizeList[result.imageVA[row-6]] as? [String: Any], let isCorrect = item["Condition"] as? String else {return}
+            if isCorrect == "Correct" {
+                resultLabel.textColor = Color.color(hexString: "#013AA5")
+                resultLabel.text = "Correct"
+            } else {
+                resultLabel.textColor = Color.color(hexString: "#E94533")
+                resultLabel.text = "Incorrect"
+            }
+            timeLabel.text = "\(String(describing: item["Time"] as! Double)) seconds"
+            
+        }
+    }
     
-    
-    func configRecallTest(imageNameList: [String], resultList: [String], timeList: [Double], indexPath: IndexPath) {
+    func configRecallTest(imageNameList: [String], resultList: [String], determinedAdminList: [String], timeList: [Double], indexPath: IndexPath) {
         timeLabelLeading.constant = 0
         inputLabelLeading.constant = 0
         if indexPath.row == 0 {
@@ -75,8 +97,12 @@ extension VACell {
         } else {
             setupContentCell()
             testTypeLabel.text = "Recalled \(imageNameList[indexPath.row - 1])"
-            resultLabel.text = "\(resultList[indexPath.row - 1])"
-            timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
+            // determinedAdmin is Correct | InCorrect | Don't Know
+            let determinedAdmin = determinedAdminList.count > 0 ? " (\(determinedAdminList[indexPath.row - 1]))" : ""
+            resultLabel.text = "\(resultList[indexPath.row - 1])\(determinedAdmin)"
+            
+            let recalledTime = String(format:"%.1f", timeList[indexPath.row - 1])
+            timeLabel.text = "\(recalledTime) seconds"
         }
     }
     
@@ -90,15 +116,20 @@ extension VACell {
             timeLabel.text = "Times"
         } else {
             setupContentCell()
-            testTypeLabel.text = "Recognized \(imageNameList[indexPath.row - 1])"
-            if recognizeErrors[indexPath.row - 1] == 0 {
-                resultLabel.textColor = Color.color(hexString: "#013AA5")
-                resultLabel.text = "Correct"
-            } else {
-                resultLabel.textColor = Color.color(hexString: "#E94533")
-                resultLabel.text = "Incorrect"
+            if imageNameList.count > 0 {
+                testTypeLabel.text = "Recognized \(imageNameList[indexPath.row - 1])"
+                if recognizeErrors[indexPath.row - 1] == 0 {
+                    resultLabel.textColor = Color.color(hexString: "#013AA5")
+                    resultLabel.text = "Correct"
+                } else {
+                    resultLabel.textColor = Color.color(hexString: "#E94533")
+                    resultLabel.text = "Incorrect"
+                }
+                timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
+                let recognizedTime = String(format:"%.1f", timeList[indexPath.row - 1])
+                timeLabel.text = "\(recognizedTime) seconds"
             }
-            timeLabel.text = "\(timeList[indexPath.row - 1]) seconds"
+            
         }
     }
     

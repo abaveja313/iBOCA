@@ -17,6 +17,8 @@ var bubbleColor:UIColor?
 var selectedTest = 0
 var numBubbles = 0
 
+var previousTestNumber = -1
+
 var isPracticeTest: Bool = false
 
 class TrailsAViewController: BaseViewController, UIPickerViewDelegate {
@@ -335,25 +337,30 @@ extension TrailsAViewController {
     }
     
     fileprivate func randomTest() {
-        selectedTest = Int.random(in: 0...6)
-        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
-        self.arrNumberOfPoints.removeAll()
-        for i in 0..<self.maxNumberOfPoints {
-            self.arrNumberOfPoints.append("\(i+2)")
-        }
+        repeat {
+            selectedTest = Int.random(in: 0...9)
+        } while selectedTest == previousTestNumber
+        previousTestNumber = selectedTest
+        numBubbles = 20
         
-        // Load data selected default from dropdown choose number of points
-        let idxNumber = TrailsTests[selectedTest].1.count - 3
-        self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
-        numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
-        self.dismissDropdownChooseTheTest()
-        
-        let randomBubble = selectedTest == 6 ? Int.random(in: 0...21) : Int.random(in: 0...17)
-        let numberOfPoints = self.arrNumberOfPoints[randomBubble]
-        self.lblChooseNumberOfPoints.text = numberOfPoints
-        numBubbles = randomBubble + 2
-        self.dismissDropdownChooseNumberOfPoints()
-        
+//        self.maxNumberOfPoints = TrailsTests[selectedTest].1.count - 2
+//        self.arrNumberOfPoints.removeAll()
+//        for i in 0..<self.maxNumberOfPoints {
+//            self.arrNumberOfPoints.append("\(i+2)")
+//        }
+//
+//        // Load data selected default from dropdown choose number of points
+//        let idxNumber = TrailsTests[selectedTest].1.count - 3
+//        self.lblChooseNumberOfPoints.text = self.arrNumberOfPoints[idxNumber]
+//        numBubbles = Int(self.arrNumberOfPoints[idxNumber])!
+//        self.dismissDropdownChooseTheTest()
+//
+//        let randomBubble = selectedTest == 6 ? Int.random(in: 0...21) : Int.random(in: 0...17)
+//        let numberOfPoints = self.arrNumberOfPoints[randomBubble]
+//        self.lblChooseNumberOfPoints.text = numberOfPoints
+//        numBubbles = randomBubble + 2
+//        self.dismissDropdownChooseNumberOfPoints()
+//
         self.lblTitlePracticeTest.isHidden = true
         // Hidden View Begin Trails
         self.lblDesc.isHidden = true
@@ -584,9 +591,9 @@ extension TrailsAViewController {
         guard !quickStartModeOn else {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
                 self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.didCompleted?()
-            }
+            })
             return
         }
         
@@ -708,7 +715,7 @@ extension TrailsAViewController {
             result.longDescription.add("The incorrect segments are \(drawingView.incorrectlist)")
             result.shortDescription = "\(drawingView.incorrect) errors with \(drawingView.nextBubb) correct bubbles (test \(self.title!))"
             result.numErrors = drawingView.incorrect
-            result.numCorrects = drawingView.nextBubb
+            result.numCorrects = drawingView.nextBubb - 1
             result.json["Path"] = drawingView.bubbles.jsontimes
             result.json["Name"] = self.title
             result.json["Total Bubbles"] = numBubbles
@@ -724,9 +731,9 @@ extension TrailsAViewController {
                 guard !quickStartModeOn else {
                     QuickStartManager.showAlertCompletion(viewController: self, cancel: {
                         self.didBackToResult?()
-                    }) {
+                    }, ok: {
                         self.didCompleted?()
-                    }
+                    })
                     return
                 }
                 

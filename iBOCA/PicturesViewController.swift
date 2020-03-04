@@ -336,9 +336,9 @@ extension PicturesViewController {
         guard !quickStartModeOn else {
             QuickStartManager.showAlertCompletion(viewController: self, cancel: {
                 self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.didCompleted?()
-            }
+            })
             return
         }
         

@@ -93,8 +93,10 @@ class IntroViewController: BaseViewController {
             viewController = (storyboard.instantiateViewController(withIdentifier: "OrientationTask") as? OrientationTask)!
         case "simple-memory":
             viewController = (storyboard.instantiateViewController(withIdentifier: "SimpleMemoryTask") as? SimpleMemoryTask)!
+            (viewController as! SimpleMemoryTask).mode = self.mode == .admin ? .patient : .admin
         case "visual-association":
             viewController = (storyboard.instantiateViewController(withIdentifier: "VATask") as? VATask)!
+            (viewController as! VATask).mode = self.mode == .admin ? .patient : .admin
         case "trails":
             viewController = (storyboard.instantiateViewController(withIdentifier: "TrailsAViewController") as? TrailsAViewController)!
             isPracticeTest = false

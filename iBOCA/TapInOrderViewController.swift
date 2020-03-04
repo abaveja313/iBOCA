@@ -18,12 +18,13 @@ class TapInOrderViewController: BaseViewController {
     var places:[(Int,Int)] = [(100, 250),  (450, 300), (350, 500), (600, 450), (800, 200), (700, 650), (850, 550), (200, 350), (100, 600), (300, 650)]
     //SHORTER LIST FOR TESTING: var places:[(Int,Int)] = [(100, 200), (450, 250), (350, 450), (600, 400)]
     var order = [Int]() //randomized order of buttons
-    var numplaces = 0 //current # of buttons that light up in a row, -1
+    var numplaces = 1 //current # of buttons that light up in a row, -1
     var currpressed = 0 //order of button that is about to be pressed
     var numRepeats = 0 //how many times user messed up on the same numplaces, calling repeat()
     var numErrors = 0
     var numCorrects = 0
     var forwardNotBackward = true
+    var shouldAppendResult = true
     
     var startTime2 = Foundation.Date()
     
@@ -120,7 +121,7 @@ class TapInOrderViewController: BaseViewController {
         endButton.isEnabled = true
         resetButton.isEnabled = true
         
-        numplaces = 0
+        numplaces = 1
         numRepeats = 0
         numErrors = 0
         numCorrects = 0
@@ -232,7 +233,7 @@ class TapInOrderViewController: BaseViewController {
         resetButton.isEnabled = true
         //backButton.isEnabled = false
         
-        numplaces = 0
+        numplaces = 1
         numRepeats = 0
         numErrors = 0
         numCorrects = 0
@@ -343,14 +344,17 @@ class TapInOrderViewController: BaseViewController {
             result.shortDescription = "Spatial span of \(self.numplaces) with \(self.numErrors) errors"
             print("json: \(result.json)")
             print("Spatial span of \(self.numplaces) with \(self.numErrors) errors")
-            resultsArray.add(result)
+            if self.shouldAppendResult {
+                resultsArray.add(result)
+                self.shouldAppendResult = false
+            }
             if self.forwardNotBackward {
                 Status[TestForwardSpatialSpan] = TestStatus.Done
             } else {
                 Status[TestBackwardSpatialSpan] = TestStatus.Done
             }
             
-            self.numplaces = 0
+            self.numplaces = 1
             self.numRepeats = 0
             self.numErrors = 0
             self.stopCounter()
@@ -643,7 +647,7 @@ class TapInOrderViewController: BaseViewController {
         endButton.isEnabled = true
         resetButton.isEnabled = true
     
-        numplaces = 0
+        numplaces = 1
         numRepeats = 0
         numErrors = 0
         
@@ -679,7 +683,7 @@ class TapInOrderViewController: BaseViewController {
         endButton.isEnabled = true
         resetButton.isEnabled = true
         
-        numplaces = 0
+        numplaces = 1
         numRepeats = 0
         numErrors = 0
         currpressed = 0
@@ -742,10 +746,9 @@ class TapInOrderViewController: BaseViewController {
             
             QuickStartManager.showAlertCompletion(viewController: self, endAllTest: !forwardNotBackward, cancel: {
                 self.didBackToResult?()
-            }) {
+            }, ok: {
                 self.didCompleted?()
-            }
-            
+            })
             return
         }
         
