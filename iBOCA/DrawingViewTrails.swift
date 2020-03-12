@@ -34,28 +34,27 @@ class DrawingViewTrails: UIView {
     
     //ADDITION
     var paths = [UIBezierPath]()
-    
     var countSinceCorrect = 0
     var canDraw = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        print("Initializing")
+        debugPrint("Initializing")
     }
     
     init(frame: CGRect, isPracticeTests: Bool) {
         super.init(frame: frame)
-        print("View Trails")
-        print("Left: \(frame.origin.x)")
-        print("Top: \(frame.origin.y)")
-        print("Right: \(frame.origin.x + frame.size.width)")
-        print("Bottom: \(frame.origin.y + frame.size.height)")
+        debugPrint("View Trails")
+        debugPrint("Left: \(frame.origin.x)")
+        debugPrint("Top: \(frame.origin.y)")
+        debugPrint("Right: \(frame.origin.x + frame.size.width)")
+        debugPrint("Bottom: \(frame.origin.y + frame.size.height)")
         self.bubbles = BubblesA.init(withPracticeTest: isPracticeTests)
         self.bubbles.parentFrame = frame
         self.isPracticeTests = isPracticeTests
         setupView()
-        print("Initializing")
+        debugPrint("Initializing")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -86,8 +85,8 @@ class DrawingViewTrails: UIView {
         backgroundColor = nil
         
         //ADDITION
-        print("should have drawn colored bezierpath")
-        print("paths has \(paths.count) members; timedConnectionsA length is \(timedConnectionsA.count)")
+        debugPrint("should have drawn colored bezierpath")
+        debugPrint("paths has \(paths.count) members; timedConnectionsA length is \(timedConnectionsA.count)")
         
         if (timedConnectionsA.count > 0){
             for k in 1 ..< timedConnectionsA.count {
@@ -112,7 +111,7 @@ class DrawingViewTrails: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        print("in drawRect")
+        debugPrint("in drawRect")
         
         for bubble in bubbles.bubblelist {
             drawBubble(bubble: bubble)
@@ -125,11 +124,11 @@ class DrawingViewTrails: UIView {
         mainPath.stroke()
         UIColor.blue.set()
         errorPath.stroke()
-        print("DoneDrawRect")
+        debugPrint("DoneDrawRect")
     }
     
     func reset() {
-        print("In reset")
+        debugPrint("In reset")
         mainPath.removeAllPoints()
         currPath.removeAllPoints()
         errorPath.removeAllPoints()
@@ -252,7 +251,7 @@ class DrawingViewTrails: UIView {
                     p = UIBezierPath(cgPath: currPath.cgPath)
                     paths.append(p)
                     
-                    print("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
+                    debugPrint("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
                     nextBubb += 1
                     action = "Moveto next bubble \(bubbles.currentBubble)"
                 } else {
@@ -264,7 +263,7 @@ class DrawingViewTrails: UIView {
                 
                 currPath.removeAllPoints()
                 currPath.move(to: touch.location(in: self))
-                print("in correct bubble")
+                debugPrint("in correct bubble")
                 
             } else {
 //                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
@@ -282,11 +281,11 @@ class DrawingViewTrails: UIView {
         let touch = touches.first! as UITouch
         if canDraw == true {
             currPath.addLine(to: touch.location(in: self))
-            
             setNeedsDisplay()
+            
             var action = "Lineto"
             if bubbles.inNewBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) == true {
-                print("in a new bubble")
+                debugPrint("in a new bubble")
                 
                 if bubbles.inCorrectBubble() == true {
                     mainPath.append(UIBezierPath(cgPath: currPath.cgPath))
@@ -297,7 +296,7 @@ class DrawingViewTrails: UIView {
                         p = UIBezierPath(cgPath: currPath.cgPath)
                         paths.append(p)
                 
-                        print("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
+                        debugPrint("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
                         nextBubb += 1
                         action = "Lineto next bubble \(bubbles.currentBubble)"
                     } else {
@@ -311,17 +310,33 @@ class DrawingViewTrails: UIView {
                     }
                     
                     currPath.removeAllPoints()
-                    currPath.move(to: touch.location(in: self))
-                    print("in correct bubble")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+                        self.currPath.move(to: touch.location(in: self))
+                    }
+                    debugPrint("in correct bubble")
                 } else {
-                    print("countSinceCorrect = \(countSinceCorrect); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
+                    debugPrint("countSinceCorrect = \(countSinceCorrect); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
                     errorPath.append(UIBezierPath(cgPath: currPath.cgPath))
                     currPath.removeAllPoints()
                     canDraw = false
-                    print("should have removed all pts")
+                    debugPrint("should have removed all pts")
                     incorrect += 1
                     incorrectlist.append("\(bubbles.lastBubble)->\(bubbles.currentBubble)")
                     action = "Lineto incorrect bubble \(bubbles.currentBubble)"
+                }
+            }
+            else {
+                var objBool: ObjCBool = true
+                let result = currPath.findIntersections(withClosedPath: mainPath, andBeginsInside: &objBool)
+                if let rs = result, rs.count > 0 {
+                    errorPath.append(UIBezierPath(cgPath: currPath.cgPath))
+                    currPath.removeAllPoints()
+                    canDraw = false
+                
+                    incorrect += 1
+                    incorrectlist.append("\(bubbles.lastBubble)->\(bubbles.currentBubble)")
+                    action = "Lineto incorrect bubble \(bubbles.currentBubble)"
+                    setNeedsDisplay()
                 }
             }
             let loc = touch.location(in: self)
