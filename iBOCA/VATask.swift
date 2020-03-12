@@ -335,7 +335,7 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         let newStartAlert = UIAlertController(title: "Display", message: "Name out loud and remember the two items in the photographs.", preferredStyle: .alert)
         newStartAlert.addAction(UIAlertAction(title: "Start", style: .default, handler: { (action) -> Void in
-            print("start")
+            debugPrint("start")
             self.display()
         }))
         
@@ -352,7 +352,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         let startAlert = UIAlertController(title: "Start", message: "Choose start option.", preferredStyle: .alert)
         
         startAlert.addAction(UIAlertAction(title: "Start New Task", style: .default, handler: { (action) -> Void in
-            print("start new")
             MyGlobalVA.shared.clearAll()
             MyGlobalVA.shared.stopTotalTimer()
             MyGlobalVA.shared.total = 0
@@ -363,13 +362,13 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         if afterBreakVA {
             startAlert.addAction(UIAlertAction(title: "Resume Task", style: .default, handler: { (action) -> Void in
-                print("resume old")
+                
                 self.resumeTask()
             }))
         }
         
         startAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in
-            print("cancel")
+            
         }))
         
         self.present(startAlert, animated: true, completion: nil)
@@ -448,7 +447,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         isImageViewHidden(true)
         isRecommendDelayHidden(false)
         
-        print("in delay...")
         afterBreakVA = true
         
         self.delayTime = Double(MyGlobalVA.shared.VADelayTime)
@@ -502,7 +500,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         
         let recallAlert = UIAlertController(title: "Recall", message: "Type the name of the item that is missing from the picture.", preferredStyle: .alert)
         recallAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action) -> Void in
-            print("recalling...")
             self.recall()
         }))
         self.present(recallAlert, animated: true, completion: nil)
@@ -558,13 +555,11 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             isMissingItemViewHidden(true)
             isRememberAgainViewHidden(false)
         } else {
-            print("next pic!")
             outputDisplayImage(withImageName: halfImages[testCount])
         }
     }
     
     @objc fileprivate func recognize() {
-        print("IN RECOGNIZE!!!")
         isRememberAgainViewHidden(true)
         timeInput = 0
         testCount = 0
@@ -771,7 +766,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
         view.endEditing(true)
         self.testCount += 1
         if (testCount == mixedImages.count) {
-            print("delay")
             self.isImageViewHidden(true)
             if self.isRecalledTestMode {
                 self.isMissingItemViewHidden(true)
@@ -798,7 +792,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
                 }
             }
         } else {
-            print("testCount: \(testCount)")
             if self.isRecalledTestMode {
                 if testCount - 1 == textInputList.count {
                     self.textInputList.append(missingItemTextField.text!)
@@ -866,12 +859,10 @@ extension VATask {
     }
     
     @IBAction func btnArrowLeftTapped(_ sender: Any) {
-        print("Arrow Left Tapped")
         view.endEditing(true)
         testCount -= 1
         timeInput = 0
         if testCount >= 0 {
-            print("testCount: \(testCount)")
             if isRecalledTestMode {
                 self.outputDisplayImage(withImageName: halfImages[testCount])
                 missingItemTextField.text = textInputList[testCount]
@@ -891,7 +882,6 @@ extension VATask {
             }))
             self.present(warningAlert, animated: true, completion: nil)
         } else {
-            print("Arrow Right Tapped")
             self.nextOutputDisplayImage()
         }
     }
@@ -1125,7 +1115,6 @@ extension VATask {
         self.correctButton.isHidden = true
         self.incorrectButton.isHidden = true
         self.dontKnowButton.isHidden = true
-        print("====== mode: \(self.mode)")
     }
     
     fileprivate func setupViewDelay() {
