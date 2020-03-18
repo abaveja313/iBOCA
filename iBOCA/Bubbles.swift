@@ -339,10 +339,13 @@ class BubblesA {
         for (index,bubble) in bubblelist.enumerated(){
             let (_, a, b) = bubble
             
-            let z = (x-CGFloat(a))*(x-CGFloat(a)) + (y-CGFloat(b))*(y-CGFloat(b))
-            
-            if z <= 700.0 {
-                //println("inside bubble " + name)
+//            let z = (x-CGFloat(a))*(x-CGFloat(a)) + (y-CGFloat(b))*(y-CGFloat(b))
+
+//            if z <= 700.0 {
+//                //println("inside bubble " + name)
+//                return index
+//            }
+            if abs(x-CGFloat(a)) <= 29 && abs(y-CGFloat(b)) <= 29 {
                 return index
             }
             
@@ -367,6 +370,11 @@ class BubblesA {
         seqCount += 1
         return true
         
+    }
+    
+    func inCurrentBubble(x:CGFloat, y:CGFloat) -> Bool {
+        let curr = inBubble(x: x, y:y)
+        return curr == currentBubble
     }
     
     func inCorrectBubble()->Bool{

@@ -82,7 +82,6 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     var mode : TestMode = TestMode.admin
     
     // Check Timer Next Picture
-    var counterNextPicture = 0
     var timerNextPicture = Timer()
     
     var recallErrors = [Int]()
@@ -745,21 +744,16 @@ class VATask: BaseViewController, UIPickerViewDelegate {
     
     func createTimerNextPicture() {
         self.timerNextPicture.invalidate()
-        self.timerNextPicture = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerNextPictureAction), userInfo: nil, repeats: true)
+        self.timerNextPicture = Timer.scheduledTimer(timeInterval: 4.5, target: self, selector: #selector(timerNextPictureAction), userInfo: nil, repeats: true)
     }
     
     func cancelTimerNextPicture() {
         self.timerNextPicture.invalidate()
-        self.counterNextPicture = 0
     }
     
     // called every time interval from the timer
     @objc func timerNextPictureAction() {
-        self.counterNextPicture += 1
-        if self.counterNextPicture == 2 {
-            self.cancelTimerNextPicture()
-            self.nextOutputDisplayImage()
-        }
+        self.nextOutputDisplayImage()
     }
     
     func nextOutputDisplayImage(_ determinedAdmin: String = "") {
@@ -791,7 +785,8 @@ class VATask: BaseViewController, UIPickerViewDelegate {
                     self.noticeButton.addTarget(self, action: #selector(display), for: .touchUpInside)
                 }
             }
-        } else {
+        } else if testCount < mixedImages.count {
+            print("testCount: \(testCount)")
             if self.isRecalledTestMode {
                 if testCount - 1 == textInputList.count {
                     self.textInputList.append(missingItemTextField.text!)
@@ -823,6 +818,9 @@ class VATask: BaseViewController, UIPickerViewDelegate {
             } else {
                 self.outputDisplayImage(withImageName: mixedImages[testCount])
             }
+        }
+        else {
+            cancelTimerNextPicture()
         }
     }
 }

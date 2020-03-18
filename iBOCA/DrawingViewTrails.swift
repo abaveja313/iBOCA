@@ -13,6 +13,12 @@ class DrawingViewTrails: UIView {
     private var currPath = UIBezierPath()
     var errorPath = UIBezierPath()
     var mainPath = UIBezierPath()
+    var intersectCheckingPath = UIBezierPath() // Use for detecting drawing line is intersect with existing ones or not
+    var cutPathInBubble = UIBezierPath() // 
+    
+    var isTouching: Bool = false
+    var lastTouch: UITouch?
+    var isMovingInsideBubble: Bool = false
     
     var startTime = Foundation.Date()
     var resultpath: [String:Any] = [:]
@@ -228,59 +234,81 @@ class DrawingViewTrails: UIView {
         }
     }
     
+    func handleBubbleWithDragging(touch: UITouch) {
+        var action = "Moveto"
+                if bubbles.inNewBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) == true {
+                    
+                    if bubbles.inCorrectBubble() == true {
+                        
+                        //ADDITION
+                        if bubbles.currentBubble == nextBubb {
+                            
+                            
+                            var p = UIBezierPath()
+                            p = UIBezierPath(cgPath: currPath.cgPath)
+                            paths.append(p)
+                            
+                            debugPrint("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
+                            nextBubb += 1
+                            action = "Moveto next bubble \(bubbles.currentBubble)"
+                        } else {
+        //                    var p = UIBezierPath()
+        //                    p = UIBezierPath(cgPath: currPath.cgPath)
+        //                    errorPath.append(p)
+//                            action = "Moveto not next bubble \(bubbles.currentBubble)"
+                        }
+                        
+                        currPath.removeAllPoints()
+                        currPath.move(to: touch.location(in: self))
+                        debugPrint("in correct bubble")
+                        
+                    } else {
+        //                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
+        //                currPath.removeAllPoints()
+                        self.canDraw = false
+        //                self.incorrect += 1
+        //                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
+                    }
+                }
+                let loc = touch.location(in: self)
+                resultpath[String(Foundation.Date().timeIntervalSince(startTime))] = ["x":loc.x, "y":loc.y, "status":action]
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if nextBubb != bubbles.bubblelist.count {
             canDraw = true
         }
         
+        mainPath.append(cutPathInBubble)
+        intersectCheckingPath.removeAllPoints()
+        cutPathInBubble.removeAllPoints()
+        currPath.removeAllPoints()
+        
         let touch = touches.first! as UITouch
         currPath.move(to: touch.location(in: self))
+        intersectCheckingPath.move(to: touch.location(in: self))
         
         setNeedsDisplay()
         
-        var action = "Moveto"
-        if bubbles.inNewBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) == true {
-            
-            
-            if bubbles.inCorrectBubble() == true {
-                mainPath.append(UIBezierPath(cgPath: currPath.cgPath))
-                
-                //ADDITION
-                if bubbles.currentBubble == nextBubb {
-                    var p = UIBezierPath()
-                    p = UIBezierPath(cgPath: currPath.cgPath)
-                    paths.append(p)
-                    
-                    debugPrint("paths added member; length is \(paths.count); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
-                    nextBubb += 1
-                    action = "Moveto next bubble \(bubbles.currentBubble)"
-                } else {
-//                    var p = UIBezierPath()
-//                    p = UIBezierPath(cgPath: currPath.cgPath)
-//                    errorPath.append(p)
-                    action = "Moveto not next bubble \(bubbles.currentBubble)"
-                }
-                
-                currPath.removeAllPoints()
-                currPath.move(to: touch.location(in: self))
-                debugPrint("in correct bubble")
-                
-            } else {
-//                self.errorPath.append(UIBezierPath(cgPath: self.currPath.cgPath))
-//                currPath.removeAllPoints()
-                self.canDraw = false
-//                self.incorrect += 1
-//                action = "Moveto incorrect bubble \(bubbles.currentBubble)"
-            }
-        }
-        let loc = touch.location(in: self)
-        resultpath[String(Foundation.Date().timeIntervalSince(startTime))] = ["x":loc.x, "y":loc.y, "status":action]
+        isTouching = true
+        lastTouch = touch
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // First touch that has movement
+        if isTouching, let lastTouch = self.lastTouch {
+            isTouching = false
+            handleBubbleWithDragging(touch: lastTouch)
+            self.lastTouch = nil
+        }
+        
+        // Continue touching with movement
         let touch = touches.first! as UITouch
         if canDraw == true {
             currPath.addLine(to: touch.location(in: self))
+            intersectCheckingPath.addLine(to: touch.location(in: self))
+            cutPathInBubble.addLine(to: touch.location(in: self))
             setNeedsDisplay()
             
             var action = "Lineto"
@@ -310,29 +338,53 @@ class DrawingViewTrails: UIView {
                     }
                     
                     currPath.removeAllPoints()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-                        self.currPath.move(to: touch.location(in: self))
-                    }
+//                    intersectCheckingPath.removeAllPoints()
+                    cutPathInBubble.removeAllPoints()
+                    
+                    currPath.move(to: touch.location(in: self))
+                    cutPathInBubble.move(to: touch.location(in: self))
+                    
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+//                        self.intersectCheckingPath.move(to: touch.location(in: self))
+//                    }
                     debugPrint("in correct bubble")
                 } else {
-                    debugPrint("countSinceCorrect = \(countSinceCorrect); currBubb = \(bubbles.currentBubble); nextBubb = \(bubbles.nextBubble)")
+                    debugPrint("In INCORRECT BUBBLE =========")
+
                     errorPath.append(UIBezierPath(cgPath: currPath.cgPath))
                     currPath.removeAllPoints()
+                    cutPathInBubble.removeAllPoints()
                     canDraw = false
-                    debugPrint("should have removed all pts")
+//                    debugPrint("should have removed all pts")
                     incorrect += 1
                     incorrectlist.append("\(bubbles.lastBubble)->\(bubbles.currentBubble)")
                     action = "Lineto incorrect bubble \(bubbles.currentBubble)"
                 }
             }
+            else if bubbles.inCurrentBubble(x: touch.location(in: self).x, y:touch.location(in: self).y) {
+                isMovingInsideBubble = true
+            }
             else {
+                if isMovingInsideBubble {
+                    isMovingInsideBubble = false
+                    intersectCheckingPath.removeAllPoints()
+                    intersectCheckingPath.move(to: touch.location(in: self))
+                }
+                
+                
+                if intersectCheckingPath.isEmpty {
+                    intersectCheckingPath = currPath
+                }
                 var objBool: ObjCBool = true
-                let result = currPath.findIntersections(withClosedPath: mainPath, andBeginsInside: &objBool)
+                
+                let result = intersectCheckingPath.findIntersections(withClosedPath: mainPath, andBeginsInside: &objBool)
                 if let rs = result, rs.count > 0 {
                     errorPath.append(UIBezierPath(cgPath: currPath.cgPath))
                     currPath.removeAllPoints()
+                    cutPathInBubble.removeAllPoints()
+                    intersectCheckingPath.removeAllPoints()
                     canDraw = false
-                
+
                     incorrect += 1
                     incorrectlist.append("\(bubbles.lastBubble)->\(bubbles.currentBubble)")
                     action = "Lineto incorrect bubble \(bubbles.currentBubble)"
