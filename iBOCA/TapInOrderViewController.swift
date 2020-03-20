@@ -69,6 +69,13 @@ class TapInOrderViewController: BaseViewController {
     var mTimerCounting : Timer?
     private var isPause: Bool = false
     private var pressedNextRound: Bool = false
+    private var enableNextRound: Bool = false {
+        didSet {
+            mNextRound.titleLabel?.textColor = enableNextRound ? .white : Color.color(hexString: "#D5C9C4")
+            mNextRound.alpha = enableNextRound ? 1 : 0.8
+            mNextRound.isUserInteractionEnabled = enableNextRound
+        }
+    }
     
     //randomize 1st order; light up 1st button
     override func viewDidLoad() {
@@ -114,6 +121,8 @@ class TapInOrderViewController: BaseViewController {
     
     
     @IBAction func ibaNexRound(_ sender: Any) {
+        guard numplaces < buttonList.count - 1 else {return}
+        self.enableNextRound = false
         self.pressedNextRound = true
         // Skip to next round, mean error increase 1
         self.numErrors += 1
@@ -406,6 +415,8 @@ class TapInOrderViewController: BaseViewController {
                     for (index, _) in self.order.enumerated() {
                         self.buttonList[index].backgroundColor = Color.color(hexString: "649BFF")
                     }
+
+                    self.enableNextRound = self.numplaces < self.buttonList.count - 1
                     self.enableButtons()
                     self.levelStartTime = Foundation.Date()
                     self.resultTmpList.removeAll()
@@ -655,6 +666,7 @@ class TapInOrderViewController: BaseViewController {
 //        mNextRound.setupGradient(arrColor: [Color.color(hexString: "#FCD24B"),Color.color(hexString: "#FFC556")], direction: .topToBottom)
         mNextRound.render()
         mNextRound.addTextSpacing(-0.36)
+        enableNextRound = false
         
         //
         mViewContent.layer.cornerRadius = 8.0
